@@ -2,12 +2,14 @@ package edu.tsj.aula.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.tsj.aula.model.Plantel;
+import edu.tsj.aula.repository.PlantelRepository;
 import edu.tsj.aula.service.implementation.PlantelService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -35,6 +37,9 @@ public class PlantelControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @SpyBean
+    private PlantelRepository plantelRepository;
 
 
     // POST: Save plantel - Positive scenario
@@ -82,4 +87,5 @@ public class PlantelControllerTest {
                 .andExpect(jsonPath("$.fechaCreacion",
                         is(plantel.getFechaCreacion().toString())));
     }
+    
 }
