@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface IPlantelService {
     Plantel savePlantel(Plantel plantel);
 
-    List<Plantel> getAllPlantels();
+    List<Plantel> getAllPlanteles();
 
     Optional<Plantel> getPlantelById(Long id);
 
