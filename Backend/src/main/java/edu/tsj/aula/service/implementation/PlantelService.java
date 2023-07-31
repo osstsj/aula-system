@@ -37,7 +37,7 @@ public class PlantelService implements IPlantelService {
     @Transactional
     @Override
     public List<Plantel> getAllPlanteles() {
-        log.debug(String.format("Se ha ejecutado el metodo gettAllPlanteles"));
+        log.debug("Se ha ejecutado el metodo gettAllPlanteles");
         return plantelRepository.findAll();
     }
 
@@ -46,7 +46,7 @@ public class PlantelService implements IPlantelService {
     public Optional<Plantel> getPlantelById(Long id) {
         Optional<Plantel> plantel = plantelRepository.findById(id);
         if(plantel.isEmpty())
-            throw new ResourceNotFoundException(String.format("No se encontro plantel con id '{0}'", id), HttpStatus.NOT_FOUND);
+            throw new ResourceNotFoundException(String.format("No se encontro plantel con id {0}", id), HttpStatus.NOT_FOUND);
 
         return plantel;
     }
@@ -54,14 +54,14 @@ public class PlantelService implements IPlantelService {
     @Transactional
     @Override
     public Plantel updatePlantel(Plantel plantel) {
-        log.debug(String.format("Plantel con el id '{0}' ha sido eliminado!", plantel.getId()));
+        log.debug(String.format("Plantel con el id {0} ha sido eliminado!", plantel.getId()));
         return plantelRepository.save(plantel);
     }
 
     @Transactional
     @Override
-    public void deletePlantel(Long id) {
-        log.debug(String.format("Plantel con el id '{0}' ha sido eliminado!", id));
+    public void deletePlantelById(Long id) {
+        log.debug(String.format("Plantel con el id {0} ha sido eliminado!", id));
         plantelRepository.deleteById(id);
     }
 }

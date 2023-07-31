@@ -14,5 +14,5 @@ public interface IPlantelService {
 
     Plantel updatePlantel(Plantel plantel);
 
-    void deletePlantel(Long id);
+    void deletePlantelById(Long id);
 }
