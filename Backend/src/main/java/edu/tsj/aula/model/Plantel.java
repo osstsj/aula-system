@@ -22,12 +22,25 @@ public class Plantel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String tipoUnidad;
+
+    @Column(unique = true)
     private String clave_dgp;
+
+    @Column(unique = true)
     private String abreviatura;
+
+    @Column(unique = true)
     private String nombreCorto;
+
+    @Column(unique = true)
     private String nombreCompleto;
+
+//    @Column(unique = true)
     private String  nombre_extension;
+
+    @Column(unique = true)
     private String direccionCompleta;
 
     @CreationTimestamp
