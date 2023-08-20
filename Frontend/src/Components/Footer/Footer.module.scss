@@ -1,0 +1,21 @@
+.footer {
+    background-color: #33179c;
+    color: #fff;
+    padding: 20px;
+  
+    flex-grow: 1;
+    display: flex;
+    justify-content: center!important;
+  }
+  
+  .image_container {
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+  }
+  
+  .footer_image {
+    max-width: 100px; /* Ajusta el tamaño según tus necesidades */
+    margin: 0 10px; /* Espacio entre las imágenes */
+  }
+  
