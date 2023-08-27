@@ -1,10 +1,12 @@
 package edu.tsj.aula.service.implementation;
 
+import edu.tsj.aula.exception.ResourceNotFoundException;
 import edu.tsj.aula.model.CarreraEntity;
 import edu.tsj.aula.repository.CarreraRepository;
 import edu.tsj.aula.service.ICarrerasService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -27,24 +29,34 @@ public class CarreraService implements ICarrerasService {
         return carreraRepository.save(carreraEntity);
     }
 
+    @Transactional
     @Override
     public List<CarreraEntity> getAllCarreras() {
         log.debug("Se ha ejecutado el metodo getAllCarreras");
         return carreraRepository.findAll();
     }
 
+    @Transactional
     @Override
     public Optional<CarreraEntity> getCarreraById(Long id) {
-        return Optional.empty();
+        Optional<CarreraEntity> carrera = carreraRepository.findById(id);
+        if(carrera.isEmpty())
+            throw new ResourceNotFoundException(String.format("No se encontro carrera con el id: %s", id), HttpStatus.NOT_FOUND);
+
+        return carrera;
     }
 
+    @Transactional
     @Override
     public CarreraEntity updateCarrera(CarreraEntity carreraEntity) {
-        return null;
+        log.debug("Se ha ejecutado el metodo updateCarrera");
+        return carreraRepository.save(carreraEntity);
     }
 
+    @Transactional
     @Override
     public void deleteCarreraById(Long id) {
-
+        log.debug(String.format("Carrera con el id %s ha sido eliminada!", id));
+        carreraRepository.deleteById(id);
     }
 }
