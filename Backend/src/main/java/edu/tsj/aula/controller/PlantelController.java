@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200") // change for react's host
 @RestController
 @RequestMapping("api/v1")
 @AllArgsConstructor
@@ -56,7 +55,7 @@ public class PlantelController {
 
     @DeleteMapping("/plantel/{id}")
     public ResponseEntity<String> deletePlantel(@PathVariable Long id) {
-        plantelService.deletePlantel(id);
+        plantelService.deletePlantelById(id);
 
         return new ResponseEntity<>(String.format("Plantel con el id '{0}' ha sido eliminado con exito!", id),
                 HttpStatus.NO_CONTENT);

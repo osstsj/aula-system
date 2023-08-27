@@ -25,3 +25,5 @@ spring:
         '[use_sql_comments]': false
         '[format_sql]': true
     show-sql: true
+configuration:
+  reactHost: http://localhost:4200
