@@ -23,6 +23,9 @@ public class CarreraEntity {
     private String abreviatura;
 
     @Column(unique = true)
+    private String nombre;
+
+    @Column(unique = true)
     private Long DGP;
 
     @Column(unique = true)
