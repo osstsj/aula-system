@@ -1,5 +1,6 @@
 package edu.tsj.aula.model;
 
+import edu.tsj.aula.model.enums.Nivel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
