@@ -22,7 +22,7 @@ public class CarreraService implements ICarrerasService {
     @Transactional
     @Override
     public CarreraEntity saveCarrera(CarreraEntity carreraEntity) {
-        Optional<CarreraEntity> checkCarreraByAbreviatura = carreraRepository.findCarreraEntityByByAbreviatura(carreraEntity.getAbreviatura());
+        Optional<CarreraEntity> checkCarreraByAbreviatura = carreraRepository.findCarreraEntityByAbreviatura(carreraEntity.getAbreviatura());
         if (checkCarreraByAbreviatura.isPresent())
             log.error(String.format("La carrera ya se encuentra registrada con el id: %s y nombre: %s", carreraEntity.getId(),carreraEntity.getNombre()));
 
