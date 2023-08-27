@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -22,7 +23,14 @@ public class CarreraService implements ICarrerasService {
         Optional<CarreraEntity> checkCarreraByAbreviatura = carreraRepository.findCarreraEntityByByAbreviatura(carreraEntity.getAbreviatura());
         if (checkCarreraByAbreviatura.isPresent())
             log.error(String.format("La carrera ya se encuentra registrada con el id: %s y nombre: %s", carreraEntity.getId(),carreraEntity.getNombre()));
+
         return carreraRepository.save(carreraEntity);
+    }
+
+    @Override
+    public List<CarreraEntity> getAllCarreras() {
+        log.debug("Se ha ejecutado el metodo getAllCarreras");
+        return carreraRepository.findAll();
     }
 
     @Override
