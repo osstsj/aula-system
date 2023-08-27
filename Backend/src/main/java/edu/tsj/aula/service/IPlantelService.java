@@ -1,18 +1,18 @@
 package edu.tsj.aula.service;
 
-import edu.tsj.aula.model.Plantel;
+import edu.tsj.aula.model.PlantelEntity;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IPlantelService {
-    Plantel savePlantel(Plantel plantel);
+    PlantelEntity savePlantel(PlantelEntity plantelEntity);
 
-    List<Plantel> getAllPlanteles();
+    List<PlantelEntity> getAllPlanteles();
 
-    Optional<Plantel> getPlantelById(Long id);
+    Optional<PlantelEntity> getPlantelById(Long id);
 
-    Plantel updatePlantel(Plantel plantel);
+    PlantelEntity updatePlantel(PlantelEntity plantelEntity);
 
     void deletePlantelById(Long id);
 }

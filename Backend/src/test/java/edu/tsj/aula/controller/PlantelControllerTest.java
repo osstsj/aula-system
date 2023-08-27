@@ -1,18 +1,13 @@
 package edu.tsj.aula.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.tsj.aula.exception.ResourceNotFoundException;
-import edu.tsj.aula.model.Plantel;
-import edu.tsj.aula.repository.PlantelRepository;
+import edu.tsj.aula.model.PlantelEntity;
 import edu.tsj.aula.service.implementation.PlantelService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -50,7 +45,7 @@ public class PlantelControllerTest {
     public void givenPlantelObject_whenCreatePlantel_thenReturnSavedPlantel() throws Exception {
         // Given: Precondition or setup
         LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of( "America/Mexico_City" ));
-        Plantel plantel = Plantel.builder()
+        PlantelEntity plantelEntity = PlantelEntity.builder()
                 .tipoUnidad("Unidad")
                 .clave_dgp("14EIT0003A")
                 .abreviatura("AR")
@@ -61,34 +56,34 @@ public class PlantelControllerTest {
                 .fechaCreacion(localDateTime)
                 .build();
 
-        given(plantelServiceMock.savePlantel(any(Plantel.class)))
+        given(plantelServiceMock.savePlantel(any(PlantelEntity.class)))
                 .willAnswer((invocationOnMock) -> invocationOnMock.getArgument(0));
 
         // WHEN: action or behaviour that are going test
-        when(plantelServiceMock.savePlantel(any(Plantel.class))).thenReturn(plantel);
+        when(plantelServiceMock.savePlantel(any(PlantelEntity.class))).thenReturn(plantelEntity);
 
         ResultActions response = mockMvc.perform(post("/api/v1/plantel")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(plantel)));
+                .content(objectMapper.writeValueAsString(plantelEntity)));
 
         // THEN: verify the result or output using assert statements
         response.andDo(print())
                 .andExpect(jsonPath("$.tipoUnidad",
-                        is(plantel.getTipoUnidad())))
+                        is(plantelEntity.getTipoUnidad())))
                 .andExpect(jsonPath("$.clave_dgp",
-                        is(plantel.getClave_dgp())))
+                        is(plantelEntity.getClave_dgp())))
                 .andExpect(jsonPath("$.abreviatura",
-                        is(plantel.getAbreviatura())))
+                        is(plantelEntity.getAbreviatura())))
                 .andExpect(jsonPath("$.nombreCorto",
-                        is(plantel.getNombreCorto())))
+                        is(plantelEntity.getNombreCorto())))
                 .andExpect(jsonPath("$.nombreCompleto",
-                        is(plantel.getNombreCompleto())))
+                        is(plantelEntity.getNombreCompleto())))
                 .andExpect(jsonPath("$.nombre_extension",
-                        is(plantel.getNombre_extension())))
+                        is(plantelEntity.getNombre_extension())))
                 .andExpect(jsonPath("$.direccionCompleta",
-                        is(plantel.getDireccionCompleta())))
+                        is(plantelEntity.getDireccionCompleta())))
                 .andExpect(jsonPath("$.fechaCreacion",
-                        is(plantel.getFechaCreacion().toString())));
+                        is(plantelEntity.getFechaCreacion().toString())));
     }
 
     // POST: Save plantel - Negative scenario

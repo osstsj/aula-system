@@ -32,5 +32,29 @@ public class CarreraController {
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-    
+
+    @PutMapping("/carrera/{id}")
+    public ResponseEntity<CarreraEntity> updateCarrera(@PathVariable Long id, @RequestBody CarreraEntity carreraEntity) {
+        return carreraService.getCarreraById(id)
+                .map(auxCarrera -> {
+                    auxCarrera.setAbreviatura(carreraEntity.getAbreviatura());
+                    auxCarrera.setNombre(carreraEntity.getNombre());
+                    auxCarrera.setDGP(carreraEntity.getDGP());
+                    auxCarrera.setPlanDeEstudio(carreraEntity.getPlanDeEstudio());
+                    auxCarrera.setEstatus(carreraEntity.getEstatus());
+
+                    CarreraEntity updateCarrera = carreraService.updateCarrera(auxCarrera);
+
+                    return new ResponseEntity<>(updateCarrera, HttpStatus.OK);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/carrera/{id}")
+    public ResponseEntity<String> deleteCarrera(@PathVariable Long id) {
+        carreraService.deleteCarreraById(id);
+
+        return new ResponseEntity<>(String.format("La carrera con el id: %s ha sido eliminada con exito!", id),
+                HttpStatus.NO_CONTENT);
+    }
 }

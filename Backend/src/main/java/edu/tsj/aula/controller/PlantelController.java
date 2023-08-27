@@ -1,6 +1,6 @@
 package edu.tsj.aula.controller;
 
-import edu.tsj.aula.model.Plantel;
+import edu.tsj.aula.model.PlantelEntity;
 import edu.tsj.aula.service.implementation.PlantelService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,38 +17,38 @@ public class PlantelController {
 
     @PostMapping("/plantel")
     @ResponseStatus(HttpStatus.CREATED)
-    public Plantel createPlantel(@RequestBody Plantel plantel) {
-        return plantelService.savePlantel(plantel);
+    public PlantelEntity createPlantel(@RequestBody PlantelEntity plantelEntity) {
+        return plantelService.savePlantel(plantelEntity);
     }
 
     @GetMapping("/planteles")
-    public List<Plantel> getAllPlanteles() {
+    public List<PlantelEntity> getAllPlanteles() {
         return plantelService.getAllPlanteles();
     }
 
     @GetMapping("/plantel/{id}")
-    public ResponseEntity<Plantel> getPlantelById(@PathVariable Long id) {
+    public ResponseEntity<PlantelEntity> getPlantelById(@PathVariable Long id) {
         return plantelService.getPlantelById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(()-> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/plantel/{id}")
-    public ResponseEntity<Plantel> updatePlantel(@PathVariable Long id, @RequestBody Plantel plantel) {
+    public ResponseEntity<PlantelEntity> updatePlantel(@PathVariable Long id, @RequestBody PlantelEntity plantelEntity) {
         return plantelService.getPlantelById(id)
                 .map(auxPlantel -> {
-                    auxPlantel.setTipoUnidad(plantel.getTipoUnidad());
-                    auxPlantel.setClave_dgp(plantel.getClave_dgp());
-                    auxPlantel.setAbreviatura(plantel.getAbreviatura());
-                    auxPlantel.setNombreCorto(plantel.getNombreCorto());
-                    auxPlantel.setNombreCompleto(plantel.getNombreCompleto());
-                    auxPlantel.setNombre_extension(plantel.getNombre_extension());
-                    auxPlantel.setDireccionCompleta(plantel.getDireccionCompleta());
+                    auxPlantel.setTipoUnidad(plantelEntity.getTipoUnidad());
+                    auxPlantel.setClave_dgp(plantelEntity.getClave_dgp());
+                    auxPlantel.setAbreviatura(plantelEntity.getAbreviatura());
+                    auxPlantel.setNombreCorto(plantelEntity.getNombreCorto());
+                    auxPlantel.setNombreCompleto(plantelEntity.getNombreCompleto());
+                    auxPlantel.setNombre_extension(plantelEntity.getNombre_extension());
+                    auxPlantel.setDireccionCompleta(plantelEntity.getDireccionCompleta());
                     auxPlantel.setFechaCreacion(auxPlantel.getFechaCreacion());
 
-                    Plantel updatePlantel = plantelService.updatePlantel(auxPlantel);
+                    PlantelEntity updatePlantelEntity = plantelService.updatePlantel(auxPlantel);
 
-                    return new ResponseEntity<>(updatePlantel, HttpStatus.OK);
+                    return new ResponseEntity<>(updatePlantelEntity, HttpStatus.OK);
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
