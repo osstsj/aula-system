@@ -16,7 +16,7 @@ import java.util.Optional;
 @Slf4j
 @AllArgsConstructor
 @Service
-public class PlantelService implements IPlantelService {
+public class PlantelServiceImpl implements IPlantelService {
     private final PlantelRepository plantelRepository;
 
     @Transactional

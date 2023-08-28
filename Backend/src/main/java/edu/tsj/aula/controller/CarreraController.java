@@ -1,7 +1,7 @@
 package edu.tsj.aula.controller;
 
 import edu.tsj.aula.model.CarreraEntity;
-import edu.tsj.aula.service.implementation.CarreraService;
+import edu.tsj.aula.service.implementation.CarreraServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("api/v1")
 @AllArgsConstructor
 public class CarreraController {
-    private final CarreraService carreraService;
+    private final CarreraServiceImpl carreraService;
 
     @PostMapping("/carrera")
     @ResponseStatus(HttpStatus.CREATED)

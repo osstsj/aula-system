@@ -2,7 +2,7 @@ package edu.tsj.aula.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.tsj.aula.model.PlantelEntity;
-import edu.tsj.aula.service.implementation.PlantelService;
+import edu.tsj.aula.service.implementation.PlantelServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class PlantelControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private PlantelService plantelServiceMock;
+    private PlantelServiceImpl plantelServiceImplMock;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -56,11 +56,11 @@ public class PlantelControllerTest {
                 .fechaCreacion(localDateTime)
                 .build();
 
-        given(plantelServiceMock.savePlantel(any(PlantelEntity.class)))
+        given(plantelServiceImplMock.savePlantel(any(PlantelEntity.class)))
                 .willAnswer((invocationOnMock) -> invocationOnMock.getArgument(0));
 
         // WHEN: action or behaviour that are going test
-        when(plantelServiceMock.savePlantel(any(PlantelEntity.class))).thenReturn(plantelEntity);
+        when(plantelServiceImplMock.savePlantel(any(PlantelEntity.class))).thenReturn(plantelEntity);
 
         ResultActions response = mockMvc.perform(post("/api/v1/plantel")
                 .contentType(MediaType.APPLICATION_JSON)

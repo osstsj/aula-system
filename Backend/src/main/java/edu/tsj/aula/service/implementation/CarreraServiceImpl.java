@@ -16,7 +16,7 @@ import java.util.Optional;
 @Slf4j
 @AllArgsConstructor
 @Service
-public class CarreraService implements ICarrerasService {
+public class CarreraServiceImpl implements ICarrerasService {
     private final CarreraRepository carreraRepository;
 
     @Transactional
