@@ -15,14 +15,14 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "CarreraPorUnidad")
+@Table(name = "carreraPorUnidad")
 public class CarreraPorUnidadEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "CarreraPorUnidad_id")
+    @JoinColumn(name = "carreraPorUnidad_id")
     private List<CarreraEntity> carreraEntitiesList;
     // Note: when we consult the with Lazy, what we do is to consult only item List
 
@@ -30,7 +30,7 @@ public class CarreraPorUnidadEntity {
     private Nivel nivel;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "CarrerasPorUnidad_id")
+    @JoinColumn(name = "carrerasPorUnidad_id")
     private List<PlantelEntity> plantelEntities;
 
     @Column
