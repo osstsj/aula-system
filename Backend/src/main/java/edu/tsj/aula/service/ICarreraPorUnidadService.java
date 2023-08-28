@@ -12,5 +12,7 @@ public interface ICarreraPorUnidadService {
 
     Optional<CarreraPorUnidadEntity> getCarreraPorUnidadById(Long id);
 
+    CarreraPorUnidadEntity updateCarreraPorUnidad(CarreraPorUnidadEntity carreraPorUnidadEntity);
+
     void deleteCarreraPorUnidadById(Long id);
 }

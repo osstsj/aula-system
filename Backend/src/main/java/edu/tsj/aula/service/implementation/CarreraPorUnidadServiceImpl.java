@@ -41,6 +41,12 @@ public class CarreraPorUnidadServiceImpl implements ICarreraPorUnidadService {
 
     @Transactional
     @Override
+    public CarreraPorUnidadEntity updateCarreraPorUnidad(CarreraPorUnidadEntity carreraPorUnidadEntity) {
+        return carreraPorUnidadRepository.save(carreraPorUnidadEntity);
+    }
+
+    @Transactional
+    @Override
     public void deleteCarreraPorUnidadById(Long id) {
         log.debug("Se ha elimindo la carreraPorUnidad con el id: " + id);
         carreraPorUnidadRepository.deleteById(id);
