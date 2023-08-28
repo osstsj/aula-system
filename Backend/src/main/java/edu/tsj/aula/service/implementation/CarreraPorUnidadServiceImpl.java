@@ -15,5 +15,34 @@ import java.util.Optional;
 @AllArgsConstructor
 @Service
 public class CarreraPorUnidadServiceImpl implements ICarreraPorUnidadService {
-   
+    private final CarreraPorUnidadRepository carreraPorUnidadRepository;
+
+    @Transactional
+    @Override
+    public CarreraPorUnidadEntity saveCarreraPorUnidad(CarreraPorUnidadEntity carreraPorUnidadEntity) {
+        log.debug("Se ha registrado la carreraPorUnidad con el id: " + carreraPorUnidadEntity.getId());
+        return carreraPorUnidadRepository.save(carreraPorUnidadEntity);
+    }
+
+
+    @Transactional
+    @Override
+    public List<CarreraPorUnidadEntity> getAllCarreraPorUnidad() {
+        log.debug("Se ha ejecuta el metodo getAllCarreraPorUnidad");
+        return carreraPorUnidadRepository.findAll();
+    }
+
+    @Transactional
+    @Override
+    public Optional<CarreraPorUnidadEntity> getCarreraPorUnidadById(Long id) {
+        log.debug("Se ha ejecutado el metodo getCarreraPorUnidadById");
+        return carreraPorUnidadRepository.findById(id);
+    }
+
+    @Transactional
+    @Override
+    public void deleteCarreraPorUnidadById(Long id) {
+        log.debug("Se ha elimindo la carreraPorUnidad con el id: " + id);
+        carreraPorUnidadRepository.deleteById(id);
+    }
 }
