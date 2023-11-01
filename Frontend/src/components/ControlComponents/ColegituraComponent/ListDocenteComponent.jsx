@@ -136,7 +136,7 @@ class ListColegiaturaComponent extends Component {
            
         return (
             <div className="container">
-                <h2 className="text-center mt-5 Title">Lista de Colegiaturas</h2>
+                <h2 className="text-center mt-5 mb-5 Title">LISTA DE COLEGIATURAS</h2>
                 <button 
                     className="btn btn-primary mb-4" style={{width:'20%'}}
                     onClick={this.addColegiatura}>Agragar Colegiatura</button>

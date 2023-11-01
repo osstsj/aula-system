@@ -42,12 +42,12 @@ class CreatePlantelComponent extends Component {
         e.preventDefault();
         if (this.state.disablePlantelList == false) { 
             let plantel = {
-                tipo_unidad: this.state.tipo_unidad, 
-                clave_dgp: this.state.clave_dgp, 
-                abreviatura: this.state.abreviatura,
-                nombre_corto: this.state.nombre_corto, 
-                nombre_completo: this.state.nombre_completo,
-                direccion_completa: this.state.direccion_completa,
+                tipo_unidad: this.state.tipo_unidad.trim(), 
+                clave_dgp: this.state.clave_dgp.trim(), 
+                abreviatura: this.state.abreviatura.trim(),
+                nombre_corto: this.state.nombre_corto.trim(), 
+                nombre_completo: this.state.nombre_completo.trim(),
+                direccion_completa: this.state.direccion_completa.trim(),
             };
 
             console.log('Unidad Academica => ' + JSON.stringify(plantel));
@@ -61,12 +61,12 @@ class CreatePlantelComponent extends Component {
                 let plantel = res.data;
 
                 let plantelExtensiones  = {
-                    tipo_unidad: this.state.tipo_unidad,
-                    clave_dgp: plantel.clave_dgp,
-                    abreviatura:  this.state.abreviatura,
-                    nombre_corto: this.state.nombre_corto,
-                    nombre_completo: this.state.nombre_completo,
-                    direccion_completa: plantel.direccion_completa               
+                    tipo_unidad: this.state.tipo_unidad.trim(),
+                    clave_dgp: plantel.clave_dgp.trim(),
+                    abreviatura:  this.state.abreviatura.trim(),
+                    nombre_corto: this.state.nombre_corto.trim(),
+                    nombre_completo: this.state.nombre_completo.trim(),
+                    direccion_completa: plantel.direccion_completa.trim()              
                 }
                
 
@@ -165,11 +165,11 @@ class CreatePlantelComponent extends Component {
         return (
             <div  className='' >
                 <div className = "container">
-                        <div className = "row">
-                        <div className="card col-md-6 offset-md-3 offset-md-3 mt-5" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                        <div className = "row justify-content-center">
+                        <div className="card col-9 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                             <div className="card-body">
-                                <div className="card-header text-center">
-                                    <h2 className="h3 Title">Agregar Plantel</h2>
+                                <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                                    <h2 className="h3 Title">Agregar Unidad Academica</h2>
                                 </div>
                                 <br />
                                 <form>
@@ -184,7 +184,7 @@ class CreatePlantelComponent extends Component {
                                                     onChange={this.changeTipoUnidadHandler} 
                                                     required
                                                 >
-                                                    <option value=""  disabled>Seleccione un tipo de unidad...</option>
+                                                    <option value=""  disabled>Seleccione un tipo de UA...</option>
                                                     <option value="Unidad">Unidad academica</option>
                                                     <option value="Extension">Unidad academica con extension</option>
                                                 </select>
@@ -201,7 +201,7 @@ class CreatePlantelComponent extends Component {
                                                     rules={{ required: true }}
                                                     options={this.state.unidades}
                                                     onChange={(e) => this.onChangeUnidadHandler(e)}
-                                                    value={{ label: this.state.unidad_academica == '' ? "Seleccione unidad..." : this.state.unidad_academica}}
+                                                    value={{ label: this.state.unidad_academica == '' ? "Seleccione UA..." : this.state.unidad_academica}}
                                                 />
                                             </div>
                                         </div>
@@ -212,7 +212,7 @@ class CreatePlantelComponent extends Component {
                                                 <label className="">Clave DGP: </label>
                                                 <input 
                                                     readOnly= {this.state.disablePlantelList}
-                                                    placeholder="Ingrese Clave DGP..." 
+                                                    placeholder="Ingrese Clave DGP de UA..." 
                                                     name="ClaveDGP" className="form-control" 
                                                     value={this.state.clave_dgp} 
                                                     onChange={this.changeClaveDGPHandler} 
@@ -239,7 +239,7 @@ class CreatePlantelComponent extends Component {
                                             <div className="form-outline">
                                                 <label className="mt-1">Nombre Corto UA: </label>
                                                 <input 
-                                                    placeholder="Ingrese nombre corto..." 
+                                                    placeholder="Ingrese nombre corto de UA..." 
                                                     name="nombreCorto" 
                                                     className="form-control" 
                                                     value={this.state.nombre_corto} 
@@ -254,7 +254,7 @@ class CreatePlantelComponent extends Component {
                                             <div className="form-outline">
                                                 <label className="mt-1">Nombre Completo UA: </label>
                                                 <input 
-                                                    placeholder="Ingrese nombre completo..." 
+                                                    placeholder="Ingrese nombre completo de UA..." 
                                                     name="nombreCompleto" 
                                                     className="form-control" 
                                                     value={this.state.nombre_completo} 

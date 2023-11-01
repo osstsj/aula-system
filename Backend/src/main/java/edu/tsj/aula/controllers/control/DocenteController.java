@@ -4,6 +4,7 @@ import edu.tsj.aula.persistance.models.control.dto.docenteDto.DocenteRequestDto;
 import edu.tsj.aula.persistance.models.control.dto.docenteDto.DocenteResponseDto;
 import edu.tsj.aula.persistance.models.control.entity.DocenteEntity;
 import edu.tsj.aula.persistance.models.control.entity.PlantelEntity;
+import edu.tsj.aula.service.control.ICarreraService;
 import edu.tsj.aula.service.control.IDocenteService;
 import edu.tsj.aula.service.control.IPlantelService;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,7 @@ import java.util.*;
 public class DocenteController {
     private final IDocenteService docenteService;
     private final IPlantelService plantelService;
+    private final ICarreraService carreraService;
 
     @PostMapping(value="/docente/{plantel_id}",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
@@ -45,12 +47,16 @@ public class DocenteController {
         }
     }
 
-    @GetMapping(value = "/docentes/{plantel_id}",
+    @GetMapping(value = "/docentes/{plantel_id}/{carrera_id}",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE })
-    public ResponseEntity<List<DocenteEntity>> getAllDocentesByPlantel(@PathVariable Long plantel_id) {
+    public ResponseEntity<List<DocenteEntity>> getAllDocentesByPlantel(@PathVariable Long plantel_id,
+                                                                       @PathVariable Long carrera_id) {
         try {
             Optional<PlantelEntity> plantel = plantelService.getPlantelById(plantel_id);
             List<DocenteEntity> docentes = docenteService.findAllByPlantel((Collections.singletonList(plantel.get())));
+            // Agregar findDOcenteByCarrara
+
+
 //            List<DocenteEntity> docentes = docenteService.findAllByPlantel(Collections.singletonList(plantel_id));
             return new ResponseEntity<>(docentes, HttpStatus.OK);
         } catch (Exception e) {

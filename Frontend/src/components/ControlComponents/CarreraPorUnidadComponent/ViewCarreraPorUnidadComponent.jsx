@@ -46,28 +46,28 @@ class ViewCarreraPorUnidadComponent extends Component {
        
         return (
         <div className="container">
-             <div className="mt-5">
-                <div className="card col-md-6 offset-md-3" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                    <div className="card-header">
-                        <h3 className="text-center"> Carrera por  Unidades a Detalle</h3>
-                    </div>
-                    
+             <div className="row justify-content-center">
+                <div className="card col-9 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>                    
                     <div className="card-body">
+                        <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                            <h3 className="h3 Title"> Carrera por Unidade Academica a Detalle</h3>
+                        </div>
+                        <br />
                         <div className="row">
-                            <div className="col">
+                            <div className="col-4">
                                 <div className="form-outline">
                                     <label className=""><b>Carrera:</b> </label>
                                 </div>
                             </div>
                             <div className="col">
                                 <div className="form-outline">
-                                    <div className=""><i>{this.state.carrera_nombre}</i></div>
+                                    <div className="">{this.state.carrera_nombre}</div>
                                 </div>
                             </div>
                         </div>
 
                         <div className="row">
-                            <div className="col">
+                            <div className="col-4">
                                 <div className="form-outline">
                                     <label className=""><b>Nivel Academico</b> </label>
                                 </div>
@@ -80,9 +80,9 @@ class ViewCarreraPorUnidadComponent extends Component {
                         </div>
 
                         <div className="row">
-                            <div className="col">
+                            <div className="col-4">
                                 <div className="form-outline">
-                                    <label className=""><b>Plantel:</b></label>
+                                    <label className=""><b>Unidad Academica:</b></label>
                                 </div>
                             </div>
                             <div className="col">
@@ -93,7 +93,7 @@ class ViewCarreraPorUnidadComponent extends Component {
                         </div>
                         
                         <div className="row">
-                            <div className="col">
+                            <div className="col-4">
                                 <div className="form-outline">
                                     <label className=""><b>Modalidad:</b></label>
                                 </div>
@@ -105,31 +105,56 @@ class ViewCarreraPorUnidadComponent extends Component {
                             </div>
                         </div>
 
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className=""><b>Fecha de creacion:</b></label>
+                        <div className="row mt-2">
+                                <div className="col-4">
+                                    <div className="form-outline">
+                                        <label className=""><b>Creado por:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.fecha_creacion}</div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.fecha_creacion}</i></div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className=""><b>Fecha de actualizacion:</b></label>
+                            <div className="row mb-3">
+                                <div className="col-4">
+                                    <div className="form-outline">
+                                        <label className=""><b>Fecha de creacion:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.fecha_creacion}</div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.fecha_actualizacion}</i></div>
+                            
+                            <div className="row">
+                                <div className="col-4">
+                                    <div className="form-outline">
+                                        <label className=""><b>Actualizacion realizada por:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.fecha_actualizacion}</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            <div className="row">
+                                <div className="col-4">
+                                    <div className="form-outline">
+                                        <label className=""><b>Fecha de actualizacion:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.fecha_actualizacion}</div>
+                                    </div>
+                                </div>
+                            </div>                         
 
                     </div>
                         <br />

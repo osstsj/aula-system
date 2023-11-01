@@ -111,351 +111,379 @@ class ViewProyeccionAsignaturaComponent extends Component {
 
         return (
             <div className="mt-4 container" >
-                <div className="card col-md-6 offset-md-3" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                    <div className="card-header">
-                        <h3 className="text-center"><b>{this.state.id} - Proyeccion Por Asignatura Unidad Academica "{this.state.unidad_academica}"</b></h3>
-                    </div>
-                    
-                    <div className="card-body">
-                        <div className="col">
-                            <div className="row mb-2">
-                                <label className="h5"><b>PROFESORES DE ASIGNATURA</b></label>
+                <div className="row justify-content-center">
+                    <div className="card col-9" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>                     
+                        <div className="card-body">
+                            <div className="card-header" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                                <h3 className="text-center"><b>{this.state.id} - Proyeccion Por Asignatura Unidad Academica "{this.state.unidad_academica}"</b></h3>
                             </div>
-                            <div className="row">
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <label className="">Clave de Programa Educativo:</label>
-                                    </div>
-                                </div>
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <div className=""><i>{this.state.clave_programa}</i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <label className="">Código de  Nómina:</label>
-                                    </div>
-                                </div>
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <div className=""><i>{this.state.codigo_nomina}</i></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="row">
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <label className="">Grado Académico:</label>
-                                    </div>
-                                </div>
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <div className=""><i>{this.state.grado_academico}</i></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="row">
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <label className="">Nombre del Docente:</label>
-                                    </div>
-                                </div>
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <div className=""><i>{this.state.nombre_docente}</i></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr />
-                        
-                        <div className="col">
-                            <div className="row">
-                                <label className="h5"><b>HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS</b></label>
-                            </div>
-                            <div className="row mb-1">
-                                <label className="h6"><b>Horas de Asignatura</b></label>
-                            </div>
-                            <div className="row">
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <label className="">A:</label>
-                                    </div>
-                                </div>
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <div className=""><i>{this.state.a}</i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <label className="">B:</label>
-                                    </div>
-                                </div>
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <div className=""><i>{this.state.b}</i></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        {/* Horas Frente Grupo */}
-                        <div className="row mt-3 mb-3">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className="">Horas Frente a Grupo:</label>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.horas_frente_grupo}</i></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col">
-                            <div className="row mb-1 mt-3">
-                                    <label><b>Academias</b></label>
-                            </div>
-                            <div className="row">
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <label className="">Presidente:</label>
-                                    </div>
-                                </div>
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <div className=""><i>{this.state.presidente}</i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <label className="">Secretario:</label>
-                                    </div>
-                                </div>
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <div className=""><i>{this.state.secretario}</i></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col">
-                            <div className="row mb-1 mt-3">
-                                    <label><b>Asesorías</b></label>
-                            </div>
-                            <div className="row">
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <label className="">Asesorias Académicas:</label>
-                                    </div>
-                                </div>
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <div className=""><i>{this.state.asesoria_academica}</i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <label className="">Educacion Dual:</label>
-                                    </div>
-                                </div>
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <div className=""><i>{this.state.educacion_dual}</i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <label className="">Residencias Profesionales:</label>
-                                    </div>
-                                </div>
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <div className=""><i>{this.state.residencias_profesionales}</i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <label className="">Titulación:</label>
-                                    </div>
-                                </div>
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <div className=""><i>{this.state.titulacion}</i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <label className="">Tutorias:</label>
-                                    </div>
-                                </div>
-                                <div className="col">
-                                    <div className="form-outline">
-                                        <div className=""><i>{this.state.tutorias}</i></div>
-                                    </div>
-                                </div>
-                            </div>
-
+                            <br />
                             
-                        </div>
+                            <div className="col">
+                                <div className="row mb-2">
+                                    <label className="h5"><b>PROFESORES DE ASIGNATURA</b></label>
+                                </div>
+                                <div className="row">
+                                    <div className="col-5">
+                                        <div className="form-outline">
+                                            <label className="">Clave de Programa Educativo:</label>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <div className=""><i>{this.state.clave_programa}</i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-5">
+                                        <div className="form-outline">
+                                            <label className="">Código de  Nómina:</label>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <div className=""><i>{this.state.codigo_nomina}</i></div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className="">Actividades Complementarias:</label>
+                                <div className="row">
+                                    <div className="col-5">
+                                        <div className="form-outline">
+                                            <label className="">Grado Académico:</label>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <div className=""><i>{this.state.grado_academico}</i></div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.actividades_complementarias}</i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row mb-1 mt-3">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className=""><b>Subtotal 1:</b></label>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.subtotal_1}</i></div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <hr />
-                    
-                        <div className="col">
+                                <div className="row">
+                                    <div className="col-5">
+                                        <div className="form-outline">
+                                            <label className="">Nombre del Docente:</label>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <div className=""><i>{this.state.nombre_docente}</i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            
+                            <div className="col">
+                                <div className="row">
+                                    <label className="h5"><b>HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS</b></label>
+                                </div>
+                                <div className="row mb-1">
+                                    <label className="h6"><b>Horas de Asignatura</b></label>
+                                </div>
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <label className="">A:</label>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <div className=""><i>{this.state.a}</i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <label className="">B:</label>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <div className=""><i>{this.state.b}</i></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            {/* Horas Frente Grupo */}
+                            <div className="row mt-3 mb-3">
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <label className="">Horas Frente a Grupo:</label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className=""><i>{this.state.horas_frente_grupo}</i></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col">
+                                <div className="row mb-1 mt-3">
+                                        <label><b>Academias</b></label>
+                                </div>
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <label className="">Presidente:</label>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <div className=""><i>{this.state.presidente}</i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <label className="">Secretario:</label>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <div className=""><i>{this.state.secretario}</i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col">
+                                <div className="row mb-1 mt-3">
+                                        <label><b>Asesorías</b></label>
+                                </div>
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <label className="">Asesorias Académicas:</label>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <div className=""><i>{this.state.asesoria_academica}</i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <label className="">Educacion Dual:</label>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <div className=""><i>{this.state.educacion_dual}</i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <label className="">Residencias Profesionales:</label>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <div className=""><i>{this.state.residencias_profesionales}</i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <label className="">Titulación:</label>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <div className=""><i>{this.state.titulacion}</i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <label className="">Tutorias:</label>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <div className=""><i>{this.state.tutorias}</i></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+
                             <div className="row">
-                                <label className="h5"><b>HORAS NECESIDAD INSTITUCIONAL</b></label>
-                            </div>
-                        </div>
-                       
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className="">Investigacion educativa, desarrrollo tecnológico:</label>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <label className="">Actividades Complementarias:</label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className=""><i>{this.state.actividades_complementarias}</i></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.invesigacion_educativa}</i></div>
+                            <div className="row mb-1 mt-3">
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <label className=""><b>Subtotal 1:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className=""><i>{this.state.subtotal_1}</i></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className="">Apoyo Operativo:</label>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.apoyo_operativo}</i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row mb-1 mt-3">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className=""><b>Subtotal 2:</b></label>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.subtotal_2}</i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr />
 
-                        <div className="row">
+                            <hr />
+                        
                             <div className="col">
-                                <div className="form-outline">
-                                    <label className=""><b>Total:</b></label>
+                                <div className="row">
+                                    <label className="h5"><b>HORAS NECESIDAD INSTITUCIONAL</b></label>
                                 </div>
                             </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.total}</i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className=""><b>OBSERVACIONES:</b></label>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.observaciones}</i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr />
-
-                        <div className="col">
+                        
                             <div className="row">
-                                <label className="h5"><b>Fechas de Actividades</b></label>
-                            </div>
-                        </div>
-                        
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className="">Fecha y hora de creacion:</label>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <label className="">Investigacion educativa, desarrrollo tecnológico:</label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className=""><i>{this.state.invesigacion_educativa}</i></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.fecha_creacion}</i></div>
+                            <div className="row">
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <label className="">Apoyo Operativo:</label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className=""><i>{this.state.apoyo_operativo}</i></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className="">Fecha y hora de ultima modificaion:</label>
+                            <div className="row mb-1 mt-3">
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <label className=""><b>Subtotal 2:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className=""><i>{this.state.subtotal_2}</i></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.fecha_actualizacion}</i></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
+                            <hr />
 
-                        <br />
-                        <div className="card-footer text-muted">
-                            <button className = "btn btn-secondary" onClick={this.back.bind(this)} style= {{marginLeft: "10px"}}>Regresar</button>
+                            <div className="row">
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <label className=""><b>Total:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className=""><i>{this.state.total}</i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <label className=""><b>OBSERVACIONES:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className=""><i>{this.state.observaciones}</i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+
+                            <div className="col">
+                                <div className="row">
+                                    <label className="h5"><b>Fechas de Actividades</b></label>
+                                </div>
+                            </div>
+                            
+                            <div className="row mt-2">
+                                <div className="col-5">
+                                    <div className="form-outline">
+                                        <label className=""><b>Creado por:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.fecha_creacion}</div>
+                                    </div>
+                                </div>
+                            </div>                            
+                            <div className="row">
+                                <div className="col-5">
+                                    <div className="form-outline">
+                                        <label className="">Fecha y hora de creacion:</label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className=""><i>{this.state.fecha_creacion}</i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className="row mt-2">
+                                <div className="col-5">
+                                    <div className="form-outline">
+                                        <label className=""><b>Modificado por:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.fecha_creacion}</div>
+                                    </div>
+                                </div>
+                            </div>      
+                            <div className="row">
+                                <div className="col-5">
+                                    <div className="form-outline">
+                                        <label className="">Fecha y hora de ultima modificaion:</label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className=""><i>{this.state.fecha_actualizacion}</i></div>
+                                    </div>
+                                </div>
+                            </div>                            
+                            
+
+                            <br />
+                            <div className="card-footer text-muted">
+                                <button className = "btn btn-secondary" onClick={this.back.bind(this)} style= {{marginLeft: "10px"}}>Regresar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+                
             </div>
         )
     }

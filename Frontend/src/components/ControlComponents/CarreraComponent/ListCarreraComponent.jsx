@@ -152,7 +152,7 @@ class ListCarreraComponent extends Component {
         
         return (
             <div className='container'>
-                <h2 className="text-center mt-5 Title">Lista de carreras</h2>
+                <h2 className="text-center mt-5 mb-5 Title">LISTA DE CARRERAS</h2>
                     <button style={{width:'15%'}} className="btn btn-primary mb-4" onClick={this.addCarrera}>Agregar carrera</button>
                     <button style={{ width: '15%',marginLeft:'1rem' }} className="btn btn-outline-success mb-4" onClick={this.exportToExcel}>Exportar a Excel</button> {/* Botón de exportar a Excel */}
                     <button style={{ width: '15%',marginLeft:'1rem' }} className="btn btn-outline-dark mb-4" onClick={this.exportToPDF}>

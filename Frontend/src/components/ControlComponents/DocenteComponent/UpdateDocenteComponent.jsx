@@ -24,35 +24,35 @@ class UpdateDocenteComponent extends Component {
 
     updateDocenteById = (e) =>{
         e.preventDefault();
-        let docente = {
-            nombre: this.state.nombre, 
-            apellido_paterno: this.state.apellido_paterno, 
-            apellido_materno: this.state.apellido_materno,
-            unidad_academica: this.state.unidad_academica, 
-            categoria: this.state.categoria,
-            actividad: this.state.actividad
-        };
+        // let docente = {
+        //     nombre: this.state.nombre.trim(), 
+        //     apellido_paterno: this.state.apellido_paterno.trim(), 
+        //     apellido_materno: this.state.apellido_materno.trim(),
+        //     unidad_academica: this.state.unidad_academica.trim(), 
+        //     categoria: this.state.categoria.trim(),
+        //     actividad: this.state.actividad.trim()
+        // };
         
-        console.log('docente=> ' + JSON.stringify(docente));
+        // console.log('docente=> ' + JSON.stringify(docente));
         
-        DocenteService.updateDocenteById(docente, this.state.id).then(res => {
-            this.props.history.push('/list-docente');
-        });
+        // DocenteService.updateDocenteById(docente, this.state.id).then(res => {
+        //     this.props.history.push('/list-docente');
+        // });
     }
 
     componentDidMount() {        
-        DocenteService.getDocenteById(this.state.id).then(res => {
-            let docente = res.data;
+    //     DocenteService.getDocenteById(this.state.id).then(res => {
+    //         let docente = res.data;
 
-            this.setState({
-                nombre: docente.nombre, 
-                apellido_paterno: docente.apellido_paterno, 
-                apellido_materno: docente.apellido_materno,
-                unidad_academica: docente.unidad_academica, 
-                categoria: docente.categoria,
-                actividad: docente.actividad
-            });
-       });
+    //         this.setState({
+    //             nombre: docente.nombre, 
+    //             apellido_paterno: docente.apellido_paterno, 
+    //             apellido_materno: docente.apellido_materno,
+    //             unidad_academica: docente.unidad_academica, 
+    //             categoria: docente.categoria,
+    //             actividad: docente.actividad
+    //         });
+    //    });
 
         this.getUnidadList();
         this.getActividad();
@@ -132,10 +132,10 @@ class UpdateDocenteComponent extends Component {
             <div  className='' >
                 <div className = "">
                         <div className = "row justify-content-center">
-                            <div className="card col-9 mt-5" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                            <div className="card col-9 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                                 <div className="card-body">
-                                    <div className="card-header text-center">
-                                        <h2 className="h3 Title">Agregar Docente</h2>
+                                    <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                                        <h2 className="h3 Title">Actualizar Docente</h2>
                                     </div>
                                     <br />
                                     <form>

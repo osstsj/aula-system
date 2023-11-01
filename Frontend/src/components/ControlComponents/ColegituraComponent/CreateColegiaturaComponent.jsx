@@ -34,12 +34,12 @@ class CreateColegiaturaComponent extends Component {
         
         let colegiatura = {
             // clave: parseFloat(this.state.clave),
-            clave: this.state.clave,
-            descripcion: this.state.descripcion, 
+            clave: this.state.clave.trim(),
+            descripcion: this.state.descripcion.trim(), 
             // monto: parseFloat(this.state.monto),
-            monto: this.state.monto,
-            colegiatura_estatus: this.state.colegiatura_estatus, 
-            comentarios: this.state.comentarios
+            monto: this.state.monto.trim(),
+            colegiatura_estatus: this.state.colegiatura_estatus.trim(), 
+            comentarios: this.state.comentarios.trim()
         };
         // Mostrar el spinner al iniciar la acción
         this.setState({ isLoading: true });
@@ -77,11 +77,11 @@ class CreateColegiaturaComponent extends Component {
         return (
             <div className=''>
                 <div className = "container" >
-                        <div className = "row">
-                            <div className = "card col-md-6 offset-md-3 offset-md-3 mt-5" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                        <div className = "row justify-content-center">
+                            <div className = "card col-8 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                             <div className="card-body">
-                                <div className="card-header text-center">
-                                    <h2 className="h3  Title">Colegiatura</h2>
+                                <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                                    <h2 className="h3 Title">Agregar Colegiatura</h2>
                                 </div>
                                 <br />
                                 <form>

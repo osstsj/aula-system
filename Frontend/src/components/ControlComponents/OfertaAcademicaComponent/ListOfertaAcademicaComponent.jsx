@@ -148,8 +148,8 @@ class ListOfertaAcademicaComponent extends Component {
 
         return (
             <div className='container'>
-                <h2 className="text-center mt-5 Title">Lista de Oferta Academica</h2>
-                <button style={{ width: '15%' }} className="btn btn-primary mb-4" onClick={this.addUnidad}>Agregar Oferta</button>
+                <h2 className="text-center mt-5 mb-5 Title">LISTA DE OFERTAS ACADEMICAS</h2>
+                <button style={{ width: '20%' }} className="btn btn-primary mb-4" onClick={this.addUnidad}>Agregar Oferta Academica</button>
                 <button style={{ width: '15%', marginLeft: '1rem' }} className="btn btn-outline-success mb-4" onClick={this.exportToExcel}>Exportar a Excel</button> {/* Botón de exportar a Excel */}
                 <button style={{ width: '15%', marginLeft: '1rem' }} className="btn btn-outline-dark mb-4" onClick={this.exportToPDF}>
                     Exportar a PDF

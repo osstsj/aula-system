@@ -89,9 +89,9 @@ class ListPlantelComponent extends Component {
 
         return (
             <div className="container">
-                <h2 className="text-center mt-5 Title">LISTA DE PLANTELES</h2>
-                <button style={{ width: '15%' }} className="btn btn-primary mb-4" onClick={this.addPlantel}>
-                    Agregar plantel
+                <h2 className="text-center mt-5 mb-5 Title">LISTA DE UNIDADES ACADEMICAS</h2>
+                <button style={{ width: '20%' }} className="btn btn-primary mb-4" onClick={this.addPlantel}>
+                    Agregar Unidad Academica
                 </button>
                 <button style={{ width: '15%', marginLeft: '1rem' }} className="btn  btn-outline-success mb-4" onClick={this.exportToExcel}>
                     Exportar a Excel

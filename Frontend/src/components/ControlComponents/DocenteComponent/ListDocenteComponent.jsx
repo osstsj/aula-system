@@ -117,7 +117,7 @@ class ListDocenteComponent extends Component {
        
         return (
             <div  className='container'>
-                <h2 className="text-center mt-5 Title">LISTA DE DOCENTES</h2>
+                <h2 className="text-center mt-5 mb-5 Title" >LISTA DE DOCENTES</h2>
                 <button style={{width:'15%'}} className="btn btn-primary mb-4" onClick={this.addDocente}>
                     Agregar Docente
                 </button>

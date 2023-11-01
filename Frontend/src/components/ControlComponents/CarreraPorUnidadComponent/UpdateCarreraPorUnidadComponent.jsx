@@ -44,10 +44,10 @@ class UpdateCarreraPorUnidadComponent extends Component {
     updateCarrera = (e) =>{
         e.preventDefault();
         let unidad = {
-            carrera_nombre: this.state.carrera_nombre, 
-            unidad_academica: this.state.unidad_academica, 
-            modalidad: this.state.modalidad,
-            nivel: this.state.nivel
+            carrera_nombre: this.state.carrera_nombre.trim(), 
+            unidad_academica: this.state.unidad_academica.trim(), 
+            modalidad: this.state.modalidad.trim(),
+            nivel: this.state.nivel.trim()
         };
         
         console.log('unidad => ' + JSON.stringify(unidad));
@@ -125,15 +125,15 @@ class UpdateCarreraPorUnidadComponent extends Component {
        
          return (
             <div className="container"  >
-                <div className="row">
-                    <div className="card col-md-6 offset-md-3 offset-md-3 mt-4">
+                <div className="row justify-content-center">
+                    <div className="card col-9 mt-4">
                         <div className="card-body">
                             <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                                <h2 className='h3'>Editar Carrera Por Unidad</h2>
+                                <h2 className='h3 Title'>Actualizar Carrera Por Unidad Academica</h2>
                             </div>
                             <br />
                             <form>
-                                 <div className="row">
+                                 <div className="row mb-3">
                                     <div className="col">
                                         <div className="form-outline">
                                             <label>Lista de Carreras</label>
@@ -147,7 +147,7 @@ class UpdateCarreraPorUnidadComponent extends Component {
                                     </div>
                                 </div>
                                 
-                                <div className="row">
+                                <div className="row mb-3">
                                     <div className="col">
                                         <div className="form-outline">
                                             <label>Niveles Academico</label>
@@ -161,7 +161,7 @@ class UpdateCarreraPorUnidadComponent extends Component {
                                     </div>
                                 </div>
 
-                                <div className="row">
+                                <div className="row mb-3">
                                     <div className="col">
                                         <div className="form-outline">
                                         <label>Lista de Planteles</label>
@@ -174,7 +174,7 @@ class UpdateCarreraPorUnidadComponent extends Component {
                                     </div>
                                 </div>
 
-                                <div className="row">
+                                <div className="row mb-3">
                                     <div className="col">
                                         <div className="form-outline">
                                         <label>Modalidades</label>

@@ -47,6 +47,11 @@ public class DocenteEntity {
 //    @JsonProperty("plantel")
     private PlantelEntity plantel;
 
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @JoinColumn(name = "id_carrera", nullable = false)
+//    @OnDelete(action =OnDeleteAction.CASCADE)
+//    private CarreraEntity carrera;
+
     @CreationTimestamp
     private LocalDateTime fecha_creacion;
 

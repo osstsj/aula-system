@@ -42,12 +42,12 @@ class CreateDocenteComponent extends Component {
         //     let plantelById = res.data;
 
             let docente = {
-                nombre: this.state.nombre,
-                apellido_paterno: this.state.apellido_paterno,
-                apellido_materno: this.state.apellido_materno,
-                unidad_academica: this.state.unidad_academica,
-                categoria: this.state.categoria,
-                actividad: this.state.actividad,
+                nombre: this.state.nombre.trim(),
+                apellido_paterno: this.state.apellido_paterno.trim(),
+                apellido_materno: this.state.apellido_materno.trim(),
+                unidad_academica: this.state.unidad_academica.trim(),
+                categoria: this.state.categoria.trim(),
+                actividad: this.state.actividad.trim(),
                 // plantel: this.state.id
             };
             // Mostrar el spinner al iniciar la acción
@@ -141,10 +141,10 @@ class CreateDocenteComponent extends Component {
             <div className='' >
                 <div className="">
                     <div className="row justify-content-center">
-                        <div className="card col-9 mt-5" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                        <div className="card col-9 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                             <div className="card-body">
-                                <div className="card-header text-center">
-                                    <h2 className="h3 Title">Agregar Docente</h2>
+                                <div className="card-header text-center"  style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                                    <h2 className="h3 Title" >Agregar Docente</h2>
                                 </div>
                                 <br />
                                 <form>
@@ -195,8 +195,7 @@ class CreateDocenteComponent extends Component {
                                                     rules={{ required: true }}
                                                         options={this.state.unidades}
                                                         onChange={(e) => this.onChangeUnidadAcademicaHandler(e)}
-                                                        placeholder="Seleccione un carrera..."
-                                                        value={{ label: this.state.unidad_academica == "" ? "Seleccione d..." : this.state.unidad_academica }}
+                                                        value={{ label: this.state.unidad_academica == "" ? "Seleccione UA..." : this.state.unidad_academica }}
                                                     />
                                                 </div>
                                             </div>
@@ -207,7 +206,6 @@ class CreateDocenteComponent extends Component {
                                                     rules={{ required: true }}
                                                         options={this.state.categorias}
                                                         onChange={(e) => this.onChangeCategoriaHandler(e)}
-                                                        placeholder="Seleccione un carrera..."
                                                         value={{ label: this.state.categoria == "" ? "Seleccione una categoria..." : this.state.categoria }}
                                                     />
                                                 </div>
@@ -219,7 +217,6 @@ class CreateDocenteComponent extends Component {
                                                     rules={{ required: true }}
                                                         options={this.state.actividades}
                                                         onChange={(e) => this.onChangeActividadHandler(e)}
-                                                        placeholder="Seleccione un carrera..."
                                                         value={{ label: this.state.actividad == "" ? "Seleccione una actividad..." : this.state.actividad }}
                                                     />
                                                 </div>

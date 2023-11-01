@@ -21,6 +21,7 @@ class CreateProyeccionAsignatura extends Component {
             disableSecretario: false,
             disableAgregar: true,
             disableTest: false,
+            disableDocente: true,
 
             unidad_academica: '',
 
@@ -66,17 +67,17 @@ class CreateProyeccionAsignatura extends Component {
 
         let asignatura = {
             profe_asignatura: {
-                clave_programa: this.state.clave_programa,
-                codigo_nomina: this.state.codigo_nomina,
-                grado_academico: this.state.grado_academico,
-                nombre_docente: this.state.nombre_docente,
+                clave_programa: this.state.clave_programa.trim(),
+                codigo_nomina: this.state.codigo_nomina.trim(),
+                grado_academico: this.state.grado_academico.trim(),
+                nombre_docente: this.state.nombre_docente.trim(),
             },
                 horas_sustantivas_atencion_alumnos: {
                     horas_asignatura: {
                     a: this.state.a,
                     b: this.state.b,
                 },
-                horas_frente_grupo: 0,
+                horas_frente_grupo: this.state.horas_frente_grupo,
 
                     academias: {
                     presidente: this.state.presidente,
@@ -99,8 +100,8 @@ class CreateProyeccionAsignatura extends Component {
                 apoyo_operativo: this.state.apoyo_operativo,
                 },
 
-            unidad_academica: this.state.unidad_academica,
-            observaciones: this.state.observaciones,
+            unidad_academica: this.state.unidad_academica.trim(),
+            observaciones: this.state.observaciones.trim(),
         }
 
         if (this.state.disablePresidente == false) {
@@ -193,6 +194,7 @@ class CreateProyeccionAsignatura extends Component {
 
     onChangeUnidadHandler = (event) => {
         this.setState({ unidad_academica: event.label });
+        this.setState({ disableDocente: false});
         if (event.value == 'Extension') {
             this.state.disableTest= true;
         } else {
@@ -416,7 +418,7 @@ class CreateProyeccionAsignatura extends Component {
                     <div className="card col-8 offset-md-2 mt-3" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                         <div className="card-body">
                             <div className="card-header text-center">
-                                <h2 className='h3'><b>Agregar Proyeccion Asignatura</b></h2>
+                                <h2 className='h3'><b>Agregar Proyeccion por Asignatura</b></h2>
                             </div>
                             <br />
                             <form>    
@@ -460,7 +462,7 @@ class CreateProyeccionAsignatura extends Component {
                                             <Select
                                             // depende que se realize el cambio en unidad academcia para que se pueda habilidar
                                             // y se reseteara si se cambia la unidad academica, al igual se resetea el valor de nivel academico.
-                                                isDisabled={true}
+                                                isDisabled={this.state.disableDocente}
                                                 rules={{ required: true }}
                                                 options={this.state.docentes}
                                                 onChange={(e) => this.onChangeNombreDocenteHandler(e)}

@@ -45,11 +45,11 @@ class UpdateOfertaAcademicaComponent extends Component {
     updateCarreraById = (e) =>{
         e.preventDefault();
         let oferta = {
-            unidad: this.state.unidad, 
-            carrera: this.state.carrera, 
-            modalidad: this.state.modalidad,
-            turno: this.state.turno,
-            periodo: this.state.periodo
+            unidad: this.state.unidad.trim(), 
+            carrera: this.state.carrera.trim(), 
+            modalidad: this.state.modalidad.trim(),
+            turno: this.state.turno.trim(),
+            periodo: this.state.periodo.trim()
         };
         
         console.log('oferta => ' + JSON.stringify(oferta));
@@ -128,11 +128,11 @@ class UpdateOfertaAcademicaComponent extends Component {
     render() {
          return (
             <div className="container"   >
-                <div className="row">
-                    <div className="card col-md-6 offset-md-3 offset-md-3 mt-5" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                <div className="row justify-content-center">
+                    <div className="card col-8 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                         <div className="card-body">
-                            <div className="card-header text-center">
-                                <h2 className='h3'>Editar Oferta Academica</h2>
+                            <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                                <h2 className='h3 Title'>Actualizar Oferta Academica</h2>
                             </div>
                             <br />
                             <form>

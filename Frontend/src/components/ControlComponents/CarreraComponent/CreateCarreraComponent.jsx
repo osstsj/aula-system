@@ -25,17 +25,18 @@ class CreateCarreraComponent extends Component {
     }
 
     saveCarrera = (e) =>{
+        e.preventDefault();
        // Validar que los campos requeridos no estén vacíos
     if (this.state.abreviatura.trim() === '' || this.state.nombre.trim() === '' || this.state.dgp.trim() === '' || this.state.estatus.trim() === '' || this.state.plan_estudio.trim() === '') {
         alert('Por favor complete todos los campos requeridos.');
         return;
     }
         let carrera = {
-            abreviatura: this.state.abreviatura, 
-            nombre: this.state.nombre, 
-            plan_estudio: this.state.plan_estudio, 
+            abreviatura: this.state.abreviatura.trim(), 
+            nombre: this.state.nombre.trim(), 
+            plan_estudio: this.state.plan_estudio.trim(), 
             dgp: parseInt(this.state.dgp), 
-            estatus: this.state.estatus
+            estatus: this.state.estatus.trim()
         };
            // Mostrar el spinner al iniciar la acción
            this.setState({ isLoading: true });
@@ -75,16 +76,16 @@ class CreateCarreraComponent extends Component {
         return (
             <div className=''>
                 <div className = "container" >
-                        <div className = "row">
-                            <div className = "card col-md-6 offset-md-3 offset-md-3 mt-5" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                        <div className = "row justify-content-center">
+                            <div className = "card col-9 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                             <div className="card-body">
-                                <div className="card-header text-center">
+                                <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                                     <h2 className="h3 Title">Agregar Carrera</h2>
                                 </div>
                                 <br />
                                 <form>
                                     <div className="row mb-3">
-                                        <div className="col">
+                                        <div className="col-4">
                                             <div className="form-outline">
                                                 <label className="">Abreviatura: </label>
                                                 <input 

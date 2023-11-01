@@ -42,111 +42,139 @@ class viewColegiaturaComponent extends Component {
     render() {
         
         return (
-            <div className="mt-5 container"  >
-                <div className="card col-md-6 offset-md-3" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                    <div className="card-header">
-                        <h3 className="text-center">Colegiatura a detalle</h3>
-                    </div>
-                    
-                    <div className="card-body">
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className=""><b>Clave:</b></label>
+            <div className="mt-4 container"  >
+                <div className="row justify-content-center">
+                    <div className="card col-9" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>                  
+                        <div className="card-body">
+                            <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                                <h3 className="h3 Title">Colegiatura a Detalle</h3>
+                            </div>
+                            <br />
+                            <div className="row">
+                                <div className="col-4">
+                                    <div className="form-outline">
+                                        <label className=""><b>Clave:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className=""><i>{this.state.clave}</i></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.clave}</i></div>
+
+                            <div className="row">
+                                <div className="col-4">
+                                    <div className="form-outline">
+                                        <label className=""><b>Descripcion:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className=""><i>{this.state.descripcion}</i></div>
+                                    </div>
                                 </div>
                             </div>
+                            <br />
+
+                            <div className="row">
+                                <div className="col-4">
+                                    <div className="form-outline">
+                                        <label className=""><b>Monto:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className=""><i>{this.state.monto}</i></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="row">
+                                <div className="col-4">
+                                    <div className="form-outline">
+                                        <label className=""><b>Estatus:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className=""><i>{this.state.colegiatura_estatus}</i></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="row">
+                                <div className="col-4">
+                                    <div className="form-outline">
+                                        <label className=""><b>Comentarios:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className=""><i>{this.state.comentarios === '' ? 'No hay comentarios':this.state.comentarios }</i></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                            <div className="row mt-2">
+                                <div className="col-4">
+                                    <div className="form-outline">
+                                        <label className=""><b>Creado por:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.fecha_creacion}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="row mb-3">
+                                <div className="col-4">
+                                    <div className="form-outline">
+                                        <label className=""><b>Fecha de creacion:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.fecha_creacion}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className="row">
+                                <div className="col-4">
+                                    <div className="form-outline">
+                                        <label className=""><b>Actualizacion realizada por:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.fecha_actualizacion}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-4">
+                                    <div className="form-outline">
+                                        <label className=""><b>Fecha de actualizacion:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.fecha_actualizacion}</div>
+                                    </div>
+                                </div>
+                            </div>  
                         </div>
 
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className=""><b>Descripcion:</b></label>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.descripcion}</i></div>
-                                </div>
-                            </div>
-                        </div>
                         <br />
-
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className=""><b>Monto:</b></label>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.monto}</i></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className=""><b>Estatus:</b></label>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.colegiatura_estatus}</i></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className=""><b>Comentarios:</b></label>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.comentarios === '' ? 'No hay comentarios':this.state.comentarios }</i></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className=""><b>Fecha de creacion:</b></label>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.fecha_creacion}</i></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className=""><b>Fecha de actualizacion:</b></label>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.fecha_actualizacion}</i></div>
-                                </div>
-                            </div>
+                        <div className="card-footer text-muted">
+                            <button className = "btn btn-secondary" onClick={this.back.bind(this)} style= {{marginLeft: "10px"}}>Regresar</button>
                         </div>
                     </div>
-
-                    <br />
-                    <div className="card-footer text-muted">
-                        <button className = "btn btn-secondary" onClick={this.back.bind(this)} style= {{marginLeft: "10px"}}>Regresar</button>
-                    </div>
-                </div>
+                </div>                
             </div>
 
         )

@@ -36,82 +36,109 @@ class ViewCarreraComponent extends Component {
     render() {
 
         return (
-            <div className="mt-5 container "  >
-                <div className="card col-md-6 offset-md-3" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                    <div className="card-header">
-                        <h3 className="text-center">Area Escolar a detalle</h3>
-                    </div>
-                    
-                    <div className="card-body">
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className=""><b>Area:</b></label>
+            <div className="mt-4 container "  >
+                <div className="row justify-content-center">
+                    <div className="card col-10" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>                       
+                        <div className="card-body">
+                            <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                                <h3 className="h3 Title">Area Escolar a detalle</h3>
+                            </div>
+                            <br />
+                            <div className="row">
+                                <div className="col-3">
+                                    <div className="form-outline">
+                                        <label className=""><b>Area:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className=""><i>{this.state.area}</i></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.area}</i></div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className=""><b>Responsable:</b></label>
+                            <div className="row">
+                                <div className="col-3">
+                                    <div className="form-outline">
+                                        <label className=""><b>Responsable:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className=""><i>{this.state.responsable}</i></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.responsable}</i></div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className=""><b>Unidad academica:</b></label>
+                            <div className="row">
+                                <div className="col-3">
+                                    <div className="form-outline">
+                                        <label className=""><b>Unidad academica:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className=""><i>{this.state.unidad_academica}</i></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.unidad_academica}</i></div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className=""><b>Fecha de creacion:</b></label>
+                            <div className="row mt-2">
+                                <div className="col-4">
+                                    <div className="form-outline">
+                                        <label className=""><b>Creado por:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.fecha_creacion}</div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.fecha_creacion}</i></div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                    <label className=""><b>Fecha de actualizacion:</b></label>
+                            <div className="row mb-3">
+                                <div className="col-4">
+                                    <div className="form-outline">
+                                        <label className=""><b>Fecha de creacion:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.fecha_creacion}</div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                    <div className=""><i>{this.state.fecha_actualizacion}</i></div>
+                            
+                            <div className="row">
+                                <div className="col-4">
+                                    <div className="form-outline">
+                                        <label className=""><b>Actualizacion realizada por:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.fecha_actualizacion}</div>
+                                    </div>
                                 </div>
                             </div>
+                            <div className="row">
+                                <div className="col-4">
+                                    <div className="form-outline">
+                                        <label className=""><b>Fecha de actualizacion:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.fecha_actualizacion}</div>
+                                    </div>
+                                </div>
+                            </div>   
+                            
                         </div>
-                        
-                    </div>
-                        <br />
-                    <div className="card-footer text-muted">
-                        <button className = "btn btn-secondary" onClick={this.cancel.bind(this)} style= {{marginLeft: "10px"}}>Regresar</button>
+                            <br />
+                        <div className="card-footer text-muted">
+                            <button className = "btn btn-secondary" onClick={this.cancel.bind(this)} style= {{marginLeft: "10px"}}>Regresar</button>
+                        </div>
                     </div>
                 </div>
             </div>

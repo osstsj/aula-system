@@ -147,7 +147,7 @@ class ListCargaAcademicaComponent extends Component {
 
         return (
             <div className='container'>
-                <h2 className="text-center mt-5 mb-5 Title">PROYECCIONES ASIGNATURA</h2>
+                <h2 className="text-center mt-5 mb-5 Title">PROYECCIONES POR ASIGNATURA</h2>
                 <div className="row">
                     <div className="col-4">
                        <div style={{marginTop:'5.6%'}}>

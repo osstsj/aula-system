@@ -27,9 +27,9 @@ class UpdateAreaComponent extends Component {
         e.preventDefault();
         
         let area = {
-            area: this.state.area,
-            responsable: this.state.responsable,
-            unidad_academica: this.state.unidad_academica
+            area: this.state.area.trim(),
+            responsable: this.state.responsable.trim(),
+            unidad_academica: this.state.unidad_academica.trim()
         }
 
         console.log('Area =>' + JSON.stringify(area));
@@ -81,11 +81,11 @@ class UpdateAreaComponent extends Component {
     render() {
         return (
             <div className="container" >
-                <div className="row">
-                    <div className="card col-md-6 offset-md-3 offset-md-3 mt-5" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                <div className="row justify-content-center">
+                    <div className="card card col-9 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                         <div className="card-body">
-                            <div className="card-header text-center">
-                                <h2 className='h3'>Agregar Area Escolar</h2>
+                            <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                                <h2 className="h3 Title">Actualizar Area Escolar</h2>
                             </div>
                             <br />
                         <form>
