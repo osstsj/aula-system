@@ -1,0 +1,31 @@
+/* HeaderComponent.css */
+.dropdown-submenu {
+  position: relative;
+}
+
+/* Adjust the arrow direction */
+.dropdown-submenu .dropdown-menu {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+  border-radius: 0;
+  display: none;
+}
+
+/* Add a right-pointing arrow with black color */
+.dropdown-submenu:before {
+  content: "";
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent #000; /* Set the arrow color to black (#000) */
+  position: absolute;
+  right: 10px; /* Adjust the distance from the right edge */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Show the submenu on hover */
+.dropdown-submenu:hover .dropdown-menu {
+  display: block;
+}

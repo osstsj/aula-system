@@ -1,0 +1,60 @@
+.Container{
+    min-height: 100vh!important; /* 100% de la altura de la ventana */
+    background-color: #f0f0f0; /* Cambia esto al color de fondo que desees */
+
+    box-sizing: border-box;
+    overflow: auto; 
+    background-color: #c2cbcb3d;
+    
+}
+.container{
+    padding-bottom:2rem;
+}
+.Title{
+    color: #000000;
+    font-weight: bold!important;
+    font-family: Arial, Helvetica, sans-serif!important;
+}
+.Title-Table{
+    font-size: 20px!important;
+    text-align: center;
+    color: #000000;
+    font-weight: bold!important;
+    font-family: Arial, Helvetica, sans-serif!important;
+    border-Color: #000000!important;
+    vertical-align: middle!important;
+}
+thead tr {
+    
+    background-color: #fff; /* Color del fondo para filas del <thead> */
+}/* Estilos para filas del <tbody> */
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Color de fila par para el <tbody> */
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #ffffff!important; /* Color de fila impar para el <tbody> */
+}
+.table-conten{
+    min-width: 200px;
+    border-radius: #000000;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.table-title {
+    min-width: 200px;
+    overflow: auto;
+    vertical-align: middle!important;
+    color: #000000 !important;
+    text-align: center;
+    
+         /*white-space: nowrap; */
+}
+.table-action{
+    min-width:290px;
+    overflow: auto;
+    vertical-align: middle!important;
+    color: #000000 !important;
+    text-align: center;
+}

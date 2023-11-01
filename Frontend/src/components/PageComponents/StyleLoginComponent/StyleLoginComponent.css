@@ -1,0 +1,12 @@
+.login-fondo{padding-top: 5rem;
+  padding-bottom: 5rem;
+  margin-top: 0;
+  align-items: center;
+  display: flex;
+  background-color: #000; /* Color de fondo si la imagen no se carga o no cubre completamente */
+  background-image: url('/img/login.jpg');
+  background-size: 100% 100%; /* Ajusta la imagen al 100% de ancho y alto */
+  background-repeat: no-repeat; /* Evita la repetición de la imagen de fondo */
+  background-position: center center; /* Centra la imagen de fondo */
+  min-height: 100vh;
+}

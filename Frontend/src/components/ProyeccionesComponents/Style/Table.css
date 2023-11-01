@@ -1,0 +1,50 @@
+
+
+.table-green {
+    min-width: 200px;
+    overflow: auto;
+    vertical-align: middle!important;
+    background-color: #28a745;
+    border-Color: #000000!important;
+    color: #ffffff !important;
+    text-align: center;
+         /*white-space: nowrap; */
+}
+.table-blue{
+    min-width: 300px;
+            overflow: auto;
+            vertical-align: middle!important;
+            background-color: #007bff;
+            border-Color: #000000!important;
+            color: #ffffff;
+            text-align: center;
+         /*white-space: nowrap; */
+}
+.table-content{
+    min-width: 200px;   
+    border-radius: #000000;
+    border-Color: #000000!important;
+    vertical-align: middle!important;
+    text-align: center;
+    font-size: 12px!important;
+}
+.table-id{
+    
+            vertical-align: middle!important;
+            border-Color: #000000!important;
+         /*white-space: nowrap; */
+}
+.table-acciones{
+    min-width: 300px;
+            overflow: auto;
+            vertical-align: middle!important;
+            background-color: #ffffff;
+            border-Color: #000000!important;
+            color: #000000;
+            text-align: center;
+         /*white-space: nowrap; */
+}
+
+tbody tr td {
+    height: 40px!important;
+  }

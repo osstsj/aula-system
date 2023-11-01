@@ -1,0 +1,12 @@
+/* FooterComponent.css */
+.footer-content {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  height: 100vh; /* Ajusta la altura según tu diseño */
+}
+
+.centered-image {
+  max-width: 100%; /* Ajusta el ancho de la imagen según tu diseño */
+  max-height: 100%; /* Ajusta la altura de la imagen según tu diseño */
+}

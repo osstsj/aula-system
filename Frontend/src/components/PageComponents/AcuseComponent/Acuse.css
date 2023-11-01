@@ -1,0 +1,75 @@
+
+  
+  .header, .footer {
+  text-align: center;
+  padding: 20px 0;
+  background-color: #f5f5f5; /* Color de fondo del encabezado y el pie de página */
+}
+  .header img {
+    width: 200px; /* Ajusta el tamaño de la imagen del encabezado según tus necesidades */
+  }
+  
+  .acuse {
+    text-align: center;
+    border: none;
+    
+    box-shadow: none;
+    background-color: transparent; /* Color de fondo del contenido principal */
+  }
+  .texto-justificado{
+    text-align: justify;
+  }
+  h2 {
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  
+  
+  .footer img {
+    width: 1135px; /* Ajusta el tamaño de la imagen del pie de página según tus necesidades */
+  }
+  @media print {
+    @page { size: auto; margin: 0; }
+
+    .acuse {
+      text-align: center;
+      margin: 0 auto;
+    }
+    .acuse-container {
+        position: absolute;
+        top: 50%; /* Coloca el elemento en el 50% superior de la página */
+        transform: translateY(-50%); /* Centra verticalmente el contenido */
+        left: 0; /* Asegura que el contenido esté alineado a la izquierda */
+        right: 0; /* Asegura que el contenido esté alineado a la derecha */
+        text-align: center; /* Centra el contenido horizontalmente en la página */
+      }
+      button {
+        display: none;
+      }
+      footer{
+        display: none;
+      }
+      img.pie-pagina {
+        bottom: 0;
+        text-align: center;
+        width: 100%;
+        position: fixed;
+        left: 0;
+        right: 0;
+      }
+      
+  }
