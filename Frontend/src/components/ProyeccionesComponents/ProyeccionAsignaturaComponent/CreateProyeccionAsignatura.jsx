@@ -414,10 +414,10 @@ class CreateProyeccionAsignatura extends Component {
     render() {
         return (
             <div className="container">
-                <div className="row">
-                    <div className="card col-8 offset-md-2 mt-3" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                <div className="row justify-content-center mt-3 mb-3">
+                    <div className="card col-10" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                         <div className="card-body">
-                            <div className="card-header text-center">
+                            <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                                 <h2 className='h3'><b>Agregar Proyeccion por Asignatura</b></h2>
                             </div>
                             <br />
