@@ -11,6 +11,7 @@ class CreateProyeccionAsignatura extends Component {
         this.state = {
             unidades: [],
             niveles: [],
+            carreras: [],
             horas_presidente: [],
             horas_secretario: [],
             docentes: [],
@@ -22,6 +23,9 @@ class CreateProyeccionAsignatura extends Component {
             disableAgregar: true,
             disableTest: false,
             disableDocente: true,
+
+            error: null,
+            errorInfo: null,
 
             unidad_academica: '',
 
@@ -63,6 +67,12 @@ class CreateProyeccionAsignatura extends Component {
     }
 
     createProyeccionAsignatura = (e) => {
+        if (this.state.errorInfo !== null) {
+            alert('No se puede duplicar clave de empleado.');
+            console.log("Error Info and Error adentro" + this.state.error + this.state.errorInfo);
+        }
+        console.log("Error Info and Error adentro" + this.state.error + this.state.errorInfo);
+
         e.preventDefault();
 
         let asignatura = {
@@ -104,13 +114,13 @@ class CreateProyeccionAsignatura extends Component {
             observaciones: this.state.observaciones.trim(),
         }
 
-        if (this.state.disablePresidente == false) {
+        if (this.state.disablePresidente === false) {
             asignatura.horas_sustantivas_atencion_alumnos.academias.presidente = 0;
         } else {
             asignatura.horas_sustantivas_atencion_alumnos.academias.secretario = 0;
         }
 
-        if (this.state.disableA == true) {
+        if (this.state.disableA === true) {
             asignatura.horas_sustantivas_atencion_alumnos.horas_asignatura.a = 0;
         } else {
             asignatura.horas_sustantivas_atencion_alumnos.horas_asignatura.b = 0;
@@ -120,10 +130,15 @@ class CreateProyeccionAsignatura extends Component {
         console.log("Proyeccion por asignatura: " + JSON.stringify(asignatura));
 
         AsignaturaProyeccionService.createProyeccionAsignatura(asignatura).then(
-            res => {
+         () => {
                 this.props.history.push('/list-proyeccion_asignatura');
             }
-        );
+        ).catch(error => {
+            console.log("Error en crear proyeccion por asignatura: " + error);
+            alert('No se puede duplicar clave de nomina...');
+            this.props.history.push('/list-proyeccion_asignatura');
+        });
+
     }
 
     cancel() {
@@ -136,6 +151,7 @@ class CreateProyeccionAsignatura extends Component {
         this.getHorasAcademias_presidente();
         this.getHorasAcademias_secretario();
         this.getDocenteList();
+        this.getCarreraList();
     }
 
     async getDocenteList() {
@@ -147,6 +163,17 @@ class CreateProyeccionAsignatura extends Component {
             "label": d.nombre + " " + d.apellido_paterno + " "  + d.apellido_materno
         }))
         this.setState({ docentes: options });
+    }
+
+    async getCarreraList() {
+        const res = await axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "carreras");
+        const data = res.data;
+
+        let options = data.map(d => ({
+            "value": d.abreviatura + " - " + d.plan_estudio,
+            "label": d.abreviatura + " - " + d.plan_estudio,
+        }))
+        this.setState({ carreras: options });
     }
     
     async getUnidadList() {
@@ -191,48 +218,54 @@ class CreateProyeccionAsignatura extends Component {
         this.setState({ horas_secretario: academiasList });
     }
 
+    componentDidCatch(error, errorInfo) {
+        this.setState( {
+            error: error,
+            errorInfo: errorInfo
+        })
+    }
 
     onChangeUnidadHandler = (event) => {
         this.setState({ unidad_academica: event.label });
-        this.setState({ disableDocente: false});
-        if (event.value == 'Extension') {
-            this.state.disableTest= true;
+        this.setState({ disableDocente: false });
+        if (event.value === 'Extension') {
+            this.setState({ disableTest: true });
         } else {
-            this.state.disableTest =false;
+            this.setState({ disableTest: false });
         }
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
 
     onChangeClaveProgramaHandler = (event) => {
-        this.setState({clave_programa: event.target.value});
+        this.setState({clave_programa: event.label});
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
     onChangeCodigoNominaHandler = (event) => {
         this.setState({codigo_nomina: event.target.value});
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
     onChangeGradoAcademicoaHandler = (event) => {
         this.setState({grado_academico: event.label});
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
     onChangeNombreDocenteHandler = (event) => {
         // this.setState({nombre_docente: event.target.value});
         this.setState({ nombre_docente: event.label });
         
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
 
 
@@ -241,17 +274,17 @@ class CreateProyeccionAsignatura extends Component {
         let aux = event.target.value;
         this.setState({subtotal_1: this.state.subtotal_1 + aux});
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
     onChangeBHandler = (event) => {
         this.setState({b: event.target.value});
         this.setState({subtotal_1: this.state.subtotal_1 + event.target.value});
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
 
     onChangeADisablerHandler = () => {
@@ -260,9 +293,9 @@ class CreateProyeccionAsignatura extends Component {
             disableB: true
         }));
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
     onChangeBDisablerHandler = () => {
         this.setState(() => ({
@@ -270,9 +303,9 @@ class CreateProyeccionAsignatura extends Component {
             disableA: true
         }));
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
     onChangePresidenteDisablerHandler = () => {
         this.setState(() => ({
@@ -280,9 +313,9 @@ class CreateProyeccionAsignatura extends Component {
             disableSecretario: false,
         }));
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
     onChangeSecretarioDisablerHandler = () => {
         this.setState(() => ({
@@ -290,9 +323,9 @@ class CreateProyeccionAsignatura extends Component {
             disablePresidente: false,
         }));
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
 
 
@@ -300,73 +333,73 @@ class CreateProyeccionAsignatura extends Component {
         this.setState({horas_frente_grupo: event.target.value});
         this.state.subtotal_1 =+ event.target.value;
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
     onChangePresidenteHandler = (event) => {
         this.setState({presidente: event.label});
         // this.state.subtotal_1 =+ event.value;
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
     onChangeSecretarioHandler = (event) => {
         this.setState({secretario: event.label});
         this.state.subtotal_1 =+ event.value;
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
     onChangeAsesoriaAcademicaHandler = (event) => {
         this.setState({asesorias_academica: event.target.value});
         this.state.subtotal_1 =+ event.target.value;
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
     onChangeEducacionDualHandler = (event) => {
         this.setState({educacion_dual: event.target.value});
         this.state.subtotal_1 =+ event.target.value;
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
     onChangeResidenciasProfesionalesHandler = (event) => {
         this.setState({residencias_profesionales: event.target.value});
         this.state.subtotal_1 =+ event.target.value;
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
     onChangeTutoriasHandler = (event) => {
         this.setState({tutorias: event.target.value});
         this.state.subtotal_1 =+ event.target.value;
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
     onChangeTitulacionHandler = (event) => {
         this.setState({titulacion: event.target.value});
         this.state.subtotal_1 =+ event.target.value;
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
     onChangeActividadesComplementariasHandler = (event) => {
         this.setState({actividades_complementarias: event.target.value});
         this.state.subtotal_1 =+ event.target.value;
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
 
 
@@ -374,39 +407,39 @@ class CreateProyeccionAsignatura extends Component {
         this.setState({invesigacion_educativa: event.target.value});
         this.state.subtotal_2 =+ event.target.value;
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
     onChangeApoyoOperativoHandler = (event) => {
         this.setState({apoyo_operativo: event.target.value});
         this.state.subtotal_2 =+ event.target.value;
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
     onChangeSubtotal2Handler = (event) => {
         this.setState({subtotal_2: event.target.value});
         this.state.subtotal_2 =+ event.target.value;
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
     onChangeTotalHandler = (event) => {
         this.setState({total: event.target.value});
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
     onChangeObservacionesHandler = (event) => {
         this.setState({observaciones: event.target.value});
 
-        this.state.disableAgregar = (this.state.clave_programa.length != 0) && (this.state.codigo_nomina.length != 0) &&
-        (this.state.grado_academico.length != 0) && (this.state.nombre_docente.length != 0) ?
-            false : true;
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
 
 
@@ -436,7 +469,7 @@ class CreateProyeccionAsignatura extends Component {
                                                 rules={{ required: true }}
                                                 options={this.state.unidades}
                                                 onChange={(e) => this.onChangeUnidadHandler(e)}
-                                                value={{ label: this.state.unidad_academica == '' ? "Seleccione unidad academica..." : this.state.unidad_academica}}
+                                                value={{ label: this.state.unidad_academica === '' ? "Seleccione unidad academica..." : this.state.unidad_academica}}
                                             />
                                         </div>
                                     </div>
@@ -444,12 +477,11 @@ class CreateProyeccionAsignatura extends Component {
                                     <div className="col">
                                         <div className="form-outline">
                                             <label className="">Clave de Programa Educativo:</label>
-                                            <input 
-                                                placeholder="Ingrese clave de programa educativo..."
-                                                className="form-control"
-                                                value={this.state.clave_programa}
-                                                onChange={this.onChangeClaveProgramaHandler}
-                                                required
+                                            <Select
+                                                rules={{ required: true }}
+                                                options={this.state.carreras}
+                                                onChange={(e) => this.onChangeClaveProgramaHandler(e)}
+                                                value={{ label: this.state.clave_programa === '' ? "Seleccione clave de programa educativo..." : this.state.clave_programa}}
                                             />
                                         </div>
                                     </div>                        
@@ -466,15 +498,8 @@ class CreateProyeccionAsignatura extends Component {
                                                 rules={{ required: true }}
                                                 options={this.state.docentes}
                                                 onChange={(e) => this.onChangeNombreDocenteHandler(e)}
-                                                value={{ label: this.state.nombre_docente == '' ? "Seleccione nombre del docente..." : this.state.nombre_docente}}
+                                                value={{ label: this.state.nombre_docente === '' ? "Seleccione nombre del docente..." : this.state.nombre_docente}}
                                             />
-                                            {/* <input 
-                                                placeholder="Ingrese nombre del docente..."
-                                                 className="form-control"
-                                                value={this.state.nombre_docente}
-                                                onChange={this.onChangeNombreDocenteHandler}
-                                                required
-                                            /> */}
                                         </div>
                                     </div>                        
                                 </div>
@@ -500,7 +525,7 @@ class CreateProyeccionAsignatura extends Component {
                                             <Select
                                                 options={this.state.niveles}
                                                 onChange={(e) => this.onChangeGradoAcademicoaHandler(e)}
-                                                value={{ label: this.state.grado_academico  == '' ? "Seleccione nivel academico..." : this.state.grado_academico}}
+                                                value={{ label: this.state.grado_academico  === '' ? "Seleccione nivel academico..." : this.state.grado_academico}}
                                             />
                                         </div>
                                     </div>                    
@@ -535,8 +560,8 @@ class CreateProyeccionAsignatura extends Component {
                                                     <div className="col-sm-1 col-form-label">
                                                         <label className="">A:</label>
                                                     </div>
-                                                    <div class="col">
-                                                    <div class="input-group">
+                                                    <div className="col">
+                                                    <div className="input-group">
                                                         <input type='number'
                                                             className="form-control"
                                                             value={this.state.a}
@@ -545,8 +570,8 @@ class CreateProyeccionAsignatura extends Component {
                                                             checked={this.state.disableB}
                                                             required
                                                         />
-                                                        <div class="input-group-append">
-                                                            <span class="input-group-text">Hora(s)</span>
+                                                        <div className="input-group-append">
+                                                            <span className="input-group-text">Hora(s)</span>
                                                         </div>
                                                     </div>
                                                  </div>
@@ -569,8 +594,8 @@ class CreateProyeccionAsignatura extends Component {
                                                     <label className="">B:</label>
                                                 </div>
                                         
-                                                <div class="col">
-                                                    <div class="input-group">
+                                                <div className="col">
+                                                    <div className="input-group">
                                                         <input type='number'
                                                             className="form-control"
                                                             value={this.state.b}
@@ -578,8 +603,8 @@ class CreateProyeccionAsignatura extends Component {
                                                             disabled={this.state.disableB}
                                                             required
                                                         />
-                                                        <div class="input-group-append">
-                                                            <span class="input-group-text">Hora(s)</span>
+                                                        <div className="input-group-append">
+                                                            <span className="input-group-text">Hora(s)</span>
                                                         </div>
                                                     </div>
                                                 </div>            
@@ -590,11 +615,11 @@ class CreateProyeccionAsignatura extends Component {
 
                                 <div className="row"> 
                                     <div className="col-6">
-                                        <div class="form-group row">
+                                        <div className="form-group row">
                                                 <label className="col-md-5 col-form-label"><b>Horas Frente a Grupo:</b> </label>
 
                                             <div className="col">
-                                                <div class="input-group">
+                                                <div className="input-group">
                                                     <input
                                                         type='number'
                                                         className=" form-control"
@@ -602,8 +627,8 @@ class CreateProyeccionAsignatura extends Component {
                                                         onChange={this.onChangeHorasFrenteGrupoHandler}
                                                         required
                                                     />
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">Hora(s)</span>
+                                                    <div className="input-group-append">
+                                                        <span className="input-group-text">Hora(s)</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -638,7 +663,7 @@ class CreateProyeccionAsignatura extends Component {
                                                 rules={{ required: true }}
                                                 options={this.state.horas_presidente}
                                                 onChange={(e) => this.onChangePresidenteHandler(e)}
-                                                value={{ label: this.state.presidente == '' ? "Seleccione hora(s) presidente..." : this.state.presidente }}
+                                                value={{ label: this.state.presidente === '' ? "Seleccione hora(s) presidente..." : this.state.presidente }}
                                             />
                                         </div>
                                     </div>
@@ -661,7 +686,7 @@ class CreateProyeccionAsignatura extends Component {
                                                 rules={{ required: true }}
                                                 options={this.state.horas_presidente}
                                                 onChange={(e) => this.onChangeSecretarioHandler(e)}
-                                                value={{ label: this.state.secretario == '' ? "Seleccione hora(s) secretario..." : this.state.secretario }}
+                                                value={{ label: this.state.secretario === '' ? "Seleccione hora(s) secretario..." : this.state.secretario }}
                                             />
                                         </div>
                                     </div>                        
@@ -676,7 +701,7 @@ class CreateProyeccionAsignatura extends Component {
                                     <div className="col">
                                         <div className="form-outline">
                                             <label>Asesorias Académicas:</label>
-                                            <div class="input-group">
+                                            <div className="input-group">
                                                 <input
                                                     type='number'
                                                     className="form-control"
@@ -684,8 +709,8 @@ class CreateProyeccionAsignatura extends Component {
                                                     onChange={this.onChangeAsesoriaAcademicaHandler}
                                                     required
                                                 />
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">Hora(s)</span>
+                                            <div className="input-group-append">
+                                                <span className="input-group-text">Hora(s)</span>
                                             </div>
                                         </div>
                                         </div>
@@ -694,7 +719,7 @@ class CreateProyeccionAsignatura extends Component {
                                     <div className="col">
                                         <div className="form-outline">
                                             <label className="">Educacion Dual:</label>
-                                            <div class="input-group">
+                                            <div className="input-group">
                                                 <input
                                                     type='number'
                                                     className="form-control"
@@ -702,8 +727,8 @@ class CreateProyeccionAsignatura extends Component {
                                                     onChange={this.onChangeEducacionDualHandler}
                                                     required
                                                 />
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">Hora(s)</span>
+                                                <div className="input-group-append">
+                                                    <span className="input-group-text">Hora(s)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -714,7 +739,7 @@ class CreateProyeccionAsignatura extends Component {
                                     <div className="col">
                                         <div className="form-outline">
                                             <label>Residencias Profesionales:</label>
-                                            <div class="input-group">
+                                            <div className="input-group">
                                                 <input
                                                     type='number'
                                                     className="form-control"
@@ -722,8 +747,8 @@ class CreateProyeccionAsignatura extends Component {
                                                     onChange={this.onChangeResidenciasProfesionalesHandler}
                                                     required
                                                 />
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">Hora(s)</span>
+                                                <div className="input-group-append">
+                                                    <span className="input-group-text">Hora(s)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -732,7 +757,7 @@ class CreateProyeccionAsignatura extends Component {
                                     <div className="col">
                                         <div className="form-outline">
                                             <label className="">Titulación:</label>
-                                            <div class="input-group">
+                                            <div className="input-group">
                                                 <input
                                                     type='number'
                                                     className="form-control"
@@ -740,8 +765,8 @@ class CreateProyeccionAsignatura extends Component {
                                                     onChange={this.onChangeTitulacionHandler}
                                                     required
                                                 />
-                                            <div class="input-group-append">
-                                                    <span class="input-group-text">Hora(s)</span>
+                                            <div className="input-group-append">
+                                                    <span className="input-group-text">Hora(s)</span>
                                                 </div>
                                             </div>
                                         </div>                            
@@ -750,7 +775,7 @@ class CreateProyeccionAsignatura extends Component {
                                     <div className="col">
                                         <div className="form-outline">
                                             <label className="">Tutorias:</label>
-                                            <div class="input-group">
+                                            <div className="input-group">
                                                 <input
                                                     type='number'
                                                     className="form-control"
@@ -758,8 +783,8 @@ class CreateProyeccionAsignatura extends Component {
                                                     onChange={this.onChangeTutoriasHandler}
                                                     required
                                                 />
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">Hora(s)</span>
+                                                <div className="input-group-append">
+                                                    <span className="input-group-text">Hora(s)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -768,10 +793,10 @@ class CreateProyeccionAsignatura extends Component {
 
                                 <div className="row">
                                     <div className="col-7">
-                                        <div class="form-group row">
+                                        <div className="form-group row">
                                             <label className="col-md-5 col-form-label"><b>Actividades Complementarias:</b> </label>
                                             <div className="col">
-                                                <div class="input-group">
+                                                <div className="input-group">
                                                     <input
                                                         type='number'
                                                         className=" form-control"
@@ -779,8 +804,8 @@ class CreateProyeccionAsignatura extends Component {
                                                         onChange={this.onChangeActividadesComplementariasHandler}
                                                         required
                                                     />
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">Hora(s)</span>
+                                                    <div className="input-group-append">
+                                                        <span className="input-group-text">Hora(s)</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -790,10 +815,10 @@ class CreateProyeccionAsignatura extends Component {
 
                                 <div className="row">
                                     <div className="col-7">
-                                        <div class="form-group row">
+                                        <div className="form-group row">
                                             <label className="col-md-5 col-form-label"><b>Subtotal 1:</b> </label>
                                             <div className="col">
-                                                <div class="input-group">
+                                                <div className="input-group">
                                                     <input readOnly={true}
                                                         type='number'
                                                         // placeholder="Subtotal 1 reactivo"
@@ -801,8 +826,8 @@ class CreateProyeccionAsignatura extends Component {
                                                         value={this.state.subtotal_1}
                                                         // onChange={this.onChangesubtotal1Handler}
                                                     />
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">Hora(s)</span>
+                                                    <div className="input-group-append">
+                                                        <span className="input-group-text">Hora(s)</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -819,11 +844,11 @@ class CreateProyeccionAsignatura extends Component {
 
                                 <div className="row">
                                     <div className="col-12">
-                                        <div class="form-group row">
+                                        <div className="form-group row">
                                                 <label className="col-md-6 col-form-label">Investigacion educativa, desarrrollo tecnológico:</label>
 
                                             <div className="col">
-                                                <div class="input-group">
+                                                <div className="input-group">
                                                     <input
                                                         type='number'
                                                         placeholder="Subtotal 1 reactivo"
@@ -832,8 +857,8 @@ class CreateProyeccionAsignatura extends Component {
                                                         onChange={this.onChangeInvesigacionEducativaHandler}
                                                         required
                                                     />
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">Hora(s)</span>
+                                                    <div className="input-group-append">
+                                                        <span className="input-group-text">Hora(s)</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -845,7 +870,7 @@ class CreateProyeccionAsignatura extends Component {
                                     <div className="col">
                                         <div className="form-outline">
                                             <label className="">Apoyo Operativo:</label>
-                                            <div class="input-group">
+                                            <div className="input-group">
                                                 <input
                                                     type='number'
                                                     className="form-control"
@@ -853,8 +878,8 @@ class CreateProyeccionAsignatura extends Component {
                                                     onChange={this.onChangeApoyoOperativoHandler}
                                                     required ={true}
                                                 />
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">Hora(s)</span>
+                                                <div className="input-group-append">
+                                                    <span className="input-group-text">Hora(s)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -863,7 +888,7 @@ class CreateProyeccionAsignatura extends Component {
                                     <div className="col">
                                         <div className="form-outline">
                                             <label className=""><b>Subtotal 2:</b></label>
-                                                <div class="input-group">
+                                                <div className="input-group">
                                                     <input readOnly={true}
                                                         type='number'
                                                         placeholder="Subtotal 2 reactivo"
@@ -871,8 +896,8 @@ class CreateProyeccionAsignatura extends Component {
                                                         value={this.state.subtotal_2}
                                                         onChange={this.onChangeSubtotal2Handler}
                                                     />
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">Hora(s)</span>
+                                                <div className="input-group-append">
+                                                    <span className="input-group-text">Hora(s)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -884,7 +909,7 @@ class CreateProyeccionAsignatura extends Component {
                                     <div className="col-6">
                                         <div className="form-outline">
                                             <label className=""><b>Total:</b></label>
-                                            <div class="input-group">
+                                            <div className="input-group">
                                                 <input readOnly={true}
                                                     type='number'
                                                     placeholder="Total reactivo"
@@ -892,8 +917,8 @@ class CreateProyeccionAsignatura extends Component {
                                                     value={this.state.total}
                                                     onChange={this.onChangeTotalHandler}
                                                 />
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">Hora(s)</span>
+                                                <div className="input-group-append">
+                                                    <span className="input-group-text">Hora(s)</span>
                                                 </div>
                                             </div>
                                         </div>

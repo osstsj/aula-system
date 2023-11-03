@@ -99,13 +99,13 @@ class ListCarreraComponent extends Component {
 
         const columns = [' abreviatura', ' nombre', 'dgp',' plan_estudio','estatus','fecha de creacion', ' fecha de actualizacion'];
         const data = carreras.map((carrera) => [
-            carrera. abreviatura,
-            carrera. nombre,
+            carrera.abreviatura,
+            carrera.nombre,
             carrera.dgp,
-             carrera.plan_estudio,
-             carrera.estatus,
-             carrera.fecha_creacion,
-             carrera.fecha_actualizacion
+            carrera.plan_estudio,
+            carrera.estatus,
+            carrera.fecha_creacion,
+            carrera.fecha_actualizacion
         ]);
 
         doc.autoTable({
@@ -131,23 +131,10 @@ class ListCarreraComponent extends Component {
             carreraToDeleteId: null, // Restablece el ID de la colegiatura
         });
     }
-    render() {
-        const tamano = {
-            minWidth: '200px !important',
-            overflow: 'auto',
-            textAlign: 'center'
-        }
-        
+    render() {        
         const boton= {
             marginLeft:'1rem',
             marginRight:'1rem'
-        }
-        const main={
-            minHeight:'100vh',
-            display:'flex',
-            flexDirection:'column',
-            marginBottom:'2rem'
-            
         }
         
         return (

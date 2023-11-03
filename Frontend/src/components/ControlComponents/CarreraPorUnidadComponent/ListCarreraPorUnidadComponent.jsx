@@ -95,9 +95,9 @@ class ListCarreraPorUnidadComponent extends Component {
 
         const columns = [' Carrera',' Nivel',' Plantel', 'Modalidad'];
         const data = unidades.map((unidad) => [
-            unidad. carrera_nombre,
+            unidad.carrera_nombre,
             unidad.nivel,
-            unidad. unidad_academica,
+            unidad.unidad_academica,
             unidad.modalidad,
         ]);
 

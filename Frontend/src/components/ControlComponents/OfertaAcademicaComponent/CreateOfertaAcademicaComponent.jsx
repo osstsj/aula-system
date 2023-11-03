@@ -135,7 +135,7 @@ class CreateOfertaAcademicaComponent extends Component {
                                                 options={this.state.unidades}
                                                 onChange={(e) => this.changeUnidadHandler(e)}
                                                 placeholder="Seleccione un carrera..."
-                                                value={{ label: this.state.unidad == "" ? "Seleccione unidad academica..." : this.state.unidad }}
+                                                value={{ label: this.state.unidad === "" ? "Seleccione unidad academica..." : this.state.unidad }}
                                             />
                                         </div>
                                     </div>
@@ -148,7 +148,7 @@ class CreateOfertaAcademicaComponent extends Component {
                                                 options={this.state.carreras}
                                                 onChange={(e) => this.changeCarreraHandler(e)}
                                                 placeholder="Seleccione un plantel..."
-                                                value={{ label: this.state.carrera == "" ? "Seleccione una carrera..." : this.state.carrera }}
+                                                value={{ label: this.state.carrera === "" ? "Seleccione una carrera..." : this.state.carrera }}
                                             />
                                         </div>
                                     </div>
@@ -162,7 +162,7 @@ class CreateOfertaAcademicaComponent extends Component {
                                                 options={this.state.modalidades}
                                                 onChange={(e) => this.changeModalidadHandler(e)}
                                                 placeholder="Seleccione un modalidad..."
-                                                value={{ label: this.state.modalidad == "" ? "Seleccione una modalidad..." : this.state.modalidad }}
+                                                value={{ label: this.state.modalidad === "" ? "Seleccione una modalidad..." : this.state.modalidad }}
                                             />
                                         </div>
                                     </div>
@@ -175,7 +175,7 @@ class CreateOfertaAcademicaComponent extends Component {
                                                 options={this.state.turnos}
                                                 onChange={(e) => this.changeTurnoHandler(e)}
                                                 placeholder="Seleccione un nivel academico..."
-                                                value={{ label: this.state.turno == "" ? "Seleccione un turno..." : this.state.turno }}
+                                                value={{ label: this.state.turno === "" ? "Seleccione un turno..." : this.state.turno }}
                                             />
                                         </div>
                                     </div>

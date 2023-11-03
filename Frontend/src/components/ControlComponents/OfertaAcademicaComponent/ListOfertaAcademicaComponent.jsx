@@ -136,11 +136,6 @@ class ListOfertaAcademicaComponent extends Component {
         });
     }
     render() {
-        const tamaño = {
-            maxWidth: '270px',
-            overflow: 'auto',
-            textAlign: 'center'
-        }
         const boton = {
             marginLeft: '1rem',
             marginRight: '1rem'

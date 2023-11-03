@@ -1,0 +1,51 @@
+$ sudo docker compose up -d
+$ sudo docker compose ps
+$ sudo docker logs postgres -f
+$ sudo docker os
+$ sudo docker exec -it postgres bash
+
+$ psql - U <user>
+amigoscode=# \l
+amigoscode=# CREATE DATABASE aula;
+amigoscode=# \l
+Ctrl + D to esquema's exit
+Ctrl + D to to came out of the shell
+
+///////////
+ \c customer
+ \dt    # List of relations
+ \d     # List of all relations
+select * from customer;
+ \d customer  # To describe customer's table
+
+customer=# INSERT INTO customer(id, name, email, age)
+customer-# VALUES (nextval('customer_id_sequence'), 'Alex', 'alex@gmail.com', 22);
+
+
+
+//--------------------------------
+basic GET endpoint with records
+	@GetMapping("/greet")
+	public GreetResponse greet() {
+		GreetResponse response = new GreetResponse(
+				"hello",
+				List.of("Java", "Golang", "JS"),
+				new Person("Alex")
+		);
+
+		return response;
+	}
+
+	record Person(String name) {
+
+	}
+
+	record GreetResponse(
+			String greet,
+			List<String> favProgrammingLanguages,
+			Person person
+	){
+
+	}
+
+//--------------------------------

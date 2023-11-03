@@ -157,7 +157,7 @@ class ListCargaAcademicaComponent extends Component {
                             options={this.state.unidades}
                             onChange={(e) => this.changeUnidadHandler(e)}
                             placeholder="Seleccione un carrera..."
-                            value={{ label: this.state.unidad == "" ? "Seleccione unidad academica..." : this.state.unidad }}
+                            value={{ label: this.state.unidad === "" ? "Seleccione unidad academica..." : this.state.unidad }}
                         />
                        </div>
                     </div>

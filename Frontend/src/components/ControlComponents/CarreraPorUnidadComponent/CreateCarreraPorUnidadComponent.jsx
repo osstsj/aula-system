@@ -115,7 +115,7 @@ class CreateCarreraPorUnidadComponent extends Component {
         return (
             <div className="container">
                 <div className="row justify-content-center">
-                    <div className="card col-9 mt-4 " style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }} >
+                    <div className="card col-9 mt-3 " style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }} >
                         <div className="card-body">
                             <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                                 <h2 className='h3 Title'   >Agregar Carrera Por Unidad Academica</h2>
@@ -130,7 +130,7 @@ class CreateCarreraPorUnidadComponent extends Component {
                                                 rules={{ required: true }}
                                                 options={this.state.carreras}
                                                 onChange={(e) => this.changeCarrerasHandler(e)}
-                                                value={{ label: this.state.carrera_nombre == "" ? "Seleccione un carrera..." : this.state.carrera_nombre }}
+                                                value={{ label: this.state.carrera_nombre === "" ? "Seleccione un carrera..." : this.state.carrera_nombre }}
                                             />
                                         </div>
                                     </div>
@@ -143,7 +143,7 @@ class CreateCarreraPorUnidadComponent extends Component {
                                             <Select
                                                 options={this.state.niveles}
                                                 onChange={(e) => this.changeNivelHandler(e)}
-                                                value={{ label: this.state.nivel == "" ? "Seleccione un nivel academico..." : this.state.nivel }}
+                                                value={{ label: this.state.nivel === "" ? "Seleccione un nivel academico..." : this.state.nivel }}
                                             />
                                         </div>
                                     </div>
@@ -156,7 +156,7 @@ class CreateCarreraPorUnidadComponent extends Component {
                                             <Select
                                                 options={this.state.planteles}
                                                 onChange={(e) => this.changePlantelesHandler(e)}
-                                                value={{ label: this.state.unidad_academica == "" ? "Seleccione una UA..." : this.state.unidad_academica }}
+                                                value={{ label: this.state.unidad_academica === "" ? "Seleccione una UA..." : this.state.unidad_academica }}
                                             />
                                         </div>
                                     </div>
@@ -168,7 +168,7 @@ class CreateCarreraPorUnidadComponent extends Component {
                                             <Select
                                                 options={this.state.modalidades}
                                                 onChange={(e) => this.changeModalidadHandler(e)}
-                                                value={{ label: this.state.modalidad == "" ? "Seleccione una modalidad..." : this.state.modalidad }}
+                                                value={{ label: this.state.modalidad === "" ? "Seleccione una modalidad..." : this.state.modalidad }}
                                             />
                                         </div>
                                     </div>

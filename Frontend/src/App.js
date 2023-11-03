@@ -28,7 +28,7 @@ import UpdateAreaComponent from './components/ControlComponents/AreasComponent/U
 import ViewAreaComponent from './components/ControlComponents/AreasComponent/ViewAreaComponent';
 
 import CreateColegiaturaComponent from './components/ControlComponents/ColegituraComponent/CreateColegiaturaComponent';
-import ListColegiaturaComponent from './components/ControlComponents/ColegituraComponent/ListDocenteComponent';
+import ListColegiaturaComponent from './components/ControlComponents/ColegituraComponent/ListColegiaturaComponent';
 import UpdateColegiaturaComponent from './components/ControlComponents/ColegituraComponent/UpdateColegiaturaComponent';
 import ViewColegiaturaComponent from './components/ControlComponents/ColegituraComponent/ViewColegiaturaComponent';
 
@@ -49,6 +49,8 @@ import FooterComponent from './components/PageComponents/Footer/FooterComponent'
 import LoginComponents from './components/PageComponents/LoginComponents/LoginComponents';
 import CreateLoginComponent from './components/PageComponents/CreateLoginComponent/CreateLoginComponent';
 import AcuseComponent from './components/PageComponents/AcuseComponent/AcuseComponent';
+
+import CreateFolioAsignaturaComponent from './components/ProyeccionesComponents/ProyeccionAsignaturaComponent/HistorialAsignaturaComponent/CreateFolioAsignaturaComponent';
 
 
 function App() {
@@ -109,14 +111,19 @@ function App() {
                            
                            {/* ------------ ProyeccionFullTimeComponent ----------- */}
                            <Route path = "/list-full-time" component = {ListProyeccionOrariaComponent}></Route>
-                               {/* ------------ Longin ----------- */}
+                          
+                          {/* ------------ Longin ----------- */}
                           <Route path = "/login" component = {LoginComponents}></Route>
                           <Route path = "/add-login" component = {CreateLoginComponent}></Route>
-                            {/* ------------ DocenteAsignaturaComponent ----------- */}
+                          {/* ------------ DocenteAsignaturaComponent ----------- */}
 
 
-                             {/* ------------ Acuse ----------- */}
-                             <Route path = "/acuse" component = {AcuseComponent}></Route>
+                          {/* ------------ Acuse ----------- */}
+                          <Route path = "/acuse" component = {AcuseComponent}></Route>
+
+                          {/* ---------------- FOLIO --------------- */}
+                          <Route path = "/create-folio-signatura" component = {CreateFolioAsignaturaComponent}></Route>
+                            
                   </Switch>
                 </div>
               <FooterComponent /> 

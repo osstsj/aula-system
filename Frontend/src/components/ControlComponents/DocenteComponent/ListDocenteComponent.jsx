@@ -171,7 +171,7 @@ class ListDocenteComponent extends Component {
                     ¿Estás seguro de que deseas eliminar este docente?
                 </ModalBody>
                 <ModalFooter>
-                <Button color="danger" onClick={() => this. deleteDocenteById(this.state.docenteToDeleteId)}>Eliminar</Button>
+                <Button color="danger" onClick={() => this.deleteDocenteById(this.state.docenteToDeleteId)}>Eliminar</Button>
                     <Button color="secondary" onClick={this.closeModal}>Cancelar</Button>
                 </ModalFooter>
                 </Modal>

@@ -1,9 +1,7 @@
 package edu.tsj.aula.controllers.projections;
 
-import edu.tsj.aula.persistance.models.projections.dto.asignatura.AsignaturaRequestDto;
-import edu.tsj.aula.persistance.models.projections.dto.asignatura.AsignaturaResponseDto;
 import edu.tsj.aula.persistance.models.projections.entity.asignatura.AsignaturaEntity;
-import edu.tsj.aula.service.projections.IAsignaturaService;
+import edu.tsj.aula.service.projections.asignatura.IAsignaturaService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1")
@@ -26,10 +23,10 @@ public class ProyeccionAsignaturaController {
 //    }
 
 
-        @PostMapping("/asignatura")
+    @PostMapping("/asignatura/{id_folio}")
     @ResponseStatus(HttpStatus.CREATED)
-    public AsignaturaEntity createProyeccionAsignatura(@RequestBody AsignaturaEntity asignaturaRequestDto) {
-        return asignaturaService.createAsignatura(asignaturaRequestDto);
+    public AsignaturaEntity createProyeccionAsignatura(@RequestBody AsignaturaEntity asignaturaRequestDto, @PathVariable Long id_folio) {
+        return asignaturaService.createAsignatura(asignaturaRequestDto, id_folio);
     }
 
     @GetMapping(value = "/asignatura/{id}",

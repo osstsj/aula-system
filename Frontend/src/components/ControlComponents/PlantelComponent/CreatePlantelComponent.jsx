@@ -40,7 +40,7 @@ class CreatePlantelComponent extends Component {
 
     createPlantel = (e) =>{
         e.preventDefault();
-        if (this.state.disablePlantelList == false) { 
+        if (this.state.disablePlantelList === false) { 
             let plantel = {
                 tipo_unidad: this.state.tipo_unidad.trim(), 
                 clave_dgp: this.state.clave_dgp.trim(), 
@@ -81,9 +81,9 @@ class CreatePlantelComponent extends Component {
 
     changeTipoUnidadHandler = (event) => {
         this.setState({tipo_unidad: event.target.value});
-        if (event.target.value == 'Extension') {
-            this.state.disablePlantelList= true;
-
+        if (event.target.value === 'Extension') {
+            this.setState({ disablePlantelList: true });
+            
             this.setState({clave_dgp: ''});
             this.setState({abreviatura: ''});
             this.setState({nombre_corto: ''});
@@ -91,7 +91,7 @@ class CreatePlantelComponent extends Component {
             this.setState({direccion_completa: ''});
             this.setState({unidad_academica: ''});
         } else {
-            this.state.disablePlantelList=false;
+            this.setState({ disablePlantelList: false });
 
             this.setState({clave_dgp: ''});
             this.setState({abreviatura: ''});
@@ -125,7 +125,7 @@ class CreatePlantelComponent extends Component {
             this.setState({ clave_dgp: event.dgp })
             this.setState({ direccion_completa: event.direccion })
         } else {
-            this.state.disablePlantelList=false;
+            this.setState({ disablePlantelList: false });
             this.setState({ unidad_academica: event.label });
         }        
     }
@@ -154,14 +154,6 @@ class CreatePlantelComponent extends Component {
 
 
     render() {
-        const main={
-            minHeight:'100vh',
-            display:'flex',
-            flexDirection:'column',
-            marginBottom:'2rem'
-            
-        }
-       
         return (
             <div  className='' >
                 <div className = "container">
@@ -201,7 +193,7 @@ class CreatePlantelComponent extends Component {
                                                     rules={{ required: true }}
                                                     options={this.state.unidades}
                                                     onChange={(e) => this.onChangeUnidadHandler(e)}
-                                                    value={{ label: this.state.unidad_academica == '' ? "Seleccione UA..." : this.state.unidad_academica}}
+                                                    value={{ label: this.state.unidad_academica === '' ? "Seleccione UA..." : this.state.unidad_academica}}
                                                 />
                                             </div>
                                         </div>

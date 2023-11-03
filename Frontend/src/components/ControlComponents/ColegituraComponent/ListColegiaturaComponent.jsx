@@ -97,9 +97,9 @@ class ListColegiaturaComponent extends Component {
 
         const columns = [' clave',' descripcion',' monto', 'estatus','comentarios'];
         const data = colegiaturas.map((colegiatura) => [
-            colegiatura. clave,
+            colegiatura.clave,
             colegiatura.descripcion,
-            colegiatura. monto,
+            colegiatura.monto,
             colegiatura.colegiatura_estatus,
             colegiatura.comentarios,
         ]);

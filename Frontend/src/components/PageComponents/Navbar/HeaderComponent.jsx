@@ -91,6 +91,17 @@ class HeaderComponent extends Component {
                                 Proyecciones
                             </a>
                             <div className="dropdown-menu">
+                                <ul className=''>
+                                    <li>
+                                        <a class="dropdown-item" href="/list-proyeccion_asignatura">
+                                            Proyeccion por Asignatura &raquo;
+                                        </a>
+                                        <ul className="dropdown-menu dropdown-submenu">
+                                            <li>Crear Folio</li>
+                                            <li>Lista de FolioS</li>
+                                        </ul>
+                                    </li>
+                                </ul>
                                 <a className="dropdown-item" href="/list-proyeccion_asignatura">
                                     Proyeccion por Asignatura
                                 </a>

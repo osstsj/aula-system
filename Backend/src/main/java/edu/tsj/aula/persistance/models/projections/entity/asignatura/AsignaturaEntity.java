@@ -2,6 +2,7 @@ package edu.tsj.aula.persistance.models.projections.entity.asignatura;
 
 import com.fasterxml.jackson.annotation.*;
 import edu.tsj.aula.persistance.models.control.entity.PlantelEntity;
+import edu.tsj.aula.persistance.models.projections.entity.ProyeccionEntity;
 import edu.tsj.aula.persistance.models.projections.entity.asignatura.sustantivas.ProfeAsignatura;
 import edu.tsj.aula.persistance.models.projections.entity.asignatura.sustantivas.HorasSustantivasAtencionAlumnos;
 import edu.tsj.aula.persistance.models.projections.entity.asignatura.necesidad.HorasNecesidadInstitucional;
@@ -24,8 +25,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "proyecion_asignatura")
-public class AsignaturaEntity implements Serializable {
+@Table(name = "proyeccion_asignatura")
+public class AsignaturaEntity  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,6 +42,7 @@ public class AsignaturaEntity implements Serializable {
 //    causara conflicto por no actualizarse el string que contiene el nombre de la unidad en
 //    la comparacion las proyeccion
 
+
     @Column
     private String unidad_academica;
 
@@ -55,6 +57,14 @@ public class AsignaturaEntity implements Serializable {
     @JoinColumn(name = "id")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private HorasNecesidadInstitucional horas_necesidad_institucional;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE) ///    Tal vez deba quitarse ya que se realaciona con la proyeccion
+    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityReference(alwaysAsId=true)
+    @JsonProperty("id_proyeccion")
+    @JoinColumn(name = "id_proyeccion", nullable = false)
+    private ProyeccionEntity proyeccion;
 
     @Column
     private Integer total;

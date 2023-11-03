@@ -120,13 +120,6 @@ class UpdateDocenteComponent extends Component {
 
 
     render() {
-        const main={
-            minHeight:'100vh',
-            display:'flex',
-            flexDirection:'column',
-            marginBottom:'2rem'
-            
-        }
        
         return (
             <div  className='' >
@@ -187,7 +180,7 @@ class UpdateDocenteComponent extends Component {
                                                         options={this.state.unidades}
                                                         onChange={(e) => this.onChangeUnidadAcademicaHandler(e)}
                                                         placeholder="Seleccione un carrera..."
-                                                        value={{ label: this.state.unidad_academica == "" ? "Seleccione UA..." : this.state.unidad_academica }}
+                                                        value={{ label: this.state.unidad_academica === "" ? "Seleccione UA..." : this.state.unidad_academica }}
                                                     />
                                                 </div>
                                             </div>
@@ -199,7 +192,7 @@ class UpdateDocenteComponent extends Component {
                                                         options={this.state.categorias}
                                                         onChange={(e) => this.onChangeCategoriaHandler(e)}
                                                         placeholder="Seleccione un carrera..."
-                                                        value={{ label: this.state.categoria == "" ? "Seleccione una categoria..." : this.state.categoria }}
+                                                        value={{ label: this.state.categoria === "" ? "Seleccione una categoria..." : this.state.categoria }}
                                                     />
                                                 </div>
                                             </div>
@@ -211,7 +204,7 @@ class UpdateDocenteComponent extends Component {
                                                         options={this.state.actividades}
                                                         onChange={(e) => this.onChangeActividadHandler(e)}
                                                         placeholder="Seleccione un carrera..."
-                                                        value={{ label: this.state.actividad == "" ? "Seleccione una actividad..." : this.state.actividad }}
+                                                        value={{ label: this.state.actividad === "" ? "Seleccione una actividad..." : this.state.actividad }}
                                                     />
                                                 </div>
                                             </div>

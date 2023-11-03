@@ -1,30 +1,37 @@
-package edu.tsj.aula.service.projections;
+package edu.tsj.aula.service.projections.asignatura;
 
 
-import edu.tsj.aula.persistance.models.projections.dto.asignatura.AsignaturaRequestDto;
-import edu.tsj.aula.persistance.models.projections.dto.asignatura.AsignaturaResponseDto;
+import edu.tsj.aula.configuration.exception.ResourceNotFoundException;
+import edu.tsj.aula.persistance.models.projections.entity.ProyeccionEntity;
 import edu.tsj.aula.persistance.models.projections.entity.asignatura.AsignaturaEntity;
 import edu.tsj.aula.persistance.models.projections.mapper.AsignaturaMapper;
 import edu.tsj.aula.persistance.repository.projections.AsignaturaRepository;
+import edu.tsj.aula.persistance.repository.projections.ProyeccionRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @AllArgsConstructor
 @Service
 public class AsignaturaServiceImpl implements IAsignaturaService {
     private final AsignaturaRepository asignaturaRepository;
+    private final ProyeccionRepository proyeccionRepository;
     private final AsignaturaMapper mapper;
 
     @Transactional
     @Override
-    public AsignaturaEntity createAsignatura(AsignaturaEntity asignaturaRequest) {
+    public AsignaturaEntity createAsignatura(AsignaturaEntity asignaturaRequest, Long id_folio) {
         log.debug("Se ha ejecutado el metodo createAsignatura");
+        ProyeccionEntity proyeccionEntity = proyeccionRepository.findById(id_folio).orElseThrow(()-> new ResourceNotFoundException((" No se encontro folio..."),
+                HttpStatus.NOT_FOUND));
+
+        asignaturaRequest.setProyeccion(proyeccionEntity);
+
         Integer subtotal_1 = asignaturaRequest.getHoras_sustantivas_atencion_alumnos().getHoras_asignatura().getA() +
                 asignaturaRequest.getHoras_sustantivas_atencion_alumnos().getHoras_asignatura().getB() +
                 asignaturaRequest.getHoras_sustantivas_atencion_alumnos().getHoras_frente_grupo() +
@@ -47,6 +54,8 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
                 asignaturaRequest.getHoras_necesidad_institucional().getSubtotal_2();
 
         asignaturaRequest.setTotal(total);
+
+        // AGREGARA EL FOLIO
 //        AsignaturaEntity entity = mapper.requestToEntity(asignaturaRequest);
         return asignaturaRepository.save(asignaturaRequest);
 

@@ -143,7 +143,7 @@ class ViewPlantelComponent extends Component {
                             <div className="row mb-3">
                                 <div className="col-4">
                                     <div className="form-outline">
-                                        <label className=""><b>Fecha de creacion:</b></label>
+                                        <label className="">Fecha de creacion:</label>
                                     </div>
                                 </div>
                                 <div className="col">
@@ -167,7 +167,7 @@ class ViewPlantelComponent extends Component {
                             <div className="row">
                                 <div className="col-4">
                                     <div className="form-outline">
-                                        <label className=""><b>Fecha de actualizacion:</b></label>
+                                        <label className="">Fecha de actualizacion:</label>
                                     </div>
                                 </div>
                                 <div className="col">

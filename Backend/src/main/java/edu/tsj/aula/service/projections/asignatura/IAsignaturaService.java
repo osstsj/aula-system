@@ -1,4 +1,4 @@
-package edu.tsj.aula.service.projections;
+package edu.tsj.aula.service.projections.asignatura;
 
 import edu.tsj.aula.persistance.models.projections.dto.asignatura.AsignaturaRequestDto;
 import edu.tsj.aula.persistance.models.projections.dto.asignatura.AsignaturaResponseDto;
@@ -14,7 +14,7 @@ public interface IAsignaturaService {
 
     List<AsignaturaEntity> getAsignaturas();
 
-    AsignaturaEntity createAsignatura(AsignaturaEntity asignaturaEntity);
+    AsignaturaEntity createAsignatura(AsignaturaEntity asignaturaEntity, Long id_folio);
 
     List<AsignaturaEntity> findAllByUnidad_academica(List<String> plantel);
 }

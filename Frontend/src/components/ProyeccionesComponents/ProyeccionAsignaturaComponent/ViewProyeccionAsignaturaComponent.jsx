@@ -101,14 +101,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
 
 
     render() {
-        const main={
-            minHeight:'100vh',
-            display:'flex',
-            flexDirection:'column',
-            marginBottom:'2rem'
-            
-        }
-
+        
         return (
             <div className="mt-4 container" >
                 <div className="row justify-content-center">
@@ -131,7 +124,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                     </div>
                                     <div className="col">
                                         <div className="form-outline">
-                                            <div className=""><i>{this.state.clave_programa}</i></div>
+                                            <div className="">{this.state.clave_programa}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -143,7 +136,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                     </div>
                                     <div className="col">
                                         <div className="form-outline">
-                                            <div className=""><i>{this.state.codigo_nomina}</i></div>
+                                            <div className="">{this.state.codigo_nomina}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -156,7 +149,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                     </div>
                                     <div className="col">
                                         <div className="form-outline">
-                                            <div className=""><i>{this.state.grado_academico}</i></div>
+                                            <div className="">{this.state.grado_academico}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -169,7 +162,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                     </div>
                                     <div className="col">
                                         <div className="form-outline">
-                                            <div className=""><i>{this.state.nombre_docente}</i></div>
+                                            <div className="">{this.state.nombre_docente}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -191,7 +184,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                     </div>
                                     <div className="col">
                                         <div className="form-outline">
-                                            <div className=""><i>{this.state.a}</i></div>
+                                            <div className="">{this.state.a}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -203,7 +196,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                     </div>
                                     <div className="col">
                                         <div className="form-outline">
-                                            <div className=""><i>{this.state.b}</i></div>
+                                            <div className="">{this.state.b}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -219,7 +212,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                 </div>
                                 <div className="col">
                                     <div className="form-outline">
-                                        <div className=""><i>{this.state.horas_frente_grupo}</i></div>
+                                        <div className="">{this.state.horas_frente_grupo}</div>
                                     </div>
                                 </div>
                             </div>
@@ -236,7 +229,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                     </div>
                                     <div className="col">
                                         <div className="form-outline">
-                                            <div className=""><i>{this.state.presidente}</i></div>
+                                            <div className="">{this.state.presidente}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -248,7 +241,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                     </div>
                                     <div className="col">
                                         <div className="form-outline">
-                                            <div className=""><i>{this.state.secretario}</i></div>
+                                            <div className="">{this.state.secretario}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -266,7 +259,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                     </div>
                                     <div className="col">
                                         <div className="form-outline">
-                                            <div className=""><i>{this.state.asesoria_academica}</i></div>
+                                            <div className="">{this.state.asesoria_academica}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -278,7 +271,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                     </div>
                                     <div className="col">
                                         <div className="form-outline">
-                                            <div className=""><i>{this.state.educacion_dual}</i></div>
+                                            <div className="">{this.state.educacion_dual}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -290,7 +283,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                     </div>
                                     <div className="col">
                                         <div className="form-outline">
-                                            <div className=""><i>{this.state.residencias_profesionales}</i></div>
+                                            <div className="">{this.state.residencias_profesionales}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -302,7 +295,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                     </div>
                                     <div className="col">
                                         <div className="form-outline">
-                                            <div className=""><i>{this.state.titulacion}</i></div>
+                                            <div className="">{this.state.titulacion}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -314,7 +307,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                     </div>
                                     <div className="col">
                                         <div className="form-outline">
-                                            <div className=""><i>{this.state.tutorias}</i></div>
+                                            <div className="">{this.state.tutorias}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -330,7 +323,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                 </div>
                                 <div className="col">
                                     <div className="form-outline">
-                                        <div className=""><i>{this.state.actividades_complementarias}</i></div>
+                                        <div className="">{this.state.actividades_complementarias}</div>
                                     </div>
                                 </div>
                             </div>
@@ -342,7 +335,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                 </div>
                                 <div className="col">
                                     <div className="form-outline">
-                                        <div className=""><i>{this.state.subtotal_1}</i></div>
+                                        <div className="">{this.state.subtotal_1}</div>
                                     </div>
                                 </div>
                             </div>
@@ -363,7 +356,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                 </div>
                                 <div className="col">
                                     <div className="form-outline">
-                                        <div className=""><i>{this.state.invesigacion_educativa}</i></div>
+                                        <div className="">{this.state.invesigacion_educativa}</div>
                                     </div>
                                 </div>
                             </div>
@@ -375,7 +368,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                 </div>
                                 <div className="col">
                                     <div className="form-outline">
-                                        <div className=""><i>{this.state.apoyo_operativo}</i></div>
+                                        <div className="">{this.state.apoyo_operativo}</div>
                                     </div>
                                 </div>
                             </div>
@@ -387,7 +380,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                 </div>
                                 <div className="col">
                                     <div className="form-outline">
-                                        <div className=""><i>{this.state.subtotal_2}</i></div>
+                                        <div className="">{this.state.subtotal_2}</div>
                                     </div>
                                 </div>
                             </div>
@@ -401,7 +394,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                 </div>
                                 <div className="col">
                                     <div className="form-outline">
-                                        <div className=""><i>{this.state.total}</i></div>
+                                        <div className="">{this.state.total}</div>
                                     </div>
                                 </div>
                             </div>
@@ -413,7 +406,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                 </div>
                                 <div className="col">
                                     <div className="form-outline">
-                                        <div className=""><i>{this.state.observaciones}</i></div>
+                                        <div className="">{this.state.observaciones}</div>
                                     </div>
                                 </div>
                             </div>
@@ -445,7 +438,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                 </div>
                                 <div className="col">
                                     <div className="form-outline">
-                                        <div className=""><i>{this.state.fecha_creacion}</i></div>
+                                        <div className="">{this.state.fecha_creacion}</div>
                                     </div>
                                 </div>
                             </div>
@@ -470,7 +463,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                 </div>
                                 <div className="col">
                                     <div className="form-outline">
-                                        <div className=""><i>{this.state.fecha_actualizacion}</i></div>
+                                        <div className="">{this.state.fecha_actualizacion}</div>
                                     </div>
                                 </div>
                             </div>                            

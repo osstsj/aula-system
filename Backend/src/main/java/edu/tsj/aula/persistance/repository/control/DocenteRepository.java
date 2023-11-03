@@ -1,5 +1,6 @@
 package edu.tsj.aula.persistance.repository.control;
 
+import edu.tsj.aula.persistance.models.control.entity.CarreraEntity;
 import edu.tsj.aula.persistance.models.control.entity.DocenteEntity;
 import edu.tsj.aula.persistance.models.control.entity.PlantelEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

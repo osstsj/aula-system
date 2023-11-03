@@ -72,13 +72,6 @@ class UpdateCarreraComponent extends Component {
 
 
     render() {
-        const main={
-            minHeight:'100vh',
-            display:'flex',
-            flexDirection:'column',
-            marginBottom:'2rem'
-            
-        }
         return (
             <div>
                 <div className = "container" >
