@@ -8,53 +8,54 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 
 class ListCarreraComponent extends Component {
-  
-    constructor(props){
+
+    constructor(props) {
         super(props)
 
         this.state = {
-            carreras:[],
+            carreras: [],
             isModalOpen: false, // Estado para controlar la apertura/cierre del modal
             carreraToDeleteId: null, // Estado para almacenar el ID de la colegiatura a eliminar
         }
-        this.addCarrera= this.addCarrera.bind(this);
-        this.editCarrera= this.editCarrera.bind(this);
-        this.deleteCarrera= this.deleteCarrera.bind(this);
+        this.addCarrera = this.addCarrera.bind(this);
+        this.editCarrera = this.editCarrera.bind(this);
+        this.deleteCarrera = this.deleteCarrera.bind(this);
         this.exportToExcel = this.exportToExcel.bind(this);  // Método para exportar a Excel
         this.exportToPDF = this.exportToPDF.bind(this); // Método para exportar a PDF
 
     }
 
-    deleteCarrera(id){
+    deleteCarrera(id) {
         // rest api
         CarreraService.deleteCarreralById(id).then(res => {
-            this.setState({carreras: this.state.carreras.filter(carrera => carrera.id !== id),
+            this.setState({
+                carreras: this.state.carreras.filter(carrera => carrera.id !== id),
                 isModalOpen: false, // Cierra el modal después de eliminar
                 carreraToDeleteId: null, // Restablece el ID de la colegiatura
             });
-            
+
         });
     }
 
-    viewCarrera(id){
+    viewCarrera(id) {
         this.props.history.push(`view-carrera/${id}`);
     }
 
-    editCarrera(id){
+    editCarrera(id) {
         this.props.history.push(`update-carrera/${id}`);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         //promise
         CarreraService.getAllCarreras().then((res) => {
-            this.setState({carreras: res.data});
+            this.setState({ carreras: res.data });
         });
     }
 
-    addCarrera(){
+    addCarrera() {
         this.props.history.push('/add-carrera/');
     }
-  
+
     exportToExcel() {
         const { carreras } = this.state;
 
@@ -97,15 +98,15 @@ class ListCarreraComponent extends Component {
         const doc = new jsPDF();
         doc.text('Lista de carreras', 10, 10);
 
-        const columns = [' abreviatura', ' nombre', 'dgp',' plan_estudio','estatus','fecha de creacion', ' fecha de actualizacion'];
+        const columns = [' abreviatura', ' nombre', 'dgp', ' plan_estudio', 'estatus', 'fecha de creacion', ' fecha de actualizacion'];
         const data = carreras.map((carrera) => [
-            carrera. abreviatura,
-            carrera. nombre,
+            carrera.abreviatura,
+            carrera.nombre,
             carrera.dgp,
-             carrera.plan_estudio,
-             carrera.estatus,
-             carrera.fecha_creacion,
-             carrera.fecha_actualizacion
+            carrera.plan_estudio,
+            carrera.estatus,
+            carrera.fecha_creacion,
+            carrera.fecha_actualizacion
         ]);
 
         doc.autoTable({
@@ -137,29 +138,29 @@ class ListCarreraComponent extends Component {
             overflow: 'auto',
             textAlign: 'center'
         }
-        
-        const boton= {
-            marginLeft:'1rem',
-            marginRight:'1rem'
+
+        const boton = {
+            marginLeft: '1rem',
+            marginRight: '1rem'
         }
-        const main={
-            minHeight:'100vh',
-            display:'flex',
-            flexDirection:'column',
-            marginBottom:'2rem'
-            
+        const main = {
+            minHeight: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            marginBottom: '2rem'
+
         }
-        
+
         return (
             <div className='container'>
                 <h2 className="text-center mt-5 mb-5 Title">LISTA DE CARRERAS</h2>
-                    <button style={{width:'15%'}} className="btn btn-primary mb-4" onClick={this.addCarrera}>Agregar carrera</button>
-                    <button style={{ width: '15%',marginLeft:'1rem' }} className="btn btn-outline-success mb-4" onClick={this.exportToExcel}>Exportar a Excel</button> {/* Botón de exportar a Excel */}
-                    <button style={{ width: '15%',marginLeft:'1rem' }} className="btn btn-outline-dark mb-4" onClick={this.exportToPDF}>
+                <button style={{ width: '15%' }} className="btn btn-primary mb-4" onClick={this.addCarrera}>Agregar carrera</button>
+                <button style={{ width: '15%', marginLeft: '1rem' }} className="btn btn-outline-success mb-4" onClick={this.exportToExcel}>Exportar a Excel</button> {/* Botón de exportar a Excel */}
+                <button style={{ width: '15%', marginLeft: '1rem' }} className="btn btn-outline-dark mb-4" onClick={this.exportToPDF}>
                     Exportar a PDF
                 </button>
-                <div className="row"  style={{ overflowX: 'auto'}}>
-                <table className="table table-striped table-bordered"  style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                <div className="row" style={{ overflowX: 'auto' }}>
+                    <table className="table table-striped table-bordered" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                         <thead>
                             <tr>
                                 <th></th>
@@ -176,13 +177,13 @@ class ListCarreraComponent extends Component {
                                         <td >{index + 1}</td>
                                         <td className='table-conten'>{carrera.nombre}</td>
                                         <td className='table-conten'>{carrera.estatus}</td>
-                                        <td>{carrera.plan_estudio}</td>
+                                        <td className='table-conten'>{carrera.plan_estudio}</td>
                                         <td className='table-action'>
-                                            <button onClick={()=> this.editCarrera(carrera.id)} className="btn btn-warning">Actualizar</button>
-                                            <button className="btn btn-danger" style={boton}
-                                            onClick={() => this.toggleModal(carrera.id)} // Abre el modal y pasa el ID de la colegiatura
-                                        > Eliminar</button>                                             
-                                        <button onClick={()=> this.viewCarrera(carrera.id)} className="btn btn-info">Ver</button>
+                                            <button onClick={() => this.editCarrera(carrera.id)} className="btn btn-warning mt-0">Actualizar</button>
+                                            <button className="btn btn-danger mt-0" style={boton}
+                                                onClick={() => this.toggleModal(carrera.id)} // Abre el modal y pasa el ID de la colegiatura
+                                            > Eliminar</button>
+                                            <button onClick={() => this.viewCarrera(carrera.id)} className="btn btn-info mt-0">Ver</button>
                                         </td>
                                     </tr>
                                 )
@@ -191,14 +192,14 @@ class ListCarreraComponent extends Component {
                     </table>
                 </div>
                 <Modal isOpen={this.state.isModalOpen} toggle={this.closeModal}>
-                <ModalHeader>Confirmar Eliminación</ModalHeader>
-                <ModalBody>
-                    ¿Estás seguro de que deseas eliminar esta carrera?
-                </ModalBody>
-                <ModalFooter>
-                <Button color="danger" onClick={() => this.deleteCarrera(this.state.carreraToDeleteId)}>Eliminar</Button>
-                    <Button color="secondary" onClick={this.closeModal}>Cancelar</Button>
-                </ModalFooter>
+                    <ModalHeader>Confirmar Eliminación</ModalHeader>
+                    <ModalBody>
+                        ¿Estás seguro de que deseas eliminar esta carrera?
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="danger" onClick={() => this.deleteCarrera(this.state.carreraToDeleteId)}>Eliminar</Button>
+                        <Button color="secondary" onClick={this.closeModal}>Cancelar</Button>
+                    </ModalFooter>
                 </Modal>
             </div>
 

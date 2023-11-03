@@ -29,3 +29,26 @@
 .dropdown-submenu:hover .dropdown-menu {
   display: block;
 }
+
+
+/* CSS para el submenú */
+.dropdown-submenu {
+  position: relative;
+}
+
+/* Quitar la flecha de submenú que apunta hacia abajo */
+.dropdown-submenu > .dropdown-toggle:after {
+  content: none; /* Eliminar el contenido del elemento ::after */
+}
+
+/* Mostrar una flecha que apunte hacia la derecha en lugar de la flecha de Bootstrap predeterminada */
+.dropdown-submenu > .dropdown-toggle:before {
+  content: none;
+
+}
+
+/* Cambiar el ícono de flecha cuando se abre el submenú */
+.dropdown-submenu.open > .dropdown-toggle:before {
+  transform: rotate(90deg); /* Rotar la flecha hacia arriba */
+}
+

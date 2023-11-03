@@ -165,9 +165,9 @@ class CreateCarreraComponent extends Component {
                                                 </div>
                                             </div>
                                         ) : (
-                                            <button className="btn btn-primary" onClick={this.saveCarrera}>Guardar</button>
+                                            <button className="btn btn-primary mt-0" onClick={this.saveCarrera}>Guardar</button>
                                         )}                                            
-                                        <button className = "btn btn-danger" onClick={this.cancel.bind(this)} style= {{marginLeft: "10px"}}>Cancelar</button>
+                                        <button className = "btn btn-danger mt-0" onClick={this.cancel.bind(this)} style= {{marginLeft: "10px"}}>Cancelar</button>
                                         </div>
                                 </form>
                             </div>

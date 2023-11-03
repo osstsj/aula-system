@@ -169,14 +169,14 @@ class CreatePlantelComponent extends Component {
                         <div className="card col-9 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                             <div className="card-body">
                                 <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                                    <h2 className="h3 Title">Agregar Unidad Academica</h2>
+                                    <h2 className="h3 Title">Agregar Unidad Académica</h2>
                                 </div>
                                 <br />
                                 <form>
                                     <div className="row mb-3">
                                     <div className="col">
                                             <div className="form-outline">
-                                                <label className="">Unidad Academica: </label>
+                                                <label className="">Unidad Académica: </label>
                                                 <select 
                                                     name="tipoUnidad" 
                                                     className="form-control" 
@@ -185,8 +185,8 @@ class CreatePlantelComponent extends Component {
                                                     required
                                                 >
                                                     <option value=""  disabled>Seleccione un tipo de UA...</option>
-                                                    <option value="Unidad">Unidad academica</option>
-                                                    <option value="Extension">Unidad academica con extension</option>
+                                                    <option value="Unidad">Unidad académicas</option>
+                                                    <option value="Extension">Unidad académicas con extension</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -195,7 +195,7 @@ class CreatePlantelComponent extends Component {
                                     <div className="row mb-3">
                                         <div className="col">
                                             <div className="form-outline">
-                                                <label className="">Lista de unidades academicas: </label>
+                                                <label className="">Lista de unidades académicas: </label>
                                                 <Select
                                                     isDisabled={!this.state.disablePlantelList}
                                                     rules={{ required: true }}
@@ -265,7 +265,7 @@ class CreatePlantelComponent extends Component {
                                     </div>
                                        
                                         <div className="form-group">
-                                            <label className="mt-3">Direccion completa UA: </label>
+                                            <label className="mt-3">Dirección  completa UA: </label>
                                             <textarea 
                                                 readOnly= {this.state.disablePlantelList}
                                                 name="direccionCompleta" 
@@ -277,8 +277,8 @@ class CreatePlantelComponent extends Component {
 
                                     <br />
                                         <div className="card-footer text-muted">
-                                            <button className = "btn btn-primary" onClick={this.createPlantel}>Guardar</button>
-                                            <button className = "btn btn-danger" onClick={this.cancel.bind(this)} style= {{marginLeft: "10px"}}>Cancelar</button>
+                                            <button className = "btn btn-primary mt-0" onClick={this.createPlantel}>Guardar</button>
+                                            <button className = "btn btn-danger mt-0" onClick={this.cancel.bind(this)} style= {{marginLeft: "10px"}}>Cancelar</button>
                                         </div>
                                 </form>
                             </div>

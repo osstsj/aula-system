@@ -23,6 +23,8 @@ class HomeComponent extends Component {
             fontSize: '2.5em',
             fontWeight: 'bold',
             textTransform: 'uppercase',
+            textAlign:'justify',
+
         };
 
         const imgStyle = {
@@ -142,7 +144,7 @@ class HomeComponent extends Component {
         return (
 
             <div >
-                <div className="row mb-3 mt-3" style={{justifyContent:'center'}} >
+                <div className="row mb-3 mt-3 mr-0 ml-0" style={{justifyContent:'center'}} >
                 <div className="card"  style={{padding:'1%'}}>
                     <div className="card-body">
                     <div style={carrusel}>

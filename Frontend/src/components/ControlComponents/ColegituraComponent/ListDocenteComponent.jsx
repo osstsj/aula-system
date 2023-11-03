@@ -150,7 +150,7 @@ class ListColegiaturaComponent extends Component {
                             <tr>
                                 <th></th>
                                 <th className='table-title'>Clave</th>
-                                <th className='table-title'>Descripcion</th>
+                                <th className='table-title'>Descripción</th>
                                 <th className='table-title'>Monto</th>
                                 <th className='table-title'>Estatus</th>
                                 <th className='table-action'>Acciones</th>
@@ -167,12 +167,12 @@ class ListColegiaturaComponent extends Component {
                                         <td className='table-conten'>{colegiatura.colegiatura_estatus}</td>
                                         <td className='table-action'>
                                             <button 
-                                                className="btn btn-warning"
+                                                className="btn btn-warning mt-0"
                                                 onClick={()=>this.editColegiaturaById(colegiatura.id)}
                                             >Actualizar
                                             </button>
                                             <button
-                                            className="btn btn-danger"
+                                            className="btn btn-danger mt-0"
                                             style={boton}
                                             onClick={() => this.toggleModal(colegiatura.id)} // Abre el modal y pasa el ID de la colegiatura
                                         >
@@ -180,7 +180,7 @@ class ListColegiaturaComponent extends Component {
                                         </button>
                                             
                                             <button 
-                                                className="btn btn-info"
+                                                className="btn btn-info mt-0"
                                                 onClick={()=>this.viewColegiaturaById(colegiatura.id)}
                                             >Ver
                                             </button>

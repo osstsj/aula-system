@@ -129,7 +129,7 @@ class UpdateCarreraPorUnidadComponent extends Component {
                     <div className="card col-9 mt-4">
                         <div className="card-body">
                             <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                                <h2 className='h3 Title'>Actualizar Carrera Por Unidad Academica</h2>
+                                <h2 className='h3 Title'>Actualizar Carrera Por Unidad Académica</h2>
                             </div>
                             <br />
                             <form>
@@ -150,7 +150,7 @@ class UpdateCarreraPorUnidadComponent extends Component {
                                 <div className="row mb-3">
                                     <div className="col">
                                         <div className="form-outline">
-                                            <label>Niveles Academico</label>
+                                            <label>Niveles Académico</label>
                                             <Select
                                              placeholder="Seleccione una nivel Academico..."
                                              options={this.state.niveles} 
@@ -164,7 +164,7 @@ class UpdateCarreraPorUnidadComponent extends Component {
                                 <div className="row mb-3">
                                     <div className="col">
                                         <div className="form-outline">
-                                        <label>Lista de Planteles</label>
+                                        <label>Lista de Unidades Académicas</label>
                                             <Select 
                                             placeholder="Seleccione una lista de planteles..."
                                             options={this.state.planteles} 
@@ -188,8 +188,8 @@ class UpdateCarreraPorUnidadComponent extends Component {
                                 </div>
                                 <br></br>
                                 <div className="card-footer text-muted">
-                                <button className = "btn btn-warning" onClick={this.updateCarrera}>Actualizar</button>
-                                <button className = "btn btn-danger"  onClick={this.cancel.bind(this)}   style= {{marginLeft: "10px"}}>Cancelar</button>
+                                <button className = "btn btn-warning mt-0" onClick={this.updateCarrera}>Actualizar</button>
+                                <button className = "btn btn-danger mt-0"  onClick={this.cancel.bind(this)}   style= {{marginLeft: "10px"}}>Cancelar</button>
                                 </div>
                             </form>
                         </div>

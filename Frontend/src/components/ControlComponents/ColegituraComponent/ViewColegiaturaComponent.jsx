@@ -66,7 +66,7 @@ class viewColegiaturaComponent extends Component {
                             <div className="row">
                                 <div className="col-4">
                                     <div className="form-outline">
-                                        <label className=""><b>Descripcion:</b></label>
+                                        <label className=""><b>Descripción:</b></label>
                                     </div>
                                 </div>
                                 <div className="col">
@@ -133,7 +133,7 @@ class viewColegiaturaComponent extends Component {
                             <div className="row mb-3">
                                 <div className="col-4">
                                     <div className="form-outline">
-                                        <label className=""><b>Fecha de creacion:</b></label>
+                                        <label className=""><b>Fecha de creación:</b></label>
                                     </div>
                                 </div>
                                 <div className="col">
@@ -146,7 +146,7 @@ class viewColegiaturaComponent extends Component {
                             <div className="row">
                                 <div className="col-4">
                                     <div className="form-outline">
-                                        <label className=""><b>Actualizacion realizada por:</b></label>
+                                        <label className=""><b>Actualización realizada por:</b></label>
                                     </div>
                                 </div>
                                 <div className="col">
@@ -158,7 +158,7 @@ class viewColegiaturaComponent extends Component {
                             <div className="row">
                                 <div className="col-4">
                                     <div className="form-outline">
-                                        <label className=""><b>Fecha de actualizacion:</b></label>
+                                        <label className=""><b>Fecha de actualización:</b></label>
                                     </div>
                                 </div>
                                 <div className="col">
@@ -171,7 +171,7 @@ class viewColegiaturaComponent extends Component {
 
                         <br />
                         <div className="card-footer text-muted">
-                            <button className = "btn btn-secondary" onClick={this.back.bind(this)} style= {{marginLeft: "10px"}}>Regresar</button>
+                            <button className = "btn btn-secondary mt-0" onClick={this.back.bind(this)} style= {{marginLeft: "10px"}}>Regresar</button>
                         </div>
                     </div>
                 </div>                

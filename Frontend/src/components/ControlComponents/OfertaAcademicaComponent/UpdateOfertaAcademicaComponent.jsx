@@ -132,7 +132,7 @@ class UpdateOfertaAcademicaComponent extends Component {
                     <div className="card col-8 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                         <div className="card-body">
                             <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                                <h2 className='h3 Title'>Actualizar Oferta Academica</h2>
+                                <h2 className='h3 Title'>Actualizar Oferta Académica</h2>
                             </div>
                             <br />
                             <form>
@@ -197,8 +197,8 @@ class UpdateOfertaAcademicaComponent extends Component {
                                     </div>
                                 <br></br>
                                 <div className="card-footer text-muted">
-                                <button className = "btn btn-warning" onClick={this.updateCarreraById}>Actualizar</button>
-                                <button className = "btn btn-danger"  onClick={this.cancel.bind(this)}   style= {{marginLeft: "10px"}}>Cancelar</button>
+                                <button className = "btn btn-warning mt-0" onClick={this.updateCarreraById}>Actualizar</button>
+                                <button className = "btn btn-danger mt-0"  onClick={this.cancel.bind(this)}   style= {{marginLeft: "10px"}}>Cancelar</button>
                                 </div>
                             </form>
                         </div>

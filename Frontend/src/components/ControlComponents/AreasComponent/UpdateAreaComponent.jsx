@@ -85,14 +85,14 @@ class UpdateAreaComponent extends Component {
                     <div className="card card col-9 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                         <div className="card-body">
                             <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                                <h2 className="h3 Title">Actualizar Area Escolar</h2>
+                                <h2 className="h3 Title">Actualizar Área Escolar</h2>
                             </div>
                             <br />
                         <form>
                             <div className="row mb-3">
                                 <div className="col">
                                     <div className="form-outline">
-                                        <label>Area</label>
+                                        <label>Área</label>
                                         <input type="text" 
                                             placeholder="Ingrese nombre del area..." 
                                             className="form-control"  name="area"
@@ -121,7 +121,7 @@ class UpdateAreaComponent extends Component {
                             <div className="row mb-3">
                                 <div className="col">
                                     <div className="form-outline">
-                                    <label>Unidad academica</label>
+                                    <label>Unidad académica</label>
                                         <Select 
                                             value=
                                             {{
@@ -138,8 +138,8 @@ class UpdateAreaComponent extends Component {
                         </div>
                         <br />
                         <div className="card-footer text-muted">
-                            <button className="btn btn-warning" onClick={this.updateArea}>Actualizar</button>
-                            <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>Cancelar</button>
+                            <button className="btn btn-warning mt-0" onClick={this.updateArea}>Actualizar</button>
+                            <button className="btn btn-danger mt-0" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>Cancelar</button>
                         </div>
                     </div>
                     </div>
