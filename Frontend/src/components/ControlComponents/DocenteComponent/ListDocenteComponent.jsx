@@ -8,7 +8,7 @@ import 'jspdf-autotable'; // Importa la extensión jspdf-autotable
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'; // Importa Reactstrap para el modal
 
 class ListDocenteComponent extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
 
         this.state = {
@@ -25,35 +25,36 @@ class ListDocenteComponent extends Component {
         this.exportToPDF = this.exportToPDF.bind(this); // Método para exportar a PDF
     }
 
-    deleteDocenteById(id){
+    deleteDocenteById(id) {
         // rest api
         DocenteService.deleteDocenteById(id).then(res => {
-            this.setState({docentes: this.state.docentes.filter(docente => docente.id !== id),
+            this.setState({
+                docentes: this.state.docentes.filter(docente => docente.id !== id),
                 isModalOpen: false, // Cierra el modal después de eliminar
                 docenteToDeleteId: null, // Restablece el ID de la colegiatura
             });
         });
     }
 
-    viewDocenteById(id){
+    viewDocenteById(id) {
         this.props.history.push(`view-docente/${id}`);
     }
 
-    editDocenteById(id){
+    editDocenteById(id) {
         this.props.history.push(`update-docente/${id}`);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         //promise
         DocenteService.getAllDocentes().then((res) => {
-            this.setState({docentes: res.data});
+            this.setState({ docentes: res.data });
         });
     }
 
-    addDocente(){
+    addDocente() {
         this.props.history.push('/add-docente/');
     }
-    
+
     exportToExcel() {
         const { docentes } = this.state;
 
@@ -73,7 +74,7 @@ class ListDocenteComponent extends Component {
         const doc = new jsPDF();
         doc.text('Lista de docentes', 10, 10);
 
-        const columns = ['Nombre', 'Apellido Paternno', 'Apellido Materno','Unidad Academica','Categoria','Actividad','Fecha Creacion','Fecha de Actualizacion'];
+        const columns = ['Nombre', 'Apellido Paternno', 'Apellido Materno', 'Unidad Academica', 'Categoria', 'Actividad', 'Fecha Creacion', 'Fecha de Actualizacion'];
         const data = '';
         // const data = docentes.map((docente) => [
         //     docente.nombre,
@@ -109,43 +110,43 @@ class ListDocenteComponent extends Component {
             docenteToDeleteId: null, // Restablece el ID de la colegiatura
         });
     }
-    render() { 
-         const boton= {
-            marginLeft:'1rem',
-            marginRight:'1rem'
+    render() {
+        const boton = {
+            marginLeft: '1rem',
+            marginRight: '1rem'
         }
-       
+
         return (
-            <div  className='container'>
+            <div className='container'>
                 <h2 className="text-center mt-5 mb-5 Title" >LISTA DE DOCENTES</h2>
-                <button style={{width:'15%'}} className="btn btn-primary mb-4" onClick={this.addDocente}>
+                <button style={{ width: '15%' }} className="btn btn-primary mb-4" onClick={this.addDocente}>
                     Agregar Docente
                 </button>
-                <button style={{ width: '15%',marginLeft:'1rem' }} className="btn  btn-outline-success mb-4" onClick={this.exportToExcel}>
+                <button style={{ width: '15%', marginLeft: '1rem' }} className="btn  btn-outline-success mb-4" onClick={this.exportToExcel}>
                     Exportar a Excel
                 </button>
-                <button style={{ width: '15%',marginLeft:'1rem' }} className="btn btn-outline-dark  mb-4" onClick={this.exportToPDF}>
+                <button style={{ width: '15%', marginLeft: '1rem' }} className="btn btn-outline-dark  mb-4" onClick={this.exportToPDF}>
                     Exportar a PDF
                 </button>
-                <div className="row"  style={{ overflowX: 'auto' }}>
-                    <table className="table table-striped table-bordered"  style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                <div className="row" style={{ overflowX: 'auto' }}>
+                    <table className="table table-striped table-bordered" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                         <thead >
                             <tr >
                                 <th></th>
                                 <th className='table-title'>Nombre</th>
-                                <th className='table-title'>Apellido Paterno</th>                               
+                                <th className='table-title'>Apellido Paterno</th>
                                 <th className='table-title'>Apellido Materno</th>
-                                <th className='table-title'>Unidad Academica</th>
-                                <th className='table-title'>Categoria</th>
+                                <th className='table-title'>Unidad Académica</th>
+                                <th className='table-title'>Categoría</th>
                                 <th className='table-title'>Actividad</th>
                                 <th className='table-action'>Acciones</th>
                             </tr>
                         </thead>
                         <tbody >
                             {
-                                this.state.docentes.map((docente, index )=>
-                                <tr key={docente.id} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
-                                    <td>{index + 1}</td>
+                                this.state.docentes.map((docente, index) =>
+                                    <tr key={docente.id} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
+                                        <td>{index + 1}</td>
                                         <td className='table-conten'>{docente.nombre}</td>
                                         <td className='table-conten'>{docente.apellido_paterno}</td>
                                         <td className='table-conten'>{docente.apellido_materno}</td>
@@ -153,11 +154,11 @@ class ListDocenteComponent extends Component {
                                         <td className='table-conten'>{docente.categoria}</td>
                                         <td className='table-conten'>{docente.actividad}</td>
                                         <td className='table-action'>
-                                            <button onClick={()=> this.editDocenteById(docente.id)} className="btn btn-warning">Actualizar</button>
-                                            <button className="btn btn-danger" style={boton}
-                                            onClick={() => this.toggleModal(docente.id)} // Abre el modal y pasa el ID de la colegiatura
-                                        > Eliminar</button>  
-                                         <button onClick={()=> this.viewDocenteById(docente.id)} className="btn btn-info">Ver</button>
+                                            <button onClick={() => this.editDocenteById(docente.id)} className="btn btn-warning mt-0">Actualizar</button>
+                                            <button className="btn btn-danger mt-0" style={boton}
+                                                onClick={() => this.toggleModal(docente.id)} // Abre el modal y pasa el ID de la colegiatura
+                                            > Eliminar</button>
+                                            <button onClick={() => this.viewDocenteById(docente.id)} className="btn btn-info mt-0">Ver</button>
                                         </td>
                                     </tr>
                                 )
@@ -166,14 +167,14 @@ class ListDocenteComponent extends Component {
                     </table>
                 </div>
                 <Modal isOpen={this.state.isModalOpen} toggle={this.closeModal}>
-                <ModalHeader>Confirmar Eliminación</ModalHeader>
-                <ModalBody>
-                    ¿Estás seguro de que deseas eliminar este docente?
-                </ModalBody>
-                <ModalFooter>
-                <Button color="danger" onClick={() => this.deleteDocenteById(this.state.docenteToDeleteId)}>Eliminar</Button>
-                    <Button color="secondary" onClick={this.closeModal}>Cancelar</Button>
-                </ModalFooter>
+                    <ModalHeader>Confirmar Eliminación</ModalHeader>
+                    <ModalBody>
+                        ¿Estás seguro de que deseas eliminar este docente?
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="danger" onClick={() => this.deleteDocenteById(this.state.docenteToDeleteId)}>Eliminar</Button>
+                        <Button color="secondary" onClick={this.closeModal}>Cancelar</Button>
+                    </ModalFooter>
                 </Modal>
             </div>
 

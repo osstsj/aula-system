@@ -6,12 +6,12 @@ import Select from 'react-select'
 import axios from 'axios';
 
 class CreateDocenteComponent extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             id: 0,
             nombre: '',
-            apellido_paterno: '', 
+            apellido_paterno: '',
             apellido_materno: '',
             unidad_academica: '',
             categoria: '',
@@ -31,32 +31,32 @@ class CreateDocenteComponent extends Component {
         this.createDocente = this.createDocente.bind(this);
     }
 
-    createDocente = (e) =>{
+    createDocente = (e) => {
         e.preventDefault();
         // Validar que los campos requeridos no estén vacíos
-        if (this.state.nombre.trim() === '' || this.state.apellido_paterno.trim() === '' || this.state.apellido_materno.trim() === '' || this.state.unidad_academica.trim() === ''|| this.state.categoria.trim() === ''|| this.state.actividad.trim() === '') {
+        if (this.state.nombre.trim() === '' || this.state.apellido_paterno.trim() === '' || this.state.apellido_materno.trim() === '' || this.state.unidad_academica.trim() === '' || this.state.categoria.trim() === '' || this.state.actividad.trim() === '') {
             alert('Por favor complete todos los campos requeridos.');
             return;
         }
         // PlantelService.getPlantelById(this.state.id).then((res) => {
         //     let plantelById = res.data;
 
-            let docente = {
-                nombre: this.state.nombre.trim(),
-                apellido_paterno: this.state.apellido_paterno.trim(),
-                apellido_materno: this.state.apellido_materno.trim(),
-                unidad_academica: this.state.unidad_academica.trim(),
-                categoria: this.state.categoria.trim(),
-                actividad: this.state.actividad.trim(),
-                // plantel: this.state.id
-            };
-            // Mostrar el spinner al iniciar la acción
-            this.setState({ isLoading: true });
-            console.log('docente=> ' + JSON.stringify(docente));
+        let docente = {
+            nombre: this.state.nombre.trim(),
+            apellido_paterno: this.state.apellido_paterno.trim(),
+            apellido_materno: this.state.apellido_materno.trim(),
+            unidad_academica: this.state.unidad_academica.trim(),
+            categoria: this.state.categoria.trim(),
+            actividad: this.state.actividad.trim(),
+            // plantel: this.state.id
+        };
+        // Mostrar el spinner al iniciar la acción
+        this.setState({ isLoading: true });
+        console.log('docente=> ' + JSON.stringify(docente));
 
-            DocenteService.createDocente(docente, this.state.id).then(res => {
-                this.props.history.push('/list-docente');
-            });
+        DocenteService.createDocente(docente, this.state.id).then(res => {
+            this.props.history.push('/list-docente');
+        });
         // });
     }
 
@@ -136,7 +136,7 @@ class CreateDocenteComponent extends Component {
                     <div className="row justify-content-center">
                         <div className="card col-9 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                             <div className="card-body">
-                                <div className="card-header text-center"  style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                                <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                                     <h2 className="h3 Title" >Agregar Docente</h2>
                                 </div>
                                 <br />
@@ -180,21 +180,21 @@ class CreateDocenteComponent extends Component {
                                         </div>
                                     </div>
 
-                                        <div className="row mb-3 mt-4">
-                                            <div className="col-4">
-                                                <div className="form-outline">
-                                                <label>Lista de Unidades Academicas</label>
-                                                    <Select
+                                    <div className="row mb-3 mt-4">
+                                        <div className="col-4">
+                                            <div className="form-outline">
+                                                <label>Lista de Unidades Académicas</label>
+                                                <Select
                                                     rules={{ required: true }}
-                                                        options={this.state.unidades}
-                                                        onChange={(e) => this.onChangeUnidadAcademicaHandler(e)}
-                                                        value={{ label: this.state.unidad_academica === "" ? "Seleccione UA..." : this.state.unidad_academica }}
-                                                    />
-                                                </div>
+                                                    options={this.state.unidades}
+                                                    onChange={(e) => this.onChangeUnidadAcademicaHandler(e)}
+                                                    value={{ label: this.state.unidad_academica === "" ? "Seleccione UA..." : this.state.unidad_academica }}
+                                                />
                                             </div>
-                                            <div className="col-3">
-                                                <div className="form-outline">
-                                                <label>Lista de Categorias</label>
+                                        </div>
+                                        <div className="col-3">
+                                            <div className="form-outline">
+                                                <label>Lista de Categorías</label>
                                                 <Select
                                                     rules={{ required: true }}
                                                         options={this.state.categorias}
@@ -206,7 +206,7 @@ class CreateDocenteComponent extends Component {
                                             <div className="col-3">
                                                 <div className="form-outline">
                                                 <label>Lista de actividades</label>
-                                                    <Select
+                                                <Select
                                                     rules={{ required: true }}
                                                         options={this.state.actividades}
                                                         onChange={(e) => this.onChangeActividadHandler(e)}
@@ -217,35 +217,35 @@ class CreateDocenteComponent extends Component {
                                             <div className="col-3">
                                                 <div className="form-outline">
                                                 <label>Estatus</label>
-                                                    <select name="" id="" className='form-control'
-                                                        disabled
-                                                    >
-                                                        <option value="" selected>Nuevo</option>
-                                                        <option value="">Baja</option>
-                                                    </select>
-                                                </div>
+                                                <select name="" id="" className='form-control'
+                                                    disabled
+                                                >
+                                                    <option value="" selected>Nuevo</option>
+                                                    <option value="">Baja</option>
+                                                </select>
                                             </div>
                                         </div>
-
-                                        
-
-                                        <br />
-                                            <div className="card-footer text-muted">
-                                            {this.state.isLoading ? (
-                                // Mostrar el spinner si isLoading es true
-                                <div className="text-center">
-                                    <div className="spinner-border" role="status">
-                                        <span className="sr-only">Loading...</span>
                                     </div>
-                                </div>
-                            ) : (
-                                <button className = "btn btn-primary" onClick={this.createDocente}>Guardar</button>
-                                )}
-                                                <button className = "btn btn-danger" onClick={this.cancel.bind(this)} style= {{marginLeft: "10px"}}>Cancelar</button>
+
+
+
+                                    <br />
+                                    <div className="card-footer text-muted">
+                                        {this.state.isLoading ? (
+                                            // Mostrar el spinner si isLoading es true
+                                            <div className="text-center">
+                                                <div className="spinner-border" role="status">
+                                                    <span className="sr-only">Loading...</span>
+                                                </div>
                                             </div>
-                                    </form>
-                                </div>
+                                        ) : (
+                                            <button className="btn btn-primary mt-0" onClick={this.createDocente}>Guardar</button>
+                                        )}
+                                        <button className="btn btn-danger mt-0" onClick={this.cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancelar</button>
+                                    </div>
+                                </form>
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>

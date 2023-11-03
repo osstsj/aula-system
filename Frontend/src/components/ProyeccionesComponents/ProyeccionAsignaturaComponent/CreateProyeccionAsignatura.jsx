@@ -945,8 +945,8 @@ class CreateProyeccionAsignatura extends Component {
 
                         <br />
                         <div className="card-footer text-muted mb-3 mt-3">
-                            <button className="btn btn-primary" onClick={this.createProyeccionAsignatura} disabled={this.state.disableAgregar}>Agregar</button>
-                            <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancelar</button>
+                            <button className="btn btn-primary mt-0" onClick={this.createProyeccionAsignatura} disabled={this.state.disableAgregar}>Agregar</button>
+                            <button className="btn btn-danger mt-0" onClick={this.cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancelar</button>
                         </div>
                     </div>
                 </div>

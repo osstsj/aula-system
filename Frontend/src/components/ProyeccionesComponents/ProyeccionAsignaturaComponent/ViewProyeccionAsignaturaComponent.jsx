@@ -471,7 +471,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
 
                             <br />
                             <div className="card-footer text-muted">
-                                <button className = "btn btn-secondary" onClick={this.back.bind(this)} style= {{marginLeft: "10px"}}>Regresar</button>
+                                <button className = "btn btn-secondary mt-0" onClick={this.back.bind(this)} style= {{marginLeft: "10px"}}>Regresar</button>
                             </div>
                         </div>
                     </div>

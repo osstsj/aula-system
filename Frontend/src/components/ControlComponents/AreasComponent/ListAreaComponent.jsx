@@ -135,8 +135,8 @@ class ListAreaComponent extends Component {
 
         return (
             <div className='container'>
-                <h2 className='text-center mt-5 mb-5 Title'>LISTA DE AREAS ACADEMICAS</h2>
-                <button style={{ width: '20%' }} className="btn btn-primary mb-4" onClick={this.addArea}>Agragar Area Academica</button>
+                <h2 className='text-center mt-5 mb-5 Title'>LISTA DE ÁREAS ACADÉMICAS</h2>
+                <button style={{ width: '20%' }} className="btn btn-primary mb-4" onClick={this.addArea}>Agragar Área Académica</button>
                 <button style={{ width: '15%', marginLeft: '1rem' }} className="btn btn-outline-success mb-4" onClick={this.exportToExcel}>Exportar a Excel</button> {/* Botón de exportar a Excel */}
                 <button style={{ width: '15%', marginLeft: '1rem' }} className="btn btn-outline-dark mb-4" onClick={this.exportToPDF}>
                     Exportar a PDF
@@ -146,9 +146,9 @@ class ListAreaComponent extends Component {
                         <thead>
                             <tr>
                                 <th></th>
-                                <th className='table-title'>Area</th>
+                                <th className='table-title'>Área </th>
                                 <th className='table-title'>Responsable</th>
-                                <th className='table-title'>Unidad academica</th>
+                                <th className='table-title'>Unidad académica</th>
                                 <th className='table-action'>Acciones</th>
                             </tr>
                         </thead>
@@ -161,11 +161,11 @@ class ListAreaComponent extends Component {
                                         <td className='table-conten'>{area.responsable}</td>
                                         <td className='table-conten'>{area.unidad_academica}</td>
                                         <td className='table-action'>
-                                            <button onClick={() => this.editAreaById(area.id)} className="btn btn-warning">Actualizar</button>
-                                            <button className="btn btn-danger" style={boton}
+                                            <button onClick={() => this.editAreaById(area.id)} className="btn btn-warning  mt-0">Actualizar</button>
+                                            <button className="btn btn-danger mt-0" style={boton}
                                                 onClick={() => this.toggleModal(area.id)} // Abre el modal y pasa el ID de la colegiatura
                                             > Eliminar</button>
-                                            <button onClick={() => this.viewAreaById(area.id)} className="btn btn-info">Ver</button>
+                                            <button onClick={() => this.viewAreaById(area.id)} className="btn btn-info mt-0">Ver</button>
                                         </td>
                                     </tr>
                                 )

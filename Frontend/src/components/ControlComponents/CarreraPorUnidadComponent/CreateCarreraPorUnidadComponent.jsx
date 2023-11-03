@@ -118,7 +118,7 @@ class CreateCarreraPorUnidadComponent extends Component {
                     <div className="card col-9 mt-3 " style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }} >
                         <div className="card-body">
                             <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                                <h2 className='h3 Title'   >Agregar Carrera Por Unidad Academica</h2>
+                                <h2 className='h3 Title'   >Agregar Carrera Por Unidad Académica</h2>
                             </div>
                             <br />
                             <form>
@@ -139,11 +139,11 @@ class CreateCarreraPorUnidadComponent extends Component {
                                 <div className="row mb-3">
                                     <div className="col">
                                         <div className="form-outline">
-                                            <label>Nivel Academico</label>
+                                            <label>Nivel Académico</label>
                                             <Select
                                                 options={this.state.niveles}
                                                 onChange={(e) => this.changeNivelHandler(e)}
-                                                value={{ label: this.state.nivel === "" ? "Seleccione un nivel academico..." : this.state.nivel }}
+                                                value={{ label: this.state.nivel === "" ? "Seleccione un nivel académico..." : this.state.nivel }}
                                             />
                                         </div>
                                     </div>
@@ -152,7 +152,7 @@ class CreateCarreraPorUnidadComponent extends Component {
                                 <div className="row mb-3">
                                     <div className="col">
                                         <div className="form-outline">
-                                            <label>Lista de Unidades Academicas</label>
+                                            <label>Lista de Unidades Académicas</label>
                                             <Select
                                                 options={this.state.planteles}
                                                 onChange={(e) => this.changePlantelesHandler(e)}
@@ -186,9 +186,9 @@ class CreateCarreraPorUnidadComponent extends Component {
                                     </div>
                                 </div>
                             ) : (
-                                <button className="btn btn-primary" onClick={this.saveCarreraPorUnidad}>Agregar</button>
+                                <button className="btn btn-primary mt-0" onClick={this.saveCarreraPorUnidad}>Agregar</button>
                             )}
-                            <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancelar</button>
+                            <button className="btn btn-danger mt-0" onClick={this.cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancelar</button>
                         </div>
                     </div>
                 </div>

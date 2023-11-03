@@ -91,7 +91,7 @@ class ViewPlantelComponent extends Component {
                         <div className="row mb-3">
                             <div className="col">
                                 <div className="form-outline">
-                                    <label className=""><b>Unidad Academica:</b></label>
+                                    <label className=""><b>Unidad Académica:</b></label>
                                 </div>
                             </div>
                             <div className="col">
@@ -104,7 +104,7 @@ class ViewPlantelComponent extends Component {
                         <div className="row mb-3">
                             <div className="col">
                                 <div className="form-outline">
-                                    <label className=""><b>Categoria:</b></label>
+                                    <label className=""><b>Categoría:</b></label>
                                 </div>
                             </div>
                             <div className="col">
@@ -143,7 +143,7 @@ class ViewPlantelComponent extends Component {
                             <div className="row mb-3">
                                 <div className="col-4">
                                     <div className="form-outline">
-                                        <label className="">Fecha de creacion:</label>
+                                        <label className="">Fecha de creación:</label>
                                     </div>
                                 </div>
                                 <div className="col">
@@ -155,7 +155,7 @@ class ViewPlantelComponent extends Component {
                             <div className="row">
                                 <div className="col-4">
                                     <div className="form-outline">
-                                        <label className=""><b>Actualizacion realizada por:</b></label>
+                                        <label className=""><b>Actualización  realizada por:</b></label>
                                     </div>
                                 </div>
                                 <div className="col">
@@ -167,7 +167,7 @@ class ViewPlantelComponent extends Component {
                             <div className="row">
                                 <div className="col-4">
                                     <div className="form-outline">
-                                        <label className="">Fecha de actualizacion:</label>
+                                        <label className="">Fecha de actualización:</label>
                                     </div>
                                 </div>
                                 <div className="col">
@@ -181,7 +181,7 @@ class ViewPlantelComponent extends Component {
                     </div>
                         <br />
                     <div className="card-footer text-muted">
-                        <button className = "btn btn-secondary" onClick={this.back.bind(this)} style= {{marginLeft: "10px"}}>Regresar</button>
+                        <button className = "btn btn-secondary mt-0" onClick={this.back.bind(this)} style= {{marginLeft: "10px"}}>Regresar</button>
                     </div>
                 </div>
             </div>

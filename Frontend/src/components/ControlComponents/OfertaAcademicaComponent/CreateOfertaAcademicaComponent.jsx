@@ -122,7 +122,7 @@ class CreateOfertaAcademicaComponent extends Component {
                     <div className="card col-8 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                         <div className="card-body">
                             <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }} >
-                                <h2 className='h3 Title'>Agregar Oferta Academica</h2>
+                                <h2 className='h3 Title'>Agregar Oferta Académica</h2>
                             </div>
                             <br />
                             <form>
@@ -135,7 +135,7 @@ class CreateOfertaAcademicaComponent extends Component {
                                                 options={this.state.unidades}
                                                 onChange={(e) => this.changeUnidadHandler(e)}
                                                 placeholder="Seleccione un carrera..."
-                                                value={{ label: this.state.unidad === "" ? "Seleccione unidad academica..." : this.state.unidad }}
+                                                value={{ label: this.state.unidad === "" ? "Seleccione unidad académica..." : this.state.unidad }}
                                             />
                                         </div>
                                     </div>
@@ -202,9 +202,9 @@ class CreateOfertaAcademicaComponent extends Component {
                                     </div>
                                 </div>
                             ) : (
-                                <button className="btn btn-primary" onClick={this.saveOfertaAcademica}>Agregar</button>
+                                <button className="btn btn-primary mt-0" onClick={this.saveOfertaAcademica}>Agregar</button>
                             )}
-                            <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancelar</button>
+                            <button className="btn btn-danger mt-0" onClick={this.cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancelar</button>
                         </div>
                     </div>
                 </div>

@@ -172,8 +172,8 @@ class UpdateColegiaturaComponent extends Component {
 
                                     <br />
                                         <div className="card-footer text-muted ">
-                                            <button className = "btn btn-warning" onClick={this.updateColegiatura}>Actualizar</button>
-                                            <button className = "btn btn-danger" onClick={this.cancel.bind(this)} style= {{marginLeft: "10px"}}>Cancelar</button>
+                                            <button className = "btn btn-warning mt-0" onClick={this.updateColegiatura}>Actualizar</button>
+                                            <button className = "btn btn-danger mt-0" onClick={this.cancel.bind(this)} style= {{marginLeft: "10px"}}>Cancelar</button>
                                         </div>
                                 </form>
                             </div>

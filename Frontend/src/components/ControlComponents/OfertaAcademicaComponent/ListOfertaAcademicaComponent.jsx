@@ -143,8 +143,8 @@ class ListOfertaAcademicaComponent extends Component {
 
         return (
             <div className='container'>
-                <h2 className="text-center mt-5 mb-5 Title">LISTA DE OFERTAS ACADEMICAS</h2>
-                <button style={{ width: '20%' }} className="btn btn-primary mb-4" onClick={this.addUnidad}>Agregar Oferta Academica</button>
+                <h2 className="text-center mt-5 mb-5 Title">LISTA DE OFERTAS ACADÉMICAS</h2>
+                <button style={{ width: '20%' }} className="btn btn-primary mb-4" onClick={this.addUnidad}>Agregar Oferta Académica</button>
                 <button style={{ width: '15%', marginLeft: '1rem' }} className="btn btn-outline-success mb-4" onClick={this.exportToExcel}>Exportar a Excel</button> {/* Botón de exportar a Excel */}
                 <button style={{ width: '15%', marginLeft: '1rem' }} className="btn btn-outline-dark mb-4" onClick={this.exportToPDF}>
                     Exportar a PDF
@@ -173,11 +173,11 @@ class ListOfertaAcademicaComponent extends Component {
                                         <td className='table-conten'>{oferta.turno}</td>
                                         <td className='table-conten'>{oferta.periodo}</td>
                                         <td className='table-action' >
-                                            <button onClick={() => this.editCarreraPorUnidad(oferta.id)} className="btn btn-warning">Actualizar</button>
-                                            <button className="btn btn-danger" style={boton}
+                                            <button onClick={() => this.editCarreraPorUnidad(oferta.id)} className="btn btn-warning mt-0">Actualizar</button>
+                                            <button className="btn btn-danger mt-0" style={boton}
                                                 onClick={() => this.toggleModal(oferta.id)} // Abre el modal y pasa el ID de la colegiatura
                                             > Eliminar</button>
-                                            <button onClick={() => this.viewCarreraPorUnidad(oferta.id)} className="btn btn-info">Ver</button>
+                                            <button onClick={() => this.viewCarreraPorUnidad(oferta.id)} className="btn btn-info mt-0">Ver</button>
                                         </td>
                                     </tr>
                                 )

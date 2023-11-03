@@ -42,7 +42,7 @@ class ViewOfertaAcademicaComponent extends Component {
                 <div className="card col-9 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                     <div className="card-body">
                         <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                            <h3 className="h3 Title"> Oferta Academica  a Detalle</h3>
+                            <h3 className="h3 Title"> Oferta Académica  a Detalle</h3>
                         </div>
                         <br />
                         <div className="row">
@@ -126,7 +126,7 @@ class ViewOfertaAcademicaComponent extends Component {
                             <div className="row mb-3">
                                 <div className="col-4">
                                     <div className="form-outline">
-                                        <label className="">Fecha de creacion:</label>
+                                        <label className="">Fecha de creación:</label>
                                     </div>
                                 </div>
                                 <div className="col">
@@ -139,7 +139,7 @@ class ViewOfertaAcademicaComponent extends Component {
                             <div className="row">
                                 <div className="col-4">
                                     <div className="form-outline">
-                                        <label className=""><b>Actualizacion realizada por:</b></label>
+                                        <label className=""><b>Actualización realizada por:</b></label>
                                     </div>
                                 </div>
                                 <div className="col">
@@ -151,7 +151,7 @@ class ViewOfertaAcademicaComponent extends Component {
                             <div className="row">
                                 <div className="col-4">
                                     <div className="form-outline">
-                                        <label className="">Fecha de actualizacion:</label>
+                                        <label className="">Fecha de actualización:</label>
                                     </div>
                                 </div>
                                 <div className="col">
@@ -164,7 +164,7 @@ class ViewOfertaAcademicaComponent extends Component {
                     </div>
                         <br />
                     <div className="card-footer text-muted">
-                        <button className = "btn btn-secondary" onClick={this.cancel.bind(this)} style= {{marginLeft: "10px"}}>Regresar</button>
+                        <button className = "btn btn-secondary mt-0" onClick={this.cancel.bind(this)} style= {{marginLeft: "10px"}}>Regresar</button>
                     </div>
                 </div>
             </div>  

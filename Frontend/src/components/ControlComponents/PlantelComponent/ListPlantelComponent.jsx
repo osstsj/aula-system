@@ -89,9 +89,9 @@ class ListPlantelComponent extends Component {
 
         return (
             <div className="container">
-                <h2 className="text-center mt-5 mb-5 Title">LISTA DE UNIDADES ACADEMICAS</h2>
+                <h2 className="text-center mt-5 mb-5 Title">LISTA DE UNIDADES ACADÉMICAS</h2>
                 <button style={{ width: '20%' }} className="btn btn-primary mb-4" onClick={this.addPlantel}>
-                    Agregar Unidad Academica
+                    Agregar Unidad Académica
                 </button>
                 <button style={{ width: '15%', marginLeft: '1rem' }} className="btn  btn-outline-success mb-4" onClick={this.exportToExcel}>
                     Exportar a Excel
@@ -118,13 +118,13 @@ class ListPlantelComponent extends Component {
                                     <td className="table-conten">{plantel.abreviatura}</td>
                                     <td className="table-conten">{plantel.nombre_completo}</td>
                                     <td className="table-action">
-                                        <button onClick={() => this.editPlantel(plantel.id)} className="btn btn-warning">
+                                        <button onClick={() => this.editPlantel(plantel.id)} className="btn btn-warning mt-0">
                                             Actualizar
                                         </button>
-                                        <button style={boton} onClick={() => this.deletePlantel(plantel.id)} className="btn btn-danger">
+                                        <button style={boton} onClick={() => this.deletePlantel(plantel.id)} className="btn btn-danger mt-0">
                                             Eliminar
                                         </button>
-                                        <button onClick={() => this.viewPlantel(plantel.id)} className="btn btn-info">
+                                        <button onClick={() => this.viewPlantel(plantel.id)} className="btn btn-info mt-0">
                                             Ver
                                         </button>
                                     </td>

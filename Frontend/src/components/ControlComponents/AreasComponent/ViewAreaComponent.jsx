@@ -41,13 +41,13 @@ class ViewCarreraComponent extends Component {
                     <div className="card col-10" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>                       
                         <div className="card-body">
                             <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                                <h3 className="h3 Title">Area Escolar a detalle</h3>
+                                <h3 className="h3 Title">Área Escolar a detalle</h3>
                             </div>
                             <br />
                             <div className="row">
-                                <div className="col-3">
+                                <div className="col-4">
                                     <div className="form-outline">
-                                        <label className=""><b>Area:</b></label>
+                                        <label className=""><b>Área:</b></label>
                                     </div>
                                 </div>
                                 <div className="col">
@@ -58,7 +58,7 @@ class ViewCarreraComponent extends Component {
                             </div>
 
                             <div className="row">
-                                <div className="col-3">
+                                <div className="col-4">
                                     <div className="form-outline">
                                         <label className=""><b>Responsable:</b></label>
                                     </div>
@@ -71,9 +71,9 @@ class ViewCarreraComponent extends Component {
                             </div>
 
                             <div className="row">
-                                <div className="col-3">
+                                <div className="col-4">
                                     <div className="form-outline">
-                                        <label className=""><b>Unidad academica:</b></label>
+                                        <label className=""><b>Unidad académica:</b></label>
                                     </div>
                                 </div>
                                 <div className="col">
@@ -112,7 +112,7 @@ class ViewCarreraComponent extends Component {
                             <div className="row">
                                 <div className="col-4">
                                     <div className="form-outline">
-                                        <label className=""><b>Actualizacion realizada por:</b></label>
+                                        <label className=""><b>Actualización realizada por:</b></label>
                                     </div>
                                 </div>
                                 <div className="col">
@@ -137,7 +137,7 @@ class ViewCarreraComponent extends Component {
                         </div>
                             <br />
                         <div className="card-footer text-muted">
-                            <button className = "btn btn-secondary" onClick={this.cancel.bind(this)} style= {{marginLeft: "10px"}}>Regresar</button>
+                            <button className = "btn btn-secondary mt-0" onClick={this.cancel.bind(this)} style= {{marginLeft: "10px"}}>Regresar</button>
                         </div>
                     </div>
                 </div>

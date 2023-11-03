@@ -23,9 +23,9 @@ class HeaderComponent extends Component {
         return (
             <nav className="navbar navbar-expand-lg navbar-light" style={navbarStyle}>
                 <a href="/">
-    <img src="/img/Fondo2.png"  alt="..." width={150} height={70} />
-    </a>
-                    <button
+                    <img src="/img/Fondo2.png" alt="..." width={150} height={70} />
+                </a>
+                <button
                     className="navbar-toggler"
                     type="button"
                     data-toggle="collapse"
@@ -38,10 +38,10 @@ class HeaderComponent extends Component {
                 </button>
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav mr-auto" style={{ marginLeft: '1.5rem' }}>  
-                    <li><p style={{color:'#ffffff',fontWeight:'bold',fontSize:'18px' ,marginTop:'5%'}}>
-                    <a style={{color:'#ffffff'}} href="/">Aula System</a> |</p> 
-                        </li>                  
+                    <ul className="navbar-nav mr-auto" style={{ marginLeft: '1.5rem' }}>
+                        <li><p style={{ color: '#ffffff', fontWeight: 'bold', fontSize: '18px', marginTop: '5%' }}>
+                            <a style={{ color: '#ffffff' }} href="/">Aula System</a> |</p>
+                        </li>
                         <li className="nav-item dropdown">
                             <a
                                 style={letras}
@@ -55,7 +55,7 @@ class HeaderComponent extends Component {
                             </a>
                             <div className="dropdown-menu">
                                 <a className="dropdown-item" href="/list-plantel">
-                                    Lista de Unidades Academicas
+                                    Lista de Unidades Académicas
                                 </a>
                                 <a className="dropdown-item" href="/list-docente">
                                     Lista de Docentes
@@ -67,10 +67,10 @@ class HeaderComponent extends Component {
                                     Lista de Carreras Por Unidad
                                 </a>
                                 <a className="dropdown-item" href="/list-oferta-academica">
-                                    Lista de Ofertas Academicas
+                                    Lista de Ofertas Académicas
                                 </a>
                                 <a className="dropdown-item" href="/list-area">
-                                    Lista de Areas
+                                    Lista de Áreas
                                 </a>
                                 <a className="dropdown-item" href="/list-colegiatura">
                                     Lista de Colegiaturas
@@ -80,37 +80,40 @@ class HeaderComponent extends Component {
                         </li>
 
                         <li className="nav-item dropdown">
-                            <a
-                                style={letras}
-                                className="nav-link dropdown-toggle"
-                                href="#"
-                                role="button"
-                                data-toggle="dropdown"
-                                aria-expanded="false"
-                            >
+                            <a style={letras} className="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                                 Proyecciones
                             </a>
                             <div className="dropdown-menu">
-                                <ul className=''>
-                                    <li>
-                                        <a class="dropdown-item" href="/list-proyeccion_asignatura">
-                                            Proyeccion por Asignatura &raquo;
+                                <div className="dropdown-submenu">
+                                    <a className="dropdown-item dropdown-toggle" href="/list-proyeccion_asignatura">
+                                        Proyeccion por Asignatura
+                                    </a>
+                                    <div className="dropdown-menu">
+                                        <a className="dropdown-item" href="/submenu-item-1">
+                                            Lista de Folios
                                         </a>
-                                        <ul className="dropdown-menu dropdown-submenu">
-                                            <li>Crear Folio</li>
-                                            <li>Lista de FolioS</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <a className="dropdown-item" href="/list-proyeccion_asignatura">
-                                    Proyeccion por Asignatura
-                                </a>
-                                <a className="dropdown-item" href="/list-full-time">
-                                    Proyeccion por Tiempo Completo
-                                </a>
-                                
+                                        <a className="dropdown-item" href="/submenu-item-2">
+                                            Crear Folio
+                                        </a>
+                                    </div>
+                                </div>
+                                <div className="dropdown-submenu">
+                                    <a className="dropdown-item dropdown-toggle" href="/list-full-time">
+                                        Proyeccion por Tiempo Completo
+                                    </a>
+                                    <div className="dropdown-menu">
+                                        <a className="dropdown-item" href="/submenu-item-3">
+                                            Lista de Folio 2
+                                        </a>
+                                        <a className="dropdown-item" href="/submenu-item-4">
+                                            Crear Folio 2
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </li>
+
+
                     </ul>
                 </div>
             </nav>

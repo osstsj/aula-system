@@ -186,7 +186,7 @@ class UpdateDocenteComponent extends Component {
                                             </div>
                                             <div className="col-3">
                                                 <div className="form-outline">
-                                                <label>Lista de Categorias</label>
+                                                <label>Lista de Categorías</label>
                                                     <Select
                                                     rules={{ required: true }}
                                                         options={this.state.categorias}
@@ -224,8 +224,8 @@ class UpdateDocenteComponent extends Component {
 
                                         <br />
                                             <div className="card-footer text-muted">
-                                                <button className = "btn btn-primary" onClick={this.updateDocenteById}>Guardar</button>
-                                                <button className = "btn btn-danger" onClick={this.cancel.bind(this)} style= {{marginLeft: "10px"}}>Cancelar</button>
+                                                <button className = "btn btn-primary mt-0" onClick={this.updateDocenteById}>Guardar</button>
+                                                <button className = "btn btn-danger mt-0" onClick={this.cancel.bind(this)} style= {{marginLeft: "10px"}}>Cancelar</button>
                                             </div>
                                     </form>
                                 </div>

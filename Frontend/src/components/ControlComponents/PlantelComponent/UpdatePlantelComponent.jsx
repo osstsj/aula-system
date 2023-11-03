@@ -89,7 +89,7 @@ class UpdatePlantelComponent extends Component {
                         <div className="card col-9 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                             <div className="card-body">
                                 <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                                    <h2 className="h3 Title">Actualizar Unidad Academica</h2>
+                                    <h2 className="h3 Title">Actualizar Unidad Académica</h2>
                                 </div>
                                 <br />
                                 <form>
@@ -167,7 +167,7 @@ class UpdatePlantelComponent extends Component {
                                     </div>
                                        
                                         <div className="form-group">
-                                            <label className="mt-3">Direccion completa: </label>
+                                            <label className="mt-3">Dirección  completa: </label>
                                             <textarea 
                                                 name="direccionCompleta" 
                                                 className="form-control" 
@@ -178,8 +178,8 @@ class UpdatePlantelComponent extends Component {
 
                                     <br />
                                         <div className="card-footer text-muted">
-                                            <button className = "btn btn-warning" onClick={this.updatePlantel}>Actualizar</button>
-                                            <button className = "btn btn-danger" onClick={this.cancel.bind(this)} style= {{marginLeft: "10px"}}>Cancelar</button>
+                                            <button className = "btn btn-warning mt-0" onClick={this.updatePlantel}>Actualizar</button>
+                                            <button className = "btn btn-danger mt-0" onClick={this.cancel.bind(this)} style= {{marginLeft: "10px"}}>Cancelar</button>
                                         </div>
                                 </form>
                             </div>
