@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import edu.tsj.aula.persistance.models.projections.entity.asignatura.necesidad.HorasNecesidadInstitucional;
-import edu.tsj.aula.persistance.models.projections.entity.asignatura.sustantivas.HorasSustantivasAtencionAlumnos;
-import edu.tsj.aula.persistance.models.projections.entity.asignatura.sustantivas.ProfeAsignatura;
+import edu.tsj.aula.persistance.models.projections.entity.asignatura.necesidad.HorasNecesidadInstitucionalAsignatura;
+import edu.tsj.aula.persistance.models.projections.entity.asignatura.sustantivas.HorasSustantivasAtencionAlumnosAsignatura;
+import edu.tsj.aula.persistance.models.projections.entity.asignatura.profesor.ProfeAsignatura;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,9 +26,9 @@ public class AsignaturaResponseDto {
 
     private ProfeAsignatura profe_asignatura;
 
-    private HorasSustantivasAtencionAlumnos horas_sustantivas_atencion_alumnos;
+    private HorasSustantivasAtencionAlumnosAsignatura horas_sustantivas_atencion_alumnos;
 
-    private HorasNecesidadInstitucional horas_necesidad_institucional;
+    private HorasNecesidadInstitucionalAsignatura horas_necesidad_institucional;
 
     private Integer total;
 

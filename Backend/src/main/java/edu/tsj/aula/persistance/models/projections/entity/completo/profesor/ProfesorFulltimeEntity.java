@@ -1,4 +1,4 @@
-package edu.tsj.aula.persistance.models.projections.entity.asignatura.sustantivas;
+package edu.tsj.aula.persistance.models.projections.entity.completo.profesor;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -14,8 +14,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "proyeccion_profe_asignatura")
-public class ProfeAsignatura {
+@Table(name = "proyeccion_profe_fulltime")
+public class ProfesorFulltimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +23,7 @@ public class ProfeAsignatura {
     @Column
     private String clave_programa;
 
-//    @Column(unique = true)
+    //    @Column(unique = true)
     @Column
     private String codigo_nomina;
 

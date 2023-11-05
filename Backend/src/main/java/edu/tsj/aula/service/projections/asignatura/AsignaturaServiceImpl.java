@@ -68,6 +68,13 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
         return asignaturaRepository.findAllByUnidad_academica(unidad_academica);
     }
 
+    @Override
+    public List<AsignaturaEntity> findAllByFolioId(Long id_folio) {
+        ProyeccionEntity proyeccionEntity = proyeccionRepository.findById(id_folio).orElseThrow(()-> new ResourceNotFoundException((" No se encontro folio..."),
+                HttpStatus.NOT_FOUND));
+        return asignaturaRepository.findAllByProyeccionId(proyeccionEntity);
+    }
+
     @Transactional
     @Override
     public AsignaturaEntity getAsignaturaById(Long id) {

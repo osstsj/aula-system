@@ -51,6 +51,7 @@ import CreateLoginComponent from './components/PageComponents/CreateLoginCompone
 import AcuseComponent from './components/PageComponents/AcuseComponent/AcuseComponent';
 
 import CreateFolioAsignaturaComponent from './components/ProyeccionesComponents/ProyeccionAsignaturaComponent/HistorialAsignaturaComponent/CreateFolioAsignaturaComponent';
+import ListFolioAsignaturaComponent from './components/ProyeccionesComponents/ProyeccionAsignaturaComponent/HistorialAsignaturaComponent/ListFolioAsignaturaComponent';
 
 
 function App() {
@@ -105,7 +106,7 @@ function App() {
                           <Route path = "/view-docente/:id" component = {ViewDocenteComponent}></Route>
 
                            {/* ------------ ProyeccionAsignaturaComponent ----------- */}
-                           <Route path = "/list-proyeccion_asignatura" component = {ListCargaAcademicaComponent}></Route>
+                           <Route path = "/list-proyeccion_asignatura/:id" component = {ListCargaAcademicaComponent}></Route>
                            <Route path = "/view-proyeccion_asignatura/:id" component = {ViewProyeccionAsignaturaComponent}></Route>
                            <Route path = "/add-proyeccion_asignatura" component = {CreateProyeccionAsignatura}></Route>
                            
@@ -122,7 +123,8 @@ function App() {
                           <Route path = "/acuse" component = {AcuseComponent}></Route>
 
                           {/* ---------------- FOLIO --------------- */}
-                          <Route path = "/create-folio-signatura" component = {CreateFolioAsignaturaComponent}></Route>
+                          <Route path = "/create-folio-asignatura" component = {CreateFolioAsignaturaComponent}></Route>
+                          <Route path = "/list-folio-asignatura" component = {ListFolioAsignaturaComponent}></Route>
                             
                   </Switch>
                 </div>

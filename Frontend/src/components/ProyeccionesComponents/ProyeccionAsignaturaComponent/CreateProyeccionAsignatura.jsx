@@ -15,7 +15,10 @@ class CreateProyeccionAsignatura extends Component {
             horas_presidente: [],
             horas_secretario: [],
             docentes: [],
+            folios: [],
 
+            folio: '',
+            id_folio: null,
             disableA: false,
             disableB: true,
             disablePresidente: true,
@@ -129,20 +132,20 @@ class CreateProyeccionAsignatura extends Component {
 
         console.log("Proyeccion por asignatura: " + JSON.stringify(asignatura));
 
-        AsignaturaProyeccionService.createProyeccionAsignatura(asignatura).then(
+        AsignaturaProyeccionService.createProyeccionAsignatura(asignatura, this.state.id_folio).then(
          () => {
-                this.props.history.push('/list-proyeccion_asignatura');
+                this.props.history.push(`/list-proyeccion_asignatura/${this.state.id_folio}`);
             }
         ).catch(error => {
             console.log("Error en crear proyeccion por asignatura: " + error);
             alert('No se puede duplicar clave de nomina...');
-            this.props.history.push('/list-proyeccion_asignatura');
+            this.props.history.push('/');
         });
 
     }
 
     cancel() {
-        this.props.history.push('/list-proyeccion_asignatura');
+        this.props.history.push('/');
     }
 
     componentDidMount() {        
@@ -152,6 +155,7 @@ class CreateProyeccionAsignatura extends Component {
         this.getHorasAcademias_secretario();
         this.getDocenteList();
         this.getCarreraList();
+        this.getFolioList();
     }
 
     async getDocenteList() {
@@ -176,6 +180,18 @@ class CreateProyeccionAsignatura extends Component {
         this.setState({ carreras: options });
     }
     
+    async getFolioList() {
+        const res = await axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL  + "folios");
+        const data = res.data;
+
+        let options = data.map(d => ({
+            "value": d.folio,
+            "label": d.folio,
+            'id': d.id,
+        }))
+        this.setState({ folios: options });
+    }
+
     async getUnidadList() {
         const res = await axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL  + "planteles");
         const data = res.data;
@@ -223,6 +239,16 @@ class CreateProyeccionAsignatura extends Component {
             error: error,
             errorInfo: errorInfo
         })
+    }
+
+    onChangeFolioHandler = (event) => {
+        // this.setState({nombre_docente: event.target.value});
+        this.setState({ folio: event.label });
+        this.setState({ id_folio: event.id });
+        
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
     }
 
     onChangeUnidadHandler = (event) => {
@@ -455,6 +481,19 @@ class CreateProyeccionAsignatura extends Component {
                             </div>
                             <br />
                             <form>    
+                                <div className="row mb-4 justify-content-center ">                              
+                                    <div className="col-6">
+                                        <div className="form-outline">
+                                            <label className="">Folio: </label>
+                                            <Select
+                                                rules={{ required: true }}
+                                                options={this.state.folios}
+                                                onChange={(e) => this.onChangeFolioHandler(e)}
+                                                value={{ label: this.state.folio === '' ? "Seleccione folio de proyeccion..." : this.state.folio}}
+                                            />
+                                        </div>
+                                    </div>                        
+                                </div>
                                 <div className="col">
                                     <div className="row mb-3">
                                         <label className="h5"><b>PROFESORES DE ASIGNATURA</b></label>

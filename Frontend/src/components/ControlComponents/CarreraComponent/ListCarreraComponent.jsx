@@ -4,7 +4,7 @@ import CarreraService from '../../../services/Control/CarreraService';
 import * as XLSX from 'xlsx';  // Importa la librería XLSX
 import jsPDF from 'jspdf';
 import 'jspdf-autotable'; // Importa la extensión jspdf-autotable
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from ' '; // Importa Reactstrap para el modal
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'; // Importa Reactstrap para el modal
 
 
 class ListCarreraComponent extends Component {

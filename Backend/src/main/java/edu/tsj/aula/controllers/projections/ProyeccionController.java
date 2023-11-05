@@ -16,12 +16,12 @@ public class ProyeccionController {
 
     @PostMapping("/folio")
     @ResponseStatus(HttpStatus.CREATED)
-    public ProyeccionEntity createProyeccion(@RequestBody ProyeccionEntity proyeccion) {
+    public ProyeccionEntity createFolio(@RequestBody ProyeccionEntity proyeccion) {
         return proyeccionService.createProyeccion(proyeccion);
     }
 
     @GetMapping(value = "/folios")
-    public List<ProyeccionEntity> getAllProyeccionesByFolio() {
+    public List<ProyeccionEntity> getAllFolios() {
         return proyeccionService.getAllProyecciones();
     }
 }

@@ -47,22 +47,6 @@ public class DocenteController {
         }
     }
 
-    @GetMapping(value = "/docentes/{plantel_id}/{carrera_id}",
-            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE })
-    public ResponseEntity<List<DocenteEntity>> getAllDocentesByPlantel(@PathVariable Long plantel_id,
-                                                                       @PathVariable Long carrera_id) {
-        try {
-            Optional<PlantelEntity> plantel = plantelService.getPlantelById(plantel_id);
-            List<DocenteEntity> docentes = docenteService.findAllByPlantel((Collections.singletonList(plantel.get())));
-            // Agregar findDOcenteByCarrara
-
-
-//            List<DocenteEntity> docentes = docenteService.findAllByPlantel(Collections.singletonList(plantel_id));
-            return new ResponseEntity<>(docentes, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
 //    @GetMapping(value = "/docente/{id}",
 //        produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})

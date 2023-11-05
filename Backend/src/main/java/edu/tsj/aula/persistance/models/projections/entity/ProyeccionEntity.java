@@ -9,7 +9,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
@@ -27,13 +26,22 @@ public class ProyeccionEntity {
 //    private String tipo_proyeccion;
 
     //    @Column(unique = true)
+
+    @Column
+    private String letra;
+    @Column
+    private Integer numero;
+    @Column
+    private Integer periodo;
+    @Column
+    private String periodoAoB;
     @Column
     private String folio;
 
     @CreationTimestamp
     private LocalDateTime fecha_creacion;
-
-    @UpdateTimestamp
-    private LocalDateTime fecha_actualizacion;
+//
+//    @UpdateTimestamp
+//    private LocalDateTime fecha_actualizacion;
 }
 

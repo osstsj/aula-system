@@ -10,16 +10,15 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "proyeccion_horas_asignatura")
-public class HorasAsignatura implements Serializable {
+@Table(name = "proyeccion_academia_proyecion_asignatura")
+public class AcademiaAsignatura implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
-    private Integer A;
+    private Integer presidente;
 
     @Column
-    private Integer B;
-
+    private Integer secretario;
 }

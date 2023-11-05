@@ -41,9 +41,16 @@ public class ProyeccionAsignaturaController {
         return asignaturaService.getAsignaturas();
     }
 
-    @GetMapping(value = "/asignaturas/{unidad_academica}",
+    @GetMapping(value = "/asignaturas_by_ua/{unidad_academica}",
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
     public List<AsignaturaEntity> getAllByUnidadAcademica(@PathVariable String unidad_academica) {
             return asignaturaService.findAllByUnidad_academica(Arrays.asList(unidad_academica));
     }
+
+        @GetMapping(value = "/asignaturas_by_folio/{id_folio}",
+        produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
+    public List<AsignaturaEntity> getAllByFolioId(@PathVariable Long id_folio) {
+            return asignaturaService.findAllByFolioId(id_folio);
+    }
+
 }

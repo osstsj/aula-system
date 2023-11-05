@@ -1,11 +1,10 @@
 package edu.tsj.aula.persistance.models.projections.entity.asignatura;
 
 import com.fasterxml.jackson.annotation.*;
-import edu.tsj.aula.persistance.models.control.entity.PlantelEntity;
 import edu.tsj.aula.persistance.models.projections.entity.ProyeccionEntity;
-import edu.tsj.aula.persistance.models.projections.entity.asignatura.sustantivas.ProfeAsignatura;
-import edu.tsj.aula.persistance.models.projections.entity.asignatura.sustantivas.HorasSustantivasAtencionAlumnos;
-import edu.tsj.aula.persistance.models.projections.entity.asignatura.necesidad.HorasNecesidadInstitucional;
+import edu.tsj.aula.persistance.models.projections.entity.asignatura.profesor.ProfeAsignatura;
+import edu.tsj.aula.persistance.models.projections.entity.asignatura.sustantivas.HorasSustantivasAtencionAlumnosAsignatura;
+import edu.tsj.aula.persistance.models.projections.entity.asignatura.necesidad.HorasNecesidadInstitucionalAsignatura;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -52,17 +51,17 @@ public class AsignaturaEntity  implements Serializable {
 
     @JoinColumn(name = "id")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private HorasSustantivasAtencionAlumnos horas_sustantivas_atencion_alumnos;
+    private HorasSustantivasAtencionAlumnosAsignatura horas_sustantivas_atencion_alumnos;
 
     @JoinColumn(name = "id")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private HorasNecesidadInstitucional horas_necesidad_institucional;
+    private HorasNecesidadInstitucionalAsignatura horas_necesidad_institucional;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE) ///    Tal vez deba quitarse ya que se realaciona con la proyeccion
-    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+//    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
     @JsonIdentityReference(alwaysAsId=true)
-    @JsonProperty("id_proyeccion")
+//    @JsonProperty("id_proyeccion")
     @JoinColumn(name = "id_proyeccion", nullable = false)
     private ProyeccionEntity proyeccion;
 

@@ -31,6 +31,12 @@ public class ProyeccionServiceImpl implements IProyeccionService {
     @Transactional
     @Override
     public ProyeccionEntity createProyeccion(ProyeccionEntity proyeccion) {
+        proyeccion.setFolio(proyeccion.getLetra()
+                .concat(proyeccion.getNumero().toString())
+                .concat("-")
+                .concat(proyeccion.getPeriodo().toString())
+                .concat(proyeccion.getPeriodoAoB())
+        );
 
         return proyeccionRepository.save(proyeccion);
     }

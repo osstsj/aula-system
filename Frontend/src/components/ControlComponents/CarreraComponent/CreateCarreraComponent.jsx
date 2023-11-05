@@ -134,8 +134,8 @@ class CreateCarreraComponent extends Component {
                                                     required
                                                 >
                                                     <option value="" disabled>Seccione un estatus...</option>
-                                                    <option value="INACTIVA">INACTIVA</option>
                                                     <option value="ACTIVA">ACTIVA</option>
+                                                    <option value="INACTIVA">INACTIVA</option>                                    
                                                 </select>
                                             </div>
                                         </div>

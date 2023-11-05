@@ -17,4 +17,6 @@ public interface IAsignaturaService {
     AsignaturaEntity createAsignatura(AsignaturaEntity asignaturaEntity, Long id_folio);
 
     List<AsignaturaEntity> findAllByUnidad_academica(List<String> plantel);
+
+    List<AsignaturaEntity> findAllByFolioId(Long id_folio);
 }

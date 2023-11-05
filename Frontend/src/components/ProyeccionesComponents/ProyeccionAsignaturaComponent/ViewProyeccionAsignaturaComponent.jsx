@@ -12,6 +12,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                 codigo_nomina: "",
                 grado_academico: "",
                 nombre_docente: "",
+                proyeccion: "",
 
                 // horas_sustantivas_atencion_alumnos
                     // horas_asignatura: 
@@ -47,6 +48,9 @@ class ViewProyeccionAsignaturaComponent extends Component {
         }
     }
 
+
+
+
     componentDidMount() {
         AsignaturaProyeccionService.getProyeccionesAsignaturaById(this.state.id)
         .then(res =>  {
@@ -54,11 +58,13 @@ class ViewProyeccionAsignaturaComponent extends Component {
 
             this.setState({
                 // Asignatura
+                proyeccion: asignatura.proyeccion.folio,
                     // profe_asignatura: 
                     clave_programa: asignatura.profe_asignatura.clave_programa,
                     codigo_nomina: asignatura.profe_asignatura.codigo_nomina,
                     grado_academico: asignatura.profe_asignatura.grado_academico,
                     nombre_docente: asignatura.profe_asignatura.nombre_docente,
+                   
 
                     // horas_sustantivas_atencion_alumnos
                         // horas_asignatura
@@ -108,7 +114,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                     <div className="card col-9" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>                     
                         <div className="card-body">
                             <div className="card-header" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                                <h3 className="text-center"><b>{this.state.id} - Proyeccion Por Asignatura Unidad Academica "{this.state.unidad_academica}"</b></h3>
+                                <h3 className="text-center"><b>Folio: {this.state.proyeccion} <br />Proyeccion Por Asignatura #{this.state.id} <br /> Unidad Academica: {this.state.unidad_academica}</b></h3>
                             </div>
                             <br />
                             

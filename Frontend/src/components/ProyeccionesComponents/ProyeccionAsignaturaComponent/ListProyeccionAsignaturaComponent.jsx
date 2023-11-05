@@ -11,6 +11,8 @@ class ListCargaAcademicaComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: this.props.match.params.id,
+
             areColumnsVisible: true, // Estado inicial para controlar la visibilidad de las columnas
             areColumns2Visible: true,
 
@@ -26,7 +28,7 @@ class ListCargaAcademicaComponent extends Component {
     }
 
     componentDidMount() {
-        AsignaturaProyeccionService.getProyeccionesAsignatura().then(res =>
+        AsignaturaProyeccionService.getAllProyeccionesAsignaturaByFolio(this.state.id).then(res =>
             this.setState({ asignaturas: res.data }));
 
         this.getUnidadList();
@@ -35,6 +37,7 @@ class ListCargaAcademicaComponent extends Component {
     viewProyeccionAsignatura(id) {
         this.props.history.push(`view-proyeccion_asignatura/${id}`);
     }
+
     async getUnidadList() {
         const res = await axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "planteles");
         const data = res.data;
@@ -177,7 +180,7 @@ class ListCargaAcademicaComponent extends Component {
                         <thead>
                             <tr>
 
-                                <th className='Title-Table' colSpan="36">UNIDAD ACADÉMICA "{this.state.unidad}"</th>
+                                <th className='Title-Table' colSpan="36">UNIDAD ACADÉMICA: {this.state.unidad === "" ? "Sin Filtro de UA" : this.state.unidad}</th>
                             </tr>
                             <tr>
                                 <th rowSpan="3" className={`text-center table-id ${areColumns2Visible || areColumnsVisible ? '' : 'collapse'

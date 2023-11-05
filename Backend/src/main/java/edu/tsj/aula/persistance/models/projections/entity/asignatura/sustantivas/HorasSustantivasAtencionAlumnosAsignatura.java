@@ -15,8 +15,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "proyeccion_horas_sustantivas_atencion_alumnos")
-public class HorasSustantivasAtencionAlumnos implements Serializable {
+@Table(name = "proyeccion_horas_sustantivas_atencion_alumnos_asignatura")
+public class HorasSustantivasAtencionAlumnosAsignatura implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,15 +25,15 @@ public class HorasSustantivasAtencionAlumnos implements Serializable {
 
     @JoinColumn(name = "id")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private HorasAsignatura horas_asignatura;
+    private HorasAsignaturaAsignatura horas_asignatura;
 
     @JoinColumn(name = "id")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Academia academias;
+    private AcademiaAsignatura academias;
 
     @JoinColumn(name = "id")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Asesoria asesorias;
+    private AsesoriaAsignatura asesorias;
 
     @Column
     private Integer actividades_complementarias;
