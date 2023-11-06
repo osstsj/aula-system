@@ -9,7 +9,7 @@ import React, { Component } from "react";
 import FolioService from "../../../../services/Proyecciones/FolioService";
 import '../../../StyleGlobal/Style.css';
 
-class CreateFolioAsignaturaComponent extends Component{
+class CreateFolioAsignaturaComponent extends Component {
     constructor(props) {
         super(props)
 
@@ -20,18 +20,22 @@ class CreateFolioAsignaturaComponent extends Component{
             periodoAoB: '',
 
             isLoading: false, // Nuevo estado para controlar la visibilidad del spinner
+            periodoAoB: '', // Inicializa el valor según tu necesidad
+
         }
     }
-
+    onChangePeriodoHandler = (value) => {
+        this.setState({ periodoAoB: value });
+    }
     createFolio = (e) => {
         e.preventDefault();
-         // Validar que los campos requeridos no estén vacíos
+        // Validar que los campos requeridos no estén vacíos
         if (this.state.letra.trim() === '' || this.state.numero === 0 || this.state.periodo === 0 || this.state.periodoAoB.trim() === '') {
             alert('Por favor complete todos los campos requeridos.');
-        return;
+            return;
         }
 
-        let folio = { 
+        let folio = {
             letra: this.state.letra.trim().toUpperCase(),
             numero: this.state.numero,
             periodo: this.state.periodo,
@@ -39,7 +43,7 @@ class CreateFolioAsignaturaComponent extends Component{
         }
         // Mostrar el spinner al iniciar la acción
         this.setState({ isLoading: true });
-                
+
         console.log('folio=>' + JSON.stringify(folio));
         FolioService.createFolio(folio).then(() => {
             this.props.history.push('/list-folio-asignatura');
@@ -47,19 +51,19 @@ class CreateFolioAsignaturaComponent extends Component{
     }
 
     onChangeLetraHandler = (event) => {
-        this.setState({letra: event.target.value});
+        this.setState({ letra: event.target.value });
     }
-    onChangeNumeroHandler = (event) =>  {
+    onChangeNumeroHandler = (event) => {
         // if (event.target.value.isString)
-        this.setState({numero: event.target.value});
+        this.setState({ numero: event.target.value });
     }
     onChangePeriodoHandler = (event) => {
-        this.setState({periodo: event.target.value});
+        this.setState({ periodo: event.target.value });
     }
     onChangePeriodoAoBHandler = (event) => {
-            this.setState({periodoAoB: event.target.value});
+        this.setState({ periodoAoB: event.target.value });
     }
-     
+
     cancel() {
         this.props.history.push('/list-folio-asignatura');
     }
@@ -83,72 +87,73 @@ class CreateFolioAsignaturaComponent extends Component{
                                 <fieldset>
                                     <legend>Select a maintenance drone:</legend>
 
-                                <div className="row mb-3">
-                                    <div className="col">
-                                        <div className="form-outline">
-                                            <label>Ingrese Letra:</label>
-                                            <input 
-                                                type="text" 
-                                                name="" id="" 
-                                                className="form-control" 
-                                                // pattern="[A-Za-z]{1}" 
-                                                title= "Ingrese solo una letra..."
-                                                value={this.state.letra}
-                                                onChange={this.onChangeLetraHandler}
-                                                required/>
+                                    <div className="row mb-3">
+                                        <div className="col">
+                                            <div className="form-outline">
+                                                <label>Ingrese Letra:</label>
+                                                <input
+                                                    type="text"
+                                                    name="" id=""
+                                                    className="form-control"
+                                                    // pattern="[A-Za-z]{1}" 
+                                                    title="Ingrese solo una letra..."
+                                                    value={this.state.letra}
+                                                    onChange={this.onChangeLetraHandler}
+                                                    required />
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div className="col">
-                                        <div className="form-outline">
-                                            <label>Ingrese Numero:</label>
-                                            <input 
-                                                type="number" 
-                                                name="" 
-                                                id="" 
-                                                className="form-control" 
-                                                title="Ingrese solo numeros..."
-                                                value={this.state.numero}
-                                                onChange={this.onChangeNumeroHandler}
-                                                required/>
+                                        <div className="col">
+                                            <div className="form-outline">
+                                                <label>Ingrese Numero:</label>
+                                                <input
+                                                    type="number"
+                                                    name=""
+                                                    id=""
+                                                    className="form-control"
+                                                    title="Ingrese solo numeros..."
+                                                    value={this.state.numero}
+                                                    onChange={this.onChangeNumeroHandler}
+                                                    required />
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div className="col">
-                                        <div className="form-outline">
-                                            <label>Ingrese Periodo:</label>
-                                            <input 
-                                                type="number" 
-                                                name="" id="" 
-                                                className="form-control" 
-                                                min="2022" 
-                                                max="2099" 
-                                                step="1" 
-                                                title="Ingrese solo numeros..."
-                                                onChange={this.onChangePeriodoHandler}
-                                                value={this.state.periodo}
-                                                required/>
+                                        <div className="col">
+                                            <div className="form-outline">
+                                                <label>Ingrese Periodo:</label>
+                                                <input
+                                                    type="number"
+                                                    name="" id=""
+                                                    className="form-control"
+                                                    min="2022"
+                                                    max="2099"
+                                                    step="1"
+                                                    title="Ingrese solo numeros..."
+                                                    onChange={this.onChangePeriodoHandler}
+                                                    value={this.state.periodo}
+                                                    required />
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div className="col">
-                                    <label className="">Seleccione A o B: </label>
-                                        <div className="row">
-                                            <div className="col">
-                                                <div className="form-outline">
-                                                    <div>                                                  
-                                                        <select name="" className='form-control'  
-                                                            style={{width: '270%'}}
-                                                            value={this.state.periodoAoB}
-                                                            onChange={this.onChangePeriodoAoBHandler} 
-                                                            required
-                                                        >
-                                                            <option value="" disabled>Seleccione A o B...</option>
-                                                            <option value="A">A</option>
-                                                            <option value="B">B</option>
-                                                        </select>
+                                        <div className="col">
+                                            <label className="">Seleccione A o B: </label>
+                                            <div className="row">
+                                                <div className="col">
+                                                    <div className="form-outline">
+                                                        <div>
+                                                            <div>
+                                                                <input
+                                                                    type="radio"
+                                                                    name="periodoAoB"
+                                                                    value="A"
+                                                                    checked={this.state.periodoAoB === 'A'}
+                                                                    onChange={this.onChangePeriodoAoBHandler}
+                                                                    required
+                                                                />
+                                                                <label htmlFor="periodoAoB_A">A</label>
 
-                                                        {/* <input 
+                                                            </div>
+                                                            {/* <input 
                                                             type="radio" 
                                                             id="a" 
                                                             name="drone"  
@@ -157,14 +162,26 @@ class CreateFolioAsignaturaComponent extends Component{
                                                             style={{ margin: "0.4rem"}}
                                                         />
                                                         <label for="a">A</label> */}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            
-                                            <div className="col">
-                                                <div className="form-outline">
-                                                    <div>
-                                                        {/* <input 
+
+                                                <div className="col">
+                                                    <div className="form-outline">
+                                                        <div>
+                                                            
+                                                        <input
+                                                                    style={{marginLeft:'0.4rem'}}
+                                                                    type="radio"
+                                                                    name="periodoAoB"
+                                                                    value="B"
+                                                                    checked={this.state.periodoAoB === 'B'}
+                                                                    onChange={this.onChangePeriodoAoBHandler}
+                                                                    required
+                                                                    
+                                                                />
+                                                                <label htmlFor="periodoAoB_B">B</label>
+                                                            {/* <input 
                                                             type="radio" 
                                                             id="b" 
                                                             name="drone" 
@@ -173,28 +190,28 @@ class CreateFolioAsignaturaComponent extends Component{
                                                             style={{ margin: "0.4rem"}}
                                                             />
                                                         <label for="b">B</label> */}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>                 
-                                        </div>
-                                                              
-                                    </div>
+                                            </div>
 
-                                    <div className="col">
-                                        <div className="form-outline">
-                                            <label>Tipo de Folio:</label>
-                                            <input 
-                                                readOnly={true}
-                                                type="text" 
-                                                name="" 
-                                                id="" 
-                                                value={"Asignatura"}
-                                                className="form-control" 
+                                        </div>
+
+                                        <div className="col">
+                                            <div className="form-outline">
+                                                <label>Tipo de Folio:</label>
+                                                <input
+                                                    readOnly={true}
+                                                    type="text"
+                                                    name=""
+                                                    id=""
+                                                    value={"Asignatura"}
+                                                    className="form-control"
                                                 // title= "Ingrese solo una letra..."
                                                 />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 </fieldset>
                             </form>
                         </div>
@@ -210,8 +227,8 @@ class CreateFolioAsignaturaComponent extends Component{
                             ) : (
                                 <button className="btn btn-primary mt-0" onClick={this.createFolio}>Agregar</button>
                             )}
-                            <button className="btn btn-danger mt-0" style={{ marginLeft: "10px" }}  onClick={this.cancel.bind(this)}>Cancelar</button>
-                        
+                            <button className="btn btn-danger mt-0" style={{ marginLeft: "10px" }} onClick={this.cancel.bind(this)}>Cancelar</button>
+
                         </div>
                     </div>
                 </div>
