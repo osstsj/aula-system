@@ -4,6 +4,10 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-iptables -A INPUT -i eth0 -p tcp --dport 80   -j ACCEPT
-iptables -A INPUT -i eth0 -p tcp --dport 3000 -j ACCEPT
-iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000
+#iptables -A INPUT -i eth0 -p tcp --dport 80   -j ACCEPT
+#iptables -A INPUT -i eth0 -p tcp --dport 3000 -j ACCEPT
+#iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000
+sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 3000
+#sudo iptables -t nat -L
+#sudo apt-get install iptables-persistent
+#/etc/iptables/rules.v4
