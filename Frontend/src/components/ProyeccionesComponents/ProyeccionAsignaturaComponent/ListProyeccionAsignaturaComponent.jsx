@@ -312,7 +312,7 @@ class ListCargaAcademicaComponent extends Component {
 
 
                                         {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Academias - Presidente */}
-                                        <td align="center" className={`text-center table-content${areColumnsVisible ? '' : 'collapse'
+                                        <td align="center" className={`text-center table-content  ${areColumnsVisible ? '' : 'collapse'
                                             }`}>{asignatura.horas_sustantivas_atencion_alumnos.academias.presidente}</td>
 
                                         {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Academias -Secretario */}
@@ -336,7 +336,7 @@ class ListCargaAcademicaComponent extends Component {
                                             }`}>{asignatura.horas_sustantivas_atencion_alumnos.asesorias.asesorias_academica}</td>
 
                                         {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Asesorias - Tutorias */}
-                                        <td align="center" className={`text-center  table-content${areColumnsVisible ? '' : 'collapse'
+                                        <td align="center" className={`text-center table-content  ${areColumnsVisible ? '' : 'collapse'
                                             }`}>{asignatura.horas_sustantivas_atencion_alumnos.asesorias.tutorias}</td>
 
                                         {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Actividades Complementarias */}
