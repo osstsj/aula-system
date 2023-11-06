@@ -2,6 +2,7 @@ package edu.tsj.aula.controllers.control;
 
 import edu.tsj.aula.persistance.models.control.dto.carreraDto.CarreraRequestDto;
 import edu.tsj.aula.persistance.models.control.dto.carreraDto.CarreraResponseDto;
+import edu.tsj.aula.persistance.models.control.entity.CarreraEntity;
 import edu.tsj.aula.service.control.ICarreraService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,10 +20,22 @@ import java.util.List;
 public class CarreraController {
     private final ICarreraService carreraService;
 
+//    @PostMapping(value="/carrera",
+//            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
+//            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
+//    public ResponseEntity<CarreraResponseDto> createCarrera(@Valid @RequestBody CarreraRequestDto carreraRequestDto) {
+//        try {
+//            var result = carreraService.createCarrera(carreraRequestDto);
+//            return new ResponseEntity<>(result, HttpStatus.CREATED);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
     @PostMapping(value="/carrera",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-    public ResponseEntity<CarreraResponseDto> createCarrera(@Valid @RequestBody CarreraRequestDto carreraRequestDto) {
+    public ResponseEntity<CarreraEntity> createCarrera(@Valid @RequestBody CarreraEntity carreraRequestDto) {
         try {
             var result = carreraService.createCarrera(carreraRequestDto);
             return new ResponseEntity<>(result, HttpStatus.CREATED);

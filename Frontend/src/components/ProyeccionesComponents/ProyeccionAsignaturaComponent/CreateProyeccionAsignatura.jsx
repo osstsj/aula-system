@@ -20,6 +20,8 @@ class CreateProyeccionAsignatura extends Component {
             folio: '',
             id_folio: null,
             id_unidad: null,
+            id_docente: null,
+            id_carrera: null,
 
             disableA: false,
             disableB: true,
@@ -84,7 +86,7 @@ class CreateProyeccionAsignatura extends Component {
                 clave_programa: this.state.clave_programa.trim(),
                 codigo_nomina: this.state.codigo_nomina.trim(),
                 grado_academico: this.state.grado_academico.trim(),
-                nombre_docente: this.state.nombre_docente.trim(),
+                // nombre_docente: this.state.nombre_docente.trim(),
             },
                 horas_sustantivas_atencion_alumnos: {
                     horas_asignatura: {
@@ -134,7 +136,8 @@ class CreateProyeccionAsignatura extends Component {
         console.log("Proyeccion por asignatura: " + JSON.stringify(asignatura));
 
         AsignaturaProyeccionService.createProyeccionAsignatura(asignatura, 
-            this.state.id_folio, this.state.id_unidad)
+            this.state.id_folio, this.state.id_unidad,
+            this.state.id_docente, this.id_carrera)
         .then(
          () => {
                 this.props.history.push(`/list-proyeccion_asignatura/${this.state.id_folio}`);
@@ -165,8 +168,9 @@ class CreateProyeccionAsignatura extends Component {
         const data = res.data;
 
         let options = data.map(d => ({
-            "value": d.nombre + " " + d.apellido_paterno + " "  + d.apellido_materno,
-            "label": d.nombre + " " + d.apellido_paterno + " "  + d.apellido_materno
+            "value": d.nombre_completo,
+            "label": d.nombre_completo,
+            "id": d.id,
         }))
         this.setState({ docentes: options });
     }
@@ -178,6 +182,7 @@ class CreateProyeccionAsignatura extends Component {
         let options = data.map(d => ({
             "value": d.abreviatura + " - " + d.plan_estudio,
             "label": d.abreviatura + " - " + d.plan_estudio,
+            "id": d.id,
         }))
         this.setState({ carreras: options });
     }
@@ -262,7 +267,8 @@ class CreateProyeccionAsignatura extends Component {
     }
 
     onChangeClaveProgramaHandler = (event) => {
-        this.setState({clave_programa: event.label});
+        this.setState({ clave_programa: event.label });
+        this.setState({ id_carrera: event.id });
 
         this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
         (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
@@ -285,6 +291,7 @@ class CreateProyeccionAsignatura extends Component {
     onChangeNombreDocenteHandler = (event) => {
         // this.setState({nombre_docente: event.target.value});
         this.setState({ nombre_docente: event.label });
+        this.setState({ id_docente: event.id});
         
         this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
         (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?

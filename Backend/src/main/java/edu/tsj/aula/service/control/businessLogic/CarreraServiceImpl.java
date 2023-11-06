@@ -27,21 +27,30 @@ public class CarreraServiceImpl implements ICarreraService {
     private final CarreraRepository carreraRepository;
     private final CarreraMapper mapper;
 
-    @Transactional
-    @Override
-    public CarreraResponseDto createCarrera(CarreraRequestDto carreraRequestDto) {
-        LOGGER.info("Se ha ejecutado el metodo createCarrera");
-        try {
-            CarreraEntity carreraEntity = mapper.requestToEntity(carreraRequestDto);
-            carreraRepository.save(carreraEntity);
-            var result = mapper.entityToResponse(carreraEntity);
-            LOGGER.debug("Se ha guardado el Area Escolar: {}", result.toString());
+//    @Transactional
+//    @Override
+//    public CarreraResponseDto createCarrera(CarreraRequestDto carreraRequestDto) {
+//        LOGGER.info("Se ha ejecutado el metodo createCarrera");
+//        try {
+//            CarreraEntity carreraEntity = mapper.requestToEntity(carreraRequestDto);
+//            carreraRepository.save(carreraEntity);
+//            var result = mapper.entityToResponse(carreraEntity);
+//            LOGGER.debug("Se ha guardado el Area Escolar: {}", result.toString());
+//
+//            return result;
+//        } catch (Exception e) {
+//            LOGGER.error("Error al intentar  crear carrera: {}", carreraRequestDto.toString());
+//            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
+//        }
+//    }
 
-            return result;
-        } catch (Exception e) {
-            LOGGER.error("Error al intentar  crear carrera: {}", carreraRequestDto.toString());
-            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
-        }
+    @Override
+    public CarreraEntity createCarrera(CarreraEntity carreraRequestDto) {
+        var clave_programa = carreraRequestDto.getAbreviatura().concat("-")
+                .concat(carreraRequestDto.getPlan_estudio());
+        carreraRequestDto.setClave_programa(clave_programa);
+
+        return carreraRepository.save(carreraRequestDto);
     }
 
     @Transactional

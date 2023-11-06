@@ -37,6 +37,11 @@ public class DocenteServiceImpl implements IDocenteService {
         // despues en el DTO solo se agregara el id... desde el frontend sin necesidad de
         // invocarlo en el backend para la persistencia del plantel
         docenteRequestDto.setPlantel(exisitingPlantel);
+        var nombre_completo_aux = docenteRequestDto.getNombre().concat(" ")
+                .concat(docenteRequestDto.getApellido_paterno()).concat(" ")
+                .concat(docenteRequestDto.getApellido_paterno()).concat(" ");
+
+        docenteRequestDto.setNombre_completo(nombre_completo_aux);
 
         return docenteRepository.save(docenteRequestDto);
     }

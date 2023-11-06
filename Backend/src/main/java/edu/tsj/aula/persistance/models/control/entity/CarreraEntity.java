@@ -38,6 +38,8 @@ public class CarreraEntity {
 
     @Column private String estatus;
 
+    @Column private String clave_programa;
+
     @CreationTimestamp private LocalDateTime fecha_creacion;
 
     @UpdateTimestamp private LocalDateTime fecha_actualizacion;

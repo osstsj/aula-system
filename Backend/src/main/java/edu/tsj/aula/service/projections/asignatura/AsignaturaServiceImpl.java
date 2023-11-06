@@ -2,10 +2,14 @@ package edu.tsj.aula.service.projections.asignatura;
 
 
 import edu.tsj.aula.configuration.exception.ResourceNotFoundException;
+import edu.tsj.aula.persistance.models.control.entity.CarreraEntity;
+import edu.tsj.aula.persistance.models.control.entity.DocenteEntity;
 import edu.tsj.aula.persistance.models.control.entity.UnidadAcademicaEntity;
 import edu.tsj.aula.persistance.models.projections.entity.FolioEntity;
 import edu.tsj.aula.persistance.models.projections.entity.asignatura.AsignaturaEntity;
 import edu.tsj.aula.persistance.models.projections.mapper.AsignaturaMapper;
+import edu.tsj.aula.persistance.repository.control.CarreraRepository;
+import edu.tsj.aula.persistance.repository.control.DocenteRepository;
 import edu.tsj.aula.persistance.repository.control.PlantelRepository;
 import edu.tsj.aula.persistance.repository.projections.AsignaturaRepository;
 import edu.tsj.aula.persistance.repository.projections.ProyeccionRepository;
@@ -23,20 +27,28 @@ import java.util.List;
 public class AsignaturaServiceImpl implements IAsignaturaService {
     private final AsignaturaRepository asignaturaRepository;
     private final ProyeccionRepository proyeccionRepository;
+    private final DocenteRepository docenteRepository;
+    private final CarreraRepository carreraRepository;
     private final PlantelRepository plantelRepository;
     private final AsignaturaMapper mapper;
 
     @Transactional
     @Override
-    public AsignaturaEntity createAsignatura(AsignaturaEntity asignaturaRequest, Long id_folio, Long id_unidad) {
+    public AsignaturaEntity createAsignatura(AsignaturaEntity asignaturaRequest,
+                                             Long id_folio, Long id_unidad,
+                                             Long id_docente, Long id_carrera) {
         log.debug("Se ha ejecutado el metodo createAsignatura");
         FolioEntity folioEntity = proyeccionRepository.findById(id_folio).orElseThrow(()-> new ResourceNotFoundException((" No se encontro folio..."),
                 HttpStatus.NOT_FOUND));
 
+        DocenteEntity docenteEntity = docenteRepository.findById(id_docente).get();
+        CarreraEntity carreraEntity = carreraRepository.findById(id_carrera).get();
         UnidadAcademicaEntity unidadAcademica = plantelRepository.findById(id_unidad).get();
 
         asignaturaRequest.setProyeccion(folioEntity);
         asignaturaRequest.setUnidad_academica(unidadAcademica);
+        asignaturaRequest.getProfe_asignatura().setNombre_docente(docenteEntity);
+        asignaturaRequest.getProfe_asignatura().setClave_programa(carreraEntity);
 
         Integer subtotal_1 = asignaturaRequest.getHoras_sustantivas_atencion_alumnos().getHoras_asignatura().getA() +
                 asignaturaRequest.getHoras_sustantivas_atencion_alumnos().getHoras_asignatura().getB() +

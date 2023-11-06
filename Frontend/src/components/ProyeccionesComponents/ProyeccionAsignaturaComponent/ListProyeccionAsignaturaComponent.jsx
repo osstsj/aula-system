@@ -285,7 +285,7 @@ class ListCargaAcademicaComponent extends Component {
 
                                         {/* PROFESORES DE ASIGNATURA - Clave de Programa Educativo */}
                                         <td align="center" className={`text-center table-content ${areColumnsVisible ? '' : 'collapse'
-                                            }`}>{asignatura.profe_asignatura.clave_programa}</td>
+                                            }`}>{asignatura.profe_asignatura.clave_programa.clave_programa}</td>
 
                                         {/* PROFESORES DE ASIGNATURA - Código de Nómina */}
                                         <td align="center" className={`text-center table-content  ${areColumnsVisible ? '' : 'collapse'
@@ -297,7 +297,7 @@ class ListCargaAcademicaComponent extends Component {
 
                                         {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Nombre del Docente */}
                                         <td align="center" className={`text-center table-content  ${areColumnsVisible ? '' : 'collapse'
-                                            }`}>{asignatura.profe_asignatura.nombre_docente}</td>
+                                            }`}>{asignatura.profe_asignatura.nombre_docente.nombre_completo}</td>
 
                                         {/*HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Hora de asignatura - A */}
                                         <td align="center" className={`text-center table-content  ${areColumnsVisible ? '' : 'collapse'

@@ -24,11 +24,12 @@ public class ProyeccionAsignaturaController {
 //    }
 
 
-    @PostMapping("/asignatura/{id_folio}/{id_unidad}")
+    @PostMapping("/asignatura/folio/{id_folio}/unidad/{id_unidad}/docente/{id_docente}/carrera/{id_carrera}")
     @ResponseStatus(HttpStatus.CREATED)
     public AsignaturaEntity createProyeccionAsignatura(@RequestBody AsignaturaEntity asignaturaRequestDto,
-                                                       @PathVariable Long id_folio, @PathVariable Long id_unidad) {
-        return asignaturaService.createAsignatura(asignaturaRequestDto, id_folio, id_unidad);
+                                                       @PathVariable Long id_folio, @PathVariable Long id_unidad,
+                                                       @PathVariable Long id_docente, @PathVariable Long id_carrera) {
+        return asignaturaService.createAsignatura(asignaturaRequestDto, id_folio, id_unidad, id_docente, id_carrera);
     }
 
     @GetMapping(value = "/asignatura/{id}",

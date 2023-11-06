@@ -31,7 +31,7 @@ public class DocenteEntity {
 
     @Column private String apellido_materno;
 
-//    @Column private String unidad_academica;
+    @Column private String nombre_completo;
 
     @Column private String categoria;
 

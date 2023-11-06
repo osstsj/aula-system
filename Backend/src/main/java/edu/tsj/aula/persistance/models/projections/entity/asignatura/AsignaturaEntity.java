@@ -31,17 +31,6 @@ public class AsignaturaEntity  implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @JoinColumn(name = "id", nullable = false)
-//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-//    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
-//    @JsonIdentityReference(alwaysAsId=true)
-//    @JsonProperty("id_plantel")
-//    private PlantelEntity unidad_academica;
-//    Se debe relacionar la tabla plantel con proyeccion ya que si en un futuro cambia de nombre UA
-//    causara conflicto por no actualizarse el string que contiene el nombre de la unidad en
-//    la comparacion las proyeccion
-
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE) ///    Tal vez deba quitarse ya que se realaciona con la proyeccion
