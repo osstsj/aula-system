@@ -1,10 +1,7 @@
 package edu.tsj.aula.service.control;
 
-import edu.tsj.aula.persistance.models.control.dto.docenteDto.DocenteRequestDto;
-import edu.tsj.aula.persistance.models.control.dto.docenteDto.DocenteResponseDto;
 import edu.tsj.aula.persistance.models.control.entity.DocenteEntity;
-import edu.tsj.aula.persistance.models.control.entity.PlantelEntity;
-import org.springframework.stereotype.Service;
+import edu.tsj.aula.persistance.models.control.entity.UnidadAcademicaEntity;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +22,7 @@ public interface IDocenteService {
 
     List<DocenteEntity> getAllDocentes();
 
-    List<DocenteEntity> findAllByPlantel(List<PlantelEntity> plantel);
+    List<DocenteEntity> findAllDocentesByPlantel(Long unidad_id);
 
     DocenteEntity getDocenteById(Long id);
 

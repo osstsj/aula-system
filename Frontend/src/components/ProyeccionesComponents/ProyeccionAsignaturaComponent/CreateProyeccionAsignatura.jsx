@@ -19,12 +19,13 @@ class CreateProyeccionAsignatura extends Component {
 
             folio: '',
             id_folio: null,
+            id_unidad: null,
+
             disableA: false,
             disableB: true,
             disablePresidente: true,
             disableSecretario: false,
             disableAgregar: true,
-            disableTest: false,
             disableDocente: true,
 
             error: null,
@@ -113,7 +114,7 @@ class CreateProyeccionAsignatura extends Component {
                 apoyo_operativo: this.state.apoyo_operativo,
                 },
 
-            unidad_academica: this.state.unidad_academica.trim(),
+            // unidad_academica: this.state.unidad_academica.trim(),
             observaciones: this.state.observaciones.trim(),
         }
 
@@ -132,7 +133,9 @@ class CreateProyeccionAsignatura extends Component {
 
         console.log("Proyeccion por asignatura: " + JSON.stringify(asignatura));
 
-        AsignaturaProyeccionService.createProyeccionAsignatura(asignatura, this.state.id_folio).then(
+        AsignaturaProyeccionService.createProyeccionAsignatura(asignatura, 
+            this.state.id_folio, this.state.id_unidad)
+        .then(
          () => {
                 this.props.history.push(`/list-proyeccion_asignatura/${this.state.id_folio}`);
             }
@@ -153,13 +156,12 @@ class CreateProyeccionAsignatura extends Component {
         this.getNivel();
         this.getHorasAcademias_presidente();
         this.getHorasAcademias_secretario();
-        this.getDocenteList();
         this.getCarreraList();
         this.getFolioList();
     }
 
-    async getDocenteList() {
-        const res = await axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + 'docentes');
+    async getDocenteList(id_unidad) {
+        const res = await axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + 'docentes_by_ua/' + id_unidad);
         const data = res.data;
 
         let options = data.map(d => ({
@@ -198,7 +200,8 @@ class CreateProyeccionAsignatura extends Component {
 
         let options = data.map(d => ({
             "value": d.tipo_unidad,
-            "label": d.nombre_completo
+            "label": d.nombre_completo,
+            'id': d.id,
         }))
         this.setState({ unidades: options });
     }
@@ -234,12 +237,6 @@ class CreateProyeccionAsignatura extends Component {
         this.setState({ horas_secretario: academiasList });
     }
 
-    componentDidCatch(error, errorInfo) {
-        this.setState( {
-            error: error,
-            errorInfo: errorInfo
-        })
-    }
 
     onChangeFolioHandler = (event) => {
         // this.setState({nombre_docente: event.target.value});
@@ -253,12 +250,12 @@ class CreateProyeccionAsignatura extends Component {
 
     onChangeUnidadHandler = (event) => {
         this.setState({ unidad_academica: event.label });
-        this.setState({ disableDocente: false });
-        if (event.value === 'Extension') {
-            this.setState({ disableTest: true });
-        } else {
-            this.setState({ disableTest: false });
-        }
+        this.setState({ disableDocente: false })
+        this.setState({ nombre_docente: ''})
+        
+        this.getDocenteList(event.id);
+        this.setState({ id_unidad: event.id })
+
         this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
         (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
             false : true });

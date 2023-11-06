@@ -3,8 +3,9 @@ require('dotenv').config();
 
 
 class AsignaturaProyeccionService {
-    createProyeccionAsignatura(asignaturaDto, id_folio) {
-        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "asignatura/" + id_folio, asignaturaDto);
+    createProyeccionAsignatura(asignaturaDto, id_folio, id_unidad) {
+        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "asignatura/" 
+            + id_folio + "/" + id_unidad, asignaturaDto);
     } 
 
     getAllProyeccionesAsignaturaByFolio(id_folio) {
@@ -33,8 +34,8 @@ class AsignaturaProyeccionService {
         })
     }
 
-    findAllByUnidad_academica(unidad_academica) {
-        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "asignaturas_by_ua/" + unidad_academica)
+    findAllByUnidad_academica(id_folio, id_unidad) {
+        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "asignaturas_by_folio_and_unidad/" + id_folio + "/" + id_unidad)
         .catch(error => {
             if (error.response) {
                 console.error("Error in res");

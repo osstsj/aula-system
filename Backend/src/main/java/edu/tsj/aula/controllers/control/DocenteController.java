@@ -1,9 +1,8 @@
 package edu.tsj.aula.controllers.control;
 
-import edu.tsj.aula.persistance.models.control.dto.docenteDto.DocenteRequestDto;
-import edu.tsj.aula.persistance.models.control.dto.docenteDto.DocenteResponseDto;
+import edu.tsj.aula.configuration.exception.ResourceNotFoundException;
 import edu.tsj.aula.persistance.models.control.entity.DocenteEntity;
-import edu.tsj.aula.persistance.models.control.entity.PlantelEntity;
+import edu.tsj.aula.persistance.models.control.entity.UnidadAcademicaEntity;
 import edu.tsj.aula.service.control.ICarreraService;
 import edu.tsj.aula.service.control.IDocenteService;
 import edu.tsj.aula.service.control.IPlantelService;
@@ -47,6 +46,16 @@ public class DocenteController {
         }
     }
 
+    @GetMapping("/docentes_by_ua/{id_unidad}")
+    public ResponseEntity< List<DocenteEntity>> getDocenteByUnidadAcademicaId(@PathVariable Long id_unidad) {
+        try {
+
+            List<DocenteEntity> docentesByUnidad = docenteService.findAllDocentesByPlantel(id_unidad);
+            return new ResponseEntity<>(docentesByUnidad, HttpStatus.OK);
+        }  catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 //    @GetMapping(value = "/docente/{id}",
 //        produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})

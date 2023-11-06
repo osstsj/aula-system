@@ -1,8 +1,6 @@
 package edu.tsj.aula.service.control;
 
-import edu.tsj.aula.persistance.models.control.dto.plantelDto.PlantelRequestDto;
-import edu.tsj.aula.persistance.models.control.dto.plantelDto.PlantelResponseDto;
-import edu.tsj.aula.persistance.models.control.entity.PlantelEntity;
+import edu.tsj.aula.persistance.models.control.entity.UnidadAcademicaEntity;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,13 +17,13 @@ public interface IPlantelService {
 //
 //    HashMap<String, String> deletePlantelById(Long id);
 
-    PlantelEntity createPlantel(PlantelEntity plantelRequestDto);
+    UnidadAcademicaEntity createPlantel(UnidadAcademicaEntity plantelRequestDto);
 
-    List<PlantelEntity> getAllPlanteles();
+    List<UnidadAcademicaEntity> getAllPlanteles();
 
-    Optional<PlantelEntity> getPlantelById(Long id);
+    Optional<UnidadAcademicaEntity> getPlantelById(Long id);
 
-    PlantelEntity updatePlantelById(Long id, PlantelEntity plantelUpdateRequestDto);
+    UnidadAcademicaEntity updatePlantelById(Long id, UnidadAcademicaEntity plantelUpdateRequestDto);
 
     HashMap<String, String> deletePlantelById(Long id);
 }

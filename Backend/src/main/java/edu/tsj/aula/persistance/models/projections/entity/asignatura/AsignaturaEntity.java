@@ -1,7 +1,8 @@
 package edu.tsj.aula.persistance.models.projections.entity.asignatura;
 
 import com.fasterxml.jackson.annotation.*;
-import edu.tsj.aula.persistance.models.projections.entity.ProyeccionEntity;
+import edu.tsj.aula.persistance.models.control.entity.UnidadAcademicaEntity;
+import edu.tsj.aula.persistance.models.projections.entity.FolioEntity;
 import edu.tsj.aula.persistance.models.projections.entity.asignatura.profesor.ProfeAsignatura;
 import edu.tsj.aula.persistance.models.projections.entity.asignatura.sustantivas.HorasSustantivasAtencionAlumnosAsignatura;
 import edu.tsj.aula.persistance.models.projections.entity.asignatura.necesidad.HorasNecesidadInstitucionalAsignatura;
@@ -42,8 +43,16 @@ public class AsignaturaEntity  implements Serializable {
 //    la comparacion las proyeccion
 
 
-    @Column
-    private String unidad_academica;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE) ///    Tal vez deba quitarse ya que se realaciona con la proyeccion
+//    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityReference(alwaysAsId=true)
+//    @JsonProperty("id_proyeccion")
+    @JoinColumn(name = "id_unidad", nullable = false)
+    private UnidadAcademicaEntity unidad_academica;
+
+//    @Column
+//    private String unidad_academica;
 
     @JoinColumn(name = "id")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -63,7 +72,7 @@ public class AsignaturaEntity  implements Serializable {
     @JsonIdentityReference(alwaysAsId=true)
 //    @JsonProperty("id_proyeccion")
     @JoinColumn(name = "id_proyeccion", nullable = false)
-    private ProyeccionEntity proyeccion;
+    private FolioEntity proyeccion;
 
     @Column
     private Integer total;

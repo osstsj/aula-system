@@ -1,6 +1,6 @@
 package edu.tsj.aula.service.projections;
 
-import edu.tsj.aula.persistance.models.projections.entity.ProyeccionEntity;
+import edu.tsj.aula.persistance.models.projections.entity.FolioEntity;
 import edu.tsj.aula.persistance.repository.projections.ProyeccionRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,20 +17,20 @@ public class ProyeccionServiceImpl implements IProyeccionService {
 
     @Transactional
     @Override
-    public ProyeccionEntity getProyeccionById(Long id) {
+    public FolioEntity getProyeccionById(Long id) {
         return proyeccionRepository.findById(id).get();
         // debe cambiarse a optional por seguridad
     }
 
     @Transactional
     @Override
-    public List<ProyeccionEntity> getAllProyecciones() {
+    public List<FolioEntity> getAllProyecciones() {
         return proyeccionRepository.findAll();
     }
 
     @Transactional
     @Override
-    public ProyeccionEntity createProyeccion(ProyeccionEntity proyeccion) {
+    public FolioEntity createProyeccion(FolioEntity proyeccion) {
         proyeccion.setFolio(proyeccion.getLetra()
                 .concat(proyeccion.getNumero().toString())
                 .concat("-")

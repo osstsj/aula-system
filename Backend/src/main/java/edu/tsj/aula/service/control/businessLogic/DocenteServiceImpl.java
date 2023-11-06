@@ -1,10 +1,8 @@
 package edu.tsj.aula.service.control.businessLogic;
 
 import edu.tsj.aula.configuration.exception.ResourceNotFoundException;
-import edu.tsj.aula.persistance.models.control.dto.docenteDto.DocenteRequestDto;
-import edu.tsj.aula.persistance.models.control.dto.docenteDto.DocenteResponseDto;
 import edu.tsj.aula.persistance.models.control.entity.DocenteEntity;
-import edu.tsj.aula.persistance.models.control.entity.PlantelEntity;
+import edu.tsj.aula.persistance.models.control.entity.UnidadAcademicaEntity;
 import edu.tsj.aula.persistance.models.control.mapper.DocenteMapper;
 import edu.tsj.aula.persistance.repository.control.DocenteRepository;
 import edu.tsj.aula.persistance.repository.control.PlantelRepository;
@@ -16,11 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -51,8 +47,9 @@ public class DocenteServiceImpl implements IDocenteService {
     }
 
     @Override
-    public List<DocenteEntity> findAllByPlantel(List<PlantelEntity> plantel) {
-        return docenteRepository.findAllByPlantel(plantel);
+    public List<DocenteEntity> findAllDocentesByPlantel(Long unidad_id) {
+        UnidadAcademicaEntity plantel = plantelRepository.findById(unidad_id).get();
+        return docenteRepository.findAllByPlantel(Collections.singletonList(plantel));
     }
 
     @Override

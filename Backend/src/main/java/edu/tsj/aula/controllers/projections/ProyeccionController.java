@@ -1,6 +1,6 @@
 package edu.tsj.aula.controllers.projections;
 
-import edu.tsj.aula.persistance.models.projections.entity.ProyeccionEntity;
+import edu.tsj.aula.persistance.models.projections.entity.FolioEntity;
 import edu.tsj.aula.service.projections.IProyeccionService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,12 +16,12 @@ public class ProyeccionController {
 
     @PostMapping("/folio")
     @ResponseStatus(HttpStatus.CREATED)
-    public ProyeccionEntity createFolio(@RequestBody ProyeccionEntity proyeccion) {
+    public FolioEntity createFolio(@RequestBody FolioEntity proyeccion) {
         return proyeccionService.createProyeccion(proyeccion);
     }
 
     @GetMapping(value = "/folios")
-    public List<ProyeccionEntity> getAllFolios() {
+    public List<FolioEntity> getAllFolios() {
         return proyeccionService.getAllProyecciones();
     }
 }

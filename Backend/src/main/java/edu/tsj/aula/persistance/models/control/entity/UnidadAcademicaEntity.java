@@ -12,7 +12,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -21,7 +20,7 @@ import java.util.List;
 @Entity
 @Table(name = "control_plantel")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class PlantelEntity {
+public class UnidadAcademicaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

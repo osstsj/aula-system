@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -23,10 +24,11 @@ public class ProyeccionAsignaturaController {
 //    }
 
 
-    @PostMapping("/asignatura/{id_folio}")
+    @PostMapping("/asignatura/{id_folio}/{id_unidad}")
     @ResponseStatus(HttpStatus.CREATED)
-    public AsignaturaEntity createProyeccionAsignatura(@RequestBody AsignaturaEntity asignaturaRequestDto, @PathVariable Long id_folio) {
-        return asignaturaService.createAsignatura(asignaturaRequestDto, id_folio);
+    public AsignaturaEntity createProyeccionAsignatura(@RequestBody AsignaturaEntity asignaturaRequestDto,
+                                                       @PathVariable Long id_folio, @PathVariable Long id_unidad) {
+        return asignaturaService.createAsignatura(asignaturaRequestDto, id_folio, id_unidad);
     }
 
     @GetMapping(value = "/asignatura/{id}",
@@ -41,10 +43,10 @@ public class ProyeccionAsignaturaController {
         return asignaturaService.getAsignaturas();
     }
 
-    @GetMapping(value = "/asignaturas_by_ua/{unidad_academica}",
+    @GetMapping(value = "/asignaturas_by_folio_and_unidad/{id_folio}/{id_unidad}",
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-    public List<AsignaturaEntity> getAllByUnidadAcademica(@PathVariable String unidad_academica) {
-            return asignaturaService.findAllByUnidad_academica(Arrays.asList(unidad_academica));
+    public List<AsignaturaEntity> getAllByUnidadAcademica(@PathVariable Long id_folio, @PathVariable Long id_unidad) {
+            return asignaturaService.findAllByFolioAndUnidad(id_folio, id_unidad);
     }
 
         @GetMapping(value = "/asignaturas_by_folio/{id_folio}",

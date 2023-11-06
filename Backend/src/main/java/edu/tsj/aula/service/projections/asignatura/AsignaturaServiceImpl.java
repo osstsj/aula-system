@@ -2,9 +2,11 @@ package edu.tsj.aula.service.projections.asignatura;
 
 
 import edu.tsj.aula.configuration.exception.ResourceNotFoundException;
-import edu.tsj.aula.persistance.models.projections.entity.ProyeccionEntity;
+import edu.tsj.aula.persistance.models.control.entity.UnidadAcademicaEntity;
+import edu.tsj.aula.persistance.models.projections.entity.FolioEntity;
 import edu.tsj.aula.persistance.models.projections.entity.asignatura.AsignaturaEntity;
 import edu.tsj.aula.persistance.models.projections.mapper.AsignaturaMapper;
+import edu.tsj.aula.persistance.repository.control.PlantelRepository;
 import edu.tsj.aula.persistance.repository.projections.AsignaturaRepository;
 import edu.tsj.aula.persistance.repository.projections.ProyeccionRepository;
 import lombok.AllArgsConstructor;
@@ -21,16 +23,20 @@ import java.util.List;
 public class AsignaturaServiceImpl implements IAsignaturaService {
     private final AsignaturaRepository asignaturaRepository;
     private final ProyeccionRepository proyeccionRepository;
+    private final PlantelRepository plantelRepository;
     private final AsignaturaMapper mapper;
 
     @Transactional
     @Override
-    public AsignaturaEntity createAsignatura(AsignaturaEntity asignaturaRequest, Long id_folio) {
+    public AsignaturaEntity createAsignatura(AsignaturaEntity asignaturaRequest, Long id_folio, Long id_unidad) {
         log.debug("Se ha ejecutado el metodo createAsignatura");
-        ProyeccionEntity proyeccionEntity = proyeccionRepository.findById(id_folio).orElseThrow(()-> new ResourceNotFoundException((" No se encontro folio..."),
+        FolioEntity folioEntity = proyeccionRepository.findById(id_folio).orElseThrow(()-> new ResourceNotFoundException((" No se encontro folio..."),
                 HttpStatus.NOT_FOUND));
 
-        asignaturaRequest.setProyeccion(proyeccionEntity);
+        UnidadAcademicaEntity unidadAcademica = plantelRepository.findById(id_unidad).get();
+
+        asignaturaRequest.setProyeccion(folioEntity);
+        asignaturaRequest.setUnidad_academica(unidadAcademica);
 
         Integer subtotal_1 = asignaturaRequest.getHoras_sustantivas_atencion_alumnos().getHoras_asignatura().getA() +
                 asignaturaRequest.getHoras_sustantivas_atencion_alumnos().getHoras_asignatura().getB() +
@@ -64,15 +70,17 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
     }
 
     @Override
-    public List<AsignaturaEntity> findAllByUnidad_academica(List<String> unidad_academica) {
-        return asignaturaRepository.findAllByUnidad_academica(unidad_academica);
+    public List<AsignaturaEntity> findAllByFolioAndUnidad(Long id_folio, Long id_unidad_academica) {
+        FolioEntity folio = proyeccionRepository.findById(id_folio).get();
+        UnidadAcademicaEntity unidadAcademica = plantelRepository.findById(id_unidad_academica).get();
+        return asignaturaRepository.findAllByUnidad_academicaAndProyeccion(folio, unidadAcademica);
     }
 
     @Override
     public List<AsignaturaEntity> findAllByFolioId(Long id_folio) {
-        ProyeccionEntity proyeccionEntity = proyeccionRepository.findById(id_folio).orElseThrow(()-> new ResourceNotFoundException((" No se encontro folio..."),
+        FolioEntity folioEntity = proyeccionRepository.findById(id_folio).orElseThrow(()-> new ResourceNotFoundException((" No se encontro folio..."),
                 HttpStatus.NOT_FOUND));
-        return asignaturaRepository.findAllByProyeccionId(proyeccionEntity);
+        return asignaturaRepository.findAllByProyeccionId(folioEntity);
     }
 
     @Transactional

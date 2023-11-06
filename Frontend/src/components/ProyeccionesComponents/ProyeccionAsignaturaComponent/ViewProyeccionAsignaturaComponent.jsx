@@ -93,7 +93,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                     subtotal_2: asignatura.horas_necesidad_institucional.subtotal_2,
 
                 total: asignatura.total,
-                unidad_academica: asignatura.unidad_academica,
+                unidad_academica: asignatura.unidad_academica.nombre_completo,
                 observaciones: asignatura.observaciones,
                 fecha_creacion: asignatura.fecha_creacion,
                 fecha_actualizacion: asignatura.fecha_actualizacion
@@ -102,7 +102,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
     }
 
     back(){
-        this.props.history.push('/list-proyeccion_asignatura');
+        this.props.history.push('/');
     }
 
 
@@ -114,7 +114,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                     <div className="card col-9" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>                     
                         <div className="card-body">
                             <div className="card-header" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                                <h3 className="text-center"><b>Folio: {this.state.proyeccion} <br />Proyeccion Por Asignatura #{this.state.id} <br /> Unidad Academica: {this.state.unidad_academica}</b></h3>
+                                <h3 className="text-center"><b>Folio: {this.state.proyeccion} <br />Proyeccion Por Asignatura #{this.state.id} <br /> Unidad Académica: {this.state.unidad_academica}</b></h3>
                             </div>
                             <br />
                             

@@ -44,7 +44,7 @@ public class DocenteEntity {
 //    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 //    @JsonIdentityReference(alwaysAsId=true)
 //    @JsonProperty("plantel")
-    private PlantelEntity plantel;
+    private UnidadAcademicaEntity plantel;
 
 
     @CreationTimestamp

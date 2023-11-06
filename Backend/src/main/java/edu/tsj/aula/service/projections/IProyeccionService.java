@@ -1,16 +1,16 @@
 package edu.tsj.aula.service.projections;
 
-import edu.tsj.aula.persistance.models.projections.entity.ProyeccionEntity;
+import edu.tsj.aula.persistance.models.projections.entity.FolioEntity;
 
 import java.util.List;
 
 public interface IProyeccionService {
 
-    ProyeccionEntity getProyeccionById(Long id);
+    FolioEntity getProyeccionById(Long id);
 
-    List<ProyeccionEntity> getAllProyecciones();
+    List<FolioEntity> getAllProyecciones();
 
 
-    ProyeccionEntity createProyeccion(ProyeccionEntity proyeccion);
+    FolioEntity createProyeccion(FolioEntity proyeccion);
 
 }

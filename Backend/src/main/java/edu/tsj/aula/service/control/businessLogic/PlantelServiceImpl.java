@@ -1,7 +1,7 @@
 package edu.tsj.aula.service.control.businessLogic;
 
 import edu.tsj.aula.configuration.exception.ResourceNotFoundException;
-import edu.tsj.aula.persistance.models.control.entity.PlantelEntity;
+import edu.tsj.aula.persistance.models.control.entity.UnidadAcademicaEntity;
 import edu.tsj.aula.persistance.models.control.mapper.PlantelMapper;
 import edu.tsj.aula.persistance.repository.control.ExtensionRepository;
 import edu.tsj.aula.persistance.repository.control.PlantelRepository;
@@ -12,13 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -29,25 +26,25 @@ public class PlantelServiceImpl implements IPlantelService {
     private final PlantelMapper mapper;
 
     @Override
-    public PlantelEntity createPlantel(PlantelEntity plantelRequestDto) {
+    public UnidadAcademicaEntity createPlantel(UnidadAcademicaEntity plantelRequestDto) {
         return plantelRepository.save(plantelRequestDto);
     }
 
     @Override
-    public List<PlantelEntity> getAllPlanteles() {
+    public List<UnidadAcademicaEntity> getAllPlanteles() {
         return plantelRepository.findAll();
     }
 
     @Override
-    public Optional<PlantelEntity> getPlantelById(Long id) {
+    public Optional<UnidadAcademicaEntity> getPlantelById(Long id) {
         return plantelRepository.findById(id);
     }
 
     @Override
-    public PlantelEntity updatePlantelById(Long id, PlantelEntity plantelUpdateRequestDto) {
+    public UnidadAcademicaEntity updatePlantelById(Long id, UnidadAcademicaEntity plantelUpdateRequestDto) {
         LOGGER.info("Se ha ejecutado el metodo updatePlantelById");
         try {
-            Optional<PlantelEntity> exisitingPlantelEntity = plantelRepository.findById(id);
+            Optional<UnidadAcademicaEntity> exisitingPlantelEntity = plantelRepository.findById(id);
             if (exisitingPlantelEntity.isEmpty()) {
                 throw new ResourceNotFoundException("No se ha encontrado el plantel para actualizar... con el id: {}"
                         .concat(id.toString()), HttpStatus.NOT_FOUND);

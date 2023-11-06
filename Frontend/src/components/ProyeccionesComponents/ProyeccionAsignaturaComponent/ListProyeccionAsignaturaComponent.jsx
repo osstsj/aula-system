@@ -35,7 +35,7 @@ class ListCargaAcademicaComponent extends Component {
     }
 
     viewProyeccionAsignatura(id) {
-        this.props.history.push(`view-proyeccion_asignatura/${id}`);
+        this.props.history.push(`/view-proyeccion_asignatura/${id}`);
     }
 
     async getUnidadList() {
@@ -44,7 +44,8 @@ class ListCargaAcademicaComponent extends Component {
 
         let options = data.map(d => ({
             "value": d.nombre_completo,
-            "label": d.nombre_completo
+            "label": d.nombre_completo,
+            "id": d.id,
         }))
         this.setState({ unidades: options });
     }
@@ -68,7 +69,7 @@ class ListCargaAcademicaComponent extends Component {
         this.setState({ unidad: event.label });
         // this.setState({ asignaturas: this.state.asignaturas.filter((asignatura) => asignatura.unidad_academica === this.state.unidad)})
 
-        AsignaturaProyeccionService.findAllByUnidad_academica(event.label).then(res =>
+        AsignaturaProyeccionService.findAllByUnidad_academica(this.state.id, event.id).then(res =>
             this.setState({ asignaturas: res.data }));
     }
     exportToExcel() {

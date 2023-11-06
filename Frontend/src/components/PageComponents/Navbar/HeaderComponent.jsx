@@ -63,6 +63,7 @@ class HeaderComponent extends Component {
                                 <a className="dropdown-item" href="/list-carrera">
                                     <b>Lista de Carreras</b>
                                 </a>
+                                <hr />
                                 <a className="dropdown-item" href="/list-carrera_por_unidad">
                                     Lista de Carreras Por Unidad
                                 </a>
@@ -89,15 +90,17 @@ class HeaderComponent extends Component {
                                         Proyeccion por Asignatura
                                     </a>
                                     <div className="dropdown-menu">
-                                        <a className="dropdown-item" href="/add-proyeccion_asignatura">
-                                            Crear Proyeccion
-                                        </a>
                                         <a className="dropdown-item" href="/list-folio-asignatura">
                                             Historial de Folios
                                         </a>
                                         <a className="dropdown-item" href="/create-folio-asignatura">
                                             Crear Nuevo Folio
-                                        </a>                                       
+                                        </a>
+
+                                        <hr />    
+                                        <a className="dropdown-item" href="/add-proyeccion_asignatura">
+                                            Crear Proyeccion
+                                        </a>                                                                           
                                     </div>
                                 </div>
                                 <div className="dropdown-submenu">

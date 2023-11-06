@@ -40,6 +40,6 @@ public class ExtensionEntity {
     @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
     @JsonIdentityReference(alwaysAsId=true)
     @JsonProperty("id_plantel")
-    private PlantelEntity plantel;
+    private UnidadAcademicaEntity plantel;
 
 }
