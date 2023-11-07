@@ -25,6 +25,8 @@ class CreatePlantelComponent extends Component {
             unidad_academica: '',
 
             unidades: [],
+            isLoading: false, // Nuevo estado para controlar la visibilidad del spinner
+
 
             
         }
@@ -40,6 +42,13 @@ class CreatePlantelComponent extends Component {
 
     createPlantel = (e) =>{
         e.preventDefault();
+          // Validar que los campos requeridos no estén vacíos
+          if (this.state.tipo_unidad.trim() === '' || this.state.clave_dgp.trim() === '' || this.state.abreviatura.trim() === '' || this.state.nombre_corto.trim() === '' || this.state.direccion_completa.trim() === '' || this.state.actividad.trim() === '') {
+            alert('Por favor complete todos los campos requeridos.');
+            return;
+        }
+        // PlantelService.getPlantelById(this.state.id).then((res) => {
+        //     let plantelById = res.data;
         if (this.state.disablePlantelList === false) { 
             let plantel = {
                 tipo_unidad: this.state.tipo_unidad.trim(), 
@@ -49,7 +58,8 @@ class CreatePlantelComponent extends Component {
                 nombre_completo: this.state.nombre_completo.trim(),
                 direccion_completa: this.state.direccion_completa.trim(),
             };
-
+// Mostrar el spinner al iniciar la acción
+this.setState({ isLoading: true });
             console.log('Unidad Academica => ' + JSON.stringify(plantel));
             
             PlantelService.createPlantel(plantel).then(res => {
@@ -269,7 +279,16 @@ class CreatePlantelComponent extends Component {
 
                                     <br />
                                         <div className="card-footer text-muted">
+                                        {this.state.isLoading ? (
+                                            // Mostrar el spinner si isLoading es true
+                                            <div className="text-center">
+                                                <div className="spinner-border" role="status">
+                                                    <span className="sr-only">Loading...</span>
+                                                </div>
+                                            </div>
+                                        ) : (
                                             <button className = "btn btn-primary mt-0" onClick={this.createPlantel}>Guardar</button>
+                                        )}
                                             <button className = "btn btn-danger mt-0" onClick={this.cancel.bind(this)} style= {{marginLeft: "10px"}}>Cancelar</button>
                                         </div>
                                 </form>

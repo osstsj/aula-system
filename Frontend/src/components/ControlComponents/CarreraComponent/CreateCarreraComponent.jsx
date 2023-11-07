@@ -115,14 +115,19 @@ class CreateCarreraComponent extends Component {
                                         <div className="col">
                                             <div className="form-outline">
                                                 <label className="">DGP: </label>
-                                                <input
-                                                    // type='number'
-                                                    placeholder="Ingrese DGP..." 
-                                                    name="DGP" className="form-control" 
-                                                    value={this.state.dgp} 
-                                                    onChange={this.changeDGPHandler} 
-                                                    required
+                                                <input  
+                                                 type="text"
+                                                placeholder="Ingrese DGP..."
+                                                name="DGP"
+                                                className="form-control"
+                                                value={this.state.dgp}
+                                                onChange={this.changeDGPHandler}
+                                                onInput={(e) => {
+                                                    e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
+                                                }}
+                                                required
                                                 />
+
                                             </div>
                                         </div>
                                         <div className="col">

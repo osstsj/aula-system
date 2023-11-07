@@ -91,11 +91,16 @@ class CreateColegiaturaComponent extends Component {
                                                 <label className="">Clave : </label>
                                                 <input placeholder="Ingrese Clave de la colegiatura..."
                                                     // type='number'
+                                                    type='text'
                                                     name="clave"
                                                     className="form-control"
                                                     value={this.state.clave}
                                                     onChange={this.onChangeClaveHandler}
                                                     required
+                                                    
+                                                    onInput={(e) => {
+                                                        e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
+                                                    }}
                                                 />
                                             </div>
                                             <small className="form-text text-muted mb-2">Ingrese cantidad numerica.</small>
@@ -126,12 +131,16 @@ class CreateColegiaturaComponent extends Component {
                                                     </div>
                                                     <input
                                                         // type='number'
+                                                        type="text"
                                                         placeholder="Ingrese monto de la colegiatura..."
                                                         name="clave"
                                                         className="form-control"
                                                         value={this.state.monto}
                                                         onChange={this.onChangeMontoHandler}
                                                         required
+                                                        onInput={(e) => {
+                                                            e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
+                                                        }}
                                                     />
                                                 </div>
                                                 <small className="form-text text-muted mb-2">Ingrese cantidad numerica.</small>
