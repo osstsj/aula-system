@@ -2,10 +2,10 @@ package edu.tsj.aula.service.control.businessLogic;
 
 import edu.tsj.aula.configuration.exception.ResourceNotFoundException;
 import edu.tsj.aula.persistance.models.control.entity.DocenteEntity;
-import edu.tsj.aula.persistance.models.control.entity.UnidadAcademicaEntity;
+import edu.tsj.aula.persistance.models.control.entity.UnidadEntity;
 import edu.tsj.aula.persistance.models.control.mapper.DocenteMapper;
 import edu.tsj.aula.persistance.repository.control.DocenteRepository;
-import edu.tsj.aula.persistance.repository.control.PlantelRepository;
+import edu.tsj.aula.persistance.repository.control.UnidadRepository;
 import edu.tsj.aula.service.control.IDocenteService;
 import lombok.AllArgsConstructor;
 //import lombok.extern.slf4j.Slf4j;
@@ -25,18 +25,18 @@ public class DocenteServiceImpl implements IDocenteService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DocenteServiceImpl.class);
     private final DocenteRepository docenteRepository;
     private final DocenteMapper mapper; // no se puede ser static ya que no ha sido inicializada...
-    private final PlantelRepository plantelRepository;
+    private final UnidadRepository unidadRepository;
 
     @Override
-    public DocenteEntity createDocente(DocenteEntity docenteRequestDto, Long plantel_id) {
-        var exisitingPlantel = plantelRepository.findById(plantel_id).orElseThrow(
-                   () -> new ResourceNotFoundException("No se ha encontrado el plantel con el id: "
-                           .concat(plantel_id.toString()), HttpStatus.NOT_FOUND)
+    public DocenteEntity createDocente(DocenteEntity docenteRequestDto, Long id_unidad) {
+        var exisitingUnidad = unidadRepository.findById(id_unidad).orElseThrow(
+                   () -> new ResourceNotFoundException("No se ha encontrado la unidad con el id: "
+                           .concat(id_unidad.toString()), HttpStatus.NOT_FOUND)
            );
 
         // despues en el DTO solo se agregara el id... desde el frontend sin necesidad de
         // invocarlo en el backend para la persistencia del plantel
-        docenteRequestDto.setPlantel(exisitingPlantel);
+        docenteRequestDto.setUnidad(exisitingUnidad);
         var nombre_completo_aux = docenteRequestDto.getNombre().concat(" ")
                 .concat(docenteRequestDto.getApellido_paterno()).concat(" ")
                 .concat(docenteRequestDto.getApellido_paterno()).concat(" ");
@@ -52,9 +52,9 @@ public class DocenteServiceImpl implements IDocenteService {
     }
 
     @Override
-    public List<DocenteEntity> findAllDocentesByPlantel(Long unidad_id) {
-        UnidadAcademicaEntity plantel = plantelRepository.findById(unidad_id).get();
-        return docenteRepository.findAllByPlantel(Collections.singletonList(plantel));
+    public List<DocenteEntity> findAllDocentesByUnidad(Long id_unidad) {
+        UnidadEntity unidad = unidadRepository.findById(id_unidad).get();
+        return docenteRepository.findAllByUnidad(Collections.singletonList(unidad));
     }
 
     @Override
@@ -63,8 +63,41 @@ public class DocenteServiceImpl implements IDocenteService {
     }
 
     @Override
-    public DocenteEntity updateDocenteById(Long id, DocenteEntity docenteRequestDto) {
-        return null;
+    public DocenteEntity updateDocenteById(Long id, Long id_unidad, DocenteEntity docenteRequestDto) {
+        try {
+            var unidad = unidadRepository.findById(id_unidad).orElseThrow(
+                    () -> new ResourceNotFoundException("No se ha encontrado la unidad con el id: "
+                            .concat(id_unidad.toString()), HttpStatus.NOT_FOUND)
+            );
+
+            // despues en el DTO solo se agregara el id... desde el frontend sin necesidad de
+            // invocarlo en el backend para la persistencia del plantel
+//            docenteRequestDto.setPlantel(exisitingPlantel);
+            var nombre_completo_aux = docenteRequestDto.getNombre().concat(" ")
+                    .concat(docenteRequestDto.getApellido_paterno()).concat(" ")
+                    .concat(docenteRequestDto.getApellido_paterno()).concat(" ");
+
+            var existingDocente = docenteRepository.findById(id).orElseThrow(
+                    () -> new ResourceNotFoundException("No se ha encontrado el docente con el id: "
+                            .concat(id.toString()), HttpStatus.NOT_FOUND)
+            );
+
+            existingDocente.setNombre(docenteRequestDto.getNombre());
+            existingDocente.setApellido_paterno(docenteRequestDto.getApellido_paterno());
+            existingDocente.setApellido_materno(docenteRequestDto.getApellido_materno());
+
+            existingDocente.setNombre_completo(nombre_completo_aux);
+
+            existingDocente.setCategoria(docenteRequestDto.getCategoria());
+            existingDocente.setActividad(docenteRequestDto.getActividad());
+            existingDocente.setUnidad(unidad);
+
+
+            return docenteRepository.save(docenteRequestDto);
+        } catch (Exception e ) {
+            LOGGER.error("Error al intetar actualizar el docente con el id: ".concat(id.toString()));
+            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
+        }
     }
 
     @Override

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import CarreraPorUnidadService from '../../../services/Control/CarreraPorUnidadService';
+import UnidadService from '../../../services/Control/UnidadService';
+import CarreraService from '../../../services/Control/CarreraService';
 import Select from 'react-select'
 import axios from 'axios';
 import '../../StyleGlobal/Style.css'
@@ -34,10 +36,13 @@ class UpdateCarreraPorUnidadComponent extends Component {
                 modalidad: unidad.modalidad,
                 nivel: unidad.nivel
             });
+        }).catch(() => {
+            alert("Error al intentar traer la carrera por unidad...");
+            this.props.history.push('/list-carrera_por_unidad');
         });
 
         this.getCarrerasList();
-        this.getPlantelesList();
+        this.getUnidadList();
         this.getModalidad();
         this.getNivel();
     }
@@ -54,30 +59,42 @@ class UpdateCarreraPorUnidadComponent extends Component {
         
         CarreraPorUnidadService.updateCarreraPorUnidadById(unidad, this.state.id).then(res => {
             this.props.history.push('/list-carrera_por_unidad');
+        }).catch(() => {
+            alert("Error al intentar actualizar la carrera por unidad...");
+            this.props.history.push('/list-carrera_por_unidad');
         });
     }
 
-
     async getCarrerasList() {
-        const res = await axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL  + 'carreras');
-        const data = res.data;
-
-        let options = data.map(d => ({
-            "value": d.nombre,
-            "label": d.nombre
-        }))
+        let options = null;
+        
+        await CarreraService.getAllCarreras().then(res => {
+            const data = res.data;
+            options = data.map(d => ({
+                "value": d.nombre,
+                "label": d.nombre
+            }))
+        }).catch(() => {
+            alert("Error al intentar traer las carreras...");
+            this.props.history.push('/list-carrera_por_unidad');
+        });
         this.setState({ carreras: options });
     }
 
-    async getPlantelesList() {
-        const res = await axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL  + "planteles");
-        const data = res.data;
+    async getUnidadList() {
+        let options = null;
 
-        let options = data.map(d => ({
-            "value": d.nombre_completo,
-            "label": d.nombre_completo
-        }))
-        this.setState({ planteles: options });
+        await UnidadService.getAllUnidades().then(res => {
+            const data = res.data;
+            options = data.map(d => ({
+                "value": d.nombre_completo,
+                "label": d.nombre_completo
+            }))
+        }).catch(() => {
+            alert("Error al intentar traer las UAs...");
+            this.props.history.push('/list-carrera_por_unidad');
+        });
+        this.setState({unidades: options})
     }
 
     getModalidad() {
@@ -104,7 +121,7 @@ class UpdateCarreraPorUnidadComponent extends Component {
         this.setState({carrera_nombre: event.label});
     }
 
-    changePlantelesHandler = (event) => {
+    changeUnidadesHandler = (event) => {
         this.setState({unidad_academica: event.label});
     }
     
@@ -167,8 +184,8 @@ class UpdateCarreraPorUnidadComponent extends Component {
                                         <label>Lista de Unidades Académicas</label>
                                             <Select 
                                             placeholder="Seleccione una lista de planteles..."
-                                            options={this.state.planteles} 
-                                            onChange={this.changePlantelesHandler}
+                                            options={this.state.unidades} 
+                                            onChange={this.changeUnidadesHandler}
                                             value={{ label: this.state.unidad_academica }} />
                                         </div>
                                     </div>

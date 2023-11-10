@@ -19,7 +19,7 @@ class ListOfertaAcademicaComponent extends Component {
         }
 
         this.addUnidad = this.addUnidad.bind(this);
-        this.editCarreraPorUnidad = this.editCarreraPorUnidad.bind(this);
+        this.updateCarreraPorUnidad = this.updateCarreraPorUnidad.bind(this);
         this.deleteOfertasAcademicas = this.deleteOfertasAcademicas.bind(this);
         this.viewCarreraPorUnidad = this.viewCarreraPorUnidad.bind(this);
         this.exportToExcel = this.exportToExcel.bind(this);  // Método para exportar a Excel
@@ -36,13 +36,16 @@ class ListOfertaAcademicaComponent extends Component {
                 isModalOpen: false, // Cierra el modal después de eliminar
                 ofertaToDeleteId: null, // Restablece el ID de la colegiatura
             });
+        }).catch(() => {
+            alert("Error al intentar eliminar la oferta academica...");
+            this.props.history.push('/list-oferta-academica');
         });
     }
     viewCarreraPorUnidad(id) {
         this.props.history.push(`view-oferta-academica/${id}`);
     }
 
-    editCarreraPorUnidad(id) {
+    updateCarreraPorUnidad(id) {
         this.props.history.push(`update-oferta-academica/${id}`);
     }
 
@@ -51,7 +54,10 @@ class ListOfertaAcademicaComponent extends Component {
         OfertaAcademicaService.getAllOfertasAcademicas().then(
             res => {
                 this.setState({ ofertas: res.data });
-            });
+        }).catch(() => {
+            alert("Error al intentar traer las ofertas academicas...");
+            this.props.history.push('/list-oferta-academica');
+        });
     }
     addUnidad() {
         this.props.history.push('/add-oferta-academica');
@@ -173,7 +179,7 @@ class ListOfertaAcademicaComponent extends Component {
                                         <td className='table-conten'>{oferta.turno}</td>
                                         <td className='table-conten'>{oferta.periodo}</td>
                                         <td className='table-action' >
-                                            <button onClick={() => this.editCarreraPorUnidad(oferta.id)} className="btn btn-warning mt-0">Actualizar</button>
+                                            <button onClick={() => this.updateCarreraPorUnidad(oferta.id)} className="btn btn-warning mt-0">Actualizar</button>
                                             <button className="btn btn-danger mt-0" style={boton}
                                                 onClick={() => this.toggleModal(oferta.id)} // Abre el modal y pasa el ID de la colegiatura
                                             > Eliminar</button>

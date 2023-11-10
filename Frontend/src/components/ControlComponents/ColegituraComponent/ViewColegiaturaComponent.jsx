@@ -32,6 +32,9 @@ class viewColegiaturaComponent extends Component {
                 fecha_creacion: colegiatura.fecha_creacion,
                 fecha_actualizacion: colegiatura.fecha_actualizacion
             });
+        }).catch(() => {
+            alert("Error al intentar traer la colegiatura...");
+            this.props.history.push('/list-colegiatura');
         });
     }
 

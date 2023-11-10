@@ -18,7 +18,7 @@ class ListCarreraComponent extends Component {
             carreraToDeleteId: null, // Estado para almacenar el ID de la colegiatura a eliminar
         }
         this.addCarrera = this.addCarrera.bind(this);
-        this.editCarrera = this.editCarrera.bind(this);
+        this.updateCarrera = this.updateCarrera.bind(this);
         this.deleteCarrera = this.deleteCarrera.bind(this);
         this.exportToExcel = this.exportToExcel.bind(this);  // Método para exportar a Excel
         this.exportToPDF = this.exportToPDF.bind(this); // Método para exportar a PDF
@@ -34,6 +34,9 @@ class ListCarreraComponent extends Component {
                 carreraToDeleteId: null, // Restablece el ID de la colegiatura
             });
 
+        }).catch(() => {
+            alert("Error al intentar eliminar la carrera...");
+            this.props.history.push('/list-carrera');
         });
     }
 
@@ -41,7 +44,7 @@ class ListCarreraComponent extends Component {
         this.props.history.push(`view-carrera/${id}`);
     }
 
-    editCarrera(id) {
+    updateCarrera(id) {
         this.props.history.push(`update-carrera/${id}`);
     }
 
@@ -49,6 +52,9 @@ class ListCarreraComponent extends Component {
         //promise
         CarreraService.getAllCarreras().then((res) => {
             this.setState({ carreras: res.data });
+        }).catch(() => {
+            alert("Error al intentar traer las carreras...");
+            this.props.history.push('/list-carrera');
         });
     }
 
@@ -166,7 +172,7 @@ class ListCarreraComponent extends Component {
                                         <td className='table-conten'>{carrera.estatus}</td>
                                         <td className='table-conten'>{carrera.plan_estudio}</td>
                                         <td className='table-action'>
-                                            <button onClick={() => this.editCarrera(carrera.id)} className="btn btn-warning mt-0">Actualizar</button>
+                                            <button onClick={() => this.updateCarrera(carrera.id)} className="btn btn-warning mt-0">Actualizar</button>
                                             <button className="btn btn-danger mt-0" style={boton}
                                                 onClick={() => this.toggleModal(carrera.id)} // Abre el modal y pasa el ID de la colegiatura
                                             > Eliminar</button>

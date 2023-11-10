@@ -3,8 +3,8 @@ require('dotenv').config();
 
 
 class OfertaAcademica {
-    createOfertaAcademica(oferta) {
-        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "oferta_academica", oferta)
+    createOfertaAcademica(ofertaDto) {
+        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "oferta_academica", ofertaDto)
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for createOfertaAcademica...");
@@ -42,8 +42,8 @@ class OfertaAcademica {
         });
     }
 
-    updateOfertaAcademicaById(oferta,id) {
-        return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "oferta_academica/" + id, oferta)
+    updateOfertaAcademicaById(ofertaDto,id) {
+        return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "oferta_academica/" + id, ofertaDto)
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for updateOfertaAcademicaById...");

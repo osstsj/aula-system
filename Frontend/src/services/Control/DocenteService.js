@@ -3,8 +3,8 @@ require('dotenv').config();
 
 
 class DocenteService {
-    createDocente(docente, plantel_id) {
-        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "docente/" + plantel_id, docente)
+    createDocente(docenteDto, id_unidad) {
+        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "docente/" + id_unidad, docenteDto)
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for createDocente...");
@@ -16,7 +16,7 @@ class DocenteService {
         });
     }
 
-    getAllDocentes(id) {
+    getAllDocentes() {
         return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "docentes")
         .catch(err => {
             if (err.response) {
@@ -27,6 +27,19 @@ class DocenteService {
                 console.error("Something happend, unknown error for getAllDocentes");
             }
         });
+    }
+
+    getAllDocentesByUA(id_unidad) {
+        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + 'docentes_by_ua/' + id_unidad)
+        .catch(err => {
+            if (err.response) {
+                console.error("Error in response for getAllDocentesByUA...");
+            } else if(err.request) {
+                console.error("Error in request for getAllDocentesByUA...");
+            } else {
+                console.error("Something happend, unknown error for getAllDocentesByUA");
+            }
+        })
     }
 
     getDocenteById(id) {
@@ -42,8 +55,8 @@ class DocenteService {
         });
     }
 
-    updateDocenteById(docente, id) {
-        return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "docente/" + id, docente)
+    updateDocenteById(docenteDto, id) {
+        return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "docente/" + id, docenteDto)
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for updateDocenteById...");

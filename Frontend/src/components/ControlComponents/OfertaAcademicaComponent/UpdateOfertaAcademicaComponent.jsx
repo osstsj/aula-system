@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import OfertaAcademicaService from '../../../services/Control/OfertaAcademicaService';
+import UnidadService from '../../../services/Control/UnidadService';
+import CarreraService from '../../../services/Control/CarreraService';
 import Select from 'react-select'
-import axios from 'axios';
 import '../../StyleGlobal/Style.css'
 require('dotenv').config();
 
@@ -36,7 +37,12 @@ class UpdateOfertaAcademicaComponent extends Component {
                 turno: oferta.turno,
                 periodo: oferta.periodo,
             });
+        }).catch(() => {
+            alert("Error al intentar traer la oferta academica...");
+            this.props.history.push('/list-oferta-academica');
         });
+
+
         this.getUnidadList();
         this.getCarrerasList();
         this.getModalidad();
@@ -56,29 +62,43 @@ class UpdateOfertaAcademicaComponent extends Component {
         
         OfertaAcademicaService.updateOfertaAcademicaById(oferta, this.state.id).then(res => {
             this.props.history.push('/list-oferta-academica');
+        }).catch(() => {
+            alert("Error al intentar actualizar la oferta academica...");
+            this.props.history.push('/list-oferta-academica');
         });
     }
-    async getUnidadList() {
-        const res = await axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + 'planteles');
-        const data = res.data;
 
-        let options = data.map(d => ({
-            "value": d.nombre_completo,
-            "label": d.nombre_completo
-        }))
-        this.setState({ unidades: options });
+    
+    async getCarrerasList() {
+        let options = null;
+        
+        await CarreraService.getAllCarreras().then(res => {
+            const data = res.data;
+            options = data.map(d => ({
+                "value": d.nombre,
+                "label": d.nombre
+            }))
+        }).catch(() => {
+            alert("Error al intentar traer las carreras...");
+            this.props.history.push('/list-oferta-academica');
+        });
+        this.setState({ carreras: options });
     }
 
+    async getUnidadList() {
+        let options = null;
 
-    async getCarrerasList() {
-        const res = await axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + 'carreras');
-        const data = res.data;
-
-        let options = data.map(d => ({
-            "value": d.nombre,
-            "label": d.nombre
-        }))
-        this.setState({ carreras: options });
+        await UnidadService.getAllUnidades().then(res => {
+            const data = res.data;
+            options = data.map(d => ({
+                "value": d.nombre_completo,
+                "label": d.nombre_completo
+            }))
+        }).catch(() => {
+            alert("Error al intentar traer las UAs...");
+            this.props.history.push('/list-oferta-academica');
+        });
+        this.setState({unidades: options})
     }
 
    
@@ -180,7 +200,7 @@ class UpdateOfertaAcademicaComponent extends Component {
                                             <Select
                                              placeholder="Seleccione una nivel Academico..."
                                              options={this.state.turnos} 
-                                            onChange={this.changeNivelHandler}
+                                            onChange={this.changeTurnoHandler}
                                              value={{ label: this.state.turno }}
                                             />
                                         </div>

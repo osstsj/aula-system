@@ -3,8 +3,8 @@ require('dotenv').config();
 
 
 class CarreraPorUnidadService {
-    createCarreraPorUnidad(carrera) {
-        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "carreraPorUnidad", carrera)
+    createCarreraPorUnidad(carreraDto) {
+        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "carreraPorUnidad", carreraDto)
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for createCarreraPorUnidad...");
@@ -42,8 +42,8 @@ class CarreraPorUnidadService {
         });
     }
 
-    updateCarreraPorUnidadById(carrera, id) {
-        return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "carreraPorUnidad/" + id, carrera)
+    updateCarreraPorUnidadById(carreraDto, id) {
+        return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "carreraPorUnidad/" + id, carreraDto)
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for updateCarreraPorUnidadById...");

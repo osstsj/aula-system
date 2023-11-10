@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import CarreraPorUnidadService from '../../../services/Control/CarreraPorUnidadService';
+import CarreraService from '../../../services/Control/CarreraService';
+import UnidadService from '../../../services/Control/UnidadService';
+
 import Select from 'react-select'
-import axios from 'axios';
 import '../../StyleGlobal/Style.css'
 
 class CreateCarreraPorUnidadComponent extends Component {
@@ -10,7 +12,7 @@ class CreateCarreraPorUnidadComponent extends Component {
 
         this.state = {
             carreras: [],
-            planteles: [],
+            unidades: [],
             modalidades: [],
             niveles: [],
 
@@ -24,7 +26,7 @@ class CreateCarreraPorUnidadComponent extends Component {
 
     }
 
-    saveCarreraPorUnidad = (e) => {
+    createCarreraPorUnidad = (e) => {
         // Validar que los campos requeridos no estén vacíos
         if (this.state.carrera_nombre.trim() === '' || this.state.unidad_academica.trim() === '' || this.state.modalidad.trim() === '' || this.state.nivel.trim() === '') {
             alert('Por favor complete todos los campos requeridos.');
@@ -44,36 +46,49 @@ class CreateCarreraPorUnidadComponent extends Component {
         CarreraPorUnidadService.createCarreraPorUnidad(cPorU).then(
             res => {
                 this.props.history.push('/list-carrera_por_unidad')
-            });
+        }).catch(() => {
+            alert("Error al intentar crear la carrera por unidad...");
+            this.props.history.push('/list-carrera_por_unidad');
+        });
 
     }
     componentDidMount() {
         this.getCarrerasList();
-        this.getPlantelesList();
+        this.getUnidadList();
         this.getModalidad();
         this.getNivel();
     }
 
     async getCarrerasList() {
-        const res = await axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL  + 'carreras');
-        const data = res.data;
-
-        let options = data.map(d => ({
-            "value": d.nombre,
-            "label": d.nombre
-        }))
+        let options = null;
+        
+        await CarreraService.getAllCarreras().then(res => {
+            const data = res.data;
+            options = data.map(d => ({
+                "value": d.nombre,
+                "label": d.nombre
+            }))
+        }).catch(() => {
+            alert("Error al intentar traer las carreras...");
+            this.props.history.push('/list-carrera_por_unidad');
+        });
         this.setState({ carreras: options });
     }
 
-    async getPlantelesList() {
-        const res = await axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL  + "planteles");
-        const data = res.data;
+    async getUnidadList() {
+        let options = null;
 
-        let options = data.map(d => ({
-            "value": d.nombre_completo,
-            "label": d.nombre_completo
-        }))
-        this.setState({ planteles: options });
+        await UnidadService.getAllUnidades().then(res => {
+            const data = res.data;
+            options = data.map(d => ({
+                "value": d.nombre_completo,
+                "label": d.nombre_completo
+            }))
+        }).catch(() => {
+            alert("Error al intentar traer las UAs...");
+            this.props.history.push('/list-carrera_por_unidad');
+        });
+        this.setState({unidades: options})
     }
 
     getModalidad() {
@@ -98,7 +113,7 @@ class CreateCarreraPorUnidadComponent extends Component {
     changeCarrerasHandler = (event) => {
         this.setState({ carrera_nombre: event.label });
     }
-    changePlantelesHandler = (event) => {
+    changeUnidadesHandler = (event) => {
         this.setState({ unidad_academica: event.label });
     }
     changeModalidadHandler = (event) => {
@@ -111,6 +126,8 @@ class CreateCarreraPorUnidadComponent extends Component {
     cancel() {
         this.props.history.push('/list-carrera_por_unidad');
     }
+
+
     render() {
         return (
             <div className="container">
@@ -154,8 +171,8 @@ class CreateCarreraPorUnidadComponent extends Component {
                                         <div className="form-outline">
                                             <label>Lista de Unidades Académicas</label>
                                             <Select
-                                                options={this.state.planteles}
-                                                onChange={(e) => this.changePlantelesHandler(e)}
+                                                options={this.state.unidades}
+                                                onChange={(e) => this.changeUnidadesHandler(e)}
                                                 value={{ label: this.state.unidad_academica === "" ? "Seleccione una UA..." : this.state.unidad_academica }}
                                             />
                                         </div>
@@ -186,7 +203,7 @@ class CreateCarreraPorUnidadComponent extends Component {
                                     </div>
                                 </div>
                             ) : (
-                                <button className="btn btn-primary mt-0" onClick={this.saveCarreraPorUnidad}>Agregar</button>
+                                <button className="btn btn-primary mt-0" onClick={this.createCarreraPorUnidad}>Agregar</button>
                             )}
                             <button className="btn btn-danger mt-0" onClick={this.cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancelar</button>
                         </div>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import '../../StyleGlobal/Style.css';
 import DocenteService from '../../../services/Control/DocenteService';
-import PlantelService from '../../../services/Control/PlantelService';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable'; // Importa la extensión jspdf-autotable
@@ -32,6 +31,9 @@ class ListDocenteComponent extends Component {
                 docentes: this.state.docentes.filter(docente => docente.id !== id),
                 isModalOpen: false, // Cierra el modal después de eliminar
                 docenteToDeleteId: null, // Restablece el ID de la colegiatura
+            }).catch(() => {
+                alert("Error al intentar eliminar al docente...");
+                this.props.history.push('/list-docente');
             });
         });
     }
@@ -48,6 +50,9 @@ class ListDocenteComponent extends Component {
         //promise
         DocenteService.getAllDocentes().then((res) => {
             this.setState({ docentes: res.data });
+        }).catch(() => {
+            alert("Error al intentar trear al los docentes...");
+            this.props.history.push('/list-docente');
         });
     }
 
@@ -150,7 +155,7 @@ class ListDocenteComponent extends Component {
                                         <td className='table-conten'>{docente.nombre}</td>
                                         <td className='table-conten'>{docente.apellido_paterno}</td>
                                         <td className='table-conten'>{docente.apellido_materno}</td>
-                                        <td className='table-conten'>{docente.plantel.nombre_completo}</td>
+                                        <td className='table-conten'>{docente.unidad.nombre_completo}</td>
                                         <td className='table-conten'>{docente.categoria}</td>
                                         <td className='table-conten'>{docente.actividad}</td>
                                         <td className='table-action'>

@@ -11,5 +11,5 @@ import java.util.Optional;
 
 @Repository
 public interface ExtensionRepository extends JpaRepository<ExtensionEntity, Long> {
-    List<ExtensionEntity> findByPlantelId(Long id_plantel);
+    List<ExtensionEntity> findByUnidadId(Long id_unidad);
 }

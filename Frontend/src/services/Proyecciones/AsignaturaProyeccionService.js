@@ -4,7 +4,7 @@ require('dotenv').config();
 
 class AsignaturaProyeccionService {
     createProyeccionAsignatura(asignaturaDto, id_folio, id_unidad, id_docente, id_carrera) {
-        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "/asignatura/folio/" + id_folio 
+        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "asignatura/folio/" + id_folio 
         + "/unidad/" + id_unidad + "/docente/" + id_docente + "/carrera/" + id_carrera, asignaturaDto);
     } 
 

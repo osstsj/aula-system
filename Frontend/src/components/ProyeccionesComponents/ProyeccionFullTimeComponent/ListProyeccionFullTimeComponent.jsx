@@ -4,7 +4,7 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import '../Style/Table.css';
 import '../../StyleGlobal/Style.css'
 
-class ListProyeccionOrariaComponent extends Component {
+class ListProyeccionFullTimeComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -224,4 +224,4 @@ class ListProyeccionOrariaComponent extends Component {
     }
 }
 
-export default ListProyeccionOrariaComponent;
+export default ListProyeccionFullTimeComponent;

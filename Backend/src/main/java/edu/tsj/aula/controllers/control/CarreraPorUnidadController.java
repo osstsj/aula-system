@@ -22,7 +22,8 @@ public class CarreraPorUnidadController {
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<CarreraPorUnidadResponseDto> createCarreraPorUnidad(@RequestBody CarreraPorUnidadRequestDto carreraPorUnidadRequestDto) {
+    public ResponseEntity<CarreraPorUnidadResponseDto> createCarreraPorUnidad(
+            @RequestBody CarreraPorUnidadRequestDto carreraPorUnidadRequestDto) {
         try {
             var result = carreraPorUnidadService.createCarreraPorUnidad(carreraPorUnidadRequestDto);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
@@ -56,7 +57,8 @@ public class CarreraPorUnidadController {
     @PutMapping(value="/carreraPorUnidad/{id}",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-    public ResponseEntity<CarreraPorUnidadResponseDto> updateCarreraPorUnidadById(@PathVariable Long id, @RequestBody CarreraPorUnidadRequestDto carreraPorUnidadRequestDto) {
+    public ResponseEntity<CarreraPorUnidadResponseDto> updateCarreraPorUnidadById(
+            @PathVariable Long id, @RequestBody CarreraPorUnidadRequestDto carreraPorUnidadRequestDto) {
         try {
             var result = carreraPorUnidadService.updateCarreraPorUnidadById(id, carreraPorUnidadRequestDto);
             return new ResponseEntity<>(result, HttpStatus.OK);

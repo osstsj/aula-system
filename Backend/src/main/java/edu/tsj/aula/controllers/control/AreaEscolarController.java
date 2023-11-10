@@ -22,7 +22,8 @@ public class AreaEscolarController {
     @PostMapping(value="/area",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-    public ResponseEntity<AreaEscolarResponseDto> createAreaEscolar(@Valid @RequestBody AreaEscolarRequestDto areaEscolarRequestDto) {
+    public ResponseEntity<AreaEscolarResponseDto> createAreaEscolar(
+            @Valid @RequestBody AreaEscolarRequestDto areaEscolarRequestDto) {
         try {
             var result = areaEscolarService.createAreaEscolar(areaEscolarRequestDto);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
@@ -56,7 +57,8 @@ public class AreaEscolarController {
     @PutMapping(value="/area/{id}",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-    public ResponseEntity<AreaEscolarResponseDto> updateAreaEscolarById(@PathVariable Long id,@Valid @RequestBody AreaEscolarRequestDto areaEscolarRequestDto) {
+    public ResponseEntity<AreaEscolarResponseDto> updateAreaEscolarById(
+            @PathVariable Long id,@Valid @RequestBody AreaEscolarRequestDto areaEscolarRequestDto ) {
         try {
             var result = areaEscolarService.updateAreaEscolar(id, areaEscolarRequestDto);
             return new ResponseEntity<>(result, HttpStatus.OK);

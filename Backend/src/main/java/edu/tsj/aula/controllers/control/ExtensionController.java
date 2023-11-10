@@ -13,13 +13,14 @@ import java.util.List;
 public class ExtensionController {
     private final IExtensionService extensionService;
 
-    @PostMapping("/extension/{id_plantel}")
-    public ExtensionEntity createExtensionByPlanteId(@PathVariable Long id_plantel, @RequestBody ExtensionEntity extensionEntity) {
-        return extensionService.createExtensionByPlantelId(id_plantel, extensionEntity);
+    @PostMapping("/extension/{id_unidad}")
+    public ExtensionEntity createExtensionByUnidadId(
+            @PathVariable Long id_unidad, @RequestBody ExtensionEntity extensionEntity) {
+        return extensionService.createExtensionByUnidadId(id_unidad, extensionEntity);
     }
 
-    @GetMapping("/extensiones/{id_plantel}")
-    public List<ExtensionEntity> getAllExtensionsByPlantelId(@PathVariable Long id_plantel) {
-        return extensionService.getAllExtensionesByPlantelId(id_plantel);
+    @GetMapping("/extensiones/{id_unidad}")
+    public List<ExtensionEntity> getAllExtensionsByUnidadId(@PathVariable Long id_unidad) {
+        return extensionService.getAllExtensionesByUnidadId(id_unidad);
     }
 }

@@ -3,8 +3,8 @@ require('dotenv').config();
 
 
 class CarreraService {
-    createCarrera(carrera) {
-        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "carrera", carrera)
+    createCarrera(carreraDto) {
+        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "carrera", carreraDto)
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for createDocente...");
@@ -42,8 +42,8 @@ class CarreraService {
         });
     }
 
-    updateCarreralById(carrera, carreraId) {
-        return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "carrera/" + carreraId, carrera)
+    updateCarreralById(carreraDto, carreraId) {
+        return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "carrera/" + carreraId, carreraDto)
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for createDocente...");

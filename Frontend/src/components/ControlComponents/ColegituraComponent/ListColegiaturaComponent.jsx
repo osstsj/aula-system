@@ -18,7 +18,7 @@ class ListColegiaturaComponent extends Component {
         }
         
         this.addColegiatura = this.addColegiatura.bind(this);
-        this.editColegiaturaById = this.editColegiaturaById.bind(this);
+        this.updateColegiaturaById = this.updateColegiaturaById.bind(this);
         this.deleteColegiaturaById = this.deleteColegiaturaById.bind(this);
         this.viewColegiaturaById = this.viewColegiaturaById.bind(this);
         this.exportToExcel = this.exportToExcel.bind(this);  // Método para exportar a Excel
@@ -29,14 +29,17 @@ class ListColegiaturaComponent extends Component {
         ColegiaturaService.getAllColegiaturas().then(
             res => {
                 this.setState({colegiaturas: res.data});
-            });
+        }).catch(() => {
+            alert("Error al intentar traer la colegiatura...");
+            this.props.history.push('/list-colegiatura');
+        });
     }
 
     addColegiatura() {
         this.props.history.push('/add-colegiatura');
     }
 
-    editColegiaturaById(id) {
+    updateColegiaturaById(id) {
         this.props.history.push(`/update-colegiatura/${id}`);
     }
 
@@ -47,6 +50,9 @@ class ListColegiaturaComponent extends Component {
                 isModalOpen: false, // Cierra el modal después de eliminar
                 colegiaturaToDeleteId: null, // Restablece el ID de la colegiatura
             });
+        }).catch(() => {
+            alert("Error al intentar eliminar la colegiatura...");
+            this.props.history.push('/list-colegiatura');
         });
     }
 
@@ -168,7 +174,7 @@ class ListColegiaturaComponent extends Component {
                                         <td className='table-action'>
                                             <button 
                                                 className="btn btn-warning mt-0"
-                                                onClick={()=>this.editColegiaturaById(colegiatura.id)}
+                                                onClick={()=>this.updateColegiaturaById(colegiatura.id)}
                                             >Actualizar
                                             </button>
                                             <button

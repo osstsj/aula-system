@@ -23,7 +23,8 @@ public class ColegiaturaController {
     @PostMapping(value="/colegiatura",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-    public ResponseEntity<ColegiaturaResponseDto> createColegiatura(@Valid @RequestBody ColegiaturaRequestDto colegiaturaRequestDto) {
+    public ResponseEntity<ColegiaturaResponseDto> createColegiatura(
+            @Valid @RequestBody ColegiaturaRequestDto colegiaturaRequestDto) {
         try {
             var result = colegiaturaService.createColegiatura(colegiaturaRequestDto);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
@@ -56,7 +57,8 @@ public class ColegiaturaController {
 
     @PutMapping(value="/colegiatura/{id}",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-    public ResponseEntity<ColegiaturaResponseDto> updateColegiaturaById(@PathVariable Long id,@Valid @RequestBody ColegiaturaRequestDto colegiaturaRequestDto) {
+    public ResponseEntity<ColegiaturaResponseDto> updateColegiaturaById(
+            @PathVariable Long id,@Valid @RequestBody ColegiaturaRequestDto colegiaturaRequestDto) {
         try {
             var result = colegiaturaService.updateColegiaturaById(id, colegiaturaRequestDto);
             return new ResponseEntity<>(result, HttpStatus.OK);

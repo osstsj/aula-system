@@ -23,7 +23,8 @@ public class OfertaAcademicaController {
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<OfertaAcademicaResposeDto> createOfertaAcademica(@Valid @RequestBody OfertaAcademicaRequestDto ofertaAcademicaRequestDto) {
+    public ResponseEntity<OfertaAcademicaResposeDto> createOfertaAcademica(
+            @Valid @RequestBody OfertaAcademicaRequestDto ofertaAcademicaRequestDto) {
         try {
             var result = ofertaAcademicaService.createOfertaAcademica(ofertaAcademicaRequestDto);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
@@ -57,7 +58,8 @@ public class OfertaAcademicaController {
     @PutMapping(value="/oferta_academica/{id}",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-    public ResponseEntity<OfertaAcademicaResposeDto> updateOfertaAcademicaById(@PathVariable Long id,@Valid @RequestBody OfertaAcademicaRequestDto ofertaAcademicaRequestDto) {
+    public ResponseEntity<OfertaAcademicaResposeDto> updateOfertaAcademicaById(
+            @PathVariable Long id,@Valid @RequestBody OfertaAcademicaRequestDto ofertaAcademicaRequestDto) {
         try {
             var result = ofertaAcademicaService.updateOfertaAcademicaById(id, ofertaAcademicaRequestDto);
             return new ResponseEntity<>(result, HttpStatus.OK);

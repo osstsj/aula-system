@@ -30,6 +30,9 @@ class ViewCarreraComponent extends Component {
                 fecha_creacion: carrera.fecha_creacion,
                 fecha_actualizacion: carrera.fecha_actualizacion
             });
+        }).catch(() => {
+            alert("Error al intentar traer la carrera...");
+            this.props.history.push('/list-carrera');
         });
     }
 

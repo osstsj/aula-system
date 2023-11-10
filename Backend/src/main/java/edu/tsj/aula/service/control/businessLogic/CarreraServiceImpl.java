@@ -53,19 +53,24 @@ public class CarreraServiceImpl implements ICarreraService {
         return carreraRepository.save(carreraRequestDto);
     }
 
-    @Transactional
     @Override
-    public List<CarreraResponseDto> getAllCarreras() {
-        LOGGER.info("Se ha ejecutado el metodo getAllCarreras");
-        try {
-            var list = carreraRepository.findAll();
-
-            return list.stream().map(mapper::entityToResponse).collect(Collectors.toList());
-        } catch (Exception e) {
-            LOGGER.error("Error al intentar  traer lista de carreras");
-            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
-        }
+    public List<CarreraEntity> getAllCarreras() {
+        return carreraRepository.findAll();
     }
+
+//    @Transactional
+//    @Override
+//    public List<CarreraResponseDto> getAllCarreras() {
+//        LOGGER.info("Se ha ejecutado el metodo getAllCarreras");
+//        try {
+//            var list = carreraRepository.findAll();
+//
+//            return list.stream().map(mapper::entityToResponse).collect(Collectors.toList());
+//        } catch (Exception e) {
+//            LOGGER.error("Error al intentar  traer lista de carreras");
+//            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
+//        }
+//    }
 
     @Transactional
     @Override
@@ -87,6 +92,11 @@ public class CarreraServiceImpl implements ICarreraService {
                 throw new ResourceNotFoundException("No se encontro una carrera para actualizar... con el id: ".concat(id.toString()),
                         HttpStatus.NOT_FOUND);
             }
+
+            var clave_programa = carreraRequestDto.getAbreviatura().concat("-")
+                    .concat(carreraRequestDto.getPlan_estudio());
+
+            existingCarreraEntity.get().setClave_programa(clave_programa);
 
             existingCarreraEntity.get().setAbreviatura(carreraRequestDto.getAbreviatura());
             existingCarreraEntity.get().setNombre(carreraRequestDto.getNombre());

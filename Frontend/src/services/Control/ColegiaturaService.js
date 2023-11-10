@@ -3,8 +3,8 @@ require('dotenv').config();
 
 
 class ColegiaturaService {
-    createColegiatura(colegiatura) {
-        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "colegiatura", colegiatura)
+    createColegiatura(colegiaturaDto) {
+        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "colegiatura", colegiaturaDto)
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for createColegiatura...");
@@ -42,8 +42,8 @@ class ColegiaturaService {
         });
     }
 
-    updateColegiaturaById(colegiatura, id) {
-        return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "colegiatura/" + id, colegiatura)
+    updateColegiaturaById(colegiaturaDto, id) {
+        return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "colegiatura/" + id, colegiaturaDto)
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for updateColegiaturaById...");

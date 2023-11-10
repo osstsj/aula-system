@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import DocenteService from '../../../services/Control/DocenteService';
+import UnidadService from '../../../services/Control/UnidadService';
 import '../../StyleGlobal/Style.css';
 import Select from 'react-select'
-import axios from 'axios';
 
 class UpdateDocenteComponent extends Component {
     constructor(props){
@@ -24,50 +24,34 @@ class UpdateDocenteComponent extends Component {
 
     updateDocenteById = (e) =>{
         e.preventDefault();
-        // let docente = {
-        //     nombre: this.state.nombre.trim(), 
-        //     apellido_paterno: this.state.apellido_paterno.trim(), 
-        //     apellido_materno: this.state.apellido_materno.trim(),
-        //     unidad_academica: this.state.unidad_academica.trim(), 
-        //     categoria: this.state.categoria.trim(),
-        //     actividad: this.state.actividad.trim()
-        // };
         
-        // console.log('docente=> ' + JSON.stringify(docente));
-        
-        // DocenteService.updateDocenteById(docente, this.state.id).then(res => {
-        //     this.props.history.push('/list-docente');
-        // });
     }
 
     componentDidMount() {        
-    //     DocenteService.getDocenteById(this.state.id).then(res => {
-    //         let docente = res.data;
 
-    //         this.setState({
-    //             nombre: docente.nombre, 
-    //             apellido_paterno: docente.apellido_paterno, 
-    //             apellido_materno: docente.apellido_materno,
-    //             unidad_academica: docente.unidad_academica, 
-    //             categoria: docente.categoria,
-    //             actividad: docente.actividad
-    //         });
-    //    });
 
         this.getUnidadList();
         this.getActividad();
         this.getCategoria();
     }
 
+   
     async getUnidadList() {
-        const res = await axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + 'planteles');
-        const data = res.data;
+        let options = null;
 
-        let options = data.map(d => ({
-            "value": d.nombre_completo,
-            "label": d.nombre_completo
-        }))
-        this.setState({ unidades: options });
+        await UnidadService.getAllUnidades().then(res => {
+            const data = res.data;
+            options = data.map(d => ({
+                "value": d.nombre_completo,
+                "label": d.nombre_completo,
+                "id": d.id,
+            }))
+        }).catch(() => {
+            alert("Error al intentar traer las UAs...");
+            this.props.history.push('/list-area');
+        });
+        
+        this.setState({unidades: options})
     }
 
     getCategoria() {

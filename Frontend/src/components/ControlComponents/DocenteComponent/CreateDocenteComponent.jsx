@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import DocenteService from '../../../services/Control/DocenteService';
-import PlantelService from '../../../services/Control/PlantelService';
+import UnidadService from '../../../services/Control/UnidadService';
 import '../../StyleGlobal/Style.css';
 import Select from 'react-select'
 import axios from 'axios';
@@ -38,8 +38,6 @@ class CreateDocenteComponent extends Component {
             alert('Por favor complete todos los campos requeridos.');
             return;
         }
-        // PlantelService.getPlantelById(this.state.id).then((res) => {
-        //     let plantelById = res.data;
 
         let docente = {
             nombre: this.state.nombre.trim(),
@@ -48,13 +46,15 @@ class CreateDocenteComponent extends Component {
             unidad_academica: this.state.unidad_academica.trim(),
             categoria: this.state.categoria.trim(),
             actividad: this.state.actividad.trim(),
-            // plantel: this.state.id
         };
         // Mostrar el spinner al iniciar la acción
         this.setState({ isLoading: true });
         console.log('docente=> ' + JSON.stringify(docente));
 
-        DocenteService.createDocente(docente, this.state.id).then(res => {
+        DocenteService.createDocente(docente, this.state.id).then(() => {
+            this.props.history.push('/list-docente');
+        }).catch(() => {
+            alert("Error al intentar crear al docente...");
             this.props.history.push('/list-docente');
         });
         // });
@@ -67,16 +67,23 @@ class CreateDocenteComponent extends Component {
     }
 
     async getUnidadList() {
-        const res = await axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + 'planteles');
-        const data = res.data;
+        let options = null;
 
-        let options = data.map(d => ({
-            "value": d.nombre_completo,
-            "label": d.nombre_completo,
-            "id": d.id,
-        }))
-        this.setState({ unidades: options });
+        await UnidadService.getAllUnidades().then(res => {
+            const data = res.data;
+            options = data.map(d => ({
+                "value": d.nombre_completo,
+                "label": d.nombre_completo,
+                "id": d.id,
+            }))
+        }).catch(() => {
+            alert("Error al intentar traer las UAs...");
+            this.props.history.push('/list-area');
+        });
+        
+        this.setState({unidades: options})
     }
+
 
     getCategoria() {
         const categoriaList = [

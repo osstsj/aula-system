@@ -28,6 +28,9 @@ class ViewOfertaAcademicaComponent extends Component {
                     fecha_creacion: oferta.fecha_creacion,
                     fecha_actualizacion: oferta.fecha_actualizacion
                 });
+            }).catch(() => {
+                alert("Error al intentar traer la oferta academica...");
+                this.props.history.push('/list-oferta-academica');
             });
         }
     cancel(){

@@ -29,6 +29,9 @@ class ViewCarreraPorUnidadComponent extends Component {
                     fecha_creacion: carrera.fecha_creacion,
                     fecha_actualizacion: carrera.fecha_actualizacion
                 });
+            }).catch(() => {
+                alert("Error al intentar traer la carrera por unidad...");
+                this.props.history.push('/list-carrera_por_unidad');
             });
         }
     cancel(){

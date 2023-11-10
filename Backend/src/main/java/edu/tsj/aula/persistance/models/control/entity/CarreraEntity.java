@@ -1,5 +1,6 @@
 package edu.tsj.aula.persistance.models.control.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Table(name = "control_carrera_control")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CarreraEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

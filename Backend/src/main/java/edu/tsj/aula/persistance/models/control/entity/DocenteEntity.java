@@ -39,13 +39,8 @@ public class DocenteEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_plantel", nullable = false)
-// @ManyToOne(cascade = PERSIST, fetch = LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-//    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
-//    @JsonIdentityReference(alwaysAsId=true)
-//    @JsonProperty("plantel")
-    private UnidadAcademicaEntity plantel;
-
+    private UnidadEntity unidad;
 
     @CreationTimestamp
     private LocalDateTime fecha_creacion;

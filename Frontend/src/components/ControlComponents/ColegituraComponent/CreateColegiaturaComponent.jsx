@@ -47,6 +47,9 @@ class CreateColegiaturaComponent extends Component {
 
         ColegiaturaService.createColegiatura(colegiatura).then(res => {
             this.props.history.push('/list-colegiatura');
+        }).catch(() => {
+            alert("Error al intentar crear la colegiatura...");
+            this.props.history.push('/list-colegiatura');
         });
     }
 

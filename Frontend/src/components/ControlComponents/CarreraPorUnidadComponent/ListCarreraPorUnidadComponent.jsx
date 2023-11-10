@@ -15,11 +15,14 @@ class ListCarreraPorUnidadComponent extends Component {
             isModalOpen: false, // Estado para controlar la apertura/cierre del modal
             unidadeToDeleteId: null, // Estado para almacenar el ID de la colegiatura a eliminar
         }
-        this.deleteCarreraPorUnidad = this.deleteCarreraPorUnidad.bind(this);
+    
         this.exportToExcel = this.exportToExcel.bind(this);  // Método para exportar a Excel  
         this.exportToPDF = this.exportToPDF.bind(this); // Método para exportar a PDF
 
+        this.deleteCarreraPorUnidad = this.deleteCarreraPorUnidad.bind(this);
         this.addUnidad = this.addUnidad.bind(this);
+        this.updateCarreraPorUnidad = this.updateCarreraPorUnidad.bind(this);
+        this.viewCarreraPorUnidad = this.viewCarreraPorUnidad.bind(this);
 
     }
 
@@ -31,13 +34,16 @@ class ListCarreraPorUnidadComponent extends Component {
                 isModalOpen: false, // Cierra el modal después de eliminar
                 unidadeToDeleteId: null, // Restablece el ID de la colegiatura
             });
+        }).catch(() => {
+            alert("Error al intentar eliminar la carrera por unidad...");
+            this.props.history.push('/list-carrera_por_unidad');
         });
     }
     viewCarreraPorUnidad(id) {
         this.props.history.push(`view-carrera_por_unidad/${id}`);
     }
 
-    editCarreraPorUnidad(id) {
+    updateCarreraPorUnidad(id) {
         this.props.history.push(`update-carrera-por-unidad/${id}`);
     }
 
@@ -45,6 +51,9 @@ class ListCarreraPorUnidadComponent extends Component {
         //promise
         CarreraPorUnidadService.getAllCarrerasPorUnidad().then((res) => {
             this.setState({ unidades: res.data });
+        }).catch(() => {
+            alert("Error al intentar traer las carreras por unidad...");
+            this.props.history.push('/list-carrera_por_unidad');
         });
     }
     addUnidad() {
@@ -94,7 +103,7 @@ class ListCarreraPorUnidadComponent extends Component {
         const doc = new jsPDF();
         doc.text('Lista de unidades', 10, 10);
 
-        const columns = [' Carrera', ' Nivel', ' Plantel', 'Modalidad'];
+        const columns = [' Carrera', ' Nivel', ' Unidad', 'Modalidad'];
         const data = unidades.map((unidad) => [
             unidad.carrera_nombre,
             unidad.nivel,
@@ -146,7 +155,7 @@ class ListCarreraPorUnidadComponent extends Component {
                                 <th></th>
                                 <th className='table-title'>Carrera</th>
                                 <th className='table-title'>Nivel Académico</th>
-                                <th className='table-title'>Plantel</th>
+                                <th className='table-title'>Unidad Academica</th>
                                 <th className='table-title'>Modalidad</th>
                                 <th className='table-action'>Acciones</th>
                             </tr>
@@ -161,7 +170,7 @@ class ListCarreraPorUnidadComponent extends Component {
                                         <td className='table-conten'>{unidad.unidad_academica}</td>
                                         <td className='table-conten'>{unidad.modalidad}</td>
                                         <td className='table-action'>
-                                            <button onClick={() => this.editCarreraPorUnidad(unidad.id)} className="btn btn-warning mt-0">Actualizar</button>
+                                            <button onClick={() => this.updateCarreraPorUnidad(unidad.id)} className="btn btn-warning mt-0">Actualizar</button>
                                             <button className="btn btn-danger mt-0" style={boton}
                                                 onClick={() => this.toggleModal(unidad.id)} // Abre el modal y pasa el ID de la colegiatura
                                             > Eliminar</button>

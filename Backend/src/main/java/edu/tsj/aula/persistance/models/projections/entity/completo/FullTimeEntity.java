@@ -3,7 +3,7 @@ package edu.tsj.aula.persistance.models.projections.entity.completo;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import edu.tsj.aula.persistance.models.projections.entity.FolioEntity;
+import edu.tsj.aula.persistance.models.projections.entity.folio.FolioAsignaturaEntity;
 import edu.tsj.aula.persistance.models.projections.entity.completo.necesidad.HorasNecesidadInstitucionalFulltime;
 import edu.tsj.aula.persistance.models.projections.entity.completo.profesor.ProfesorFulltimeEntity;
 import edu.tsj.aula.persistance.models.projections.entity.completo.sustantivas.HorasSustantivasAtencionAlumnosFulltime;
@@ -45,12 +45,9 @@ public class FullTimeEntity {
 
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE) ///    Tal vez deba quitarse ya que se realaciona con la proyeccion
-//    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
     @JsonIdentityReference(alwaysAsId=true)
-//    @JsonProperty("id_proyeccion")
-    @JoinColumn(name = "id_proyeccion", nullable = false)
-    private FolioEntity proyeccion;
+    @JoinColumn(name = "id_folio", nullable = false)
+    private FolioAsignaturaEntity folio;
 
     @Column
     private Integer Total;

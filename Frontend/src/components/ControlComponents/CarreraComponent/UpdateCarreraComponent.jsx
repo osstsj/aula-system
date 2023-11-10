@@ -26,6 +26,9 @@ class UpdateCarreraComponent extends Component {
                 dgp: carrera.dgp, 
                 estatus: carrera.estatus
             });
+        }).catch(() => {
+            alert("Error al intentar traer la carrera...");
+            this.props.history.push('/list-carrera');
         });
     }
 
@@ -42,6 +45,9 @@ class UpdateCarreraComponent extends Component {
         console.log('carrera => ' + JSON.stringify(carrera));
         
         CarreraService.updateCarreralById(carrera, this.state.id).then(res => {
+            this.props.history.push('/list-carrera');
+        }).catch(() => {
+            alert("Error al intentar actualizar la carrera...");
             this.props.history.push('/list-carrera');
         });
     }

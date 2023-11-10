@@ -1,11 +1,7 @@
 package edu.tsj.aula.controllers.control;
 
-import edu.tsj.aula.configuration.exception.ResourceNotFoundException;
 import edu.tsj.aula.persistance.models.control.entity.DocenteEntity;
-import edu.tsj.aula.persistance.models.control.entity.UnidadAcademicaEntity;
-import edu.tsj.aula.service.control.ICarreraService;
 import edu.tsj.aula.service.control.IDocenteService;
-import edu.tsj.aula.service.control.IPlantelService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,15 +16,14 @@ import java.util.*;
 @AllArgsConstructor
 public class DocenteController {
     private final IDocenteService docenteService;
-    private final IPlantelService plantelService;
-    private final ICarreraService carreraService;
 
-    @PostMapping(value="/docente/{plantel_id}",
+    @PostMapping(value="/docente/{id_unidad}",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-    public ResponseEntity<DocenteEntity> createDocente(@Valid @RequestBody DocenteEntity docenteRequestDto, @PathVariable Long plantel_id) {
+    public ResponseEntity<DocenteEntity> createDocente(
+            @Valid @RequestBody DocenteEntity docenteRequestDto, @PathVariable Long id_unidad) {
         try {
-            var result = docenteService.createDocente(docenteRequestDto, plantel_id);
+            var result = docenteService.createDocente(docenteRequestDto, id_unidad);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -49,8 +44,7 @@ public class DocenteController {
     @GetMapping("/docentes_by_ua/{id_unidad}")
     public ResponseEntity< List<DocenteEntity>> getDocenteByUnidadAcademicaId(@PathVariable Long id_unidad) {
         try {
-
-            List<DocenteEntity> docentesByUnidad = docenteService.findAllDocentesByPlantel(id_unidad);
+            List<DocenteEntity> docentesByUnidad = docenteService.findAllDocentesByUnidad(id_unidad);
             return new ResponseEntity<>(docentesByUnidad, HttpStatus.OK);
         }  catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

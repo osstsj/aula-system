@@ -4,15 +4,14 @@ package edu.tsj.aula.service.projections.asignatura;
 import edu.tsj.aula.configuration.exception.ResourceNotFoundException;
 import edu.tsj.aula.persistance.models.control.entity.CarreraEntity;
 import edu.tsj.aula.persistance.models.control.entity.DocenteEntity;
-import edu.tsj.aula.persistance.models.control.entity.UnidadAcademicaEntity;
-import edu.tsj.aula.persistance.models.projections.entity.FolioEntity;
+import edu.tsj.aula.persistance.models.control.entity.UnidadEntity;
+import edu.tsj.aula.persistance.models.projections.entity.folio.FolioAsignaturaEntity;
 import edu.tsj.aula.persistance.models.projections.entity.asignatura.AsignaturaEntity;
-import edu.tsj.aula.persistance.models.projections.mapper.AsignaturaMapper;
 import edu.tsj.aula.persistance.repository.control.CarreraRepository;
 import edu.tsj.aula.persistance.repository.control.DocenteRepository;
-import edu.tsj.aula.persistance.repository.control.PlantelRepository;
+import edu.tsj.aula.persistance.repository.control.UnidadRepository;
 import edu.tsj.aula.persistance.repository.projections.AsignaturaRepository;
-import edu.tsj.aula.persistance.repository.projections.ProyeccionRepository;
+import edu.tsj.aula.persistance.repository.projections.folio.FolioAsignaturaRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,11 +25,11 @@ import java.util.List;
 @Service
 public class AsignaturaServiceImpl implements IAsignaturaService {
     private final AsignaturaRepository asignaturaRepository;
-    private final ProyeccionRepository proyeccionRepository;
+    private final FolioAsignaturaRepository folioAsignaturaRepository;
     private final DocenteRepository docenteRepository;
     private final CarreraRepository carreraRepository;
-    private final PlantelRepository plantelRepository;
-    private final AsignaturaMapper mapper;
+    private final UnidadRepository unidadRepository;
+//    private final AsignaturaMapper mapper;
 
     @Transactional
     @Override
@@ -38,14 +37,14 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
                                              Long id_folio, Long id_unidad,
                                              Long id_docente, Long id_carrera) {
         log.debug("Se ha ejecutado el metodo createAsignatura");
-        FolioEntity folioEntity = proyeccionRepository.findById(id_folio).orElseThrow(()-> new ResourceNotFoundException((" No se encontro folio..."),
+        FolioAsignaturaEntity folioAsignaturaEntity = folioAsignaturaRepository.findById(id_folio).orElseThrow(()-> new ResourceNotFoundException((" No se encontro folio..."),
                 HttpStatus.NOT_FOUND));
 
         DocenteEntity docenteEntity = docenteRepository.findById(id_docente).get();
         CarreraEntity carreraEntity = carreraRepository.findById(id_carrera).get();
-        UnidadAcademicaEntity unidadAcademica = plantelRepository.findById(id_unidad).get();
+        UnidadEntity unidadAcademica = unidadRepository.findById(id_unidad).get();
 
-        asignaturaRequest.setProyeccion(folioEntity);
+        asignaturaRequest.setFolio(folioAsignaturaEntity);
         asignaturaRequest.setUnidad_academica(unidadAcademica);
         asignaturaRequest.getProfe_asignatura().setNombre_docente(docenteEntity);
         asignaturaRequest.getProfe_asignatura().setClave_programa(carreraEntity);
@@ -83,16 +82,16 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
 
     @Override
     public List<AsignaturaEntity> findAllByFolioAndUnidad(Long id_folio, Long id_unidad_academica) {
-        FolioEntity folio = proyeccionRepository.findById(id_folio).get();
-        UnidadAcademicaEntity unidadAcademica = plantelRepository.findById(id_unidad_academica).get();
-        return asignaturaRepository.findAllByUnidad_academicaAndProyeccion(folio, unidadAcademica);
+        FolioAsignaturaEntity folio = folioAsignaturaRepository.findById(id_folio).get();
+        UnidadEntity unidadAcademica = unidadRepository.findById(id_unidad_academica).get();
+        return asignaturaRepository.findAllByUnidad_academicaAndFolio(folio, unidadAcademica);
     }
 
     @Override
     public List<AsignaturaEntity> findAllByFolioId(Long id_folio) {
-        FolioEntity folioEntity = proyeccionRepository.findById(id_folio).orElseThrow(()-> new ResourceNotFoundException((" No se encontro folio..."),
+        FolioAsignaturaEntity folioAsignaturaEntity = folioAsignaturaRepository.findById(id_folio).orElseThrow(()-> new ResourceNotFoundException((" No se encontro folio..."),
                 HttpStatus.NOT_FOUND));
-        return asignaturaRepository.findAllByProyeccionId(folioEntity);
+        return asignaturaRepository.findAllByFolio(folioAsignaturaEntity);
     }
 
     @Transactional

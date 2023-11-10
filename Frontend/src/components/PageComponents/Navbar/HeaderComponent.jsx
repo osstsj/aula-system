@@ -8,8 +8,8 @@ class HeaderComponent extends Component {
         this.state = {};
     }
 
-    PlantelList() {
-        this.props.history.push('/plantel-list');
+    UnidadList() {
+        this.props.history.push('/unidad-list');
     }
 
     render() {
@@ -54,7 +54,7 @@ class HeaderComponent extends Component {
                                 Control Escolar
                             </a>
                             <div className="dropdown-menu">
-                                <a className="dropdown-item" href="/list-plantel">
+                                <a className="dropdown-item" href="/list-unidad">
                                     <b>Lista de Unidades Académicas</b>
                                 </a>
                                 <a className="dropdown-item" href="/list-docente">
@@ -104,16 +104,21 @@ class HeaderComponent extends Component {
                                     </div>
                                 </div>
                                 <div className="dropdown-submenu">
-                                    <a className="dropdown-item dropdown-toggle" href="/list-full-time">
+                                    <a className="dropdown-item dropdown-toggle" href="">
                                         Proyeccion por Tiempo Completo
                                     </a>
                                     <div className="dropdown-menu">
-                                        <a className="dropdown-item" href="/submenu-item-3">
-                                            Historial de Folio 2
+                                        <a className="dropdown-item" href="/list-folio-fulltime">
+                                            Historial de Folios
                                         </a>
-                                        <a className="dropdown-item" href="/submenu-item-4">
-                                            Crear Nuevo Folio 2
+                                        <a className="dropdown-item" href="/create-folio-fulltime">
+                                            Crear Nuevo Folio
                                         </a>
+                                        
+                                        <hr />  
+                                        <a className="dropdown-item" href="/add-proyeccion_fulltime">
+                                            Crear Proyeccion
+                                        </a>                                        
                                     </div>
                                 </div>
                             </div>

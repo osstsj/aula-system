@@ -29,6 +29,9 @@ class UpdateColegiaturaComponent extends Component {
                 colegiatura_estatus: colegiatura.colegiatura_estatus,
                 comentarios: colegiatura.comentarios
             });
+        }).catch(() => {
+            alert("Error al intentar traer la colegiatura...");
+            this.props.history.push('/list-colegiatura');
         });
     }
 
@@ -47,6 +50,9 @@ class UpdateColegiaturaComponent extends Component {
         console.log('Colegiatura=> ' + JSON.stringify(colegiatura));
         
         ColegiaturaService.updateColegiaturaById(colegiatura, this.state.id).then(res => {
+            this.props.history.push('/list-colegiatura');
+        }).catch(() => {
+            alert("Error al intentar actualizar la colegiatura...");
             this.props.history.push('/list-colegiatura');
         });
     }

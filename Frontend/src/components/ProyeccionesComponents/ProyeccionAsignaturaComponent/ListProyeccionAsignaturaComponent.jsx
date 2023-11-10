@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import AsignaturaProyeccionService from '../../../services/Proyecciones/AsignaturaProyeccionService';
+import UnidadService from '../../../services/Control/UnidadService'
 import '../../StyleGlobal/Style.css';
-import axios from 'axios';
 import Select from 'react-select'
 import * as XLSX from 'xlsx';  // Importa la librería XLSX
 
 
 
-class ListCargaAcademicaComponent extends Component {
+class ListProyeccionAsignaturaComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -29,7 +29,11 @@ class ListCargaAcademicaComponent extends Component {
 
     componentDidMount() {
         AsignaturaProyeccionService.getAllProyeccionesAsignaturaByFolio(this.state.id).then(res =>
-            this.setState({ asignaturas: res.data }));
+            this.setState({ asignaturas: res.data }))
+            .catch(() => {
+                alert("Error al traer las proyecciones de asignatura por folio...");
+                this.props.history.push('/');
+            });
 
         this.getUnidadList();
     }
@@ -39,15 +43,22 @@ class ListCargaAcademicaComponent extends Component {
     }
 
     async getUnidadList() {
-        const res = await axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "planteles");
-        const data = res.data;
+        let options = null;
 
-        let options = data.map(d => ({
-            "value": d.nombre_completo,
-            "label": d.nombre_completo,
-            "id": d.id,
-        }))
-        this.setState({ unidades: options });
+        await UnidadService.getAllUnidades().then(res => {
+            const data = res.data;
+            options = data.map(d => ({
+                "value": d.nombre_completo,
+                "label": d.nombre_completo,
+                'id': d.id,
+            }))
+        })
+        .catch(() => {
+            alert("Error al intentar traer las UAs...");
+            this.props.history.push('/');
+        });
+
+        this.setState({unidades: options})
     }
 
     // Función para alternar la visibilidad de las columnas
@@ -70,7 +81,11 @@ class ListCargaAcademicaComponent extends Component {
         // this.setState({ asignaturas: this.state.asignaturas.filter((asignatura) => asignatura.unidad_academica === this.state.unidad)})
 
         AsignaturaProyeccionService.findAllByUnidad_academica(this.state.id, event.id).then(res =>
-            this.setState({ asignaturas: res.data }));
+            this.setState({ asignaturas: res.data }))
+            .catch(() => {
+                alert("Error al traer las proyecciones de asignatura por UA...");
+                this.props.history.push('/');
+            });
     }
     exportToExcel() {
         const { asignaturas } = this.state; // Reemplaza con los datos reales
@@ -160,7 +175,6 @@ class ListCargaAcademicaComponent extends Component {
                                 // style={{width: "20%"}}
                                 options={this.state.unidades}
                                 onChange={(e) => this.changeUnidadHandler(e)}
-                                placeholder="Seleccione un carrera..."
                                 value={{ label: this.state.unidad == "" ? "Seleccione unidad académica..." : this.state.unidad }}
                             />
                         </div>
@@ -428,4 +442,4 @@ class ListCargaAcademicaComponent extends Component {
     }
 }
 
-export default ListCargaAcademicaComponent;
+export default ListProyeccionAsignaturaComponent;

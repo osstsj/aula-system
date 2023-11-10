@@ -35,11 +35,11 @@ public class ExtensionEntity {
     @Column private String direccion_completa;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_plantel", nullable = false)
+    @JoinColumn(name = "id_unidad", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE) ///    Tal vez deba quitarse ya que se realaciona con el docente
     @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
     @JsonIdentityReference(alwaysAsId=true)
-    @JsonProperty("id_plantel")
-    private UnidadAcademicaEntity plantel;
+    @JsonProperty("id_unidad")
+    private UnidadEntity unidad;
 
 }

@@ -2,10 +2,10 @@ import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import ListPlantelComponent  from './components/ControlComponents/PlantelComponent/ListPlantelComponent';
-import CreatePlantelComponent  from './components/ControlComponents/PlantelComponent/CreatePlantelComponent';
-import UpdatePlantelComponent  from './components/ControlComponents/PlantelComponent/UpdatePlantelComponent';
-import ViewPlantelComponent  from './components/ControlComponents/PlantelComponent/ViewPlantelComponent';
+import ListUnidadComponent  from './components/ControlComponents/UnidadComponent/ListUnidadComponent';
+import CreateUnidadComponent  from './components/ControlComponents/UnidadComponent/CreateUnidadComponent';
+import UpdateUnidadComponent  from './components/ControlComponents/UnidadComponent/UpdateUnidadComponent';
+import ViewUnidadComponent  from './components/ControlComponents/UnidadComponent/ViewUnidadComponent';
 
 import CreateCarreraComponent from './components/ControlComponents/CarreraComponent/CreateCarreraComponent';
 import ListCarreraComponent from './components/ControlComponents/CarreraComponent/ListCarreraComponent';
@@ -22,10 +22,10 @@ import ListOfertaAcademicaComponent from './components/ControlComponents/OfertaA
 import UpdateOfertaAcademicaComponent from './components/ControlComponents/OfertaAcademicaComponent/UpdateOfertaAcademicaComponent';
 import ViewOfertaAcademicaComponent from './components/ControlComponents/OfertaAcademicaComponent/ViewOfertaAcademicaComponent';
 
-import CreateAreaComponent from './components/ControlComponents/AreasComponent/CreateAreaComponent';
-import ListAreaComponent from './components/ControlComponents/AreasComponent/ListAreaComponent';
-import UpdateAreaComponent from './components/ControlComponents/AreasComponent/UpdateAreaComponent';
-import ViewAreaComponent from './components/ControlComponents/AreasComponent/ViewAreaComponent';
+import CreateAreaEscolarComponent from './components/ControlComponents/AreasComponent/CreateAreaEscolarComponent';
+import ListAreaEscolarComponent from './components/ControlComponents/AreasComponent/ListAreaEscolarComponent';
+import UpdateAreaEscolarComponent from './components/ControlComponents/AreasComponent/UpdateAreaEscolarComponent';
+import ViewAreaEscolarComponent from './components/ControlComponents/AreasComponent/ViewAreaEscolarComponent';
 
 import CreateColegiaturaComponent from './components/ControlComponents/ColegituraComponent/CreateColegiaturaComponent';
 import ListColegiaturaComponent from './components/ControlComponents/ColegituraComponent/ListColegiaturaComponent';
@@ -37,10 +37,12 @@ import ListDocenteComponent from './components/ControlComponents/DocenteComponen
 import UpdateDocenteComponent from './components/ControlComponents/DocenteComponent/UpdateDocenteComponent';
 import ViewDocenteComponent from './components/ControlComponents/DocenteComponent/ViewDocenteComponent';
 
-import ListCargaAcademicaComponent from './components/ProyeccionesComponents/ProyeccionAsignaturaComponent/ListProyeccionAsignaturaComponent';
+import ListProyeccionAsignaturaComponent from './components/ProyeccionesComponents/ProyeccionAsignaturaComponent/ListProyeccionAsignaturaComponent';
 import ViewProyeccionAsignaturaComponent from './components/ProyeccionesComponents/ProyeccionAsignaturaComponent/ViewProyeccionAsignaturaComponent'
-import ListProyeccionOrariaComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/ListProyeccionFullTimeComponent';
-import CreateProyeccionAsignatura from './components/ProyeccionesComponents/ProyeccionAsignaturaComponent/CreateProyeccionAsignatura';
+import CreateProyeccionAsignatura from './components/ProyeccionesComponents/ProyeccionAsignaturaComponent/CreateProyeccionAsignaturaComponent';
+
+import ListProyeccionFullTimeComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/ListProyeccionFullTimeComponent';
+import CreateProyeccionFulltimeComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/CreateProyeccionFulltimeComponent';
 
 import HomeComponent from './components/PageComponents/HomeComponent/HomeComponent';
 
@@ -50,8 +52,11 @@ import LoginComponents from './components/PageComponents/LoginComponents/LoginCo
 import CreateLoginComponent from './components/PageComponents/CreateLoginComponent/CreateLoginComponent';
 import AcuseComponent from './components/PageComponents/AcuseComponent/AcuseComponent';
 
-import CreateFolioAsignaturaComponent from './components/ProyeccionesComponents/ProyeccionAsignaturaComponent/HistorialAsignaturaComponent/CreateFolioAsignaturaComponent';
-import ListFolioAsignaturaComponent from './components/ProyeccionesComponents/ProyeccionAsignaturaComponent/HistorialAsignaturaComponent/ListFolioAsignaturaComponent';
+import CreateFolioAsignaturaComponent from './components/ProyeccionesComponents/ProyeccionAsignaturaComponent/HistorialFolioAsignaturaComponent/CreateFolioAsignaturaComponent';
+import ListFolioAsignaturaComponent from './components/ProyeccionesComponents/ProyeccionAsignaturaComponent/HistorialFolioAsignaturaComponent/ListFolioAsignaturaComponent';
+
+import CreateFolioFulltimeComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/HistorialFulltimeComponent/CreateFolioFulltimeComponent';
+import ListFolioFulltimeComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/HistorialFulltimeComponent/ListFolioFulltimeComponent';
 
 
 function App() {
@@ -63,11 +68,11 @@ function App() {
                     <Switch> 
                          {/* ---------- Home ------------- */}
                          <Route path = "/" exact component = {HomeComponent}></Route>
-                          {/* ---------- plantel ------------- */}
-                          <Route path = "/list-plantel" exact component = {ListPlantelComponent}></Route>
-                          <Route path = "/add-plantel" component = {CreatePlantelComponent}></Route>
-                          <Route path = "/update-plantel/:id" component = {UpdatePlantelComponent}></Route>
-                          <Route path = "/view-plantel/:id" component = {ViewPlantelComponent}></Route>
+                          {/* ---------- unidad ------------- */}
+                          <Route path = "/list-unidad" exact component = {ListUnidadComponent}></Route>
+                          <Route path = "/add-unidad" component = {CreateUnidadComponent}></Route>
+                          <Route path = "/update-unidad/:id" component = {UpdateUnidadComponent}></Route>
+                          <Route path = "/view-unidad/:id" component = {ViewUnidadComponent}></Route>
 
                           {/* -----------carrera---------------- */}
                           <Route path = "/list-carrera" component = {ListCarreraComponent}></Route>
@@ -94,10 +99,10 @@ function App() {
                            <Route path = "/view-colegiatura/:id" component = {ViewColegiaturaComponent}></Route>
                            
                            {/* ------------------- Area Escolares ------------------- */}
-                           <Route path = "/list-area" component = {ListAreaComponent}></Route>
-                           <Route path = "/add-area" component = {CreateAreaComponent}></Route>
-                           <Route path = "/update-area/:id" component = {UpdateAreaComponent}></Route>
-                           <Route path = "/view-area/:id" component = {ViewAreaComponent}></Route>
+                           <Route path = "/list-area" component = {ListAreaEscolarComponent}></Route>
+                           <Route path = "/add-area" component = {CreateAreaEscolarComponent}></Route>
+                           <Route path = "/update-area/:id" component = {UpdateAreaEscolarComponent}></Route>
+                           <Route path = "/view-area/:id" component = {ViewAreaEscolarComponent}></Route>
 
                           {/* ------------------------ Docente Components ------------------ */}
                           <Route path = "/add-docente" component = {CreateDocenteComponent}></Route>
@@ -106,12 +111,13 @@ function App() {
                           <Route path = "/view-docente/:id" component = {ViewDocenteComponent}></Route>
 
                            {/* ------------ ProyeccionAsignaturaComponent ----------- */}
-                           <Route path = "/list-proyeccion_asignatura/:id" component = {ListCargaAcademicaComponent}></Route>
+                           <Route path = "/list-proyeccion_asignatura/:id" component = {ListProyeccionAsignaturaComponent}></Route>
                            <Route path = "/view-proyeccion_asignatura/:id" component = {ViewProyeccionAsignaturaComponent}></Route>
                            <Route path = "/add-proyeccion_asignatura" component = {CreateProyeccionAsignatura}></Route>
                            
                            {/* ------------ ProyeccionFullTimeComponent ----------- */}
-                           <Route path = "/list-full-time" component = {ListProyeccionOrariaComponent}></Route>
+                           <Route path = "/list-full-time" component = {ListProyeccionFullTimeComponent}></Route>
+                           <Route path = "/add-proyeccion_fulltime" component = {CreateProyeccionFulltimeComponent}></Route>
                           
                           {/* ------------ Longin ----------- */}
                           <Route path = "/login" component = {LoginComponents}></Route>
@@ -125,6 +131,9 @@ function App() {
                           {/* ---------------- FOLIO --------------- */}
                           <Route path = "/create-folio-asignatura" component = {CreateFolioAsignaturaComponent}></Route>
                           <Route path = "/list-folio-asignatura" component = {ListFolioAsignaturaComponent}></Route>
+
+                          <Route path = "/create-folio-fulltime" component = {CreateFolioFulltimeComponent}></Route>
+                          <Route path = "/list-folio-fulltime" component = {ListFolioFulltimeComponent}></Route>                        
                             
                   </Switch>
                 </div>

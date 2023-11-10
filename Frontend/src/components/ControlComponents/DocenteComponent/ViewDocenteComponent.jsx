@@ -32,6 +32,9 @@ class ViewPlantelComponent extends Component {
         //         fecha_creacion: docente.fecha_creacion,
         //         fecha_actualizacion: docente.fecha_actualizacion
         //     });
+        // }).catch(() => {
+        //     alert("Error al intentar traer al docente...");
+        //     this.props.history.push('/list-docente');
         // });
     }
 

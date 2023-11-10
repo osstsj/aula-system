@@ -12,7 +12,9 @@ public interface ICarreraService {
 
     CarreraEntity createCarrera(CarreraEntity carreraRequestDto);
 
-    List<CarreraResponseDto> getAllCarreras();
+//    List<CarreraResponseDto> getAllCarreras();
+
+    List<CarreraEntity> getAllCarreras();
 
     CarreraResponseDto getCarreraById(Long id);
 

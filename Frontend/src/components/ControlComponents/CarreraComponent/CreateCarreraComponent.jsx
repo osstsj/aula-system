@@ -6,8 +6,7 @@ class CreateCarreraComponent extends Component {
         super(props)
         this.state = {
             abreviatura: '', 
-            nombre: '', 
-            // dgp: 0,
+            nombre: '',
             dgp: '',
             plan_estudio: '', 
             estatus: '',
@@ -21,10 +20,10 @@ class CreateCarreraComponent extends Component {
         this.changeDGPHandler = this.changeDGPHandler.bind(this);        
         this.changePlanEstudioHandler = this.changePlanEstudioHandler.bind(this);
         this.changeEstatusHandler = this.changeEstatusHandler.bind(this);
-        this.saveCarrera = this.saveCarrera.bind(this);
+        this.createCarrera = this.createCarrera.bind(this);
     }
 
-    saveCarrera = (e) =>{
+    createCarrera = (e) =>{
         e.preventDefault();
        // Validar que los campos requeridos no estén vacíos
     if (this.state.abreviatura.trim() === '' || this.state.nombre.trim() === '' || this.state.dgp.trim() === '' || this.state.estatus.trim() === '' || this.state.plan_estudio.trim() === '') {
@@ -44,8 +43,12 @@ class CreateCarreraComponent extends Component {
         
         CarreraService.createCarrera(carrera).then(res => {
             this.props.history.push('/list-carrera');
+        }).catch(() => {
+            alert("Error al intentar crear la carrera...");
+            this.props.history.push('/list-carrera');
         });
     }
+    
 
     changeAbreviaturataHandler  = (event) => {
         this.setState({abreviatura: event.target.value});
@@ -170,7 +173,7 @@ class CreateCarreraComponent extends Component {
                                                 </div>
                                             </div>
                                         ) : (
-                                            <button className="btn btn-primary mt-0" onClick={this.saveCarrera}>Guardar</button>
+                                            <button className="btn btn-primary mt-0" onClick={this.createCarrera}>Guardar</button>
                                         )}                                            
                                         <button className = "btn btn-danger mt-0" onClick={this.cancel.bind(this)} style= {{marginLeft: "10px"}}>Cancelar</button>
                                         </div>
