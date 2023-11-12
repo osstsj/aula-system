@@ -3,8 +3,8 @@ require('dotenv').config();
 
 
 class CarreraPorUnidadService {
-    createCarreraPorUnidad(carreraDto) {
-        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "carreraPorUnidad", carreraDto)
+    createCarreraPorUnidad(carreraDto, id_unidad) {
+        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "carreraPorUnidad/" + id_unidad, carreraDto)
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for createCarreraPorUnidad...");
@@ -17,14 +17,14 @@ class CarreraPorUnidadService {
     }
 
     getAllCarrerasPorUnidad() {
-        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "carrerasPorUnidad")
+        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "carrerasPorUnidad/")
         .catch(err => {
             if (err.response) {
-                console.error("Error in response for getAllCarrerasPorUnidad...");
+                console.error("Error in response for getCarreraPorUnidadByIdUnidad...");
             } else if(err.request) {
-                console.error("Error in request for getAllCarrerasPorUnidad...");
+                console.error("Error in request for getCarreraPorUnidadByIdUnidad...");
             } else {
-                console.error("Something happend, unknown error for getAllCarrerasPorUnidad");
+                console.error("Something happend, unknown error for getCarreraPorUnidadByIdUnidad");
             }
         });
     }
@@ -42,8 +42,8 @@ class CarreraPorUnidadService {
         });
     }
 
-    updateCarreraPorUnidadById(carreraDto, id) {
-        return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "carreraPorUnidad/" + id, carreraDto)
+    updateCarreraPorUnidadById(id, carreraPorUnidadDto, id_unidad) {
+        return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "carreraPorUnidad/" + id + "/" + id_unidad, carreraPorUnidadDto)
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for updateCarreraPorUnidadById...");

@@ -51,7 +51,7 @@ public class AsignaturaEntity  implements Serializable {
     private HorasNecesidadInstitucionalAsignatura horas_necesidad_institucional;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE) ///    Tal vez deba quitarse ya que se realaciona con la proyeccion
+    @OnDelete(action = OnDeleteAction.CASCADE) ///     aqui nace la dependencia de las entidades de la proyeccion
     @JsonIdentityReference(alwaysAsId=true)
     @JoinColumn(name = "id_folio", nullable = false)
     private FolioAsignaturaEntity folio;

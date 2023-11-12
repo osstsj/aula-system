@@ -20,22 +20,10 @@ import java.util.List;
 public class CarreraController {
     private final ICarreraService carreraService;
 
-//    @PostMapping(value="/carrera",
-//            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
-//            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-//    public ResponseEntity<CarreraResponseDto> createCarrera(@Valid @RequestBody CarreraRequestDto carreraRequestDto) {
-//        try {
-//            var result = carreraService.createCarrera(carreraRequestDto);
-//            return new ResponseEntity<>(result, HttpStatus.CREATED);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
     @PostMapping(value="/carrera",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-    public ResponseEntity<CarreraEntity> createCarrera(@Valid @RequestBody CarreraEntity carreraRequestDto) {
+    public ResponseEntity<CarreraResponseDto> createCarrera(@Valid @RequestBody CarreraRequestDto carreraRequestDto) {
         try {
             var result = carreraService.createCarrera(carreraRequestDto);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
@@ -46,25 +34,15 @@ public class CarreraController {
 
     @GetMapping(value="/carreras",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-    public ResponseEntity<List<CarreraEntity>> getAllCarreras() {
+    public ResponseEntity<List<CarreraResponseDto>> getAllCarreras() {
         try {
-            List<CarreraEntity> carreras = carreraService.getAllCarreras();
+            List<CarreraResponseDto> carreras = carreraService.getAllCarreras();
             return new ResponseEntity<>(carreras, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-//    @GetMapping(value="/carreras",
-//            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-//    public ResponseEntity<List<CarreraResponseDto>> getAllCarreras() {
-//       try {
-//           List<CarreraResponseDto> carreras = carreraService.getAllCarreras();
-//           return new ResponseEntity<>(carreras, HttpStatus.OK);
-//       } catch (Exception e) {
-//           return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//       }
-//    }
 
     @GetMapping(value="/carrera/{id}",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
@@ -101,15 +79,4 @@ public class CarreraController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-//    @GetMapping(value="/carrera/{plan_estudio}",
-//            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-//    public ResponseEntity<CarreraResponseDto> getCarreraByPlanEstudio(@PathVariable String plan_estudio) {
-//        try {
-//            var result = carreraService.getCarreraByPlanEstudio(plan_estudio);
-//            return new ResponseEntity<>(result, HttpStatus.OK);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
 }

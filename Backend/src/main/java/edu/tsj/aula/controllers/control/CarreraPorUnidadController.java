@@ -18,14 +18,15 @@ import java.util.List;
 public class CarreraPorUnidadController {
     private final ICarreraPorUnidadService carreraPorUnidadService;
 
-    @PostMapping(value="/carreraPorUnidad",
+    @PostMapping(value="/carreraPorUnidad/{id_unidad}",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<CarreraPorUnidadResponseDto> createCarreraPorUnidad(
-            @RequestBody CarreraPorUnidadRequestDto carreraPorUnidadRequestDto) {
+            @RequestBody CarreraPorUnidadRequestDto carreraPorUnidadRequestDto,
+            @PathVariable Long id_unidad) {
         try {
-            var result = carreraPorUnidadService.createCarreraPorUnidad(carreraPorUnidadRequestDto);
+            var result = carreraPorUnidadService.createCarreraPorUnidad(carreraPorUnidadRequestDto, id_unidad);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -54,13 +55,25 @@ public class CarreraPorUnidadController {
         }
     }
 
-    @PutMapping(value="/carreraPorUnidad/{id}",
+//    @GetMapping(value="/carreraPorUnidad/{id}/{id_unidad}",
+//            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
+//    public ResponseEntity<CarreraPorUnidadResponseDto> getCarreraPorUnidadByIdUnidad(@PathVariable Long id, @PathVariable Long id_unidad) {
+//        try {
+//            var result = carreraPorUnidadService.getCarreraPorUnidadByIdUnidad(id,id_unidad);
+//            return new ResponseEntity<>(result, HttpStatus.OK);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
+    @PutMapping(value="/carreraPorUnidad/{id}/{id_unidad}",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
     public ResponseEntity<CarreraPorUnidadResponseDto> updateCarreraPorUnidadById(
-            @PathVariable Long id, @RequestBody CarreraPorUnidadRequestDto carreraPorUnidadRequestDto) {
+            @PathVariable Long id, @RequestBody CarreraPorUnidadRequestDto carreraPorUnidadRequestDto,
+            @PathVariable Long id_unidad) {
         try {
-            var result = carreraPorUnidadService.updateCarreraPorUnidadById(id, carreraPorUnidadRequestDto);
+            var result = carreraPorUnidadService.updateCarreraPorUnidadById(id, carreraPorUnidadRequestDto, id_unidad);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

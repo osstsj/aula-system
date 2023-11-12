@@ -29,6 +29,4 @@ public class UnidadRequestDto {
     private String nombre_completo;
 
     private String direccion_completa;
-
-    private List<ExtensionEntity> extensiones;
 }

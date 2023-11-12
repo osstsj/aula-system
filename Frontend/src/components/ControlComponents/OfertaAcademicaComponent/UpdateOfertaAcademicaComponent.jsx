@@ -13,6 +13,8 @@ class UpdateOfertaAcademicaComponent extends Component {
         super(props)
         this.state = {
             id: this.props.match.params.id,
+            id_unidad: null,
+            id_carrera: null,
             //inicializacion para lista de select
             unidades: [],
             carreras: [],
@@ -31,8 +33,8 @@ class UpdateOfertaAcademicaComponent extends Component {
         OfertaAcademicaService.getOfertaAcademicaById(this.state.id).then((res) => {
             let oferta = res.data;
             this.setState({
-                unidad: oferta.unidad, 
-                carrera: oferta.carrera, 
+                unidad: oferta.unidad_academica.nombre_completo, 
+                carrera: oferta.carrera.nombre, 
                 modalidad: oferta.modalidad,
                 turno: oferta.turno,
                 periodo: oferta.periodo,
@@ -51,8 +53,6 @@ class UpdateOfertaAcademicaComponent extends Component {
     updateCarreraById = (e) =>{
         e.preventDefault();
         let oferta = {
-            unidad: this.state.unidad.trim(), 
-            carrera: this.state.carrera.trim(), 
             modalidad: this.state.modalidad.trim(),
             turno: this.state.turno.trim(),
             periodo: this.state.periodo.trim()
@@ -60,7 +60,7 @@ class UpdateOfertaAcademicaComponent extends Component {
         
         console.log('oferta => ' + JSON.stringify(oferta));
         
-        OfertaAcademicaService.updateOfertaAcademicaById(oferta, this.state.id).then(res => {
+        OfertaAcademicaService.updateOfertaAcademicaById(this.state.id, oferta, this.state.id_unidad, this.state.id_carrera).then(() => {
             this.props.history.push('/list-oferta-academica');
         }).catch(() => {
             alert("Error al intentar actualizar la oferta academica...");
@@ -76,7 +76,8 @@ class UpdateOfertaAcademicaComponent extends Component {
             const data = res.data;
             options = data.map(d => ({
                 "value": d.nombre,
-                "label": d.nombre
+                "label": d.nombre,
+                "id": d.id,
             }))
         }).catch(() => {
             alert("Error al intentar traer las carreras...");
@@ -92,7 +93,8 @@ class UpdateOfertaAcademicaComponent extends Component {
             const data = res.data;
             options = data.map(d => ({
                 "value": d.nombre_completo,
-                "label": d.nombre_completo
+                "label": d.nombre_completo,
+                "id": d.id,
             }))
         }).catch(() => {
             alert("Error al intentar traer las UAs...");
@@ -123,10 +125,12 @@ class UpdateOfertaAcademicaComponent extends Component {
 
     changeunidadesHandler  = (event) => {
         this.setState({unidad: event.label});
+        this.setState({id_unidad: event.id});
     }
 
     changeCarreraHandler = (event) => {
         this.setState({carrera: event.label});
+        this.setState({id_carrera: event.id});
     }
     
     changeModalidadHandler = (event) => {

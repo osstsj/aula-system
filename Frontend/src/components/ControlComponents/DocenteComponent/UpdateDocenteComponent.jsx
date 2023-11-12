@@ -9,10 +9,11 @@ class UpdateDocenteComponent extends Component {
         super(props)
         this.state = {
             id: this.props.match.params.id,
+            id_unidad: null,
             nombre: '', 
             apellido_paterno: '', 
             apellido_materno: '',
-            unidad_academica: '', 
+            unidad_academica: '',
             categoria: '',
             actividad: '',
 
@@ -24,12 +25,50 @@ class UpdateDocenteComponent extends Component {
 
     updateDocenteById = (e) =>{
         e.preventDefault();
-        
+            // Validar que los campos requeridos no estén vacíos
+            if (this.state.nombre.trim() === '' || 
+            this.state.apellido_paterno.trim() === '' || 
+            this.state.apellido_materno.trim() === '' || 
+            this.state.unidad_academica.trim() === '' || 
+            this.state.categoria.trim() === '' || 
+            this.state.actividad.trim() === '') {
+                alert('Por favor complete todos los campos requeridos.');
+                return;
+            }
+    
+            let docente = {
+                nombre: this.state.nombre.trim(),
+                apellido_paterno: this.state.apellido_paterno.trim(),
+                apellido_materno: this.state.apellido_materno.trim(),
+                categoria: this.state.categoria.trim(),
+                actividad: this.state.actividad.trim(),
+            };
+            // Mostrar el spinner al iniciar la acción
+            this.setState({ isLoading: true });
+            console.log('docente=> ' + JSON.stringify(docente));
+    
+            DocenteService.updateDocenteById(this.state.id, this.state.id_unidad, docente).then(() => {
+                this.props.history.push('/list-docente');
+            }).catch(() => {
+                alert("Error al intentar crear al docente...");
+                this.props.history.push('/list-docente');
+            });
     }
 
-    componentDidMount() {        
+    componentDidMount() { 
+        DocenteService.getDocenteById(this.state.id).then( res => {
+            let docente = res.data;
 
-
+            this.setState({
+                nombre: docente.nombre,
+                apellido_paterno: docente.apellido_paterno,
+                apellido_materno: docente.apellido_materno,
+                categoria: docente.categoria,
+                unidad_academica: docente.unidad_academica.nombre_completo,
+                actividad: docente.actividad
+            })
+        })
+        
         this.getUnidadList();
         this.getActividad();
         this.getCategoria();
@@ -90,6 +129,7 @@ class UpdateDocenteComponent extends Component {
     }
     onChangeUnidadAcademicaHandler = (event) => {
         this.setState({ unidad_academica: event.label });
+        this.setState({ id_unidad: event.id});
     }
     onChangeCategoriaHandler = (event) => {
         this.setState({categoria: event.label});

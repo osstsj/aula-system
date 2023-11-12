@@ -7,13 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface IOfertaAcademicaService {
-    OfertaAcademicaResposeDto createOfertaAcademica(OfertaAcademicaRequestDto ofertaAcademicaRequestDto);
+    OfertaAcademicaResposeDto createOfertaAcademica(OfertaAcademicaRequestDto ofertaAcademicaRequestDto, Long id_unidad, Long id_carrera);
 
     List<OfertaAcademicaResposeDto> getAllOfertasAcademicas();
 
     OfertaAcademicaResposeDto getOfertaAcademicaById(Long id);
 
-    OfertaAcademicaResposeDto updateOfertaAcademicaById(Long id, OfertaAcademicaRequestDto ofertaAcademicaRequestDto);
+    OfertaAcademicaResposeDto updateOfertaAcademicaById(Long id, OfertaAcademicaRequestDto ofertaAcademicaRequestDto, Long id_unidad, Long id_carrera);
 
     HashMap<String, String> deleteOfertaAcademicaById(Long id);
 

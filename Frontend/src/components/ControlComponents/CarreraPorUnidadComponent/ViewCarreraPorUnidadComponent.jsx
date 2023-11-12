@@ -23,7 +23,7 @@ class ViewCarreraPorUnidadComponent extends Component {
                 let carrera = res.data;
                 this.setState({
                     carrera_nombre: carrera.carrera_nombre, 
-                    unidad_academica: carrera.unidad_academica, 
+                    unidad_academica: carrera.unidad_academica.nombre_completo, 
                     modalidad: carrera.modalidad,
                     nivel: carrera.nivel,
                     fecha_creacion: carrera.fecha_creacion,

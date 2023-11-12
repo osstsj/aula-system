@@ -20,19 +20,19 @@ public class FolioAsignaturaServiceImpl implements IFolioAsignaturaService {
 
     @Transactional
     @Override
-    public FolioAsignaturaEntity getProyeccionById(Long id) {
+    public FolioAsignaturaEntity getFolioAsignaturaById(Long id) {
         return folioAsignaturaRepository.findById(id).get();
         // debe cambiarse a optional por seguridad
     }
 
     @Transactional
     @Override
-    public List<FolioAsignaturaEntity> getAllProyecciones() {
+    public List<FolioAsignaturaEntity> getAllFoliosAsignatura() {
         return folioAsignaturaRepository.findAll();
     }
 
     @Override
-    public List<FolioAsignaturaEntity> findAllByUnidadAcademica(Long id_unidad) {
+    public List<FolioAsignaturaEntity> getAllFoliosAsignaturaByUnidadAcademica(Long id_unidad) {
         UnidadEntity unidadAcademica = unidadRepository.findById(id_unidad).get();
 
         return folioAsignaturaRepository.findAllByUnidad_academicaAndAndTipo_folio(unidadAcademica);
@@ -40,10 +40,9 @@ public class FolioAsignaturaServiceImpl implements IFolioAsignaturaService {
 
     @Transactional
     @Override
-    public FolioAsignaturaEntity createProyeccion(FolioAsignaturaEntity proyeccion, Long id_unidad) {
-        var plantel = unidadRepository.findById(id_unidad).get();
-
-        proyeccion.setUnidad_academica(plantel);
+    public FolioAsignaturaEntity createFolioAsignatura(FolioAsignaturaEntity proyeccion, Long id_unidad) {
+        UnidadEntity unidadEntity = unidadRepository.findById(id_unidad).get();
+        proyeccion.setUnidad_academica(unidadEntity);
         proyeccion.setFolio(proyeccion.getUnidad_academica().getAbreviatura()
                 .concat(" - ")
                 .concat(proyeccion.getNumero().toString())

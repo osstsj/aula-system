@@ -20,8 +20,8 @@ class ViewOfertaAcademicaComponent extends Component {
             OfertaAcademicaService.getOfertaAcademicaById(this.state.id).then((res) => {
                 let oferta = res.data;
                 this.setState({
-                    unidad: oferta.unidad, 
-                    carrera: oferta.carrera, 
+                    unidad: oferta.unidad_academica.nombre_completo, 
+                    carrera: oferta.carrera.nombre, 
                     modalidad: oferta.modalidad,
                     turno: oferta.turno,
                     periodo: oferta.periodo,

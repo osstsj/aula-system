@@ -104,7 +104,7 @@ class ListAreaEscolarComponent extends Component {
         const data = areas.map((area) => [
             area.area,
             area.responsable,
-            area.unidad_academica,
+            area.unidad_academica.nombre_completo,
             area.fecha_creacion,
             area.fecha_actualizacion,
         ]);

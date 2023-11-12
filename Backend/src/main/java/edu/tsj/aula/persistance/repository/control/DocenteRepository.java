@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface DocenteRepository extends JpaRepository<DocenteEntity, Long> {
-    @Query("SELECT DE FROM DocenteEntity as DE WHERE DE.unidad= :id_unidad")
+    @Query("SELECT DE FROM DocenteEntity as DE WHERE DE.unidad_academica= :id_unidad")
     List<DocenteEntity> findAllByUnidad(List<UnidadEntity> id_unidad);
 }

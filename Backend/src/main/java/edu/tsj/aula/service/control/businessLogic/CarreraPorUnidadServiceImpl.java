@@ -4,8 +4,10 @@ import edu.tsj.aula.configuration.exception.ResourceNotFoundException;
 import edu.tsj.aula.persistance.models.control.dto.carreraPorUnidadDto.CarreraPorUnidadRequestDto;
 import edu.tsj.aula.persistance.models.control.dto.carreraPorUnidadDto.CarreraPorUnidadResponseDto;
 import edu.tsj.aula.persistance.models.control.entity.CarreraPorUnidadEntity;
+import edu.tsj.aula.persistance.models.control.entity.UnidadEntity;
 import edu.tsj.aula.persistance.models.control.mapper.CarreraPorUnidadMapper;
 import edu.tsj.aula.persistance.repository.control.CarreraPorUnidadRepository;
+import edu.tsj.aula.persistance.repository.control.UnidadRepository;
 import edu.tsj.aula.service.control.ICarreraPorUnidadService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -25,13 +27,18 @@ import java.util.stream.Collectors;
 public class CarreraPorUnidadServiceImpl implements ICarreraPorUnidadService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CarreraPorUnidadServiceImpl.class);
     private final CarreraPorUnidadRepository carreraPorUnidadRepository;
+    private final UnidadRepository unidadRepository;
     private final CarreraPorUnidadMapper mapper;
 
     @Transactional
     @Override
-    public CarreraPorUnidadResponseDto createCarreraPorUnidad(CarreraPorUnidadRequestDto carreraPorUnidadRequestDto) {
+    public CarreraPorUnidadResponseDto createCarreraPorUnidad(CarreraPorUnidadRequestDto carreraPorUnidadRequestDto, Long id_unidad) {
         LOGGER.info("Se ha ejecutado el metodo createCarreraPorUnidad");
         try {
+            UnidadEntity unidadById = unidadRepository.findById(id_unidad).orElseThrow(
+                    () -> new ResourceNotFoundException("No se encontro unidad con el id: " + id_unidad, HttpStatus.NOT_FOUND));
+
+            carreraPorUnidadRequestDto.setUnidad_academica(unidadById);
             CarreraPorUnidadEntity carreraPorUnidadEntity = mapper.requestToEntity(carreraPorUnidadRequestDto);
             carreraPorUnidadRepository.save(carreraPorUnidadEntity);
             var result = mapper.entityToResponse(carreraPorUnidadEntity);
@@ -70,7 +77,7 @@ public class CarreraPorUnidadServiceImpl implements ICarreraPorUnidadService {
 
     @Transactional
     @Override
-    public CarreraPorUnidadResponseDto updateCarreraPorUnidadById(Long id, CarreraPorUnidadRequestDto carreraPorUnidadRequestDto) {
+    public CarreraPorUnidadResponseDto updateCarreraPorUnidadById(Long id, CarreraPorUnidadRequestDto carreraPorUnidadRequestDto, Long id_unidad) {
         LOGGER.info("Se ha ejecutado el metodo updateCarreraPorUnidadById");
         try {
             Optional<CarreraPorUnidadEntity> existingCarreraPorUnidadEntity = carreraPorUnidadRepository.findById(id);
@@ -78,6 +85,11 @@ public class CarreraPorUnidadServiceImpl implements ICarreraPorUnidadService {
                 throw new ResourceNotFoundException("No se ha encontrado la carrera por unidad para actualizar... con el id{}".concat(id.toString()),
                         HttpStatus.NOT_FOUND);
             }
+
+            UnidadEntity unidadById = unidadRepository.findById(id_unidad).orElseThrow(
+                    () -> new ResourceNotFoundException("No se encontro unidad con el id: " + id_unidad, HttpStatus.NOT_FOUND));
+
+            carreraPorUnidadRequestDto.setUnidad_academica(unidadById);
 
             existingCarreraPorUnidadEntity.get().setCarrera_nombre(carreraPorUnidadRequestDto.getCarrera_nombre());
             existingCarreraPorUnidadEntity.get().setNivel(carreraPorUnidadRequestDto.getNivel());

@@ -17,13 +17,6 @@ import java.util.List;
 public class ProyeccionAsignaturaController {
     private final IAsignaturaService asignaturaService;
 
-//    @PostMapping("/asignatura")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public AsignaturaResponseDto createProyeccionAsignatura(@RequestBody AsignaturaRequestDto asignaturaRequestDto) {
-//        return asignaturaService.createAsignatura(asignaturaRequestDto);
-//    }
-
-
     @PostMapping("/asignatura/folio/{id_folio}/unidad/{id_unidad}/docente/{id_docente}/carrera/{id_carrera}")
     @ResponseStatus(HttpStatus.CREATED)
     public AsignaturaEntity createProyeccionAsignatura(@RequestBody AsignaturaEntity asignaturaRequestDto,
@@ -34,21 +27,21 @@ public class ProyeccionAsignaturaController {
 
     @GetMapping(value = "/asignatura/{id}",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-    public AsignaturaEntity getProyeccionesAsignaturaById(@PathVariable Long id) {
+    public AsignaturaEntity getProyeccionAsignaturaById(@PathVariable Long id) {
         return asignaturaService.getAsignaturaById(id);
     }
 
     @GetMapping(value = "/asignaturas",
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-    public List<AsignaturaEntity> getProyeccionesAsignatura() {
+    public List<AsignaturaEntity> getAllProyeccionesAsignatura() {
         return asignaturaService.getAsignaturas();
     }
 
-    @GetMapping(value = "/asignaturas_by_folio_and_unidad/{id_folio}/{id_unidad}",
-        produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-    public List<AsignaturaEntity> getAllByUnidadAcademica(@PathVariable Long id_folio, @PathVariable Long id_unidad) {
-            return asignaturaService.findAllByFolioAndUnidad(id_folio, id_unidad);
-    }
+//    @GetMapping(value = "/asignaturas_by_folio_and_unidad/{id_folio}/{id_unidad}",
+//        produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
+//    public List<AsignaturaEntity> getAllByUnidadAcademica(@PathVariable Long id_folio, @PathVariable Long id_unidad) {
+//            return asignaturaService.findAllByFolioAndUnidad(id_folio, id_unidad);
+//    }
 
         @GetMapping(value = "/asignaturas_by_folio/{id_folio}",
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})

@@ -1,5 +1,7 @@
 package edu.tsj.aula.service.control;
 
+import edu.tsj.aula.persistance.models.control.dto.docenteDto.DocenteRequestDto;
+import edu.tsj.aula.persistance.models.control.dto.docenteDto.DocenteResponseDto;
 import edu.tsj.aula.persistance.models.control.entity.DocenteEntity;
 
 import java.util.HashMap;
@@ -8,15 +10,15 @@ import java.util.List;
 
 public interface IDocenteService {
 
-    DocenteEntity createDocente(DocenteEntity docenteRequestDto, Long plantel_id);
+    DocenteResponseDto createDocente(DocenteRequestDto docenteRequestDto, Long id_unidad);
 
-    List<DocenteEntity> getAllDocentes();
+    List<DocenteResponseDto> getAllDocentes();
 
-    List<DocenteEntity> findAllDocentesByUnidad(Long unidad_id);
+    List<DocenteResponseDto> findAllDocentesByUnidad(Long id_unidad);
 
-    DocenteEntity getDocenteById(Long id);
+    DocenteResponseDto getDocenteById(Long id);
 
-    DocenteEntity updateDocenteById(Long id, Long unidad_id, DocenteEntity docenteRequestDto);
+    DocenteResponseDto updateDocenteById(Long id, Long id_unidad, DocenteRequestDto docenteRequestDto);
 
     HashMap<String, String> deleteDocenteById(Long id);
 }

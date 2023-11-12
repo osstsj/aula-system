@@ -8,24 +8,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//@JsonInclude(JsonInclude.Include.NON_EMPTY)
-//@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class CarreraRequestDto {
     private String abreviatura;
-
     private String nombre;
-
-//    @NotNull private Integer dgp;
-    private String dgp;
-
+    private Integer dgp;
     private String plan_estudio;
-
     private String estatus;
+    private String clave_programa;
 }

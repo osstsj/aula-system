@@ -14,6 +14,7 @@ class UpdateCarreraPorUnidadComponent extends Component {
         super(props)
         this.state = {
             id: this.props.match.params.id,
+            id_unidad: null,
             //inicializacion para lista de select
             carreras:[],
             planteles:[],
@@ -32,7 +33,7 @@ class UpdateCarreraPorUnidadComponent extends Component {
             let unidad = res.data;
             this.setState({
                 carrera_nombre: unidad.carrera_nombre, 
-                unidad_academica: unidad.unidad_academica, 
+                unidad_academica: unidad.unidad_academica.nombre_completo, 
                 modalidad: unidad.modalidad,
                 nivel: unidad.nivel
             });
@@ -50,14 +51,13 @@ class UpdateCarreraPorUnidadComponent extends Component {
         e.preventDefault();
         let unidad = {
             carrera_nombre: this.state.carrera_nombre.trim(), 
-            unidad_academica: this.state.unidad_academica.trim(), 
             modalidad: this.state.modalidad.trim(),
             nivel: this.state.nivel.trim()
         };
         
         console.log('unidad => ' + JSON.stringify(unidad));
         
-        CarreraPorUnidadService.updateCarreraPorUnidadById(unidad, this.state.id).then(res => {
+        CarreraPorUnidadService.updateCarreraPorUnidadById(this.state.id, unidad, this.state.id_unidad).then(res => {
             this.props.history.push('/list-carrera_por_unidad');
         }).catch(() => {
             alert("Error al intentar actualizar la carrera por unidad...");
@@ -88,7 +88,8 @@ class UpdateCarreraPorUnidadComponent extends Component {
             const data = res.data;
             options = data.map(d => ({
                 "value": d.nombre_completo,
-                "label": d.nombre_completo
+                "label": d.nombre_completo,
+                "id": d.id,
             }))
         }).catch(() => {
             alert("Error al intentar traer las UAs...");
@@ -123,6 +124,7 @@ class UpdateCarreraPorUnidadComponent extends Component {
 
     changeUnidadesHandler = (event) => {
         this.setState({unidad_academica: event.label});
+        this.setState({id: event.id});
     }
     
     changeModalidadHandler = (event) => {

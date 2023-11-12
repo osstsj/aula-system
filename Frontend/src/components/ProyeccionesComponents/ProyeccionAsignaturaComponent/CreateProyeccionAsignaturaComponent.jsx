@@ -207,7 +207,9 @@ class CreateFolioAsignatura extends Component {
             options = data.map(d => ({
                 "value": d.folio,
                 "label": d.folio,
-                'id': d.id,
+                "id": d.id,
+                "id_unidad": d.unidad_academica.id,
+                "unidad_academica": d.unidad_academica.nombre_completo
             }))
             this.setState({ folios: options });
         }).catch(() => {
@@ -228,7 +230,7 @@ class CreateFolioAsignatura extends Component {
             }))
         }).catch(() => {
             alert("Error al intentar traer las UAs...");
-            this.props.history.push('/list-oferta-academica');
+            this.props.history.push('/');
         });
         this.setState({unidades: options})
     }
@@ -287,6 +289,13 @@ class CreateFolioAsignatura extends Component {
         // this.setState({nombre_docente: event.target.value});
         this.setState({ folio: event.label });
         this.setState({ id_folio: event.id });
+
+        this.setState({ nombre_docente: ''})
+
+        this.setState({ id_unidad: event.id_unidad});
+        this.setState({unidad_academica: event.unidad_academica})
+    
+        this.getDocenteList(event.id_unidad);
         
         this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
         (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
@@ -296,10 +305,10 @@ class CreateFolioAsignatura extends Component {
     onChangeUnidadHandler = (event) => {
         this.setState({ unidad_academica: event.label });
         this.setState({ disableDocente: false })
-        this.setState({ nombre_docente: ''})
+        // this.setState({ nombre_docente: ''})
         
-        this.getDocenteList(event.id);
-        this.setState({ id_unidad: event.id })
+        // this.getDocenteList(event.id);
+        // this.setState({ id_unidad: event.id })
 
         this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
         (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
@@ -562,6 +571,7 @@ class CreateFolioAsignatura extends Component {
                                                 <div className="form-outline">
                                                     <label>Unidad Academica</label>
                                                     <Select
+                                                        isDisabled={true}
                                                         rules={{ required: true }}
                                                         options={this.state.unidades}
                                                         onChange={(e) => this.onChangeUnidadHandler(e)}
@@ -590,7 +600,7 @@ class CreateFolioAsignatura extends Component {
                                                     <Select
                                                     // depende que se realize el cambio en unidad academcia para que se pueda habilidar
                                                     // y se reseteara si se cambia la unidad academica, al igual se resetea el valor de nivel academico.
-                                                        isDisabled={this.state.disableDocente}
+                                                        // isDisabled={this.state.disableDocente}
                                                         rules={{ required: true }}
                                                         options={this.state.docentes}
                                                         onChange={(e) => this.onChangeNombreDocenteHandler(e)}

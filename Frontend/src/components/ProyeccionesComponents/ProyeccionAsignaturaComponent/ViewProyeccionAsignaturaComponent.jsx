@@ -58,12 +58,12 @@ class ViewProyeccionAsignaturaComponent extends Component {
 
             this.setState({
                 // Asignatura
-                proyeccion: asignatura.proyeccion.folio,
+                proyeccion: asignatura.folio.folio,
                     // profe_asignatura: 
-                    clave_programa: asignatura.profe_asignatura.clave_programa,
+                    clave_programa: asignatura.profe_asignatura.clave_programa.clave_programa,
                     codigo_nomina: asignatura.profe_asignatura.codigo_nomina,
                     grado_academico: asignatura.profe_asignatura.grado_academico,
-                    nombre_docente: asignatura.profe_asignatura.nombre_docente,
+                    nombre_docente: asignatura.profe_asignatura.nombre_docente.nombre_completo,
                    
 
                     // horas_sustantivas_atencion_alumnos
@@ -98,7 +98,11 @@ class ViewProyeccionAsignaturaComponent extends Component {
                 fecha_creacion: asignatura.fecha_creacion,
                 fecha_actualizacion: asignatura.fecha_actualizacion
             });
-        });
+        })
+        .catch(() => {
+            alert("Error al intentar traer la proyeccion por asignatura");
+            this.props.history.push('/');
+        })
     }
 
     back(){

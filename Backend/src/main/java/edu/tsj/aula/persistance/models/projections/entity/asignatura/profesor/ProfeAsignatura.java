@@ -25,11 +25,6 @@ public class ProfeAsignatura {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    private CarreraEntity carreraEntity; aplicar compueso como en folio
-    //para que cuando haya una actualizacion, tambien se actualize por este lado
-//    @Column
-//    private String clave_programa;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE) ///    Tal vez deba quitarse ya que se realaciona con la proyeccion
 //    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
@@ -45,13 +40,8 @@ public class ProfeAsignatura {
     @Column
     private String grado_academico;
 
-
-//    private DocenteEntity docente; aplicar compueso como en folio
-//    @Column
-//    private String nombre_docente;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE) ///    Tal vez deba quitarse ya que se realaciona con la proyeccion
+    @OnDelete(action = OnDeleteAction.CASCADE) ///     dependencia con el folio
 //    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
     @JsonIdentityReference(alwaysAsId=true)
 //    @JsonProperty("id_proyeccion")

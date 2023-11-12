@@ -175,6 +175,8 @@ class CreateFolioAsignaturaComponent extends Component {
                                                     type="number"
                                                     name=""
                                                     id=""
+                                                    min="0"
+                                                    // max="2099"
                                                     className="form-control"
                                                     style={{'width' : '10rem'}}
                                                     placeholder="Secuencia..."

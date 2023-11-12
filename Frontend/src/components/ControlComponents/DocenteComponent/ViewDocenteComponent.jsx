@@ -20,22 +20,22 @@ class ViewPlantelComponent extends Component {
         }
 
     componentDidMount() {
-        // DocenteService.getDocenteById(this.state.id).then((res) => {
-        //     let docente = res.data;
-        //     this.setState({
-        //         nombre: docente.nombre, 
-        //         apellido_paterno: docente.apellido_paterno, 
-        //         apellido_materno: docente.apellido_materno,
-        //         unidad_academica: docente.unidad_academica, 
-        //         categoria: docente.categoria, 
-        //         actividad: docente.actividad,
-        //         fecha_creacion: docente.fecha_creacion,
-        //         fecha_actualizacion: docente.fecha_actualizacion
-        //     });
-        // }).catch(() => {
-        //     alert("Error al intentar traer al docente...");
-        //     this.props.history.push('/list-docente');
-        // });
+        DocenteService.getDocenteById(this.state.id).then((res) => {
+            let docente = res.data;
+            this.setState({
+                nombre: docente.nombre, 
+                apellido_paterno: docente.apellido_paterno, 
+                apellido_materno: docente.apellido_materno,
+                unidad_academica: docente.unidad_academica.nombre_completo, 
+                categoria: docente.categoria, 
+                actividad: docente.actividad,
+                fecha_creacion: docente.fecha_creacion,
+                fecha_actualizacion: docente.fecha_actualizacion
+            });
+        }).catch(() => {
+            alert("Error al intentar traer al docente...");
+            this.props.history.push('/list-docente');
+        });
     }
 
     back(){

@@ -12,6 +12,7 @@ class CreateAreaEscolarComponent extends Component {
 
         this.state = {
             unidades:[],
+            id_unidad: null,
 
             area: '',
             responsable: '',
@@ -62,7 +63,8 @@ class CreateAreaEscolarComponent extends Component {
             const data = res.data;
             options = data.map(d => ({
                 "value": d.nombre_completo,
-                "label": d.nombre_completo
+                "label": d.nombre_completo,
+                "id": d.id,
             }))
         }).catch(() => {
             alert("Error al intentar traer las UAs...");
@@ -79,6 +81,7 @@ class CreateAreaEscolarComponent extends Component {
     }
     onChangeUnidadAcademicaHandler = (event) => {
         this.setState({unidad_academica: event.label});
+        this.setState({ id_unidad: event.id});
     }
     
     cancel() {

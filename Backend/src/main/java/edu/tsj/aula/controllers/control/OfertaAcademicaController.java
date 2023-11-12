@@ -19,14 +19,15 @@ import java.util.List;
 public class OfertaAcademicaController {
     private final IOfertaAcademicaService ofertaAcademicaService;
 
-    @PostMapping(value="/oferta_academica",
+    @PostMapping(value="/oferta_academica/{id_unidad}/{id_carrera}",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<OfertaAcademicaResposeDto> createOfertaAcademica(
-            @Valid @RequestBody OfertaAcademicaRequestDto ofertaAcademicaRequestDto) {
+            @Valid @RequestBody OfertaAcademicaRequestDto ofertaAcademicaRequestDto,
+            @PathVariable Long id_unidad, @PathVariable Long id_carrera) {
         try {
-            var result = ofertaAcademicaService.createOfertaAcademica(ofertaAcademicaRequestDto);
+            var result = ofertaAcademicaService.createOfertaAcademica(ofertaAcademicaRequestDto, id_unidad, id_carrera);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -55,13 +56,14 @@ public class OfertaAcademicaController {
         }
     }
 
-    @PutMapping(value="/oferta_academica/{id}",
+    @PutMapping(value="/oferta_academica/{id}/{id_unidad}/{id_carrera}",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
     public ResponseEntity<OfertaAcademicaResposeDto> updateOfertaAcademicaById(
-            @PathVariable Long id,@Valid @RequestBody OfertaAcademicaRequestDto ofertaAcademicaRequestDto) {
+            @PathVariable Long id,@Valid @RequestBody OfertaAcademicaRequestDto ofertaAcademicaRequestDto,
+            @PathVariable Long id_unidad, @PathVariable Long id_carrera) {
         try {
-            var result = ofertaAcademicaService.updateOfertaAcademicaById(id, ofertaAcademicaRequestDto);
+            var result = ofertaAcademicaService.updateOfertaAcademicaById(id, ofertaAcademicaRequestDto, id_unidad, id_carrera);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

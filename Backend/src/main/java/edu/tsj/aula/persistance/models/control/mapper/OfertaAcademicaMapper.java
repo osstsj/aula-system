@@ -11,7 +11,7 @@ import org.mapstruct.ReportingPolicy;
 public interface OfertaAcademicaMapper {
     // Entity -> ResponseDTO
     @Mapping(source = "entity.id", target = "id")
-    @Mapping(source = "entity.unidad", target = "unidad")
+    @Mapping(source = "entity.unidad_academica", target = "unidad_academica")
     @Mapping(source = "entity.carrera", target = "carrera")
     @Mapping(source = "entity.modalidad", target = "modalidad")
     @Mapping(source = "entity.turno", target = "turno")
@@ -21,7 +21,7 @@ public interface OfertaAcademicaMapper {
     OfertaAcademicaResposeDto entityToResponse(OfertaAcademicaEntity entity);
 
     // RequestDTO -> Entity
-    @Mapping(source = "request.unidad", target = "unidad")
+    @Mapping(source = "request.unidad_academica", target = "unidad_academica")
     @Mapping(source = "request.carrera", target = "carrera")
     @Mapping(source = "request.modalidad", target = "modalidad")
     @Mapping(source = "request.turno", target = "turno")

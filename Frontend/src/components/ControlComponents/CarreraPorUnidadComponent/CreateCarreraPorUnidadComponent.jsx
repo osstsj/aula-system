@@ -15,6 +15,7 @@ class CreateCarreraPorUnidadComponent extends Component {
             unidades: [],
             modalidades: [],
             niveles: [],
+            id_unidad: null,
 
             carrera_nombre: '',
             unidad_academica: '',
@@ -35,7 +36,6 @@ class CreateCarreraPorUnidadComponent extends Component {
         e.preventDefault();
         let cPorU = {
             carrera_nombre: this.state.carrera_nombre.trim(),
-            unidad_academica: this.state.unidad_academica.trim(),
             modalidad: this.state.modalidad.trim(),
             nivel: this.state.nivel.trim()
         }
@@ -43,7 +43,7 @@ class CreateCarreraPorUnidadComponent extends Component {
         this.setState({ isLoading: true });
         console.log('Carrera por unidad academica: ' + JSON.stringify(cPorU));
 
-        CarreraPorUnidadService.createCarreraPorUnidad(cPorU).then(
+        CarreraPorUnidadService.createCarreraPorUnidad(cPorU, this.state.id_unidad).then(
             res => {
                 this.props.history.push('/list-carrera_por_unidad')
         }).catch(() => {
@@ -82,7 +82,8 @@ class CreateCarreraPorUnidadComponent extends Component {
             const data = res.data;
             options = data.map(d => ({
                 "value": d.nombre_completo,
-                "label": d.nombre_completo
+                "label": d.nombre_completo,
+                "id": d.id,
             }))
         }).catch(() => {
             alert("Error al intentar traer las UAs...");
@@ -115,6 +116,7 @@ class CreateCarreraPorUnidadComponent extends Component {
     }
     changeUnidadesHandler = (event) => {
         this.setState({ unidad_academica: event.label });
+        this.setState({ id_unidad: event.id });
     }
     changeModalidadHandler = (event) => {
         this.setState({ modalidad: event.label });

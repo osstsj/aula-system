@@ -28,8 +28,6 @@ public class UnidadResponseDto {
     private String nombre_completo;
     private String direccion_completa;
 
-    private List<ExtensionEntity> extensiones;
-
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fecha_creacion;
 

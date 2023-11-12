@@ -19,20 +19,20 @@ import java.util.List;
 public class AreaEscolarController {
     private final IAreaEscolarService areaEscolarService;
 
-    @PostMapping(value="/area",
+    @PostMapping(value="area_escolar_by_unidad/{id_unidad}",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
     public ResponseEntity<AreaEscolarResponseDto> createAreaEscolar(
-            @Valid @RequestBody AreaEscolarRequestDto areaEscolarRequestDto) {
+            @Valid @RequestBody AreaEscolarRequestDto areaEscolarRequestDto, @PathVariable Long id_unidad) {
         try {
-            var result = areaEscolarService.createAreaEscolar(areaEscolarRequestDto);
+            var result = areaEscolarService.createAreaEscolar(areaEscolarRequestDto, id_unidad);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping(value="/areas",
+    @GetMapping(value="/areas_escolares",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
     public ResponseEntity<List<AreaEscolarResponseDto>> getAllAreasEscolares() {
         try {
@@ -43,7 +43,7 @@ public class AreaEscolarController {
         }
     }
 
-    @GetMapping(value="/area/{id}",
+    @GetMapping(value="/area_escolar/{id}",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
     public ResponseEntity<AreaEscolarResponseDto> getAreaEscolarById(@PathVariable Long id) {
         try {
@@ -54,20 +54,21 @@ public class AreaEscolarController {
         }
     }
 
-    @PutMapping(value="/area/{id}",
+    @PutMapping(value="/area_escolar/{id}/unidad/{id_unidad}",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
     public ResponseEntity<AreaEscolarResponseDto> updateAreaEscolarById(
-            @PathVariable Long id,@Valid @RequestBody AreaEscolarRequestDto areaEscolarRequestDto ) {
+            @PathVariable Long id,@Valid @RequestBody AreaEscolarRequestDto areaEscolarRequestDto,
+            @PathVariable Long id_unidad) {
         try {
-            var result = areaEscolarService.updateAreaEscolar(id, areaEscolarRequestDto);
+            var result = areaEscolarService.updateAreaEscolar(id, areaEscolarRequestDto, id_unidad);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @DeleteMapping("/area/{id}")
+    @DeleteMapping("/area_escolar/{id}")
     public ResponseEntity<HashMap<String, String>> deleteAreaEscolarById(@PathVariable Long id) {
        try {
            HashMap<String, String> response = areaEscolarService.deleteAreaEscolarById(id);

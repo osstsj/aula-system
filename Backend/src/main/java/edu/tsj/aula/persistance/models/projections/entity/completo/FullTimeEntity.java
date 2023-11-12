@@ -3,6 +3,7 @@ package edu.tsj.aula.persistance.models.projections.entity.completo;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import edu.tsj.aula.persistance.models.control.entity.UnidadEntity;
 import edu.tsj.aula.persistance.models.projections.entity.folio.FolioAsignaturaEntity;
 import edu.tsj.aula.persistance.models.projections.entity.completo.necesidad.HorasNecesidadInstitucionalFulltime;
 import edu.tsj.aula.persistance.models.projections.entity.completo.profesor.ProfesorFulltimeEntity;
@@ -30,6 +31,12 @@ public class FullTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIdentityReference(alwaysAsId=true)
+    @JoinColumn(name = "id_unidad", nullable = false)
+    private UnidadEntity unidad_academica;
 
     @JoinColumn(name = "id")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

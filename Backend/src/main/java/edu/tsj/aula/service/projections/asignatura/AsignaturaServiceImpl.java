@@ -37,7 +37,8 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
                                              Long id_folio, Long id_unidad,
                                              Long id_docente, Long id_carrera) {
         log.debug("Se ha ejecutado el metodo createAsignatura");
-        FolioAsignaturaEntity folioAsignaturaEntity = folioAsignaturaRepository.findById(id_folio).orElseThrow(()-> new ResourceNotFoundException((" No se encontro folio..."),
+        FolioAsignaturaEntity folioAsignaturaEntity = folioAsignaturaRepository.findById(id_folio).orElseThrow(
+                ()-> new ResourceNotFoundException((" No se encontro folio..."),
                 HttpStatus.NOT_FOUND));
 
         DocenteEntity docenteEntity = docenteRepository.findById(id_docente).get();
@@ -80,16 +81,17 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
 //        return  asignaturaRequest;
     }
 
-    @Override
-    public List<AsignaturaEntity> findAllByFolioAndUnidad(Long id_folio, Long id_unidad_academica) {
-        FolioAsignaturaEntity folio = folioAsignaturaRepository.findById(id_folio).get();
-        UnidadEntity unidadAcademica = unidadRepository.findById(id_unidad_academica).get();
-        return asignaturaRepository.findAllByUnidad_academicaAndFolio(folio, unidadAcademica);
-    }
+//    @Override
+//    public List<AsignaturaEntity> findAllByFolioAndUnidad(Long id_folio, Long id_unidad_academica) {
+//        FolioAsignaturaEntity folio = folioAsignaturaRepository.findById(id_folio).get();
+//        UnidadEntity unidadAcademica = unidadRepository.findById(id_unidad_academica).get();
+//        return asignaturaRepository.findAllByUnidad_academicaAndFolio(folio, unidadAcademica);
+//    }
 
     @Override
     public List<AsignaturaEntity> findAllByFolioId(Long id_folio) {
-        FolioAsignaturaEntity folioAsignaturaEntity = folioAsignaturaRepository.findById(id_folio).orElseThrow(()-> new ResourceNotFoundException((" No se encontro folio..."),
+        FolioAsignaturaEntity folioAsignaturaEntity = folioAsignaturaRepository.findById(id_folio)
+                .orElseThrow(()-> new ResourceNotFoundException((" No se encontro folio..."),
                 HttpStatus.NOT_FOUND));
         return asignaturaRepository.findAllByFolio(folioAsignaturaEntity);
     }

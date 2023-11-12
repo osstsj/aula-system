@@ -1,6 +1,8 @@
 package edu.tsj.aula.service.control.businessLogic;
 
 import edu.tsj.aula.configuration.exception.ResourceNotFoundException;
+import edu.tsj.aula.persistance.models.control.dto.unidadDto.UnidadRequestDto;
+import edu.tsj.aula.persistance.models.control.dto.unidadDto.UnidadResponseDto;
 import edu.tsj.aula.persistance.models.control.entity.UnidadEntity;
 import edu.tsj.aula.persistance.models.control.mapper.UnidadMapper;
 import edu.tsj.aula.persistance.repository.control.ExtensionRepository;
@@ -12,163 +14,113 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
 public class UnidadServiceImpl implements IUnidadService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UnidadServiceImpl.class);
     private final UnidadRepository unidadRepository;
-    private final ExtensionRepository extensionRepository;
     private final UnidadMapper mapper;
 
-    @Override
-    public UnidadEntity createUnidad(UnidadEntity unidadRequestDto) {
-        return unidadRepository.save(unidadRequestDto);
-    }
 
-    @Override
-    public List<UnidadEntity> getAllUnidades() {
-        return unidadRepository.findAll();
-    }
 
+    @Transactional
     @Override
-    public Optional<UnidadEntity> getUnidadById(Long id) {
-        return unidadRepository.findById(id);
-    }
-
-    @Override
-    public UnidadEntity updateUnidadById(Long id, UnidadEntity unidadUpdateRequestDto) {
-        LOGGER.info("Se ha ejecutado el metodo updateUnidadById");
+    public UnidadResponseDto createUnidad(UnidadRequestDto unidadRequestDto) {
+        LOGGER.info("Se ha ejecutado el metodo createUnidad");
         try {
-            Optional<UnidadEntity> exisitingUnidadEntity = unidadRepository.findById(id);
-            if (exisitingUnidadEntity.isEmpty()) {
-                throw new ResourceNotFoundException("No se ha encontrado la unidad para actualizar... con el id: {}"
-                        .concat(id.toString()), HttpStatus.NOT_FOUND);
-            }
+            UnidadEntity unidadEntity = mapper.requestToEntity(unidadRequestDto);
+            unidadRepository.save(unidadEntity);
+            var result = mapper.entityToResponse(unidadEntity);
+            LOGGER.debug("Se ha creado la unidad: {}", result.toString());
 
-            exisitingUnidadEntity.get().setTipo_unidad(unidadUpdateRequestDto.getTipo_unidad());
-            exisitingUnidadEntity.get().setClave_dgp(unidadUpdateRequestDto.getClave_dgp());
-            exisitingUnidadEntity.get().setAbreviatura(unidadUpdateRequestDto.getAbreviatura());
-            exisitingUnidadEntity.get().setNombre_corto(unidadUpdateRequestDto.getNombre_corto());
-            exisitingUnidadEntity.get().setNombre_completo(unidadUpdateRequestDto.getNombre_completo());
-            exisitingUnidadEntity.get().setDireccion_completa(unidadUpdateRequestDto.getDireccion_completa());
-            exisitingUnidadEntity.get().setFecha_actualizacion(LocalDateTime.now());
-
-            return unidadRepository.save(exisitingUnidadEntity.get());
-
-
-//          return  plantelRepository.save(exisitingPlantelEntity.get());
-//            var result = mapper.entityToResponse(exisitingPlantelEntity.get());
-//            LOGGER.debug("Se ha actualizado el plantel: {}", result.toString());
-
-//            return result;
+            return result;
         } catch (Exception e) {
-            LOGGER.error("Error al actualizar Unidad con el id: {}", id);
+            LOGGER.error("Error al intentar crear la unidad: {}", unidadRequestDto.toString());
             throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
         }
     }
 
-
+    @Transactional
     @Override
-    public HashMap<String, String> deleteUnidadById(Long id) {
-        return null;
+    public List<UnidadResponseDto> getAllUnidades() {
+        LOGGER.info("Se ha ejecutado el metodo getAllUnidades");
+        try {
+            var list = unidadRepository.findAll();
+
+            return list.stream().map(mapper::entityToResponse).collect(Collectors.toList());
+        } catch (Exception e) {
+            LOGGER.error("Error al intentar traer lista de unidades");
+            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
+        }
     }
 
-//    @Transactional
-//    @Override
-//    public PlantelResponseDto createPlantel(PlantelRequestDto plantelRequestDto) {
-//        LOGGER.info("Se ha ejecutado el metodo createPlantel");
-//        try {
-//            PlantelEntity plantelEntity = mapper.requestToEntity(plantelRequestDto);
-//            plantelRepository.save(plantelEntity);
-//            var result = mapper.entityToResponse(plantelEntity);
-//            LOGGER.debug("Se ha creado el plantel: {}", result.toString());
-//
-//            return result;
-//        } catch (Exception e) {
-//            LOGGER.error("Error al intentar crear plantel: {}", plantelRequestDto.toString());
-//            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
-//        }
-//    }
-//
-//    @Transactional
-//    @Override
-//    public List<PlantelResponseDto> getAllPlanteles() {
-//        LOGGER.info("Se ha ejecutado el metodo getAllPlanteles");
-//        try {
-//            var list = plantelRepository.findAll();
-//
-//            return list.stream().map(mapper::entityToResponse).collect(Collectors.toList());
-//        } catch (Exception e) {
-//            LOGGER.error("Error al intentar traer lista de planteles");
-//            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
-//        }
-//    }
-//
-//    @Transactional
-//    @Override
-//    public PlantelResponseDto getPlantelById(Long id) {
-//        LOGGER.info("Se ha ejecutado el metodo getPlantelById");
-//        return plantelRepository.findById(id)
-//                .map(mapper::entityToResponse)
-//                .orElseThrow(() -> new ResourceNotFoundException("No se encontro plantel con id: ".concat(id.toString()),
-//                        HttpStatus.NOT_FOUND));
-//    }
-//
-//    @Transactional
-//    @Override
-//    public PlantelResponseDto updatePlantelById(Long id, PlantelRequestDto plantelRequestDto) {
-//        LOGGER.info("Se ha ejecutado el metodo updatePlantelById");
-//        try {
-//            Optional<PlantelEntity> exisitingPlantelEntity = plantelRepository.findById(id);
-//            if (exisitingPlantelEntity.isEmpty()) {
-//                throw new ResourceNotFoundException("No se ha encontrado el plantel para actualizar... con el id: {}"
-//                        .concat(id.toString()), HttpStatus.NOT_FOUND);
-//            }
-//
-//            exisitingPlantelEntity.get().setTipo_unidad(plantelRequestDto.getTipo_unidad());
-//            exisitingPlantelEntity.get().setClave_dgp(plantelRequestDto.getClave_dgp());
-//            exisitingPlantelEntity.get().setAbreviatura(plantelRequestDto.getAbreviatura());
-//            exisitingPlantelEntity.get().setNombre_corto(plantelRequestDto.getNombre_corto());
-//            exisitingPlantelEntity.get().setNombre_completo(plantelRequestDto.getNombre_completo());
-//            exisitingPlantelEntity.get().setDireccion_completa(plantelRequestDto.getDireccion_completa());
-//            exisitingPlantelEntity.get().setFecha_actualizacion(LocalDateTime.now());
-//
-//            plantelRepository.save(exisitingPlantelEntity.get());
-//            var result = mapper.entityToResponse(exisitingPlantelEntity.get());
-//            LOGGER.debug("Se ha actualizado el plantel: {}", result.toString());
-//
-//            return result;
-//        } catch (Exception e) {
-//            LOGGER.error("Error al actualizar el plantel con el id: {}", id);
-//            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
-//        }
-//    }
-//
-//    @Transactional
-//    @Override
-//    public HashMap<String, String> deletePlantelById(Long id) {
-//        LOGGER.info("Se a ejecutado el metodo deletePlantelById");
-//        try {
-//            PlantelEntity existingPlantel = plantelRepository.findById(id).orElse(null);
-//            if (existingPlantel != null) {
-//                HashMap<String, String> response = new HashMap<>();
-//                response.put("message", String.format("El plantel con el id %s ha sido elimido exitosamente!", id.toString()));
-//                plantelRepository.deleteById(id);
-//
-//                LOGGER.debug("Se ha eliminado el plantel con el id: {}", id.toString());
-//                return response;
-//            }
-//            return null;
-//        } catch (Exception e) {
-//            LOGGER.error("Error al eliminar el plantel con el id: {}", id);
-//            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
-//        }
-//    }
+    @Transactional
+    @Override
+    public UnidadResponseDto getUnidadById(Long id) {
+        LOGGER.info("Se ha ejecutado el metodo getUnidadById");
+        return unidadRepository.findById(id)
+                .map(mapper::entityToResponse)
+                .orElseThrow(() -> new ResourceNotFoundException("No se encontro la unidad con id: ".concat(id.toString()),
+                        HttpStatus.NOT_FOUND));
+    }
+
+    @Transactional
+    @Override
+    public UnidadResponseDto updateUnidadById(Long id, UnidadRequestDto unidadRequestDto) {
+        LOGGER.info("Se ha ejecutado el metodo updateUnidadById");
+        try {
+            Optional<UnidadEntity> unidadEntity = unidadRepository.findById(id);
+            if (unidadEntity.isEmpty()) {
+                throw new ResourceNotFoundException("No se ha encontrado la unidad para actualizar... con el id: {}"
+                        .concat(id.toString()), HttpStatus.NOT_FOUND);
+            }
+
+            unidadEntity.get().setTipo_unidad( unidadRequestDto.getTipo_unidad());
+            unidadEntity.get().setClave_dgp( unidadRequestDto.getClave_dgp());
+            unidadEntity.get().setAbreviatura( unidadRequestDto.getAbreviatura());
+            unidadEntity.get().setNombre_corto( unidadRequestDto.getNombre_corto());
+            unidadEntity.get().setNombre_completo( unidadRequestDto.getNombre_completo());
+            unidadEntity.get().setDireccion_completa( unidadRequestDto.getDireccion_completa());
+            unidadEntity.get().setFecha_actualizacion(LocalDateTime.now());
+
+            unidadRepository.save(unidadEntity.get());
+            var result = mapper.entityToResponse(unidadEntity.get());
+            LOGGER.debug("Se ha actualizado la unidad: {}", result.toString());
+
+            return result;
+        } catch (Exception e) {
+            LOGGER.error("Error al actualizar la unidad con el id: {}", id);
+            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
+        }
+    }
+
+    @Transactional
+    @Override
+    public HashMap<String, String> deleteUnidadById(Long id) {
+        LOGGER.info("Se a ejecutado el metodo deleteUnidadById");
+        try {
+            UnidadEntity existingPlantel = unidadRepository.findById(id).orElse(null);
+            if (existingPlantel != null) {
+                HashMap<String, String> response = new HashMap<>();
+                response.put("message", String.format("El unidad con el id %s ha sido elimido exitosamente!", id.toString()));
+                unidadRepository.deleteById(id);
+
+                LOGGER.debug("Se ha eliminado la unidad con el id: {}", id.toString());
+                return response;
+            }
+            return null;
+        } catch (Exception e) {
+            LOGGER.error("Error al eliminar la unidad con el id: {}", id);
+            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
+        }
+    }
 
 
 }

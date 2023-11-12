@@ -27,7 +27,7 @@ class CreateFolioAsignaturaComponent extends Component {
             isLoading: false, // Nuevo estado para controlar la visibilidad del spinner
             periodoAoB: '', // Inicializa el valor según tu necesidad
 
-            tipo_folio: "ASIGNATURA",
+            tipo_folio: "TIEMPO COMPLETO",
 
         }
     }
@@ -194,19 +194,6 @@ class CreateFolioAsignaturaComponent extends Component {
                                                     onChange={(e) => this.onChangePeriodoSelectHandler(e)}
                                                     value={{ label: this.state.periodo === 0 ? "Periodo..." : this.state.periodo}}
                                                 />
-{/* 
-                                                <input
-                                                    style={{'width' : '5rem'}}
-                                                    type="number"
-                                                    name="" id=""
-                                                    className="form-control"
-                                                    min="2023"
-                                                    max="2099"
-                                                    step="1"
-                                                    title="Ingrese solo numeros..."
-                                                    onChange={this.onChangePeriodoHandler}
-                                                    value={this.state.periodo}
-                                                    required /> */}
                                             </div>
                                         </div>
 

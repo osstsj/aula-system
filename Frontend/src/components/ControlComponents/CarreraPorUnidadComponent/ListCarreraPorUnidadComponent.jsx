@@ -105,9 +105,9 @@ class ListCarreraPorUnidadComponent extends Component {
 
         const columns = [' Carrera', ' Nivel', ' Unidad', 'Modalidad'];
         const data = unidades.map((unidad) => [
-            unidad.carrera_nombre,
+            unidad.carrera.nombre,
             unidad.nivel,
-            unidad.unidad_academica,
+            unidad.unidad_academica.nombre_completo,
             unidad.modalidad,
         ]);
 
@@ -167,7 +167,7 @@ class ListCarreraPorUnidadComponent extends Component {
                                         <td >{index + 1}</td>
                                         <td className='table-conten'>{unidad.carrera_nombre}</td>
                                         <td className='table-conten'>{unidad.nivel}</td>
-                                        <td className='table-conten'>{unidad.unidad_academica}</td>
+                                        <td className='table-conten'>{unidad.unidad_academica.nombre_completo}</td>
                                         <td className='table-conten'>{unidad.modalidad}</td>
                                         <td className='table-action'>
                                             <button onClick={() => this.updateCarreraPorUnidad(unidad.id)} className="btn btn-warning mt-0">Actualizar</button>

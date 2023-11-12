@@ -80,12 +80,12 @@ class ListProyeccionAsignaturaComponent extends Component {
         this.setState({ unidad: event.label });
         // this.setState({ asignaturas: this.state.asignaturas.filter((asignatura) => asignatura.unidad_academica === this.state.unidad)})
 
-        AsignaturaProyeccionService.findAllByUnidad_academica(this.state.id, event.id).then(res =>
-            this.setState({ asignaturas: res.data }))
-            .catch(() => {
-                alert("Error al traer las proyecciones de asignatura por UA...");
-                this.props.history.push('/');
-            });
+        // AsignaturaProyeccionService.findAllByUnidad_academica(this.state.id, event.id).then(res =>
+        //     this.setState({ asignaturas: res.data }))
+        //     .catch(() => {
+        //         alert("Error al traer las proyecciones de asignatura por UA...");
+        //         this.props.history.push('/');
+        //     });
     }
     exportToExcel() {
         const { asignaturas } = this.state; // Reemplaza con los datos reales
@@ -168,18 +168,7 @@ class ListProyeccionAsignaturaComponent extends Component {
             <div className='container'>
                 <h2 className="text-center mt-5 mb-5 Title">PROYECCIONES POR ASIGNATURA</h2>
                 <div className="row">
-                    <div className="col-4">
-                        <div style={{ marginTop: '5.6%' }}>
-                            <Select
-                                rules={{ required: true }}
-                                // style={{width: "20%"}}
-                                options={this.state.unidades}
-                                onChange={(e) => this.changeUnidadHandler(e)}
-                                value={{ label: this.state.unidad == "" ? "Seleccione unidad académica..." : this.state.unidad }}
-                            />
-                        </div>
-                    </div>
-                    <div className="col-8">
+                    <div className="col">
                         <button onClick={this.addAsignatura} style={{ marginRight: '2%' }} className="btn btn-outline-dark mb-4" >Agregar proyección</button>
                         <button onClick={this.toggleColumns} style={{ marginRight: '2%' }} className="btn btn-success mb-4" >Comprimir Actual</button>
                         <button onClick={this.toggleColumn2s} style={{ marginRight: '11.8%' }} className="btn btn-primary mb-4" >Comprimir Anterior</button>

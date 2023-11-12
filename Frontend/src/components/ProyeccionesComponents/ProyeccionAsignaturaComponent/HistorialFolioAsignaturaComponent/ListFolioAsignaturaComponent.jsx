@@ -133,7 +133,7 @@ class ListFolioAsignaturaComponent extends Component {
                                         </button> */}
                                         {/* <button onClick={() => this.viewProyeccion(folio.id === null | undefined ? )} className="btn btn-info mt-0"> */}
                                          <button onClick={() => this.viewProyeccion(folio.id)} className="btn btn-info mt-0">
-                                            Ver Proyeciones
+                                            Ver Proyecion
                                         </button>
                                     </td>
                                 </tr>

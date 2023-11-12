@@ -38,9 +38,9 @@ public class DocenteEntity {
     @Column private String actividad;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_plantel", nullable = false)
+    @JoinColumn(name = "id_unidad", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private UnidadEntity unidad;
+    private UnidadEntity unidad_academica;
 
     @CreationTimestamp
     private LocalDateTime fecha_creacion;

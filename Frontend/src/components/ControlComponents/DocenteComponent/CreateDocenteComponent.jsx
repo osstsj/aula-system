@@ -9,7 +9,7 @@ class CreateDocenteComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            id: 0,
+            id_unidad: null,
             nombre: '',
             apellido_paterno: '',
             apellido_materno: '',
@@ -34,7 +34,12 @@ class CreateDocenteComponent extends Component {
     createDocente = (e) => {
         e.preventDefault();
         // Validar que los campos requeridos no estén vacíos
-        if (this.state.nombre.trim() === '' || this.state.apellido_paterno.trim() === '' || this.state.apellido_materno.trim() === '' || this.state.unidad_academica.trim() === '' || this.state.categoria.trim() === '' || this.state.actividad.trim() === '') {
+        if (this.state.nombre.trim() === '' || 
+        this.state.apellido_paterno.trim() === '' || 
+        this.state.apellido_materno.trim() === '' || 
+        this.state.unidad_academica.trim() === '' || 
+        this.state.categoria.trim() === '' || 
+        this.state.actividad.trim() === '') {
             alert('Por favor complete todos los campos requeridos.');
             return;
         }
@@ -43,7 +48,6 @@ class CreateDocenteComponent extends Component {
             nombre: this.state.nombre.trim(),
             apellido_paterno: this.state.apellido_paterno.trim(),
             apellido_materno: this.state.apellido_materno.trim(),
-            unidad_academica: this.state.unidad_academica.trim(),
             categoria: this.state.categoria.trim(),
             actividad: this.state.actividad.trim(),
         };
@@ -51,13 +55,12 @@ class CreateDocenteComponent extends Component {
         this.setState({ isLoading: true });
         console.log('docente=> ' + JSON.stringify(docente));
 
-        DocenteService.createDocente(docente, this.state.id).then(() => {
+        DocenteService.createDocente(docente, this.state.id_unidad).then(() => {
             this.props.history.push('/list-docente');
         }).catch(() => {
             alert("Error al intentar crear al docente...");
             this.props.history.push('/list-docente');
         });
-        // });
     }
 
     componentDidMount() {
@@ -121,7 +124,7 @@ class CreateDocenteComponent extends Component {
     }
     onChangeUnidadAcademicaHandler = (event) => {
         this.setState({ unidad_academica: event.label });
-        this.setState({ id: event.id });
+        this.setState({ id_unidad: event.id });
     }
     onChangeCategoriaHandler = (event) => {
         this.setState({ categoria: event.label });
@@ -141,7 +144,7 @@ class CreateDocenteComponent extends Component {
             <div className='' >
                 <div className="">
                     <div className="row justify-content-center">
-                        <div className="card col-9 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                        <div className="card col-10 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                             <div className="card-body">
                                 <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                                     <h2 className="h3 Title" >Agregar Docente</h2>
@@ -221,7 +224,7 @@ class CreateDocenteComponent extends Component {
                                                     />
                                                 </div>
                                             </div>
-                                            <div className="col-3">
+                                            <div className="col-2">
                                                 <div className="form-outline">
                                                 <label>Estatus</label>
                                                 <select name="" id="" className='form-control'
@@ -233,8 +236,6 @@ class CreateDocenteComponent extends Component {
                                             </div>
                                         </div>
                                     </div>
-
-
 
                                     <br />
                                     <div className="card-footer text-muted">

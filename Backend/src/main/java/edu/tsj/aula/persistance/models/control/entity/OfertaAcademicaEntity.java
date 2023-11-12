@@ -1,17 +1,15 @@
 package edu.tsj.aula.persistance.models.control.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
+import javax.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -25,9 +23,17 @@ public class OfertaAcademicaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column private String unidad;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIdentityReference(alwaysAsId=true)
+    @JoinColumn(name = "id_unidad", nullable = false)
+    private UnidadEntity unidad_academica;
 
-    @Column private String carrera;
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIdentityReference(alwaysAsId=true)
+    @JoinColumn(name = "id_carrera", nullable = false)
+    private CarreraEntity carrera;
 
     @Column private String modalidad;
 

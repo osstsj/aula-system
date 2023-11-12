@@ -27,50 +27,41 @@ public class CarreraServiceImpl implements ICarreraService {
     private final CarreraRepository carreraRepository;
     private final CarreraMapper mapper;
 
-//    @Transactional
-//    @Override
-//    public CarreraResponseDto createCarrera(CarreraRequestDto carreraRequestDto) {
-//        LOGGER.info("Se ha ejecutado el metodo createCarrera");
-//        try {
-//            CarreraEntity carreraEntity = mapper.requestToEntity(carreraRequestDto);
-//            carreraRepository.save(carreraEntity);
-//            var result = mapper.entityToResponse(carreraEntity);
-//            LOGGER.debug("Se ha guardado el Area Escolar: {}", result.toString());
-//
-//            return result;
-//        } catch (Exception e) {
-//            LOGGER.error("Error al intentar  crear carrera: {}", carreraRequestDto.toString());
-//            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
-//        }
-//    }
-
+    @Transactional
     @Override
-    public CarreraEntity createCarrera(CarreraEntity carreraRequestDto) {
-        var clave_programa = carreraRequestDto.getAbreviatura().concat("-")
-                .concat(carreraRequestDto.getPlan_estudio());
-        carreraRequestDto.setClave_programa(clave_programa);
+    public CarreraResponseDto createCarrera(CarreraRequestDto carreraRequestDto) {
+        LOGGER.info("Se ha ejecutado el metodo createCarrera");
+        try {
+            String clave_programa = carreraRequestDto.getAbreviatura().concat("-")
+                    .concat(carreraRequestDto.getPlan_estudio());
+            carreraRequestDto.setClave_programa(clave_programa);
 
-        return carreraRepository.save(carreraRequestDto);
+            CarreraEntity carreraEntity = mapper.requestToEntity(carreraRequestDto);
+            carreraRepository.save(carreraEntity);
+            var result = mapper.entityToResponse(carreraEntity);
+            LOGGER.debug("Se ha guardado el Area Escolar: {}", result.toString());
+
+            return result;
+        } catch (Exception e) {
+            LOGGER.error("Error al intentar  crear carrera: {}", carreraRequestDto.toString());
+            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
+        }
     }
 
-    @Override
-    public List<CarreraEntity> getAllCarreras() {
-        return carreraRepository.findAll();
-    }
 
-//    @Transactional
-//    @Override
-//    public List<CarreraResponseDto> getAllCarreras() {
-//        LOGGER.info("Se ha ejecutado el metodo getAllCarreras");
-//        try {
-//            var list = carreraRepository.findAll();
-//
-//            return list.stream().map(mapper::entityToResponse).collect(Collectors.toList());
-//        } catch (Exception e) {
-//            LOGGER.error("Error al intentar  traer lista de carreras");
-//            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
-//        }
-//    }
+    @Transactional
+    @Override
+    public List<CarreraResponseDto> getAllCarreras() {
+        LOGGER.info("Se ha ejecutado el metodo getAllCarreras");
+        try {
+            var list = carreraRepository.findAll();
+
+            return list.stream().map(mapper::entityToResponse).collect(Collectors.toList());
+        } catch (Exception e) {
+            LOGGER.error("Error al intentar  traer lista de carreras");
+            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
+        }
+    }
 
     @Transactional
     @Override
@@ -93,16 +84,18 @@ public class CarreraServiceImpl implements ICarreraService {
                         HttpStatus.NOT_FOUND);
             }
 
-            var clave_programa = carreraRequestDto.getAbreviatura().concat("-")
+            String clave_programa = carreraRequestDto.getAbreviatura().concat("-")
                     .concat(carreraRequestDto.getPlan_estudio());
 
-            existingCarreraEntity.get().setClave_programa(clave_programa);
+            carreraRequestDto.setClave_programa(clave_programa);
 
             existingCarreraEntity.get().setAbreviatura(carreraRequestDto.getAbreviatura());
             existingCarreraEntity.get().setNombre(carreraRequestDto.getNombre());
             existingCarreraEntity.get().setDgp(carreraRequestDto.getDgp());
             existingCarreraEntity.get().setPlan_estudio(carreraRequestDto.getPlan_estudio());
             existingCarreraEntity.get().setEstatus(carreraRequestDto.getEstatus());
+            existingCarreraEntity.get().setClave_programa(carreraRequestDto.getClave_programa());
+
             existingCarreraEntity.get().setFecha_actualizacion(LocalDateTime.now());
 
             carreraRepository.save(existingCarreraEntity.get());
@@ -136,17 +129,5 @@ public class CarreraServiceImpl implements ICarreraService {
             throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
         }
     }
-
-//    @Transactional
-//    @Override
-//    public List<CarreraResponseDto> getCarreraByPlanEstudio(String plan_estudio) {
-////        var list = carreraRepository.findCarreraEntityByPlan_estudio(plan_estudio)
-////                .stream().map(p -> mapper.entityToResponse(p)).collect(Collectors.toList());
-////
-////            return carreraRepository.findCarreraEntityByPlan_estudio(plan_estudio)
-////                    .map(mapper::entityToResponse)
-////                    .orElseThrow(() -> new ResourceNotFoundException("No se encontro carrera con el plan de estudios: "
-////                            .concat(plan_estudio), HttpStatus.NOT_FOUND));
-//    }
 
 }

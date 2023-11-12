@@ -1,20 +1,19 @@
 package edu.tsj.aula.service.projections.folio.fulltime;
 
-import edu.tsj.aula.persistance.models.projections.entity.completo.FullTimeEntity;
+import edu.tsj.aula.persistance.models.projections.entity.folio.FolioFulltimeEntity;
 
 import java.util.List;
 
 public interface IFulltimeService {
 
-    FullTimeEntity getFulltimeById(Long id);
+    FolioFulltimeEntity getFolioFulltimeById(Long id);
 
-    List<FullTimeEntity> getAllFulltime();
+    List<FolioFulltimeEntity> getAllFoliosFulltime();
 
-    FullTimeEntity createFulltime(FullTimeEntity fullTimeEntity,
-                                  Long id_folio, Long id_unidad,
-                                  Long id_docente, Long id_carrera);
+    FolioFulltimeEntity createFolioFulltime(FolioFulltimeEntity folioFulltimeEntity,
+                                       Long id_folio, Long id_unidad,
+                                       Long id_docente, Long id_carrera);
 
-    List<FullTimeEntity> findAllByFolioAndUnidad(Long id_folio, Long id_unidad);
+    List<FolioFulltimeEntity> getAllByFoliosAndUnidadAcademica(Long id_folio, Long id_unidad);
 
-    List<FullTimeEntity> findAllById(Long id);
 }

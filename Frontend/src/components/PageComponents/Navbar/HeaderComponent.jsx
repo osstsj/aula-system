@@ -91,15 +91,15 @@ class HeaderComponent extends Component {
                                     </a>
                                     <div className="dropdown-menu">
                                         <a className="dropdown-item" href="/list-folio-asignatura">
-                                            Historial de Folios
+                                            Historial de Folios por Asignatura
                                         </a>
                                         <a className="dropdown-item" href="/create-folio-asignatura">
-                                            Crear Nuevo Folio
+                                            Crear Nuevo Folio por Asignatura
                                         </a>
 
                                         <hr />    
                                         <a className="dropdown-item" href="/add-proyeccion_asignatura">
-                                            Crear Proyeccion
+                                            Crear Proyeccion por Asignatura
                                         </a>                                                                           
                                     </div>
                                 </div>
@@ -109,15 +109,15 @@ class HeaderComponent extends Component {
                                     </a>
                                     <div className="dropdown-menu">
                                         <a className="dropdown-item" href="/list-folio-fulltime">
-                                            Historial de Folios
+                                            Historial de Folios por Tiempo Completo
                                         </a>
                                         <a className="dropdown-item" href="/create-folio-fulltime">
-                                            Crear Nuevo Folio
+                                            Crear Nuevo Folio por Tiempo Completo
                                         </a>
                                         
                                         <hr />  
                                         <a className="dropdown-item" href="/add-proyeccion_fulltime">
-                                            Crear Proyeccion
+                                            Crear Proyeccion por Tiempo Completo
                                         </a>                                        
                                     </div>
                                 </div>

@@ -21,6 +21,9 @@ public interface UnidadMapper {
     @Mapping(source = "entity.fecha_actualizacion", target = "fecha_actualizacion")
     UnidadResponseDto entityToResponse(UnidadEntity entity);
 
+
+
+
     // RequestDto -> Entity
     @Mapping(source = "request.tipo_unidad", target = "tipo_unidad")
     @Mapping(source = "request.clave_dgp", target = "clave_dgp")

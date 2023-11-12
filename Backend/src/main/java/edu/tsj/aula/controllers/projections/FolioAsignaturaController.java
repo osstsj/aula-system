@@ -17,16 +17,16 @@ public class FolioAsignaturaController {
     @PostMapping("/folio/{id_unidad}")
     @ResponseStatus(HttpStatus.CREATED)
     public FolioAsignaturaEntity createFolio(@RequestBody FolioAsignaturaEntity proyeccion, @PathVariable Long id_unidad) {
-        return proyeccionService.createProyeccion(proyeccion, id_unidad);
+        return proyeccionService.createFolioAsignatura(proyeccion, id_unidad);
     }
 
     @GetMapping("/folios_by_ua/{id_unidad}")
     public List<FolioAsignaturaEntity> getAllFoliosByUA(@PathVariable Long id_unidad) {
-        return proyeccionService.findAllByUnidadAcademica(id_unidad);
+        return proyeccionService.getAllFoliosAsignaturaByUnidadAcademica(id_unidad);
     }
 
     @GetMapping(value = "/folios")
     public List<FolioAsignaturaEntity> getAllFolios() {
-        return proyeccionService.getAllProyecciones();
+        return proyeccionService.getAllFoliosAsignatura();
     }
 }

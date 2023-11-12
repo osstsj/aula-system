@@ -55,8 +55,8 @@ class DocenteService {
         });
     }
 
-    updateDocenteById(docenteDto, id) {
-        return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "docente/" + id, docenteDto)
+    updateDocenteById(id, id_unidad, docenteDto) {
+        return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "docente/" + id  + "/" + id_unidad, docenteDto)
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for updateDocenteById...");

@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "proyeccion")
+@Table(name = "folio_asignatura")
 public class FolioAsignaturaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

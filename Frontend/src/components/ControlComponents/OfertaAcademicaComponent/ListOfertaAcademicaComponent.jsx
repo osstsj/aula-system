@@ -108,8 +108,8 @@ class ListOfertaAcademicaComponent extends Component {
 
         const columns = [' unidad', ' carrera', ' modalidad', 'turno', 'periodo', 'fecha de creacion', 'fecha de actualizacion'];
         const data = ofertas.map((oferta) => [
-            oferta.unidad,
-            oferta.carrera,
+            oferta.unidad_academica.nombre_completo,
+            oferta.carrera.nombre,
             oferta.modalidad,
             oferta.turno,
             oferta.periodo,
@@ -173,8 +173,8 @@ class ListOfertaAcademicaComponent extends Component {
                                 this.state.ofertas.map((oferta, index) =>
                                     <tr key={oferta.id}>
                                         <td >{index + 1}</td>
-                                        <td className='table-conten'>{oferta.unidad}</td>
-                                        <td className='table-conten'>{oferta.carrera}</td>
+                                        <td className='table-conten'>{oferta.unidad_academica.nombre_completo}</td>
+                                        <td className='table-conten'>{oferta.carrera.nombre}</td>
                                         <td className='table-conten'>{oferta.modalidad}</td>
                                         <td className='table-conten'>{oferta.turno}</td>
                                         <td className='table-conten'>{oferta.periodo}</td>

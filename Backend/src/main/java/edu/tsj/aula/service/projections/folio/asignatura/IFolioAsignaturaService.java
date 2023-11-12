@@ -6,12 +6,12 @@ import java.util.List;
 
 public interface IFolioAsignaturaService {
 
-    FolioAsignaturaEntity getProyeccionById(Long id);
+    FolioAsignaturaEntity getFolioAsignaturaById(Long id);
 
-    List<FolioAsignaturaEntity> getAllProyecciones();
+    List<FolioAsignaturaEntity> getAllFoliosAsignatura();
 
-    List<FolioAsignaturaEntity> findAllByUnidadAcademica(Long id_unidad);
+    List<FolioAsignaturaEntity> getAllFoliosAsignaturaByUnidadAcademica(Long id_unidad);
 
-    FolioAsignaturaEntity createProyeccion(FolioAsignaturaEntity proyeccion, Long id_unidad);
+    FolioAsignaturaEntity createFolioAsignatura(FolioAsignaturaEntity proyeccion, Long id_unidad);
 
 }

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import edu.tsj.aula.persistance.models.control.dto.unidadDto.UnidadResponseDto;
+import edu.tsj.aula.persistance.models.control.entity.UnidadEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +24,7 @@ public class AreaEscolarResponseDto {
     private Long id;
     private String area;
     private String responsable;
-    private String unidad_academica;
+    private UnidadEntity unidad_academica;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fecha_creacion;

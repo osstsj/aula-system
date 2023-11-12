@@ -3,8 +3,8 @@ require('dotenv').config();
 
 
 class AreaEscolarService {
-    createAreaEscolar(areaDto) {
-        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "area", areaDto)
+    createAreaEscolar(areaDto, id_unidad) {
+        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "area_escolar_by_unidad/" + id_unidad, areaDto)
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for createArea...");
@@ -17,7 +17,7 @@ class AreaEscolarService {
     }
 
     getAllAreaEscolar() {
-        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "areas")
+        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "areas_escolares")
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for getAllAreas...");
@@ -30,7 +30,7 @@ class AreaEscolarService {
     }
 
     getAreaEscolarById(areaId) {
-        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "area/" + areaId)
+        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "area_escolar/" + areaId)
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for getAreaById...");
@@ -43,7 +43,7 @@ class AreaEscolarService {
     }
 
     updateAreaEscolarById(areaDto, areaId) {
-        return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "area/" + areaId, areaDto)
+        return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "area_escolar/" + areaId, areaDto)
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for updateAreaById...");
@@ -56,7 +56,7 @@ class AreaEscolarService {
     }
 
     deleteAreaEscolarById(areaId) {
-        return axios.delete(process.env.REACT_APP_LOCAL_API_BASE_URL + "area/" + areaId)
+        return axios.delete(process.env.REACT_APP_LOCAL_API_BASE_URL + "area_escolar/" + areaId)
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for deleteAreaById...");

@@ -8,19 +8,14 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface ICarreraService {
-//    CarreraResponseDto createCarrera(CarreraRequestDto carreraRequestDto);
+    CarreraResponseDto createCarrera(CarreraRequestDto carreraRequestDto);
 
-    CarreraEntity createCarrera(CarreraEntity carreraRequestDto);
+    List<CarreraResponseDto> getAllCarreras();
 
-//    List<CarreraResponseDto> getAllCarreras();
-
-    List<CarreraEntity> getAllCarreras();
 
     CarreraResponseDto getCarreraById(Long id);
 
     CarreraResponseDto updateCarreraById(Long id, CarreraRequestDto carreraRequestDto);
-
-//    List<CarreraResponseDto> getCarreraByPlanEstudio(String planEstudio);
 
     HashMap<String, String> deleteCarreraById(Long id);
 }

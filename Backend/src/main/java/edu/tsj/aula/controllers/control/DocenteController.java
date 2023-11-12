@@ -1,5 +1,7 @@
 package edu.tsj.aula.controllers.control;
 
+import edu.tsj.aula.persistance.models.control.dto.docenteDto.DocenteRequestDto;
+import edu.tsj.aula.persistance.models.control.dto.docenteDto.DocenteResponseDto;
 import edu.tsj.aula.persistance.models.control.entity.DocenteEntity;
 import edu.tsj.aula.service.control.IDocenteService;
 import lombok.AllArgsConstructor;
@@ -20,8 +22,8 @@ public class DocenteController {
     @PostMapping(value="/docente/{id_unidad}",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-    public ResponseEntity<DocenteEntity> createDocente(
-            @Valid @RequestBody DocenteEntity docenteRequestDto, @PathVariable Long id_unidad) {
+    public ResponseEntity<DocenteResponseDto> createDocente(
+            @Valid @RequestBody DocenteRequestDto docenteRequestDto, @PathVariable Long id_unidad) {
         try {
             var result = docenteService.createDocente(docenteRequestDto, id_unidad);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
@@ -32,9 +34,9 @@ public class DocenteController {
 
     @GetMapping(value = "/docentes",
         produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE })
-    public ResponseEntity<List<DocenteEntity>> getAllDocentes() {
+    public ResponseEntity<List<DocenteResponseDto>> getAllDocentes() {
         try {
-            List<DocenteEntity> docentes = docenteService.getAllDocentes();
+            List<DocenteResponseDto> docentes = docenteService.getAllDocentes();
             return new ResponseEntity<>(docentes, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -42,49 +44,49 @@ public class DocenteController {
     }
 
     @GetMapping("/docentes_by_ua/{id_unidad}")
-    public ResponseEntity< List<DocenteEntity>> getDocenteByUnidadAcademicaId(@PathVariable Long id_unidad) {
+    public ResponseEntity<List<DocenteResponseDto>> getDocentesByUnidadAcademicaId(@PathVariable Long id_unidad) {
         try {
-            List<DocenteEntity> docentesByUnidad = docenteService.findAllDocentesByUnidad(id_unidad);
+            List<DocenteResponseDto> docentesByUnidad = docenteService.findAllDocentesByUnidad(id_unidad);
             return new ResponseEntity<>(docentesByUnidad, HttpStatus.OK);
         }  catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-//    @GetMapping(value = "/docente/{id}",
-//        produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-//    public ResponseEntity<DocenteEntity> getDocenteById(@PathVariable Long id) {
-//        try {
-//            var result = docenteService.getDocenteById(id);
-//            return new ResponseEntity<>(result, HttpStatus.OK);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-//
-//    @PutMapping(value = "/docente/{id}",
-//        produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
-//        consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-//    public ResponseEntity<DocenteEntity> updateDocenteById(@PathVariable Long id, @RequestBody DocenteEntity docenteRequestDto) {
-//        try {
-//            var result = docenteService.updateDocenteById(id, docenteRequestDto);
-//            return new ResponseEntity<>(result, HttpStatus.OK);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-//
-//    @DeleteMapping(value = "/docente/{id}",
-//        produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-//    public ResponseEntity<HashMap<String, String>> deleteDocenteById(@PathVariable Long id) {
-//        try {
-//            HashMap<String, String> response = docenteService.deleteDocenteById(id);
-//            if (response != null)
-//                return ResponseEntity.ok(response);
-//            return ResponseEntity.notFound().build();
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+    @GetMapping(value = "/docente/{id}",
+        produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
+    public ResponseEntity<DocenteResponseDto> getDocenteById(@PathVariable Long id) {
+        try {
+            var result = docenteService.getDocenteById(id);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping(value = "/docente/{id}/{id_unidad}",
+        produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
+        consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
+    public ResponseEntity<DocenteResponseDto> updateDocenteById(@PathVariable Long id,@PathVariable Long id_unidad, @RequestBody DocenteRequestDto docenteRequestDto) {
+        try {
+            var result = docenteService.updateDocenteById(id, id_unidad, docenteRequestDto);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping(value = "/docente/{id}",
+        produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
+    public ResponseEntity<HashMap<String, String>> deleteDocenteById(@PathVariable Long id) {
+        try {
+            HashMap<String, String> response = docenteService.deleteDocenteById(id);
+            if (response != null)
+                return ResponseEntity.ok(response);
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

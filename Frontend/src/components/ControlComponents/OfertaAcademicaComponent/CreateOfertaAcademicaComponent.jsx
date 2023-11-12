@@ -16,6 +16,9 @@ class CreateOfertaAcademicaComponent extends Component {
             modalidades: [],
             turnos: [],
 
+            id_unidad: null,
+            id_carrera: null,
+
             unidad: '',
             carrera: '',
             modalidad: '',
@@ -28,14 +31,17 @@ class CreateOfertaAcademicaComponent extends Component {
 
     saveOfertaAcademica = (e) => {
         // Validar que los campos requeridos no estén vacíos
-        if ( this.state.unidad.trim() === '' || this.state.carrera.trim() === '' || this.state.modalidad.trim() === '' || this.state.turno.trim() === '' || this.state.periodo.trim() === '') {
+        if ( this.state.unidad.trim() === '' || 
+        this.state.carrera.trim() === '' || 
+        this.state.modalidad.trim() === '' || 
+        this.state.turno.trim() === '' || 
+        this.state.periodo.trim() === '') {
             alert('Por favor complete todos los campos requeridos.');
             return;
         }
+
         e.preventDefault();
         let oferta = {
-            unidad: this.state.unidad.trim(),
-            carrera: this.state.carrera.trim(),
             modalidad: this.state.modalidad.trim(),
             turno: this.state.turno.trim(),
             periodo: this.state.periodo.trim()
@@ -45,7 +51,7 @@ class CreateOfertaAcademicaComponent extends Component {
         this.setState({ isLoading: true });
         console.log('Oferta academicas : ' + JSON.stringify(oferta));
 
-        OfertaAcademicaService.createOfertaAcademica(oferta).then(
+        OfertaAcademicaService.createOfertaAcademica(oferta, this.state.id_unidad, this.state.id_carrera).then(
             () => {
                 this.props.history.push('/list-oferta-academica')
         }).catch(() => {
@@ -70,7 +76,8 @@ class CreateOfertaAcademicaComponent extends Component {
             const data = res.data;
             options = data.map(d => ({
                 "value": d.nombre,
-                "label": d.nombre
+                "label": d.nombre,
+                "id": d.id,
             }))
         }).catch(() => {
             alert("Error al intentar traer las carreras...");
@@ -86,7 +93,8 @@ class CreateOfertaAcademicaComponent extends Component {
             const data = res.data;
             options = data.map(d => ({
                 "value": d.nombre_completo,
-                "label": d.nombre_completo
+                "label": d.nombre_completo,
+                "id": d.id,
             }))
         }).catch(() => {
             alert("Error al intentar traer las UAs...");
@@ -115,9 +123,11 @@ class CreateOfertaAcademicaComponent extends Component {
 
     changeUnidadHandler = (event) => {
         this.setState({ unidad: event.label });
+        this.setState({ id_unidad: event.id})
     }
     changeCarreraHandler = (event) => {
         this.setState({ carrera: event.label });
+        this.setState({ id_carrera: event.id})
     }
     changeModalidadHandler = (event) => {
         this.setState({ modalidad: event.label });

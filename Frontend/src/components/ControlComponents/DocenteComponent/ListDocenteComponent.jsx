@@ -155,7 +155,7 @@ class ListDocenteComponent extends Component {
                                         <td className='table-conten'>{docente.nombre}</td>
                                         <td className='table-conten'>{docente.apellido_paterno}</td>
                                         <td className='table-conten'>{docente.apellido_materno}</td>
-                                        <td className='table-conten'>{docente.unidad.nombre_completo}</td>
+                                        <td className='table-conten'>{docente.unidad_academica.nombre_completo}</td>
                                         <td className='table-conten'>{docente.categoria}</td>
                                         <td className='table-conten'>{docente.actividad}</td>
                                         <td className='table-action'>

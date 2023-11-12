@@ -14,17 +14,17 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//@JsonInclude(JsonInclude.Include.NON_EMPTY)
-//@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class CarreraResponseDto {
     private Long id;
     private String abreviatura;
     private String nombre;
-//    private Integer dgp;
-    private String dgp;
+    private Integer dgp;
     private String plan_estudio;
     private String estatus;
+    private String clave_programa;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fecha_creacion;

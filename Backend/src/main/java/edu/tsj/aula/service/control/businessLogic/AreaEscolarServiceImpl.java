@@ -3,9 +3,14 @@ package edu.tsj.aula.service.control.businessLogic;
 import edu.tsj.aula.configuration.exception.ResourceNotFoundException;
 import edu.tsj.aula.persistance.models.control.dto.areaDto.AreaEscolarRequestDto;
 import edu.tsj.aula.persistance.models.control.dto.areaDto.AreaEscolarResponseDto;
+import edu.tsj.aula.persistance.models.control.dto.unidadDto.UnidadRequestDto;
+import edu.tsj.aula.persistance.models.control.dto.unidadDto.UnidadResponseDto;
 import edu.tsj.aula.persistance.models.control.entity.AreaEscolarEntity;
+import edu.tsj.aula.persistance.models.control.entity.UnidadEntity;
 import edu.tsj.aula.persistance.models.control.mapper.AreaEscolarMapper;
+import edu.tsj.aula.persistance.models.control.mapper.UnidadMapper;
 import edu.tsj.aula.persistance.repository.control.AreaRepository;
+import edu.tsj.aula.persistance.repository.control.UnidadRepository;
 import edu.tsj.aula.service.control.IAreaEscolarService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -25,17 +30,25 @@ import java.util.stream.Collectors;
 public class AreaEscolarServiceImpl implements IAreaEscolarService {
     private static final Logger LOGGER = LoggerFactory.getLogger(AreaEscolarServiceImpl.class);
     private final AreaRepository areaRepository;
+    private final UnidadRepository unidadRepository;
     private final AreaEscolarMapper mapper;
 
     @Transactional
     @Override
-    public AreaEscolarResponseDto createAreaEscolar(AreaEscolarRequestDto areaEscolarRequestDto) {
+    public AreaEscolarResponseDto createAreaEscolar(AreaEscolarRequestDto areaEscolarRequestDto, Long id_unidad) {
         LOGGER.info("Se ha ejecutado el metodo createAreaEscolar");
         try {
-           AreaEscolarEntity areaEscolarEntity = mapper.requestToEntity(areaEscolarRequestDto);
-           areaRepository.save(areaEscolarEntity);
-           var result = mapper.entityToResponse(areaEscolarEntity);
-           LOGGER.debug("Se ha guardado el area escolar: {}", result.toString());
+            UnidadEntity getUnidadById = unidadRepository.findById(id_unidad).orElseThrow(
+                    () -> new ResourceNotFoundException("No se encontrol unidad con el id {}".concat(id_unidad.toString()),
+                    HttpStatus.NOT_FOUND));
+
+
+            areaEscolarRequestDto.setUnidad_academica(getUnidadById);
+
+            AreaEscolarEntity areaEscolarEntity = mapper.requestToEntity(areaEscolarRequestDto);
+            areaRepository.save(areaEscolarEntity);
+            var result = mapper.entityToResponse(areaEscolarEntity);
+            LOGGER.debug("Se ha guardado el area escolar: {}", result.toString());
 
             return result;
         } catch (Exception e) {
@@ -70,7 +83,7 @@ public class AreaEscolarServiceImpl implements IAreaEscolarService {
 
     @Transactional
     @Override
-    public AreaEscolarResponseDto updateAreaEscolar(Long id, AreaEscolarRequestDto areaEscolarRequestDto) {
+    public AreaEscolarResponseDto updateAreaEscolar(Long id, AreaEscolarRequestDto areaEscolarRequestDto, Long id_unidad) {
         LOGGER.info("Se ha ejecutado el metodo updateAreaEscolarById");
         try {
             Optional<AreaEscolarEntity> existingAreaEscolarEntity = areaRepository.findById(id);
@@ -79,9 +92,16 @@ public class AreaEscolarServiceImpl implements IAreaEscolarService {
                         HttpStatus.NOT_FOUND);
             }
 
+            UnidadEntity getUnidadById = unidadRepository.findById(id_unidad).orElseThrow(
+                    () -> new ResourceNotFoundException("No se encontrol unidad con el id {}".concat(id_unidad.toString()),
+                            HttpStatus.NOT_FOUND));
+            areaEscolarRequestDto.setUnidad_academica(getUnidadById);
+
             existingAreaEscolarEntity.get().setArea(areaEscolarRequestDto.getArea());
             existingAreaEscolarEntity.get().setResponsable(areaEscolarRequestDto.getResponsable());
             existingAreaEscolarEntity.get().setUnidad_academica(areaEscolarRequestDto.getUnidad_academica());
+            existingAreaEscolarEntity.get().setUnidad_academica(areaEscolarRequestDto.getUnidad_academica());
+
             existingAreaEscolarEntity.get().setFecha_actualizacion(LocalDateTime.now());
 
             areaRepository.save(existingAreaEscolarEntity.get());

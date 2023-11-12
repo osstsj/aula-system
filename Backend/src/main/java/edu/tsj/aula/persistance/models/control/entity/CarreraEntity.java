@@ -33,8 +33,7 @@ public class CarreraEntity {
 
     @Column private String nombre;
 
-//    @Column(unique = true) private Integer dgp;
-    @Column private String dgp;
+    @Column private Integer dgp;
 
     @Column private String plan_estudio;
 
