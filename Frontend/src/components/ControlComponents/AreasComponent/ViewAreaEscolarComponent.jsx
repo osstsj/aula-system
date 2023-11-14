@@ -22,7 +22,7 @@ class ViewAreaEscolarComponent extends Component {
             this.setState({
                 area: areaRes.area,
                 responsable: areaRes.responsable,
-                unidad_academica: areaRes.unidad_academica,
+                unidad_academica: areaRes.unidad_academica.nombre_completo,
                 fecha_creacion: areaRes.fecha_creacion,
                 fecha_actualizacion: areaRes.fecha_actualizacion
             });

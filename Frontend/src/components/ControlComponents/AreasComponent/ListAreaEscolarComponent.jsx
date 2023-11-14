@@ -165,7 +165,7 @@ class ListAreaEscolarComponent extends Component {
                                         <td >{index + 1}</td>
                                         <td className='table-conten'>{area.area}</td>
                                         <td className='table-conten'>{area.responsable}</td>
-                                        <td className='table-conten'>{area.unidad_academica}</td>
+                                        <td className='table-conten'>{area.unidad_academica.nombre_completo}</td>
                                         <td className='table-action'>
                                             <button onClick={() => this.updateAreaById(area.id)} className="btn btn-warning  mt-0">Actualizar</button>
                                             <button className="btn btn-danger mt-0" style={boton}

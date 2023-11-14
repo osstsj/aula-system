@@ -34,7 +34,9 @@ class UpdateOfertaAcademicaComponent extends Component {
             let oferta = res.data;
             this.setState({
                 unidad: oferta.unidad_academica.nombre_completo, 
+                id_unidad: oferta.unidad_academica.id,
                 carrera: oferta.carrera.nombre, 
+                id_carrera: oferta.carrera.id,
                 modalidad: oferta.modalidad,
                 turno: oferta.turno,
                 periodo: oferta.periodo,
@@ -59,9 +61,12 @@ class UpdateOfertaAcademicaComponent extends Component {
         };
         
         console.log('oferta => ' + JSON.stringify(oferta));
-        
-        OfertaAcademicaService.updateOfertaAcademicaById(this.state.id, oferta, this.state.id_unidad, this.state.id_carrera).then(() => {
-            this.props.history.push('/list-oferta-academica');
+
+        OfertaAcademicaService.updateOfertaAcademicaById(
+            this.state.id, oferta, this.state.id_unidad, this.state.id_carrera)
+        .then(
+                () => {
+                    this.props.history.push('/list-oferta-academica');
         }).catch(() => {
             alert("Error al intentar actualizar la oferta academica...");
             this.props.history.push('/list-oferta-academica');

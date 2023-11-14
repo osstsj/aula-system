@@ -20,7 +20,7 @@ public class HorasSustantivasAtencionAlumnosFulltime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column private Integer ptc;
+    @Column private String ptc;
 
     @Column private Integer horas_frente_grupo;
 

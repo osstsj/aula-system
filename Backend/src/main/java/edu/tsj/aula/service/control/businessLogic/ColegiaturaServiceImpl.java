@@ -44,7 +44,6 @@ public class ColegiaturaServiceImpl implements IColegiaturaService {
         }
     }
 
-    @Transactional
     @Override
     public List<ColegiaturaResponseDto> getAllColegiaturas() {
         LOGGER.info("Se ha ejecutado el metodo getAllColegiaturas");
@@ -58,7 +57,6 @@ public class ColegiaturaServiceImpl implements IColegiaturaService {
         }
     }
 
-    @Transactional
     @Override
     public ColegiaturaResponseDto getColegiaturaById(Long id) {
         LOGGER.info("Se ha ejecutado el metodo getColegiaturaById");

@@ -38,11 +38,11 @@ class UpdateColegiaturaComponent extends Component {
     updateColegiatura = (e) =>{
         e.preventDefault();
         let colegiatura = {
-            // clave: parseFloat(this.state.clave),
-            clave: this.state.clave.trim(),
+            clave: parseFloat(this.state.clave),
+            // clave: this.state.clave.trim(),
             descripcion: this.state.descripcion.trim(), 
-            // monto: parseFloat(this.state.monto),
-            monto: this.state.monto.trim(),
+            monto: parseFloat(this.state.monto),
+            // monto: this.state.monto.trim(),
             colegiatura_estatus: this.state.colegiatura_estatus.trim(),
             comentarios: this.state.comentarios.trim() 
         };
@@ -164,7 +164,7 @@ class UpdateColegiaturaComponent extends Component {
                                                 <label className="mt-2">Comentarios: </label>
                                                 <div class="input-group">
                                                     <textarea type='text' 
-                                                        placeholder="Ingrese comentarios (opcional)..." 
+                                                        placeholder="Ingrese comentarios..." 
                                                         name="clave" 
                                                         className="form-control"
                                                         value={this.state.comentarios} 

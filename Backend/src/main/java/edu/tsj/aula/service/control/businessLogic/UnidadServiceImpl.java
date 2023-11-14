@@ -47,7 +47,6 @@ public class UnidadServiceImpl implements IUnidadService {
         }
     }
 
-    @Transactional
     @Override
     public List<UnidadResponseDto> getAllUnidades() {
         LOGGER.info("Se ha ejecutado el metodo getAllUnidades");
@@ -61,7 +60,6 @@ public class UnidadServiceImpl implements IUnidadService {
         }
     }
 
-    @Transactional
     @Override
     public UnidadResponseDto getUnidadById(Long id) {
         LOGGER.info("Se ha ejecutado el metodo getUnidadById");

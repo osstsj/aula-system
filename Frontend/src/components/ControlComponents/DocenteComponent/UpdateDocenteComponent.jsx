@@ -65,6 +65,7 @@ class UpdateDocenteComponent extends Component {
                 apellido_materno: docente.apellido_materno,
                 categoria: docente.categoria,
                 unidad_academica: docente.unidad_academica.nombre_completo,
+                id_unidad: docente.unidad_academica.id,
                 actividad: docente.actividad
             })
         })

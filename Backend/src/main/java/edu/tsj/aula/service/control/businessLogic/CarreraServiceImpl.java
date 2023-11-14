@@ -49,7 +49,6 @@ public class CarreraServiceImpl implements ICarreraService {
     }
 
 
-    @Transactional
     @Override
     public List<CarreraResponseDto> getAllCarreras() {
         LOGGER.info("Se ha ejecutado el metodo getAllCarreras");
@@ -63,7 +62,6 @@ public class CarreraServiceImpl implements ICarreraService {
         }
     }
 
-    @Transactional
     @Override
     public CarreraResponseDto getCarreraById(Long id) {
         LOGGER.info("Se ha ejecutado el metodo getCarreraById");

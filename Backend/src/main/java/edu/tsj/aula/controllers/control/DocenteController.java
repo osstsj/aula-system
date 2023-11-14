@@ -43,6 +43,18 @@ public class DocenteController {
         }
     }
 
+    @GetMapping(value = "/docentes_categoria_ptc/{id_unidad}",
+            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE })
+    public ResponseEntity<List<DocenteResponseDto>> getAllDocentesByCategoriaPTC(@PathVariable Long id_unidad) {
+        try {
+            List<DocenteResponseDto> docentes = docenteService.getAllDocentesByPTCAndUnidadId(id_unidad);
+            return new ResponseEntity<>(docentes, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     @GetMapping("/docentes_by_ua/{id_unidad}")
     public ResponseEntity<List<DocenteResponseDto>> getDocentesByUnidadAcademicaId(@PathVariable Long id_unidad) {
         try {

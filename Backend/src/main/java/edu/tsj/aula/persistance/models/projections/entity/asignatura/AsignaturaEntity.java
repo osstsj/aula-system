@@ -27,6 +27,19 @@ import java.time.LocalDateTime;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "proyeccion_asignatura")
 public class AsignaturaEntity  implements Serializable {
+
+    /*
+        ************ SI SE DESEA SOLO TRAER EL ID DEL OBJETO SE DEBE SEGUIR LA SIGUIENTE ESTRUCTURA
+        * YA QUE POR EL MOMENTO TRAE EL OBJETO COMPLETO (En algunos caso inecesario)
+        @ManyToOne(fetch = FetchType.LAZY, optional = false)
+        @OnDelete(action = OnDeleteAction.CASCADE) ///    Tal vez deba quitarse ya que se realaciona con la proyeccion
+        @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+        @JsonIdentityReference(alwaysAsId=true)
+        @JsonProperty("id_proyeccion")
+        @JoinColumn(name = "id_carrera", nullable = false)
+        private CarreraEntity clave_programa;
+  */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,7 +47,6 @@ public class AsignaturaEntity  implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIdentityReference(alwaysAsId=true)
     @JoinColumn(name = "id_unidad", nullable = false)
     private UnidadEntity unidad_academica;
 
@@ -52,7 +64,6 @@ public class AsignaturaEntity  implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE) ///     aqui nace la dependencia de las entidades de la proyeccion
-    @JsonIdentityReference(alwaysAsId=true)
     @JoinColumn(name = "id_folio", nullable = false)
     private FolioAsignaturaEntity folio;
 

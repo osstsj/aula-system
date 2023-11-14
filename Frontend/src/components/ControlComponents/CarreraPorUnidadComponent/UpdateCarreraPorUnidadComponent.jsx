@@ -34,6 +34,7 @@ class UpdateCarreraPorUnidadComponent extends Component {
             this.setState({
                 carrera_nombre: unidad.carrera_nombre, 
                 unidad_academica: unidad.unidad_academica.nombre_completo, 
+                id_unidad: unidad.unidad_academica.id,
                 modalidad: unidad.modalidad,
                 nivel: unidad.nivel
             });

@@ -32,13 +32,14 @@ public class DocenteServiceImpl implements IDocenteService {
     private final DocenteRepository docenteRepository;
     private final DocenteMapper mapper; // no se puede ser static ya que no ha sido inicializada...
     private final UnidadRepository unidadRepository;
+    private static UnidadEntity unidadEntity = null; // singleton
 
     @Transactional
     @Override
     public DocenteResponseDto createDocente(DocenteRequestDto docenteRequestDto, Long id_unidad) {
         LOGGER.info("Se ha ejecutado el metodo createDocente");
         try {
-            UnidadEntity unidadEntity = unidadRepository.findById(id_unidad).orElseThrow(
+            unidadEntity = unidadRepository.findById(id_unidad).orElseThrow(
                     () -> new ResourceNotFoundException("No se ha encontrado la unidad con el id: "
                             .concat(id_unidad.toString()), HttpStatus.NOT_FOUND)
             );
@@ -47,7 +48,7 @@ public class DocenteServiceImpl implements IDocenteService {
 
             String nombre_completo_aux = docenteRequestDto.getNombre().concat(" ")
                     .concat(docenteRequestDto.getApellido_paterno()).concat(" ")
-                    .concat(docenteRequestDto.getApellido_paterno()).concat(" ");
+                    .concat(docenteRequestDto.getApellido_materno());
 
             docenteRequestDto.setNombre_completo(nombre_completo_aux);
 
@@ -64,7 +65,6 @@ public class DocenteServiceImpl implements IDocenteService {
         }
     }
 
-    @Transactional
     @Override
     public List<DocenteResponseDto> getAllDocentes() {
         LOGGER.info("Se ha ejecutado el metodo getAllDocentes");
@@ -78,13 +78,27 @@ public class DocenteServiceImpl implements IDocenteService {
         }
     }
 
-    @Transactional
+    @Override
+    public List<DocenteResponseDto> getAllDocentesByPTCAndUnidadId(Long id_unidad) {
+        try {
+            unidadEntity = unidadRepository.findById(id_unidad).orElseThrow(
+                    () -> new ResourceNotFoundException("No se ha encontrado la unidad con el id: "
+                            .concat(id_unidad.toString()), HttpStatus.NOT_FOUND)
+            );
+
+//            var list = docenteRepository.findAllByCategoriaPTC(Collections.singletonList(unidadEntity));
+            var list = docenteRepository.findAllByCategoriaPTC(id_unidad);
+            return list.stream().map(mapper::entityToRespose).collect(Collectors.toList());
+        } catch (Exception e) {
+            LOGGER.debug("Error al intetar traer la lista de docentes por Categoria PTC");
+            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
+        }
+    }
+
     @Override
     public List<DocenteResponseDto> findAllDocentesByUnidad(Long id_unidad) {
         LOGGER.info("Se ha ejecutado el metodo findAllDocentesByUnidad");
-        UnidadEntity unidad = unidadRepository.findById(id_unidad).get();
-        var list = docenteRepository.findAllByUnidad(Collections.singletonList(unidad));
-
+        var list = docenteRepository.findAllByUnidad(id_unidad);
         return list.stream().map(mapper::entityToRespose).collect(Collectors.toList());
     }
 
@@ -109,7 +123,7 @@ public class DocenteServiceImpl implements IDocenteService {
                         .concat(id.toString()), HttpStatus.NOT_FOUND);
             }
 
-            UnidadEntity unidadEntity = unidadRepository.findById(id_unidad).orElseThrow(
+            unidadEntity = unidadRepository.findById(id_unidad).orElseThrow(
                     () -> new ResourceNotFoundException("No se ha encontrado la unidad con el id: "
                             .concat(id_unidad.toString()), HttpStatus.NOT_FOUND)
             );
@@ -117,7 +131,7 @@ public class DocenteServiceImpl implements IDocenteService {
             docenteRequestDto.setUnidad_academica(unidadEntity);
             var nombre_completo_aux = docenteRequestDto.getNombre().concat(" ")
                     .concat(docenteRequestDto.getApellido_paterno()).concat(" ")
-                    .concat(docenteRequestDto.getApellido_paterno()).concat(" ");
+                    .concat(docenteRequestDto.getApellido_materno());
 
 
             existingDocente.get().setNombre(docenteRequestDto.getNombre());

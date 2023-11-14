@@ -7,9 +7,11 @@
 
 import React, { Component } from "react";
 import FolioAsignaturaService from "../../../../services/Proyecciones/FolioAsignaturaService";
+import UnidadService from "../../../../services/Control/UnidadService";
 import '../../../StyleGlobal/Style.css';
 import Select from 'react-select'
 import axios from 'axios';
+import FolioFulltimeService from "../../../../services/Proyecciones/FolioFulltimeService";
 
 class CreateFolioAsignaturaComponent extends Component {
     constructor(props) {
@@ -59,30 +61,30 @@ class CreateFolioAsignaturaComponent extends Component {
 
         console.log('folio=>' + JSON.stringify(folio));
         
-        FolioAsignaturaService.createFolio(folio, this.state.id_unidad).then(() => {
+        FolioFulltimeService.createFolio(folio, this.state.id_unidad).then(() => {
             this.props.history.push('/list-folio-fulltime');
         }).catch(() => {
             alert("Error al intentar crear el folio...");
-            this.props.history.push('/list-folio-fulltime');
+            this.props.history.push('/');
         });
     }
-
+    
     async getUnidadList() {
-        const res = await axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL  + "planteles")
-        .catch(() => {
-            alert("Error al traer las Unidades Académica...");
-            this.props.history.push('/list-folio-fulltime');
-        });;
+        let options = null;
 
-        const data = res.data;
-
-        let options = data.map(d => ({
-            "value": d.tipo_unidad,
-            "label": d.abreviatura,
-            "abreviatura": d.abreviatura,
-            'id': d.id,
-        }))
-        this.setState({ unidades: options });
+        await UnidadService.getAllUnidades().then(res => {
+            const data = res.data;
+            options = data.map(d => ({
+               "value": d.tipo_unidad,
+                "label": d.abreviatura,
+                "abreviatura": d.abreviatura,
+                'id': d.id,
+            }))
+        }).catch(() => {
+            alert("Error al intentar traer las UAs...");
+            this.props.history.push('/');
+        });
+        this.setState({unidades: options})
     }
 
     getPeriodo() {
@@ -127,7 +129,7 @@ class CreateFolioAsignaturaComponent extends Component {
     }
 
     cancel() {
-        this.props.history.push('/list-folio-asignatura');
+        this.props.history.push('/list-folio-fulltime');
     }
 
 

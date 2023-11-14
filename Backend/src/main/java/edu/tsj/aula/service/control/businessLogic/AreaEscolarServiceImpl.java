@@ -57,7 +57,6 @@ public class AreaEscolarServiceImpl implements IAreaEscolarService {
         }
     }
 
-    @Transactional
     @Override
     public List<AreaEscolarResponseDto> getAllAreasEscolares() {
         LOGGER.info("Se ha ejecutado el metodo getAllAreasEscolares");
@@ -71,7 +70,6 @@ public class AreaEscolarServiceImpl implements IAreaEscolarService {
         }
     }
 
-    @Transactional
     @Override
     public AreaEscolarResponseDto getAreaEscolarById(Long id) {
         LOGGER.info("Se ha ejuectado el metodo getAreaEscolarById");

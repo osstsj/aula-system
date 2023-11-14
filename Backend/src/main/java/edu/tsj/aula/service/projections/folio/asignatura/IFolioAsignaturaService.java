@@ -5,9 +5,6 @@ import edu.tsj.aula.persistance.models.projections.entity.folio.FolioAsignaturaE
 import java.util.List;
 
 public interface IFolioAsignaturaService {
-
-    FolioAsignaturaEntity getFolioAsignaturaById(Long id);
-
     List<FolioAsignaturaEntity> getAllFoliosAsignatura();
 
     List<FolioAsignaturaEntity> getAllFoliosAsignaturaByUnidadAcademica(Long id_unidad);

@@ -116,7 +116,8 @@ function App() {
                            <Route path = "/add-proyeccion_asignatura" component = {CreateProyeccionAsignatura}></Route>
                            
                            {/* ------------ ProyeccionFullTimeComponent ----------- */}
-                           <Route path = "/list-full-time" component = {ListProyeccionFullTimeComponent}></Route>
+                           <Route path = "/list-proyeccion_fulltime/:id" component = {ListProyeccionFullTimeComponent}></Route>
+                           <Route path = "/view-proyeccion_fulltime/:id" component = {ViewProyeccionAsignaturaComponent}></Route>
                            <Route path = "/add-proyeccion_fulltime" component = {CreateProyeccionFulltimeComponent}></Route>
                           
                           {/* ------------ Longin ----------- */}

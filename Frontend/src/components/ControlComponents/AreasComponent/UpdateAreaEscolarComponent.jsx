@@ -13,6 +13,7 @@ class UpdateAreaEscolarComponent extends Component {
         this.state = {
             unidades: [],
             id: this.props.match.params.id,
+            id_unidad: null,
             area: '',
             responsable: '',
             unidad_academica: ''
@@ -27,13 +28,12 @@ class UpdateAreaEscolarComponent extends Component {
         e.preventDefault();
         
         let area = {
-            area: this.state.area.trim(),
-            responsable: this.state.responsable.trim(),
-            unidad_academica: this.state.unidad_academica.trim()
+            area: this.state.area,
+            responsable: this.state.responsable,
         }
 
         console.log('Area =>' + JSON.stringify(area));
-        AreaEscolarService.updateAreaEscolarById(area, this.state.id).then(
+        AreaEscolarService.updateAreaEscolarById(area, this.state.id, this.state.id_unidad).then(
             res => {
                 this.props.history.push('/list-area')
             }
@@ -46,7 +46,8 @@ class UpdateAreaEscolarComponent extends Component {
             this.setState({
                 area: areaRes.area,
                 responsable: areaRes.responsable,
-                unidad_academica: areaRes.unidad_academica
+                unidad_academica: areaRes.unidad_academica.nombre_completo,
+                id_unidad: areaRes.unidad_academica.id,
             });
         });
 
@@ -60,7 +61,8 @@ class UpdateAreaEscolarComponent extends Component {
             const data = res.data;
             options = data.map(d => ({
                 "value": d.nombre_completo,
-                "label": d.nombre_completo
+                "label": d.nombre_completo,
+                "id": d.id,
             }))
         }).catch(() => {
             alert("Error al intentar traer las UAs...");
@@ -77,6 +79,7 @@ class UpdateAreaEscolarComponent extends Component {
     }
     onChangeUnidadAcademicaHandler = (event) => {
         this.setState({unidad_academica: event.label});
+        this.setState({id_unidad: event.id});
     }
     
     cancel() {
@@ -132,7 +135,7 @@ class UpdateAreaEscolarComponent extends Component {
                                             {{
                                                 label: this.state.unidad_academica
                                             }}
-                                            options={this.state.planteles}
+                                            options={this.state.unidades}
                                             onChange={(e) => this.onChangeUnidadAcademicaHandler(e)}
                                             required
                                         />

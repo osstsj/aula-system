@@ -39,16 +39,16 @@ class CreateAreaEscolarComponent extends Component {
         e.preventDefault();
 
         let area = {
-            area: this.state.area.trim(),
-            responsable: this.state.responsable.trim(),
-            unidad_academica: this.state.unidad_academica.trim()
+            area: this.state.area,
+            responsable: this.state.responsable,
         }
           // Mostrar el spinner al iniciar la acción
           this.setState({ isLoading: true });
+
         console.log('Area Escolar => ' + JSON.stringify(area));
-        AreaEscolarService.createAreaEscolar(area).then(
+        AreaEscolarService.createAreaEscolar(area, this.state.id_unidad).then(
             () => {
-                this.props.history.push('list-area')
+                this.props.history.push('/list-area')
             }
         ).catch(() => {
             alert("Error al intentar crear el area...");

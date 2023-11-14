@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import '../../../StyleGlobal/Style.css';
-import FolioAsignaturaService from "../../../../services/Proyecciones/FolioAsignaturaService";
 import UnidadService from '../../../../services/Control/UnidadService';
 import Select from 'react-select'
+import FolioFulltimeService from '../../../../services/Proyecciones/FolioFulltimeService';
 
 class ListFolioFulltimeComponent extends Component {
     constructor(props) {
@@ -27,7 +27,7 @@ class ListFolioFulltimeComponent extends Component {
 
     componentDidMount(){
         //promise
-        FolioAsignaturaService.getAllFolios().then((res) => {
+        FolioFulltimeService.getAllFolios().then((res) => {
             this.setState({folios: res.data});
         }).catch(() => {
             alert("Error al intentar traer los folios...");
@@ -37,44 +37,45 @@ class ListFolioFulltimeComponent extends Component {
         this.getUnidadList();
     }
 
+    viewProyeccion(id_folio) {
+        this.props.history.push(`/list-proyeccion_fulltime/${id_folio}`);
+    }
+
+
     addFolio() {
         this.props.history.push(`/create-folio-fulltime`);
     }
 
+    
     async getUnidadList() {
         let options = null;
 
-        UnidadService.getAllUnidades()
-        .then(res => 
-            options = res.map(d => ({
+        await UnidadService.getAllUnidades().then(res => {
+            const data = res.data;
+            options = data.map(d => ({
                 "value": d.nombre_completo,
                 "label": d.nombre_completo,
                 "id": d.id,
-            })),
-            this.setState({unidades: options})
-        )
-        .catch(() => {
+            }))
+        }).catch(() => {
             alert("Error al intentar traer las UAs...");
             this.props.history.push('/');
         });
+        this.setState({unidades: options})
     }
+    
 
     onChangeUnidadHandler = (event) => {
         this.setState({ unidad: event.label });
         // this.setState({ asignaturas: this.state.asignaturas.filter((asignatura) => asignatura.unidad_academica === this.state.unidad)})
 
-        FolioAsignaturaService.getAllFoliosByUA_And_TipoFolio(event.id).then(
+        FolioFulltimeService.getAllFoliosByUA(event.id).then(
             res => this.setState({ folios: res.data })
         );
     }
 
 
     render() {
-        const boton = {
-            marginLeft: '1rem',
-            marginRight: '1rem',
-        };
-
         return (
             <div className="container">
                 <div className="row">

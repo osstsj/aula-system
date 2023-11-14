@@ -29,7 +29,11 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
     private final DocenteRepository docenteRepository;
     private final CarreraRepository carreraRepository;
     private final UnidadRepository unidadRepository;
-//    private final AsignaturaMapper mapper;
+
+    private static FolioAsignaturaEntity folioAsignaturaEntity = null; //Singleton Pattern
+    private static DocenteEntity docenteEntity = null;
+    private static CarreraEntity carreraEntity = null;
+    private static UnidadEntity unidadAcademica = null;
 
     @Transactional
     @Override
@@ -37,13 +41,19 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
                                              Long id_folio, Long id_unidad,
                                              Long id_docente, Long id_carrera) {
         log.debug("Se ha ejecutado el metodo createAsignatura");
-        FolioAsignaturaEntity folioAsignaturaEntity = folioAsignaturaRepository.findById(id_folio).orElseThrow(
-                ()-> new ResourceNotFoundException((" No se encontro folio..."),
+        folioAsignaturaEntity = folioAsignaturaRepository.findById(id_folio).orElseThrow(
+                ()-> new ResourceNotFoundException((" No se encontro folio... con el id: ".concat(id_folio.toString())),
                 HttpStatus.NOT_FOUND));
 
-        DocenteEntity docenteEntity = docenteRepository.findById(id_docente).get();
-        CarreraEntity carreraEntity = carreraRepository.findById(id_carrera).get();
-        UnidadEntity unidadAcademica = unidadRepository.findById(id_unidad).get();
+        docenteEntity = docenteRepository.findById(id_docente).orElseThrow(
+                ()-> new ResourceNotFoundException((" No se encontro docente... con el id: ".concat(id_docente.toString())),
+                        HttpStatus.NOT_FOUND));
+        carreraEntity = carreraRepository.findById(id_carrera).orElseThrow(
+                ()-> new ResourceNotFoundException((" No se encontro carrera... con el id: ".concat(id_carrera.toString())),
+                        HttpStatus.NOT_FOUND));
+        unidadAcademica = unidadRepository.findById(id_unidad).orElseThrow(
+                ()-> new ResourceNotFoundException((" No se encontro unidad academica... con el id: ".concat(id_unidad.toString())),
+                        HttpStatus.NOT_FOUND));
 
         asignaturaRequest.setFolio(folioAsignaturaEntity);
         asignaturaRequest.setUnidad_academica(unidadAcademica);
@@ -81,22 +91,15 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
 //        return  asignaturaRequest;
     }
 
-//    @Override
-//    public List<AsignaturaEntity> findAllByFolioAndUnidad(Long id_folio, Long id_unidad_academica) {
-//        FolioAsignaturaEntity folio = folioAsignaturaRepository.findById(id_folio).get();
-//        UnidadEntity unidadAcademica = unidadRepository.findById(id_unidad_academica).get();
-//        return asignaturaRepository.findAllByUnidad_academicaAndFolio(folio, unidadAcademica);
-//    }
-
     @Override
-    public List<AsignaturaEntity> findAllByFolioId(Long id_folio) {
-        FolioAsignaturaEntity folioAsignaturaEntity = folioAsignaturaRepository.findById(id_folio)
+    public List<AsignaturaEntity> findAllByFolioById(Long id_folio) {
+        log.debug("Se ha ejecutado el metodo findAllByFolioById");
+        folioAsignaturaEntity = folioAsignaturaRepository.findById(id_folio)
                 .orElseThrow(()-> new ResourceNotFoundException((" No se encontro folio..."),
                 HttpStatus.NOT_FOUND));
         return asignaturaRepository.findAllByFolio(folioAsignaturaEntity);
     }
 
-    @Transactional
     @Override
     public AsignaturaEntity getAsignaturaById(Long id) {
         log.debug("Se ha ejecutado el metodo getAsignaturaById");
@@ -104,7 +107,8 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
     }
 
     @Override
-    public List<AsignaturaEntity> getAsignaturas() {
+    public List<AsignaturaEntity> getAllAsignaturas() {
+        log.debug("Se ha ejecutado el metodo getAsignaturaById");
         return asignaturaRepository.findAll();
     }
 

@@ -36,7 +36,7 @@ class ListFolioAsignaturaComponent extends Component {
             this.setState({folios: res.data});
         }).catch(() => {
             alert("Error al intentar traer los folios...");
-            this.props.history.push('/list-folio-asignatura');
+            this.props.history.push('/');
         });
 
         this.getUnidadList();
@@ -58,7 +58,7 @@ class ListFolioAsignaturaComponent extends Component {
             }))
         }).catch(() => {
             alert("Error al intentar traer las UAs...");
-            this.props.history.push('/list-folio-asignatura');
+            this.props.history.push('/');
         });
         this.setState({unidades: options})
     }

@@ -81,7 +81,7 @@ class CreateDocenteComponent extends Component {
             }))
         }).catch(() => {
             alert("Error al intentar traer las UAs...");
-            this.props.history.push('/list-area');
+            this.props.history.push('/list-docente');
         });
         
         this.setState({unidades: options})

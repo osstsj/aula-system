@@ -12,21 +12,22 @@ import java.util.List;
 @RequestMapping("api/v1")
 @AllArgsConstructor
 public class FolioAsignaturaController {
-    private final IFolioAsignaturaService proyeccionService;
+    private final IFolioAsignaturaService folioAsignaturaService;
 
-    @PostMapping("/folio/{id_unidad}")
+    @PostMapping("/folio_asignatura/{id_unidad}")
     @ResponseStatus(HttpStatus.CREATED)
-    public FolioAsignaturaEntity createFolio(@RequestBody FolioAsignaturaEntity proyeccion, @PathVariable Long id_unidad) {
-        return proyeccionService.createFolioAsignatura(proyeccion, id_unidad);
+    public FolioAsignaturaEntity createFolioAsignatura(@RequestBody FolioAsignaturaEntity folioAsignaturaEntity,
+                                                       @PathVariable Long id_unidad) {
+        return folioAsignaturaService.createFolioAsignatura(folioAsignaturaEntity, id_unidad);
     }
 
-    @GetMapping("/folios_by_ua/{id_unidad}")
-    public List<FolioAsignaturaEntity> getAllFoliosByUA(@PathVariable Long id_unidad) {
-        return proyeccionService.getAllFoliosAsignaturaByUnidadAcademica(id_unidad);
+    @GetMapping("/folios_asignatura_by_unidad/{id_unidad}")
+    public List<FolioAsignaturaEntity> getAllFoliosAsignaturaByUnidad(@PathVariable Long id_unidad) {
+        return folioAsignaturaService.getAllFoliosAsignaturaByUnidadAcademica(id_unidad);
     }
 
-    @GetMapping(value = "/folios")
-    public List<FolioAsignaturaEntity> getAllFolios() {
-        return proyeccionService.getAllFoliosAsignatura();
+    @GetMapping(value = "/folios_asignatura")
+    public List<FolioAsignaturaEntity> getAllFoliosAsignatura() {
+        return folioAsignaturaService.getAllFoliosAsignatura();
     }
 }

@@ -11,9 +11,6 @@ import java.util.List;
 
 @Repository
 public interface AsignaturaRepository  extends JpaRepository<AsignaturaEntity, Long> {
-    @Query("SELECT AE FROM AsignaturaEntity as AE WHERE AE.unidad_academica= :unidad_academica AND AE.folio= :folio")
-    List<AsignaturaEntity> findAllByUnidad_academicaAndFolio(FolioAsignaturaEntity folio, UnidadEntity unidad_academica);
-
-    @Query("SELECT AE FROM AsignaturaEntity as AE WHERE AE.folio= :folio")
-    List<AsignaturaEntity> findAllByFolio(FolioAsignaturaEntity folio);
+    @Query("SELECT AE FROM AsignaturaEntity as AE WHERE AE.folio= :id_folio")
+    List<AsignaturaEntity> findAllByFolio(FolioAsignaturaEntity id_folio);
 }

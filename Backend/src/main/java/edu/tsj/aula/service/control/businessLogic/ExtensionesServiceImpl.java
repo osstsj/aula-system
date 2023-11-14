@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @AllArgsConstructor
@@ -17,6 +18,7 @@ public class ExtensionesServiceImpl implements IExtensionService {
     private final UnidadRepository unidadRepository;
     private final ExtensionRepository extensionRepository;
 
+    @Transactional
     @Override
     public ExtensionEntity createExtensionByUnidadId(Long id_unidad, ExtensionEntity extensionEntity) {
         unidadRepository.findById(id_unidad).map(unidadEntity -> {

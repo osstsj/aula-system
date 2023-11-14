@@ -42,8 +42,8 @@ class AreaEscolarService {
         });
     }
 
-    updateAreaEscolarById(areaDto, areaId) {
-        return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "area_escolar/" + areaId, areaDto)
+    updateAreaEscolarById(areaDto, areaId, id_unidad) {
+        return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "area_escolar/" + areaId + "/" + id_unidad, areaDto)
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for updateAreaById...");

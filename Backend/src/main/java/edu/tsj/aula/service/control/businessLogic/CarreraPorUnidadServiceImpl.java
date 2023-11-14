@@ -51,7 +51,6 @@ public class CarreraPorUnidadServiceImpl implements ICarreraPorUnidadService {
         }
     }
 
-    @Transactional
     @Override
     public List<CarreraPorUnidadResponseDto> getAllCarrerasPorUnidad() {
         LOGGER.info("Se ha ejecutado el metodo getAllCarrerasPorUnidad");
@@ -65,7 +64,6 @@ public class CarreraPorUnidadServiceImpl implements ICarreraPorUnidadService {
         }
     }
 
-    @Transactional
     @Override
     public CarreraPorUnidadResponseDto getCarreraPorUnidadById(Long id) {
         LOGGER.info("Se ha ejecutado el metodo getCarreraPorUnidadById");

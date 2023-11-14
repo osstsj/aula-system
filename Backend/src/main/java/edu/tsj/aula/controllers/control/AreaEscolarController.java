@@ -54,7 +54,7 @@ public class AreaEscolarController {
         }
     }
 
-    @PutMapping(value="/area_escolar/{id}/unidad/{id_unidad}",
+    @PutMapping(value="/area_escolar/{id}/{id_unidad}",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
     public ResponseEntity<AreaEscolarResponseDto> updateAreaEscolarById(

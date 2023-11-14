@@ -60,7 +60,6 @@ public class OfertaAcademicaServiceImpl implements IOfertaAcademicaService {
         }
     }
 
-    @Transactional
     @Override
     public List<OfertaAcademicaResposeDto> getAllOfertasAcademicas() {
         LOGGER.info("Se ha ejecutado el metodo getAllOfertasAcademicas");
@@ -74,7 +73,6 @@ public class OfertaAcademicaServiceImpl implements IOfertaAcademicaService {
         }
     }
 
-    @Transactional
     @Override
     public OfertaAcademicaResposeDto getOfertaAcademicaById(Long id) {
         LOGGER.info("Se ha ejecutado el metodo getOfertaAcademicaById");

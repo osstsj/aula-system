@@ -2,6 +2,8 @@ package edu.tsj.aula.persistance.models.projections.entity.completo.profesor;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import edu.tsj.aula.persistance.models.control.entity.CarreraEntity;
+import edu.tsj.aula.persistance.models.control.entity.DocenteEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,11 +26,10 @@ public class ProfesorFulltimeEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE) ///    Tal vez deba quitarse ya que se realaciona con la proyeccion
-//    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIdentityReference(alwaysAsId=true)
-//    @JsonProperty("id_proyeccion")
     @JoinColumn(name = "id_carrera", nullable = false)
+    private CarreraEntity clave_programa;
 
     @Column
     private String codigo_nomina;
@@ -36,6 +37,9 @@ public class ProfesorFulltimeEntity {
     @Column
     private String grado_academico;
 
-    @Column
-    private String nombre_docente;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE) ///     dependencia con el folio
+    @JsonIdentityReference(alwaysAsId=true)
+    @JoinColumn(name = "id_docente", nullable = false)
+    private DocenteEntity nombre_docente;
 }

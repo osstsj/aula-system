@@ -4,16 +4,43 @@ require('dotenv').config();
 
 class FolioAsignaturaService { 
     createFolio(folioDto, id_unidad) {
-        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "folio/" + id_unidad, folioDto);
+        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "folio_asignatura/" + id_unidad, folioDto)
+        .catch(error => {
+            if (error.response) {
+                console.error("Error in res");
+            } else if (error.request) {
+                console.error("Error req");
+            } else {
+                console.error("algo mas");
+            }
+        });
     } 
 
     getAllFolios() {
-        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + 'folios');
+        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + 'folios_asignatura')
+        .catch(error => {
+            if (error.response) {
+                console.error("Error in res");
+            } else if (error.request) {
+                console.error("Error req");
+            } else {
+                console.error("algo mas");
+            }
+        });
     }
 
     getAllFoliosByUA(id_unidad) {
-        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + 'folios_by_ua/'
-         + id_unidad);
+        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + 'folios_asignatura_by_unidad/'
+         + id_unidad)
+         .catch(error => {
+            if (error.response) {
+                console.error("Error in res");
+            } else if (error.request) {
+                console.error("Error req");
+            } else {
+                console.error("algo mas");
+            }
+        });
     }
 
 }

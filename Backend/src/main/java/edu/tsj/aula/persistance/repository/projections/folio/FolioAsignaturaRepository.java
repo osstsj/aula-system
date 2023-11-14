@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface FolioAsignaturaRepository extends JpaRepository<FolioAsignaturaEntity, Long> {
-    @Query("SELECT FO FROM FolioAsignaturaEntity AS FO WHERE FO.unidad_academica= :id_unidad")
-    List<FolioAsignaturaEntity> findAllByUnidad_academicaAndAndTipo_folio(UnidadEntity id_unidad);
+    @Query("SELECT FA FROM FolioAsignaturaEntity AS FA WHERE FA.unidad_academica= :id_unidad")
+    List<FolioAsignaturaEntity> findAllByUnidad_academica(UnidadEntity id_unidad);
 
 }
