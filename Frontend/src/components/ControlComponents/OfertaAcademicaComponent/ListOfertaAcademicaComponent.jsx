@@ -66,9 +66,20 @@ class ListOfertaAcademicaComponent extends Component {
     exportToExcel() {
         const { ofertas } = this.state;
 
-        // Crear una nueva hoja de cálculo
-        const ws = XLSX.utils.json_to_sheet(ofertas);
-
+       
+        const datosParaExportar = ofertas.map(oferta => ({
+            id: oferta.id,
+            unidad_academica: oferta.unidad_academica.nombre_completo,
+            carrera: oferta.carrera.nombre,
+            modalidad: oferta.modalidad,
+            turno: oferta.turno,
+            periodo: oferta.periodo,
+            fecha_creacion: oferta.fecha_creacion,
+            fecha_actualizacion: oferta.fecha_actualizacion,
+        }));
+        
+ // Crear una nueva hoja de cálculo
+ const ws = XLSX.utils.json_to_sheet(datosParaExportar);
         // Agregar filas en blanco entre los datos y la línea de separación
         const filasEnBlanco = Array(5).fill({}); // Agregar 5 filas vacías
         XLSX.utils.sheet_add_json(ws, filasEnBlanco, { skipHeader: true, origin: -1 });
@@ -89,6 +100,11 @@ class ListOfertaAcademicaComponent extends Component {
             { wch: 15 }, // C
             { wch: 15 }, // D
             { wch: 15 }, // E
+            { wch: 15 }, // E
+            { wch: 15 }, // E
+            { wch: 15 }, // E
+            { wch: 15 }, // E{ wch: 15 }, // E
+            
         ];
         ws['!cols'] = colWidths;
 

@@ -93,10 +93,10 @@ class ListProyeccionAsignaturaComponent extends Component {
         // Combina los datos de asignaturas en una sola estructura
         const datosCombinados = asignaturas.map((asignatura) => ({
             "No.": asignatura.id,
-            "Clave de Programa Educativo": asignatura.profe_asignatura.clave_programa,
+            "Clave de Programa Educativo": asignatura.profe_asignatura.clave_programa.clave_programa,
             "Código de Nómina": asignatura.profe_asignatura.codigo_nomina,
             "Grado Académico": asignatura.profe_asignatura.grado_academico,
-            "Nombre del Docente": asignatura.profe_asignatura.nombre_docente,
+            "Nombre del Docente":asignatura.profe_asignatura.nombre_docente.nombre_completo,
             "Hora de asignatura (A)": asignatura.horas_sustantivas_atencion_alumnos.horas_asignatura.a,
             "Hora de asignatura (B)": asignatura.horas_sustantivas_atencion_alumnos.horas_asignatura.b,
             "Horas frente al grupo": asignatura.horas_sustantivas_atencion_alumnos.horas_frente_grupo,
@@ -109,7 +109,7 @@ class ListProyeccionAsignaturaComponent extends Component {
             "Tutorías": asignatura.horas_sustantivas_atencion_alumnos.asesorias.tutorias,
             "Actividades Complementarias": asignatura.horas_sustantivas_atencion_alumnos.actividades_complementarias,
             "Subtotal 1": asignatura.horas_sustantivas_atencion_alumnos.subtotal_1,
-            "Investigación Educativa, Desarrollo Tecnológico": asignatura.horas_necesidad_institucional.investigacion_educativa,
+            "Investigación Educativa, Desarrollo Tecnológico": asignatura.horas_necesidad_institucional.invesigacion_educativa,
             "Apoyo Operativo": asignatura.horas_necesidad_institucional.apoyo_operativo,
             "Subtotal 2": asignatura.horas_necesidad_institucional.subtotal_2,
             "Total": asignatura.total,
