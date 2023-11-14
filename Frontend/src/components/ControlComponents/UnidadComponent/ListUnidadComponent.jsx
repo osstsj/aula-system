@@ -4,6 +4,8 @@ import UnidadService from '../../../services/Control/UnidadService';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable'; // Importa la extensión jspdf-autotable
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'; // Importa Reactstrap para el modal
+
 
 class ListUnidadComponent extends Component {
     constructor(props) {
@@ -11,6 +13,8 @@ class ListUnidadComponent extends Component {
 
         this.state = {
             unidades: [],
+            isModalOpen: false, // Estado para controlar la apertura/cierre del modal
+            colegiaturaToDeleteId: null, // Estado para almacenar el ID de la colegiatura a eliminar
         };
 
         this.addUnidad = this.addUnidad.bind(this);
@@ -24,7 +28,10 @@ class ListUnidadComponent extends Component {
     deleteUnidad(id) {
         // Llamada a la API REST
         UnidadService.deleteUnidadById(id).then(() => {
-            this.setState({ unidades: this.state.unidades.filter((unidad) => unidad.id !== id) });
+            this.setState({ unidades: this.state.unidades.filter((unidad) => unidad.id !== id),
+                isModalOpen: false, // Cierra el modal después de eliminar
+                colegiaturaToDeleteId: null, // Restablece el ID de la colegiatura
+            });
         }).catch(() => {
             alert("Error al intentar eliminar la unida academica...");
             this.props.history.push('/list-unidades');
@@ -68,7 +75,7 @@ class ListUnidadComponent extends Component {
         const doc = new jsPDF();
         doc.text('Lista de Unidades', 10, 10);
 
-        const columns = ['Clave DGP', 'Abreviatura', 'Nombre Completo', 'Tipo Unidad', 'Nombre Corto', 'Dirección Completa'];
+        const columns = ['Clave DGP', 'Abreviatura', 'Nombre Completo', 'Tipo Unidad', 'Nombre Corto', 'Dirección Completa','Fecha de creacion','Fecha de actualizacion'];
         const data = unidades.map((unidad) => [
             unidad.clave_dgp,
             unidad.abreviatura,
@@ -76,6 +83,9 @@ class ListUnidadComponent extends Component {
             unidad.tipo_unidad,
             unidad.nombre_corto,
             unidad.direccion_completa,
+            unidad.fecha_creacion,
+            unidad.fecha_actualizacion,
+
         ]);
 
         doc.autoTable({
@@ -86,7 +96,21 @@ class ListUnidadComponent extends Component {
 
         doc.save('unidades.pdf');
     }
+  // Método para abrir el modal
+  toggleModal = (colegiaturaId) => {
+    this.setState({
+        isModalOpen: !this.state.isModalOpen,
+        colegiaturaToDeleteId: colegiaturaId, // Establece el ID de la colegiatura a eliminar
+    });
+}
 
+// Método para cerrar el modal
+closeModal = () => {
+    this.setState({
+        isModalOpen: false,
+        colegiaturaToDeleteId: null, // Restablece el ID de la colegiatura
+    });
+}
     render() {
         const boton = {
             marginLeft: '1rem',
@@ -127,9 +151,9 @@ class ListUnidadComponent extends Component {
                                         <button onClick={() => this.updateUnidad(unidad.id)} className="btn btn-warning mt-0">
                                             Actualizar
                                         </button>
-                                        <button style={boton} onClick={() => this.deleteUnidad(unidad.id)} className="btn btn-danger mt-0">
-                                            Eliminar
-                                        </button>
+                                        <button className="btn btn-danger mt-0" style={boton}
+                                                onClick={() => this.toggleModal(unidad.id)} // Abre el modal y pasa el ID de la colegiatura
+                                            > Eliminar</button>
                                         <button onClick={() => this.viewUnidad(unidad.id)} className="btn btn-info mt-0">
                                             Ver
                                         </button>
@@ -139,6 +163,16 @@ class ListUnidadComponent extends Component {
                         </tbody>
                     </table>
                 </div>
+                <Modal isOpen={this.state.isModalOpen} toggle={this.closeModal}>
+                    <ModalHeader>Confirmar Eliminación</ModalHeader>
+                    <ModalBody>
+                        ¿Estás seguro de que deseas eliminar esta Unidad académica?
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="danger" onClick={() => this.deleteUnidad(this.state.unidadeToDeleteId)}>Eliminar</Button>
+                        <Button color="secondary" onClick={this.closeModal}>Cancelar</Button>
+                    </ModalFooter>
+                </Modal>
             </div>
         );
     }

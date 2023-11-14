@@ -101,13 +101,15 @@ class ListColegiaturaComponent extends Component {
         const doc = new jsPDF();
         doc.text('Lista de colegiaturas', 10, 10);
 
-        const columns = [' clave',' descripcion',' monto', 'estatus','comentarios'];
+        const columns = [' clave',' descripcion',' monto', 'estatus','comentarios','fecha de creacion','fecha de actualiacion'];
         const data = colegiaturas.map((colegiatura) => [
             colegiatura.clave,
             colegiatura.descripcion,
             colegiatura.monto,
             colegiatura.colegiatura_estatus,
             colegiatura.comentarios,
+             colegiatura.fecha_creacion,
+          colegiatura.fecha_actualizacion
         ]);
 
         doc.autoTable({

@@ -63,10 +63,22 @@ class ListCarreraPorUnidadComponent extends Component {
 
     exportToExcel() {
         const { unidades } = this.state;
-
+    
+        // Modificar la estructura de los datos para incluir la información de la unidad académica
+        const datosParaExportar = unidades.map(unidad => ({
+            id: unidad.id,
+            carrera_nombre: unidad.carrera_nombre,
+            nivel: unidad.nivel,
+            unidad_academica: unidad.unidad_academica.nombre_completo,
+            modalidad: unidad.modalidad,
+            fecha_creacion: unidad.fecha_creacion,
+            fecha_actualizacion: unidad.fecha_actualizacion
+        }));
+        
+    
         // Crear una nueva hoja de cálculo
-        const ws = XLSX.utils.json_to_sheet(unidades);
-
+        const ws = XLSX.utils.json_to_sheet(datosParaExportar);
+        
         // Agregar filas en blanco entre los datos y la línea de separación
         const filasEnBlanco = Array(5).fill({}); // Agregar 5 filas vacías
         XLSX.utils.sheet_add_json(ws, filasEnBlanco, { skipHeader: true, origin: -1 });
@@ -80,23 +92,27 @@ class ListCarreraPorUnidadComponent extends Component {
         const nombre = { A: "  Luis jose", B: "", C: "", D: "", E: "            jose juan", F: "" };
         XLSX.utils.sheet_add_json(ws, [nombre], { skipHeader: true, header: ["A", "B", "C", "D", "E", "F"], origin: -1 });
 
-        // Configurar el ancho automático de las columnas
+        // Configurar el 
         const colWidths = [
-            { wch: 15 }, // A
-            { wch: 15 }, // B
-            { wch: 15 }, // C
-            { wch: 15 }, // D
-            { wch: 15 }, // E
+            { wch: 5 },  
+            { wch: 15 }, 
+            { wch: 25 }, 
+            { wch: 15 }, 
+            { wch: 15 },
+            { wch: 15 },
+            { wch: 20 }, 
+            { wch: 20 },
+            { wch: 20 },
         ];
         ws['!cols'] = colWidths;
-
         // Crear un nuevo libro de trabajo
         const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'unidades');  // 'unidades' es el nombre de la hoja
-
+        XLSX.utils.book_append_sheet(wb, ws, 'unidades');
+    
         // Generar el archivo XLSX
-        XLSX.writeFile(wb, 'unidades.xlsx');  // 'unidades.xlsx' es el nombre del archivo
+        XLSX.writeFile(wb, 'unidades.xlsx');
     }
+    
     exportToPDF() {
         const { unidades } = this.state;
 
@@ -105,7 +121,7 @@ class ListCarreraPorUnidadComponent extends Component {
 
         const columns = [' Carrera', ' Nivel', ' Unidad', 'Modalidad'];
         const data = unidades.map((unidad) => [
-            unidad.carrera.nombre,
+            unidad.carrera_nombre,
             unidad.nivel,
             unidad.unidad_academica.nombre_completo,
             unidad.modalidad,

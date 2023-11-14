@@ -62,17 +62,42 @@ class ListDocenteComponent extends Component {
 
     exportToExcel() {
         const { docentes } = this.state;
-
+    
+        // Modificar la estructura de los datos para incluir la información de la unidad académica
+        const datosParaExportar = docentes.map(docente => ({
+            id: docente.id,
+            nombre: docente.nombre,
+            apellido_paterno: docente.apellido_paterno,
+            apellido_materno: docente.apellido_materno,
+            unidad_academica: docente.unidad_academica.nombre_completo,
+            categoria: docente.categoria,
+            actividad: docente.actividad,
+            fecha_creacion: docente.fecha_creacion,
+            fecha_actualizacion: docente.fecha_actualizacion
+        }));
+    
         // Crear una nueva hoja de cálculo
-        const ws = XLSX.utils.json_to_sheet(docentes);
-
+        const ws = XLSX.utils.json_to_sheet(datosParaExportar);
+        const colWidths = [
+            { wch: 5 },  
+            { wch: 15 }, 
+            { wch: 25 }, 
+            { wch: 15 }, 
+            { wch: 15 },
+            { wch: 15 },
+            { wch: 20 }, 
+            { wch: 20 },
+            { wch: 20 },
+        ];
+        ws['!cols'] = colWidths;
         // Crear un nuevo libro de trabajo
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Docentes');
-
+    
         // Generar el archivo XLSX
         XLSX.writeFile(wb, 'docentes.xlsx');
     }
+    
     exportToPDF() {
         const { docentes } = this.state;
 
@@ -80,17 +105,17 @@ class ListDocenteComponent extends Component {
         doc.text('Lista de docentes', 10, 10);
 
         const columns = ['Nombre', 'Apellido Paternno', 'Apellido Materno', 'Unidad Academica', 'Categoria', 'Actividad', 'Fecha Creacion', 'Fecha de Actualizacion'];
-        const data = '';
-        // const data = docentes.map((docente) => [
-        //     docente.nombre,
-        //     docente.apellido_paterno,
-        //     docente.apellido_materno,
-        //     // docente.unidad_academica,
-        //     docente.categoria,
-        //     docente.actividad,
-        //     docente.fecha_creacion,
-        //     docente.fecha_actualizacion
-        // ]);
+        
+        const data = docentes.map((docente) => [
+            docente.nombre,
+             docente.apellido_paterno,
+             docente.apellido_materno,
+              docente.unidad_academica.nombre_completo,
+             docente.categoria,
+             docente.actividad,
+             docente.fecha_creacion,
+             docente.fecha_actualizacion
+         ]);
 
         doc.autoTable({
             startY: 20,
