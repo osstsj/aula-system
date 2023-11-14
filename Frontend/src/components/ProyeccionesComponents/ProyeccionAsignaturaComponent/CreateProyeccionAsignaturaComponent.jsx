@@ -171,7 +171,7 @@ class CreateFolioAsignatura extends Component {
     async getDocenteList(id_unidad) {
         let options = null;
         
-        await DocenteService.getAllDocentesByUA(id_unidad).then(res => {
+        await DocenteService.getAllDocentesByPTCAndUnidadId(id_unidad).then(res => {
             const data = res.data;
             options = data.map(d => ({
                 "value": d.nombre_completo,

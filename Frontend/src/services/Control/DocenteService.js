@@ -29,6 +29,20 @@ class DocenteService {
         });
     }
 
+
+    getAllDocentesByPTCAndUnidadId(id_unidad) {
+        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "docentes_categoria_ptc/" + id_unidad)
+        .catch(err => {
+            if (err.response) {
+                console.error("Error in response for getAllDocentesByPTCAndUnidadId...");
+            } else if(err.request) {
+                console.error("Error in request for getAllDocentesByPTCAndUnidadId...");
+            } else {
+                console.error("Something happend, unknown error for getAllDocentesByPTCAndUnidadId");
+            }
+        });
+    }
+
     getAllDocentesByUA(id_unidad) {
         return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + 'docentes_by_ua/' + id_unidad)
         .catch(err => {

@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import AsignaturaProyeccionService from '../../../services/Proyecciones/AsignaturaProyeccionService';
+import FulltimeProyeccionService from '../../../services/Proyecciones/FulltimeProyeccionService';
+import FolioFulltimeService from '../../../services/Proyecciones/FolioFulltimeService';
+import CarreraService from '../../../services/Control/CarreraService';
+import UnidadService from '../../../services/Control/UnidadService';
+import DocenteService from '../../../services/Control/DocenteService';
 import Select from 'react-select'
 import axios from 'axios';
 import '../../StyleGlobal/Style.css'
@@ -16,6 +20,7 @@ class CreateProyeccionFulltimeComponent extends Component {
             horas_secretario: [],
             docentes: [],
             folios: [],
+            tipos_unidades: [],
 
             folio: '',
             id_folio: null,
@@ -34,20 +39,21 @@ class CreateProyeccionFulltimeComponent extends Component {
             errorInfo: null,
 
             unidad_academica: '',
+            tipo_unidad: '',
 
-                // profe_asignatura
+                // profe_fulltime
                 clave_programa: "",
                 codigo_nomina: "",
                 grado_academico: "", // nivel: '',
                 nombre_docente: "",
 
                 // horas_sustantivas_atencion_alumnos
-                    // horas_asignatura: 
+                    // horas_fulltime: 
                     a: 0,
                     b: 0,
 
                 horas_frente_grupo: 0,
-                    
+                ptc: '',
                     // academias
                     presidente: 0,
                     secretario: 0,
@@ -63,7 +69,7 @@ class CreateProyeccionFulltimeComponent extends Component {
                 subtotal_1: 0,
 
                 // horas_necesidad_institucional
-                invesigacion_educativa: 0,
+                proyecto_investigacion: 0,
                 apoyo_operativo: 0,
                 subtotal_2: 0,
             
@@ -72,7 +78,7 @@ class CreateProyeccionFulltimeComponent extends Component {
         }
     }
 
-    createProyeccionAsignatura = (e) => {
+    createProyeccionFulltime= (e) => {
         if (this.state.errorInfo !== null) {
             alert('No se puede duplicar clave de empleado.');
             console.log("Error Info and Error adentro" + this.state.error + this.state.errorInfo);
@@ -81,59 +87,50 @@ class CreateProyeccionFulltimeComponent extends Component {
 
         e.preventDefault();
 
-        let asignatura = {
-            profe_asignatura: {
+        let fulltime = {
+            profesor_fulltime: {
                 codigo_nomina: this.state.codigo_nomina,
                 grado_academico: this.state.grado_academico,
             },
-                horas_sustantivas_atencion_alumnos: {
-                    horas_asignatura: {
-                    a: this.state.a,
-                    b: this.state.b,
-                },
-                horas_frente_grupo: this.state.horas_frente_grupo,
 
-                    academias: {
+            horas_sustantivas_atencion_alumnos_fulltime: {
+             
+                horas_frente_grupo: this.state.horas_frente_grupo,
+                ptc: this.state.ptc,
+                academias: {
                     presidente: this.state.presidente,
                     secretario: this.state.secretario,
-                    },
+                },
 
-                    asesorias: {
+                asesorias: {
                     asesorias_academica: this.state.asesorias_academica,
                     educacion_dual: this.state.educacion_dual,
                     residencias_profesionales: this.state.residencias_profesionales,
                     titulacion: this.state.titulacion,
                     tutorias: this.state.titulacion,
-                    },
+                },
 
                 actividades_complementarias: this.state.actividades_complementarias,
-                },
+            },
 
-                horas_necesidad_institucional:  {
-                invesigacion_educativa: this.state.invesigacion_educativa,
+            horas_necesidad_institucional_fulltime:  {
+                proyecto_investigacion: this.state.proyecto_investigacion,
                 apoyo_operativo: this.state.apoyo_operativo,
-                },
+            },
 
-            // unidad_academica: this.state.unidad_academica.trim(),
             observaciones: this.state.observaciones.trim(),
         }
 
         if (this.state.disablePresidente === false) {
-            asignatura.horas_sustantivas_atencion_alumnos.academias.presidente = 0;
+            fulltime.horas_sustantivas_atencion_alumnos_fulltime.academias.presidente = 0;
         } else {
-            asignatura.horas_sustantivas_atencion_alumnos.academias.secretario = 0;
-        }
-
-        if (this.state.disableA === true) {
-            asignatura.horas_sustantivas_atencion_alumnos.horas_asignatura.a = 0;
-        } else {
-            asignatura.horas_sustantivas_atencion_alumnos.horas_asignatura.b = 0;
+            fulltime.horas_sustantivas_atencion_alumnos_fulltime.academias.secretario = 0;
         }
 
 
-        console.log("Proyeccion por asignatura: " + JSON.stringify(asignatura));
+        console.log("Proyeccion por asignatura: " + JSON.stringify(fulltime));
 
-        AsignaturaProyeccionService.createProyeccionAsignatura(asignatura, 
+        FulltimeProyeccionService.createProyeccionFulltime(fulltime, 
             this.state.id_folio, this.state.id_unidad,
             this.state.id_docente, this.state.id_carrera)
         .then(
@@ -159,54 +156,85 @@ class CreateProyeccionFulltimeComponent extends Component {
         this.getHorasAcademias_secretario();
         this.getCarreraList();
         this.getFolioList();
+        this.getTipoUnidad();
     }
 
     async getDocenteList(id_unidad) {
-        const res = await axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + 'docentes_by_ua/' + id_unidad);
-        const data = res.data;
-
-        let options = data.map(d => ({
-            "value": d.nombre_completo,
-            "label": d.nombre_completo,
-            "id": d.id,
-        }))
-        this.setState({ docentes: options });
+        let options = null;
+        
+        await DocenteService.getAllDocentesByPTCAndUnidadId(id_unidad).then(res => {
+            const data = res.data;
+            options = data.map(d => ({
+                "value": d.nombre_completo,
+                "label": d.nombre_completo,
+                "ptc": d.categoria,
+                "id": d.id,
+            }))
+            this.setState({ docentes: options });
+        })
     }
 
     async getCarreraList() {
-        const res = await axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "carreras");
-        const data = res.data;
-
-        let options = data.map(d => ({
-            "value": d.abreviatura,
-            "label": d.abreviatura,
-            "id": d.id,
-        }))
+        let options = null;
+        
+        await CarreraService.getAllCarreras().then(res => {
+            const data = res.data;
+            options = data.map(d => ({
+                "value": d.clave_programa,
+                "label": d.clave_programa,
+                "id": d.id,
+            }))
+        }).catch(() => {
+            alert("Error al intentar traer las carreras...");
+            this.props.history.push('/');
+        });
         this.setState({ carreras: options });
     }
-    
-    async getFolioList() {
-        const res = await axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL  + "folios");
-        const data = res.data;
 
-        let options = data.map(d => ({
-            "value": d.folio,
-            "label": d.folio,
-            'id': d.id,
-        }))
-        this.setState({ folios: options });
+    async getFolioList() {
+        let options = null;
+
+        await FolioFulltimeService.getAllFolios().then(res => {
+            const data = res.data;
+            options = data.map(d => ({
+                "value": d.folio,
+                "label": d.folio,
+                "id": d.id,
+                "id_unidad": d.unidad_academica.id,
+                "unidad_academica": d.unidad_academica.nombre_completo
+            }))
+            this.setState({ folios: options });
+        }).catch(() => {
+            alert("Error al intentar traer los folios...");
+            this.props.history.push('/');
+        })
     }
 
     async getUnidadList() {
-        const res = await axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL  + "planteles");
-        const data = res.data;
+        let options = null;
 
-        let options = data.map(d => ({
-            "value": d.tipo_unidad,
-            "label": d.nombre_completo,
-            'id': d.id,
-        }))
-        this.setState({ unidades: options });
+        await UnidadService.getAllUnidades().then(res => {
+            const data = res.data;
+            options = data.map(d => ({
+                "value": d.tipo_unidad,
+                "label": d.nombre_completo,
+                'id': d.id,
+            }))
+        }).catch(() => {
+            alert("Error al intentar traer las UAs...");
+            this.props.history.push('/');
+        });
+        this.setState({unidades: options})
+    }
+
+
+    getTipoUnidad() {
+        const tiposlList = [
+            { value: 'Unidad Academica', label: 'Unidad Academica' },
+            { value: 'Unidad Academica + Extension', label:'Unidad Academica + Extension'},
+        ]
+
+        this.setState({ tipos_unidades: tiposlList });
     }
 
     getNivel() {
@@ -240,11 +268,27 @@ class CreateProyeccionFulltimeComponent extends Component {
         this.setState({ horas_secretario: academiasList });
     }
 
+    onChangeTipoUnidadHandler = (event) => {
+        this.setState({ tipo_unidad: event.label });
+        
+        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
+        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
+            false : true });
+    }
+
 
     onChangeFolioHandler = (event) => {
         // this.setState({nombre_docente: event.target.value});
         this.setState({ folio: event.label });
         this.setState({ id_folio: event.id });
+
+        this.setState({ nombre_docente: ''})
+        this.setState({ ptc: ''});
+
+        this.setState({ id_unidad: event.id_unidad});
+        this.setState({unidad_academica: event.unidad_academica})
+    
+        this.getDocenteList(event.id_unidad);
         
         this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
         (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
@@ -254,10 +298,10 @@ class CreateProyeccionFulltimeComponent extends Component {
     onChangeUnidadHandler = (event) => {
         this.setState({ unidad_academica: event.label });
         this.setState({ disableDocente: false })
-        this.setState({ nombre_docente: ''})
+        // this.setState({ nombre_docente: ''})
         
-        this.getDocenteList(event.id);
-        this.setState({ id_unidad: event.id })
+        // this.getDocenteList(event.id);
+        // this.setState({ id_unidad: event.id })
 
         this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
         (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
@@ -272,6 +316,7 @@ class CreateProyeccionFulltimeComponent extends Component {
         (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
             false : true });
     }
+
     onChangeCodigoNominaHandler = (event) => {
         this.setState({codigo_nomina: event.target.value});
 
@@ -289,7 +334,9 @@ class CreateProyeccionFulltimeComponent extends Component {
     onChangeNombreDocenteHandler = (event) => {
         // this.setState({nombre_docente: event.target.value});
         this.setState({ nombre_docente: event.label });
-        this.setState({ id_docente: event.id});
+        this.setState({ id_docente: event.id });
+        this.setState({ ptc: ''});
+        this.setState({ ptc: event.ptc });
         
         this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
         (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
@@ -315,26 +362,6 @@ class CreateProyeccionFulltimeComponent extends Component {
             false : true });
     }
 
-    onChangeADisablerHandler = () => {
-        this.setState(() => ({
-            disableA: false,
-            disableB: true
-        }));
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeBDisablerHandler = () => {
-        this.setState(() => ({
-            disableB: false,
-            disableA: true
-        }));
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
     onChangePresidenteDisablerHandler = () => {
         this.setState(() => ({
             disablePresidente: true,
@@ -484,18 +511,29 @@ class CreateProyeccionFulltimeComponent extends Component {
                             <br />
                             <form>    
                                 <div className="row mb-4 justify-content-center ">                              
-                                    <div className="col-6">
-                                        <div className="form-outline">
-                                            <label className="">Folio: </label>
-                                            <Select
-                                                rules={{ required: true }}
-                                                options={this.state.folios}
-                                                onChange={(e) => this.onChangeFolioHandler(e)}
-                                                value={{ label: this.state.folio === '' ? "Seleccione folio de proyeccion..." : this.state.folio}}
-                                            />
-                                        </div>
-                                    </div>                        
-                                </div>
+                                        <div className="col-6">
+                                            <div className="form-outline">
+                                                <label className="">Folio: </label>
+                                                <Select
+                                                    rules={{ required: true }}
+                                                    options={this.state.folios}
+                                                    onChange={(e) => this.onChangeFolioHandler(e)}
+                                                    value={{ label: this.state.folio === '' ? "Seleccione folio de proyeccion..." : this.state.folio}}
+                                                />
+                                            </div>
+                                        </div>       
+                                        <div className="col-6">
+                                            <div className="form-outline">
+                                                <label className="">Tipo de UA: </label>
+                                                <Select
+                                                    rules={{ required: true }}
+                                                    options={this.state.tipos_unidades}
+                                                    onChange={(e) => this.onChangeTipoUnidadHandler(e)}
+                                                    value={{ label: this.state.tipo_unidad === '' ? "Seleccione unidad academica..." : this.state.tipo_unidad}}
+                                                />
+                                            </div>
+                                        </div>                         
+                                    </div>
                                 <div className="col">
                                     <div className="row mb-3">
                                         <label className="h5"><b>PROFESORES DE ASIGNATURA</b></label>
@@ -509,6 +547,7 @@ class CreateProyeccionFulltimeComponent extends Component {
                                                 <div className="form-outline">
                                                     <label>Unidad Academica</label>
                                                     <Select
+                                                        isDisabled={true}
                                                         rules={{ required: true }}
                                                         options={this.state.unidades}
                                                         onChange={(e) => this.onChangeUnidadHandler(e)}
@@ -537,7 +576,7 @@ class CreateProyeccionFulltimeComponent extends Component {
                                                     <Select
                                                     // depende que se realize el cambio en unidad academcia para que se pueda habilidar
                                                     // y se reseteara si se cambia la unidad academica, al igual se resetea el valor de nivel academico.
-                                                        isDisabled={this.state.disableDocente}
+                                                        // isDisabled={this.state.disableDocente}
                                                         rules={{ required: true }}
                                                         options={this.state.docentes}
                                                         onChange={(e) => this.onChangeNombreDocenteHandler(e)}
@@ -589,87 +628,26 @@ class CreateProyeccionFulltimeComponent extends Component {
                                             </div>
                                         </div>
 
-                                        <div className="row mt-4">
-                                            <div className="col">
-                                                    <div className="form-group row">
-                                                        <div className="col">
-                                                        <input
-                                                            className='mr-2'
-                                                            type="radio"
-                                                            onChange={this.onChangeADisablerHandler}
-                                                            checked={this.state.disableB}
-                                                            /> Horas A
-                                                        </div>
-                                                    </div>
-                                                    <div className="form-group row">
-                                                            <div className="col-sm-1 col-form-label">
-                                                                <label className="">A:</label>
-                                                            </div>
-                                                            <div className="col">
-                                                            <div className="input-group">
-                                                                <input type='number'
-                                                                    className="form-control"
-                                                                    value={this.state.a}
-                                                                    onChange={this.onChangeAHandler}
-                                                                    disabled={this.state.disableA}
-                                                                    checked={this.state.disableB}
-                                                                    onInput={(e) => {
-                                                                        e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                                    }}
-                                                                    required
-                                                                />
-                                                                <div className="input-group-append">
-                                                                    <span className="input-group-text">Hora(s)</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>  
-                                                </div>
-                                                <div className="col">
-                                                    <div className="form-group row">
-                                                            <div className="col">
-                                                            <input
-                                                                className='mr-2'
-                                                                type="radio"
-                                                                onChange={this.onChangeBDisablerHandler}
-                                                                checked={this.state.disableA}
-                                                                /> Horas B
-                                                            </div>
-                                                        </div>
-                                                    <div className="form-group row">
-                                                        <div className="col-sm-1 col-form-label">
-                                                            <label className="">B:</label>
-                                                        </div>
-                                                
-                                                        <div className="col">
-                                                            <div className="input-group">
-                                                                <input type='number'
-                                                                    className="form-control"
-                                                                    value={this.state.b}
-                                                                    onChange={this.onChangeBHandler}
-                                                                    disabled={this.state.disableB}
-                                                                    onInput={(e) => {
-                                                                        e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                                    }}
-                                                                    required
-                                                                />
-                                                                <div className="input-group-append">
-                                                                    <span className="input-group-text">Hora(s)</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>            
-                                                    </div>  
-                                                </div>                                    
-                                            </div>  
 
                                     <div className="row"> 
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                    <label className="col-md-5 col-form-label"><b>Horas Frente a Grupo:</b> </label>
-
+                                        <div className="col">
+                                            <div className="form-group row">                                                
                                                 <div className="col">
-                                                    <div className="input-group">
+                                                    <label>Nivel de (PTC):</label>
+                                                    <div className="input-group">                                                        
+                                                        <input
+                                                            readOnly={true}
+                                                            type='text'
+                                                            placeholder='Nivel de PTC del docente...'
+                                                            className=" form-control"
+                                                            value={this.state.ptc}
+                                                            onChange={this.onChangeHorasFrenteGrupoHandler}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="col">
+                                                    <label>Horas Frente a Grupo:</label>
+                                                    <div className="input-group">                                                        
                                                         <input
                                                             type='number'
                                                             className=" form-control"
@@ -1035,7 +1013,7 @@ class CreateProyeccionFulltimeComponent extends Component {
 
                         <br />
                         <div className="card-footer text-muted mb-3 mt-3">
-                            <button className="btn btn-primary mt-0" onClick={this.createProyeccionAsignatura} disabled={this.state.disableAgregar}>Agregar</button>
+                            <button className="btn btn-primary mt-0" onClick={this.createProyeccionFulltime} disabled={this.state.disableAgregar}>Agregar</button>
                             <button className="btn btn-danger mt-0" onClick={this.cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancelar</button>
                         </div>
                     </div>

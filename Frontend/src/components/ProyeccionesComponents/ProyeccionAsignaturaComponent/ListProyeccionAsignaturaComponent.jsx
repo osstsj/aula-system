@@ -17,8 +17,6 @@ class ListProyeccionAsignaturaComponent extends Component {
             areColumns2Visible: true,
 
             asignaturas: [],
-            unidades: [],
-            unidad: ''
         };
 
         this.viewProyeccionAsignatura = this.viewProyeccionAsignatura.bind(this);
@@ -34,32 +32,12 @@ class ListProyeccionAsignaturaComponent extends Component {
                 alert("Error al traer las proyecciones de asignatura por folio...");
                 this.props.history.push('/');
             });
-
-        this.getUnidadList();
     }
 
     viewProyeccionAsignatura(id) {
         this.props.history.push(`/view-proyeccion_asignatura/${id}`);
     }
 
-    async getUnidadList() {
-        let options = null;
-
-        await UnidadService.getAllUnidades().then(res => {
-            const data = res.data;
-            options = data.map(d => ({
-                "value": d.nombre_completo,
-                "label": d.nombre_completo,
-                'id': d.id,
-            }))
-        })
-        .catch(() => {
-            alert("Error al intentar traer las UAs...");
-            this.props.history.push('/');
-        });
-
-        this.setState({unidades: options})
-    }
 
     // Función para alternar la visibilidad de las columnas
     toggleColumns = () => {
@@ -76,17 +54,7 @@ class ListProyeccionAsignaturaComponent extends Component {
     addAsignatura() {
         this.props.history.push('/add-proyeccion_asignatura');
     }
-    changeUnidadHandler = (event) => {
-        this.setState({ unidad: event.label });
-        // this.setState({ asignaturas: this.state.asignaturas.filter((asignatura) => asignatura.unidad_academica === this.state.unidad)})
 
-        // AsignaturaProyeccionService.findAllByUnidad_academica(this.state.id, event.id).then(res =>
-        //     this.setState({ asignaturas: res.data }))
-        //     .catch(() => {
-        //         alert("Error al traer las proyecciones de asignatura por UA...");
-        //         this.props.history.push('/');
-        //     });
-    }
     exportToExcel() {
         const { asignaturas } = this.state; // Reemplaza con los datos reales
 
@@ -298,7 +266,7 @@ class ListProyeccionAsignaturaComponent extends Component {
                                         <td align="center" className={`text-center table-content  ${areColumnsVisible ? '' : 'collapse'
                                             }`}>{asignatura.profe_asignatura.grado_academico}</td>
 
-                                        {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Nombre del Docente */}
+                                        {/* PROFESORES DE ASIGNATURA - Nombre del Docente */}
                                         <td align="center" className={`text-center table-content  ${areColumnsVisible ? '' : 'collapse'
                                             }`}>{asignatura.profe_asignatura.nombre_docente.nombre_completo}</td>
 
