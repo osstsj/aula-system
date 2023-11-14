@@ -13,6 +13,8 @@ class CreateFolioAsignatura extends Component {
         super(props)
 
         this.state = {
+            isLoading: false,
+
             unidades: [],
             niveles: [],
             carreras: [],
@@ -136,6 +138,7 @@ class CreateFolioAsignatura extends Component {
             asignatura.horas_sustantivas_atencion_alumnos.horas_asignatura.b = 0;
         }
 
+        this.setState({ isLoading: true });
 
         console.log("Proyeccion por asignatura: " + JSON.stringify(asignatura));
 
@@ -1098,7 +1101,16 @@ class CreateFolioAsignatura extends Component {
 
                         <br />
                         <div className="card-footer text-muted mb-3 mt-3">
+                        {this.state.isLoading ? (
+                                // Mostrar el spinner si isLoading es true
+                                <div className="text-center">
+                                    <div className="spinner-border" role="status">
+                                        <span className="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                            ) : (
                             <button className="btn btn-primary mt-0" onClick={this.createProyeccionAsignatura} disabled={this.state.disableAgregar}>Agregar</button>
+                            )}
                             <button className="btn btn-danger mt-0" onClick={this.cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancelar</button>
                         </div>
                     </div>

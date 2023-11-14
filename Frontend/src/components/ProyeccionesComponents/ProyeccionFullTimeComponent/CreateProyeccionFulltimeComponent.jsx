@@ -13,6 +13,8 @@ class CreateProyeccionFulltimeComponent extends Component {
         super(props)
 
         this.state = {
+            isLoading: false,
+
             unidades: [],
             niveles: [],
             carreras: [],
@@ -126,7 +128,8 @@ class CreateProyeccionFulltimeComponent extends Component {
         } else {
             fulltime.horas_sustantivas_atencion_alumnos_fulltime.academias.secretario = 0;
         }
-
+        
+        this.setState({ isLoading: true });
 
         console.log("Proyeccion por asignatura: " + JSON.stringify(fulltime));
 
@@ -135,7 +138,7 @@ class CreateProyeccionFulltimeComponent extends Component {
             this.state.id_docente, this.state.id_carrera)
         .then(
          () => {
-                this.props.history.push(`/list-proyeccion_asignatura/${this.state.id_folio}`);
+                this.props.history.push(`/list-proyeccion_fulltime/${this.state.id_folio}`);
             }
         ).catch(error => {
             console.log("Error en crear proyeccion por asignatura: " + error);
@@ -1013,7 +1016,16 @@ class CreateProyeccionFulltimeComponent extends Component {
 
                         <br />
                         <div className="card-footer text-muted mb-3 mt-3">
+                        {this.state.isLoading ? (
+                                // Mostrar el spinner si isLoading es true
+                                <div className="text-center">
+                                    <div className="spinner-border" role="status">
+                                        <span className="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                            ) : (
                             <button className="btn btn-primary mt-0" onClick={this.createProyeccionFulltime} disabled={this.state.disableAgregar}>Agregar</button>
+                            )}
                             <button className="btn btn-danger mt-0" onClick={this.cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancelar</button>
                         </div>
                     </div>
