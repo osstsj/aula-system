@@ -10,16 +10,10 @@ spring:
   application:
     name: backend
   datasource:
-<<<<<<< Updated upstream
     url: jdbc:postgresql://localhost:5432/aulasystem
       username: postgres
       password: aulasystem
-=======
-    url: jdbc:postgresql://localhost:5432/aula
-      username: <user>
-      password: <password>
->>>>>>> Stashed changes
-      jpa:
+     jpa:
         hibernate:
           ddl-auto: create
         properties:
