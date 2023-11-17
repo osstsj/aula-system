@@ -11,16 +11,16 @@ spring:
     name: backend
   datasource:
     url: jdbc:postgresql://localhost:5432/aulasystem
-      username: postgres
-      password: aulasystem
-     jpa:
+    username: postgres
+    password: aulasystem
+  jpa:
+      hibernate:
+         ddl-auto: none
+      properties:
         hibernate:
-          ddl-auto: create
-        properties:
-          hibernate:
-            dialect: org.hibernate.dialect.PostgreSQLDialect
-            format_sql: true
-        show_sql: true
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+          format_sql: true
+      show_sql: true
 #    driver-class-name: org.h2.Driver
 #    url: jdbc:h2:mem:backend
 #    username: sa
