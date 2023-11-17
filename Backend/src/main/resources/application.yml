@@ -2,7 +2,7 @@ server:
   port: 8080
   servlet:
     context-path: /aula-system
-#  port: ${PORT:0}
+#  port: ${PORT:0} // para puerto aleatorio
 spring:
   mvc:
     pathmatch:
@@ -10,34 +10,40 @@ spring:
   application:
     name: backend
   datasource:
-#    url: jdbc:postgresql://localhost:5332/aula
-#      username: <user>
-#      password: <password>
-#      jpa:
-#        hibernate:
-#          ddl-auto: update
-#        properties:
-#          hibernate:
-#            dialect: org.hibernate.dialect.PostgreSQLDialect
-#            format_sql: true
-#        show_sql: true
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:backend
-    username: sa
-    password: ''
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
-    properties:
-      hibernate:
-        '[show_sql]': true
-        '[use_sql_comments]': false
-        '[format_sql]': true
-    show-sql: true
+<<<<<<< Updated upstream
+    url: jdbc:postgresql://localhost:5432/aulasystem
+      username: postgres
+      password: aulasystem
+=======
+    url: jdbc:postgresql://localhost:5432/aula
+      username: <user>
+      password: <password>
+>>>>>>> Stashed changes
+      jpa:
+        hibernate:
+          ddl-auto: create
+        properties:
+          hibernate:
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+            format_sql: true
+        show_sql: true
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:mem:backend
+#    username: sa
+#    password: ''
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2-console
+#  jpa:
+#    hibernate:
+#      ddl-auto: create-drop
+#    properties:
+#      hibernate:
+#        '[show_sql]': true
+#        '[use_sql_comments]': false
+#        '[format_sql]': true
+#    show-sql: true
   jackson:
     serialization:
       fail-on-empty-beans: false
