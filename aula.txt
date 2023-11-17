@@ -1,0 +1,59 @@
+podman run --rm -i -t centos:stream9
+dnf update
+dnf install java-11-openjdk-headless
+dnf install maven maven-openjdk11
+
+--------------------------------------------------------
+mvn clean install -Dmaven.test.skip=true
+java -jar aula-0.0.1-SNAPSHOT.jar
+
+ 8080 (http)
+
+--------------------------------------------------------
+sudo apt update
+sudo apt upgrade
+sudo apt full-upgrade 
+sudo apt install openjdk-17-jdk-headless
+sudo apt install maven 
+
+mvn clean install -Dmaven.test.skip=true
+cd target
+java -jar aula-0.0.1-SNAPSHOT.jar
+
+
+curl -O  https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh
+./install.sh
+nvm install 16.20.0
+
+npm install
+npm start
+
+Ctrl+b d   detach
+
+ 
+ 
+services:
+  db:
+    container_name: postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: amigoscode
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    volumes:
+      - db:/data/postgres
+    ports:
+      - "5332:5432"
+    networks:
+      - db
+    restart: unless-stopped
+
+networks:
+  db:
+    driver: bridge
+
+volumes:
+  db:
+  
+16.20.0 node
+lts

@@ -1,0 +1,42 @@
+- `podman build -t matefacil .`
+- `podman network create --label app=matefacil --subnet=192.168.50.0/24 --gateway=192.168.50.1 mfnet`
+- `podman volume  create --label app=matefacil mfDBvol`
+- ```
+podman pod     create --label app=matefacil \
+  --infra-name=mfinfra \
+  --publish 5432:5432 --publish 8080:8080 --network=mfnet --name mfpod
+```
+- Use the script from `extra/podman-quadlet/01-crear-secretos.sh` to create the
+  podman sectrets.
+- ```
+podman run -d \
+  --secret=postgres-user,type=env,target=POSTGRES_USER \
+  --secret=postgres-password,type=env,target=POSTGRES_PASSWORD \
+  --secret=postgres-db,type=env,target=POSTGRES_DB \
+  --volume mfDBvol:/var/lib/postgresql/data:Z \
+  --restart=unless-stopped  \
+  --name db \
+  --pod mfpod \
+  postgres:15.3
+```
+- Ejecutar los siguientes comandos para entrar en modo interativo en el
+  contendedor
+  ```
+podman run --pod mfpod \
+  -i -t --rm \
+  -v ./program:/home/program:Z \
+  --name matefacil matefacil:latest
+  ```
+  En el shell del contenedor ejecutar:
+  - `python manage.py makemigrations center`    ------reconstruir base de datos
+  - `python manage.py migrate`					 ------reconstruir base de datos
+  - `python manage.py createsuperuser` (Aquí se crea la cuenta para el administrador)
+  - `exit` para salir del contenedor
+- Finalmente ejecutar
+  ```
+podman run -d --pod mfpod \
+  -v ./program:/home/program:Z \
+  --name matefacil \
+  matefacil:latest \
+  bash -c "python manage.py runserver 0.0.0.0:8080"
+  ```
