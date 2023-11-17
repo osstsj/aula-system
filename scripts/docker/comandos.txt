@@ -7,6 +7,11 @@ docker run -d \
   --publish 5432:5432 \
   postgres:16
 
+docker exec -i -t db bash
+  su - postgres
+  psql
+
+
 - `podman build -t matefacil .`
 - `podman network create --label app=matefacil --subnet=192.168.50.0/24 --gateway=192.168.50.1 mfnet`
 - `podman volume  create --label app=matefacil mfDBvol`
