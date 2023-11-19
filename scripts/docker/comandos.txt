@@ -1,0 +1,13 @@
+docker volume  create --label app=aulasystem asdbvol
+docker run -d \
+  --name db \
+  -e POSTGRES_PASSWORD=aulasystem \
+  -e PGDATA=/var/lib/postgresql/data/pgdata \
+  -v asdbvol:/var/lib/postgresql/data \
+  --publish 5432:5432 \
+  postgres:16
+
+docker exec -i -t db bash
+  su - postgres
+  psql
+

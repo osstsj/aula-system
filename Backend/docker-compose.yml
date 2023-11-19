@@ -3,8 +3,11 @@ services:
     image: postgres:12-alpine
     container_name: db-postgres-aula_system
     environment:
-      - POSTGRES_DB=aula_system
-      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB: <db_name> // cambiar-> agregar git ignore
+      - POSTGRES_PASSWORD: <password> //cambiar -> agregar git ignore
+      PGDATA: /data/postgres
+    volumes:
+      - db:/data/postgres
     ports:
       - 5432:5432
     networks:
@@ -12,5 +15,8 @@ services:
 networks:
   netms1:
     name: net-ms1
+
+volumes:
+  db:
 
 #  sudo docker-compose up -d
