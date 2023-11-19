@@ -43,11 +43,22 @@ public class DocenteController {
         }
     }
 
-    @GetMapping(value = "/docentes_categoria_ptc/{id_unidad}",
+    @GetMapping(value = "/docentes_categoria_ptc_fulltime/{id_unidad}",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE })
-    public ResponseEntity<List<DocenteResponseDto>> getAllDocentesByCategoriaPTC(@PathVariable Long id_unidad) {
+    public ResponseEntity<List<DocenteResponseDto>> getAllDocentesByCategoriaPTCFulltime(@PathVariable Long id_unidad) {
         try {
-            List<DocenteResponseDto> docentes = docenteService.getAllDocentesByPTCAndUnidadId(id_unidad);
+            List<DocenteResponseDto> docentes = docenteService.getAllDocentesByPTCFulltimeAndUnidadId(id_unidad);
+            return new ResponseEntity<>(docentes, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/docentes_categoria_ptc_asignatura/{id_unidad}",
+            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE })
+    public ResponseEntity<List<DocenteResponseDto>> getAllDocentesByCategoriaPTCAsignatura(@PathVariable Long id_unidad) {
+        try {
+            List<DocenteResponseDto> docentes = docenteService.getAllDocentesByPTCAsignaturandUnidadId(id_unidad);
             return new ResponseEntity<>(docentes, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -79,7 +90,8 @@ public class DocenteController {
     @PutMapping(value = "/docente/{id}/{id_unidad}",
         produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
         consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
-    public ResponseEntity<DocenteResponseDto> updateDocenteById(@PathVariable Long id,@PathVariable Long id_unidad, @RequestBody DocenteRequestDto docenteRequestDto) {
+    public ResponseEntity<DocenteResponseDto> updateDocenteById(@PathVariable Long id,@PathVariable Long id_unidad,
+                                                                @RequestBody DocenteRequestDto docenteRequestDto) {
         try {
             var result = docenteService.updateDocenteById(id, id_unidad, docenteRequestDto);
             return new ResponseEntity<>(result, HttpStatus.OK);

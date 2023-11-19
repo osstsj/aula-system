@@ -30,4 +30,6 @@ public class DocenteRequestDto {
     private String categoria;
 
     private String actividad;
+
+    private String estatus;
 }

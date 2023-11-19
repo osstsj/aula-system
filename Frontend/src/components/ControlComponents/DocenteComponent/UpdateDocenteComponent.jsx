@@ -16,10 +16,12 @@ class UpdateDocenteComponent extends Component {
             unidad_academica: '',
             categoria: '',
             actividad: '',
+            estatus: '',
 
             unidades: [],
             categorias: [],
             actividades: [],
+            estatusList:[],
         }
     }
 
@@ -42,6 +44,7 @@ class UpdateDocenteComponent extends Component {
                 apellido_materno: this.state.apellido_materno.trim(),
                 categoria: this.state.categoria.trim(),
                 actividad: this.state.actividad.trim(),
+                estatus: this.state.estatus,
             };
             // Mostrar el spinner al iniciar la acción
             this.setState({ isLoading: true });
@@ -66,13 +69,15 @@ class UpdateDocenteComponent extends Component {
                 categoria: docente.categoria,
                 unidad_academica: docente.unidad_academica.nombre_completo,
                 id_unidad: docente.unidad_academica.id,
-                actividad: docente.actividad
+                actividad: docente.actividad,
+                estatus: docente.estatus,
             })
         })
         
         this.getUnidadList();
         this.getActividad();
         this.getCategoria();
+        this.getEstatus();
     }
 
    
@@ -94,17 +99,23 @@ class UpdateDocenteComponent extends Component {
         this.setState({unidades: options})
     }
 
+    getEstatus() {
+        const estatusList = [
+            { value: 'Activo', label: 'Activo' },
+            { value: 'Inactivo', label: 'Inactivo' }
+
+        ]
+        this.setState({ estatusList: estatusList })
+    }
+
+
     getCategoria() {
         const categoriaList = [
-            { value: 'DIRECTOR UNIDAD ACADÉMICA', label: 'DIRECTOR UNIDAD ACADÉMICA' },
-            { value: 'JEFE DE DIVISIÓN', label: 'JEFE DE DIVISIÓN' },
             { value: 'PROFESOR ASIGNATURA A', label: 'PROFESOR ASIGNATURA A' },
             { value: 'PROFESOR ASIGNATURA B', label: 'PROFESOR ASIGNATURA B' },
             { value: 'PROFESOR ASOCIADO A', label: 'PROFESOR ASOCIADO A' },
             { value: 'PROFESOR ASOCIADO B', label: 'PROFESOR ASOCIADO B' },
             { value: 'PROFESOR ASOCIADO C', label: 'PROFESOR ASOCIADO C' },
-            { value: 'CAPTURISTA', label: 'CAPTURISTA' },
-            { value: 'TECNICO DOCENTE', label: 'TECNICO DOCENTE' }
 
         ]
         this.setState({ categorias: categoriaList })
@@ -137,6 +148,10 @@ class UpdateDocenteComponent extends Component {
     }
     onChangeActividadHandler = (event) => {
         this.setState({actividad: event.label});
+    }
+
+    onChangeEstatusHandler = (event) => {
+        this.setState({estatus: event.label})
     }
    
     cancel(){
@@ -221,7 +236,7 @@ class UpdateDocenteComponent extends Component {
                                                     />
                                                 </div>
                                             </div>
-                                            <div className="col-3">
+                                            <div className="col-4">
                                                 <div className="form-outline">
                                                 <label>Lista de actividades</label>
                                                     <Select
@@ -234,13 +249,14 @@ class UpdateDocenteComponent extends Component {
                                                 </div>
                                             </div>
 
-                                            <div className="col-3">
+                                            <div className="col-2">
                                                 <div className="form-outline">
                                                 <label>Estatus</label>
-                                                    <select name="" id="" className='form-control'>
-                                                        <option value="" selected>Nuevo</option>
-                                                        <option value="">Baja</option>
-                                                    </select>
+                                                    <Select
+                                                      onChange={(e) => this.onChangeEstatusHandler(e)}
+                                                      options={this.state.estatusList}
+                                                      value={{label: this.state.estatus === "" ? "Estatus..." : this.state.estatus}}
+                                                    />
                                                 </div>
                                             </div>
                                         </div>

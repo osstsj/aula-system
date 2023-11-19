@@ -14,7 +14,9 @@ public interface IDocenteService {
 
     List<DocenteResponseDto> getAllDocentes();
 
-    List<DocenteResponseDto> getAllDocentesByPTCAndUnidadId(Long id_unidad);
+    List<DocenteResponseDto> getAllDocentesByPTCAsignaturandUnidadId(Long id_unidad);
+
+    List<DocenteResponseDto> getAllDocentesByPTCFulltimeAndUnidadId(Long id_unidad);
 
     List<DocenteResponseDto> findAllDocentesByUnidad(Long id_unidad);
 

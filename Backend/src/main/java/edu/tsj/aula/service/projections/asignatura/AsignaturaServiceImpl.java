@@ -44,7 +44,6 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
         folioAsignaturaEntity = folioAsignaturaRepository.findById(id_folio).orElseThrow(
                 ()-> new ResourceNotFoundException((" No se encontro folio... con el id: ".concat(id_folio.toString())),
                 HttpStatus.NOT_FOUND));
-
         docenteEntity = docenteRepository.findById(id_docente).orElseThrow(
                 ()-> new ResourceNotFoundException((" No se encontro docente... con el id: ".concat(id_docente.toString())),
                         HttpStatus.NOT_FOUND));
@@ -82,13 +81,7 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
                 asignaturaRequest.getHoras_necesidad_institucional().getSubtotal_2();
 
         asignaturaRequest.setTotal(total);
-
-        // AGREGARA EL FOLIO
-//        AsignaturaEntity entity = mapper.requestToEntity(asignaturaRequest);
         return asignaturaRepository.save(asignaturaRequest);
-
-//        var result = mapper.entityToResponse(entity);
-//        return  asignaturaRequest;
     }
 
     @Override

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import AsignaturaProyeccionService from '../../../services/Proyecciones/AsignaturaProyeccionService';
+import FulltimeProyeccionService from '../../../services/Proyecciones/FulltimeProyeccionService';
 
-class ViewProyeccionAsignaturaComponent extends Component {
+class ViewProyeccionFulltimeComponent extends Component {
     constructor(props) {
         super(props)
 
@@ -15,6 +15,8 @@ class ViewProyeccionAsignaturaComponent extends Component {
                 folio: "",
 
                 // horas_sustantivas_atencion_alumnos
+                // Nivel de PTC
+                ptc: "",
                     // horas_asignatura: 
                     a: 0,
                     b: 0,
@@ -36,7 +38,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                 subtotal_1: 0,
 
                 // horas_necesidad_institucional
-                invesigacion_educativa: 0,
+                proyecto_investigacion: 0,
                 apoyo_operativo: 0,
                 subtotal_2: 0,
             
@@ -52,57 +54,54 @@ class ViewProyeccionAsignaturaComponent extends Component {
 
 
     componentDidMount() {
-        AsignaturaProyeccionService.getProyeccionesAsignaturaById(this.state.id)
+        FulltimeProyeccionService.getProyeccioneFulltimeById(this.state.id)
         .then(res =>  {
-            let asignatura = res.data;
+            let fulltime = res.data;
 
             this.setState({
-                // Asignatura
-                folio: asignatura.folio.folio,
-                    // profe_asignatura: 
-                    clave_programa: asignatura.profe_asignatura.clave_programa.clave_programa,
-                    codigo_nomina: asignatura.profe_asignatura.codigo_nomina,
-                    grado_academico: asignatura.profe_asignatura.grado_academico,
-                    nombre_docente: asignatura.profe_asignatura.nombre_docente.nombre_completo,
+                // fulltime
+                folio: fulltime.folio.folio,
+                    // profesor_fulltime 
+                    clave_programa: fulltime.profesor_fulltime.clave_programa.clave_programa,
+                    codigo_nomina: fulltime.profesor_fulltime.codigo_nomina,
+                    grado_academico: fulltime.profesor_fulltime.grado_academico,
+                    nombre_docente: fulltime.profesor_fulltime.nombre_docente.nombre_completo,
                    
 
                     // horas_sustantivas_atencion_alumnos
-                        // horas_asignatura
-                        a: asignatura.horas_sustantivas_atencion_alumnos.horas_asignatura.a,
-                        b: asignatura.horas_sustantivas_atencion_alumnos.horas_asignatura.b,
-
-                    horas_frente_grupo:asignatura.horas_sustantivas_atencion_alumnos.horas_frente_grupo,
+                    ptc: fulltime.horas_sustantivas_atencion_alumnos_fulltime.ptc,
+                    horas_frente_grupo:fulltime.horas_sustantivas_atencion_alumnos_fulltime.horas_frente_grupo,
 
                         // academias
-                        presidente: asignatura.horas_sustantivas_atencion_alumnos.academias.presidente,
-                        secretario: asignatura.horas_sustantivas_atencion_alumnos.academias.secretario,
+                        presidente: fulltime.horas_sustantivas_atencion_alumnos_fulltime.academias.presidente,
+                        secretario: fulltime.horas_sustantivas_atencion_alumnos_fulltime.academias.secretario,
 
                         // asesorias
-                        residencias_profesionales: asignatura.horas_sustantivas_atencion_alumnos.asesorias.residencias_profesionales,
-                        educacion_dual: asignatura.horas_sustantivas_atencion_alumnos.asesorias.educacion_dual,
-                        titulacion: asignatura.horas_sustantivas_atencion_alumnos.asesorias.titulacion,
-                        asesorias_academica: asignatura.horas_sustantivas_atencion_alumnos.asesorias.asesoria_academica,
-                        tutorias: asignatura.horas_sustantivas_atencion_alumnos.asesorias.tutorias,
+                        residencias_profesionales: fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.residencias_profesionales,
+                        educacion_dual: fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.educacion_dual,
+                        titulacion: fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.titulacion,
+                        asesorias_academica: fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.asesoria_academica,
+                        tutorias: fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.tutorias,
 
-                    actividades_complementarias: asignatura.horas_sustantivas_atencion_alumnos.actividades_complementarias,
-                    subtotal_1: asignatura.horas_sustantivas_atencion_alumnos.subtotal_1,
+                    actividades_complementarias: fulltime.horas_sustantivas_atencion_alumnos_fulltime.actividades_complementarias,
+                    subtotal_1: fulltime.horas_sustantivas_atencion_alumnos_fulltime.subtotal_1,
 
                     // horas_necesidad_institucional
-                    invesigacion_educativa: asignatura.horas_necesidad_institucional.invesigacion_educativa,
-                    apoyo_operativo: asignatura.horas_necesidad_institucional.apoyo_operativo,
-                    subtotal_2: asignatura.horas_necesidad_institucional.subtotal_2,
+                    proyecto_investigacion: fulltime.horas_necesidad_institucional_fulltime.proyecto_investigacion,
+                    apoyo_operativo: fulltime.horas_necesidad_institucional_fulltime.apoyo_operativo,
+                    subtotal_2: fulltime.horas_necesidad_institucional_fulltime.subtotal_2,
 
-                total: asignatura.total,
-                unidad_academica: asignatura.unidad_academica.nombre_completo,
-                observaciones: asignatura.observaciones,
-                fecha_creacion: asignatura.fecha_creacion,
-                fecha_actualizacion: asignatura.fecha_actualizacion
+                total: fulltime.total,
+                unidad_academica: fulltime.unidad_academica.nombre_completo,
+                observaciones: fulltime.observaciones,
+                fecha_creacion: fulltime.fecha_creacion,
+                fecha_actualizacion: fulltime.fecha_actualizacion
             });
         })
-        .catch(() => {
-            alert("Error al intentar traer la proyeccion por asignatura");
-            this.props.history.push('/');
-        })
+        // .catch(() => {
+        //     alert("Error al intentar traer la proyeccion por fulltime");
+        //     this.props.history.push('/');
+        // })
     }
 
     back(){
@@ -173,6 +172,18 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                     <div className="col">
                                         <div className="form-outline">
                                             <div className="">{this.state.nombre_docente}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-5">
+                                        <div className="form-outline">
+                                            <label className="">PTC del Docente:</label>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <div className="">{this.state.ptc}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -361,12 +372,12 @@ class ViewProyeccionAsignaturaComponent extends Component {
                             <div className="row">
                                 <div className="col">
                                     <div className="form-outline">
-                                        <label className="">Investigacion educativa, desarrrollo tecnológico:</label>
+                                        <label className="">Proyectos de Investigación:</label>
                                     </div>
                                 </div>
                                 <div className="col">
                                     <div className="form-outline">
-                                        <div className="">{this.state.invesigacion_educativa}</div>
+                                        <div className="">{this.state.proyecto_investigacion}</div>
                                     </div>
                                 </div>
                             </div>
@@ -492,4 +503,4 @@ class ViewProyeccionAsignaturaComponent extends Component {
     }
 }
 
-export default ViewProyeccionAsignaturaComponent;
+export default ViewProyeccionFulltimeComponent;

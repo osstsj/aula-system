@@ -93,13 +93,14 @@ class CreateUnidadComponent extends Component {
                
 
                 console.log('Unidad Academica + Extension => ' + JSON.stringify(unidadExtensiones));
-                ExtensionService.createExtensionByPlanteId(this.state.id, unidadExtensiones).then(res => {
+                ExtensionService.createExtensionByUnidadId(this.state.id, unidadExtensiones).then(res => {
                     this.props.history.push('/list-unidad');
                 }).catch(() => {
                     alert("Error al intentar crear la extension academica...");
                     this.props.history.push('/list-unidad');
                 });
-            }).catch(() => {
+            })
+            .catch(() => {
                 alert("Error al intentar traer la unidad para crear extension...");
                 this.props.history.push('/list-unidad');
             });           

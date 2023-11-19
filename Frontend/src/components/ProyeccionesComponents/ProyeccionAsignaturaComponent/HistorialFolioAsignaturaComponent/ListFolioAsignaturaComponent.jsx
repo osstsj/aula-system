@@ -125,10 +125,10 @@ class ListFolioAsignaturaComponent extends Component {
                                     <td className="table-conten">{folio.fecha_creacion}</td>
                                     <td className="table-conten">"Activo/Cerrado"</td>
                                     <td className="table-action">
-                                        {/* <button onClick={() => this.editPlantel(folio.id)} className="btn btn-warning mt-0">
+                                        {/* <button onClick={() => updateEstatus(folio.id)} className="btn btn-warning mt-0">
                                             Actualizar
-                                        </button>
-                                        <button style={boton} onClick={() => this.deletePlantel(folio.id)} className="btn btn-danger mt-0">
+                                        </button> */}
+                                        {/* <button style={boton} onClick={() => this.deletePlantel(folio.id)} className="btn btn-danger mt-0">
                                             Eliminar
                                         </button> */}
                                         {/* <button onClick={() => this.viewProyeccion(folio.id === null | undefined ? )} className="btn btn-info mt-0"> */}

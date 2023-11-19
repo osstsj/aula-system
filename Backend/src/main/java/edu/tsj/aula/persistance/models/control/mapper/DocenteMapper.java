@@ -18,6 +18,7 @@ public interface DocenteMapper {
     @Mapping(source = "entity.nombre_completo", target = "nombre_completo")
     @Mapping(source = "entity.categoria", target = "categoria")
     @Mapping(source = "entity.actividad",target = "actividad")
+    @Mapping(source = "entity.estatus", target = "estatus")
     @Mapping(source = "entity.fecha_creacion", target = "fecha_creacion")
     @Mapping(source = "entity.fecha_actualizacion", target = "fecha_actualizacion")
     DocenteResponseDto entityToRespose(DocenteEntity entity);
@@ -30,5 +31,6 @@ public interface DocenteMapper {
     @Mapping(source = "request.nombre_completo", target = "nombre_completo")
     @Mapping(source = "request.categoria", target = "categoria")
     @Mapping(source = "request.actividad", target = "actividad")
+    @Mapping(source = "request.estatus", target = "estatus")
     DocenteEntity requestToEntity(DocenteRequestDto request);
 }

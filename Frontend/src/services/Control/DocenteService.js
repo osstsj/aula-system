@@ -30,15 +30,29 @@ class DocenteService {
     }
 
 
-    getAllDocentesByPTCAndUnidadId(id_unidad) {
-        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "docentes_categoria_ptc/" + id_unidad)
+    getAllDocentesByCategoriaPTCAsignatura(id_unidad) {
+        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "docentes_categoria_ptc_asignatura/" + id_unidad)
         .catch(err => {
             if (err.response) {
-                console.error("Error in response for getAllDocentesByPTCAndUnidadId...");
+                console.error("Error in response for getAllDocentesByCategoriaPTCAsignatura...");
             } else if(err.request) {
-                console.error("Error in request for getAllDocentesByPTCAndUnidadId...");
+                console.error("Error in request for getAllDocentesByCategoriaPTCAsignatura...");
             } else {
-                console.error("Something happend, unknown error for getAllDocentesByPTCAndUnidadId");
+                console.error("Something happend, unknown error for getAllDocentesByCategoriaPTCAsignatura");
+            }
+        });
+    }
+
+
+    getAllDocentesByCategoriaPTCFulltime(id_unidad) {
+        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "docentes_categoria_ptc_fulltime/" + id_unidad)
+        .catch(err => {
+            if (err.response) {
+                console.error("Error in response for getAllDocentesByCategoriaPTCFulltime...");
+            } else if(err.request) {
+                console.error("Error in request for getAllDocentesByCategoriaPTCFulltime...");
+            } else {
+                console.error("Something happend, unknown error for getAllDocentesByCategoriaPTCFulltime");
             }
         });
     }

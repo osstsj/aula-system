@@ -38,12 +38,11 @@ public class AsignaturaEntity  implements Serializable {
         @JsonProperty("id_proyeccion")
         @JoinColumn(name = "id_carrera", nullable = false)
         private CarreraEntity clave_programa;
-  */
+   */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

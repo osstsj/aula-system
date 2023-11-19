@@ -29,7 +29,7 @@ class FulltimeProyeccionService {
         });
     }
 
-    getProyeccionesAsignaturaById(id) {
+    getProyeccioneFulltimeById(id) {
         return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "fulltime/" + id)
         .catch(error => {
             if (error.response) {

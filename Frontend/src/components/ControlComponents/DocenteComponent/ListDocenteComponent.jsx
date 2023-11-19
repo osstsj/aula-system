@@ -31,10 +31,10 @@ class ListDocenteComponent extends Component {
                 docentes: this.state.docentes.filter(docente => docente.id !== id),
                 isModalOpen: false, // Cierra el modal después de eliminar
                 docenteToDeleteId: null, // Restablece el ID de la colegiatura
-            }).catch(() => {
-                alert("Error al intentar eliminar al docente...");
-                this.props.history.push('/list-docente');
-            });
+            })
+        }).catch(() => {
+            alert("Error al intentar eliminar al docente...");
+            this.props.history.push('/list-docente');
         });
     }
 
@@ -146,6 +146,10 @@ class ListDocenteComponent extends Component {
             marginRight: '1rem'
         }
 
+        const red = {
+            
+        }
+
         return (
             <div className='container'>
                 <h2 className="text-center mt-5 mb-5 Title" >LISTA DE DOCENTES</h2>
@@ -163,26 +167,35 @@ class ListDocenteComponent extends Component {
                         <thead >
                             <tr >
                                 <th></th>
-                                <th className='table-title'>Nombre</th>
-                                <th className='table-title'>Apellido Paterno</th>
-                                <th className='table-title'>Apellido Materno</th>
+                                <th className='table-title'>Nombre completo</th>
                                 <th className='table-title'>Unidad Académica</th>
                                 <th className='table-title'>Categoría</th>
                                 <th className='table-title'>Actividad</th>
+                                <th className='table-title'>Estatus</th>
                                 <th className='table-action'>Acciones</th>
                             </tr>
                         </thead>
                         <tbody >
                             {
                                 this.state.docentes.map((docente, index) =>
-                                    <tr key={docente.id} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
+                                    <tr key={docente.id} className={index % 2 === 0 ? 'even-row' : 'odd-row'}
+                                        >
                                         <td>{index + 1}</td>
-                                        <td className='table-conten'>{docente.nombre}</td>
-                                        <td className='table-conten'>{docente.apellido_paterno}</td>
-                                        <td className='table-conten'>{docente.apellido_materno}</td>
-                                        <td className='table-conten'>{docente.unidad_academica.nombre_completo}</td>
-                                        <td className='table-conten'>{docente.categoria}</td>
-                                        <td className='table-conten'>{docente.actividad}</td>
+                                        <td className={docente.estatus === 'Activo' ? 'table-conten':'table-conten text-secondary'}>
+                                            {docente.nombre_completo}
+                                        </td>
+                                        <td className={docente.estatus === 'Activo' ? 'table-conten':'table-conten text-secondary'}>
+                                            {docente.unidad_academica.nombre_completo}
+                                        </td>
+                                        <td className={docente.estatus === 'Activo' ? 'table-conten':'table-conten text-secondary'}>
+                                            {docente.categoria}
+                                        </td>
+                                        <td className={docente.estatus === 'Activo' ? 'table-conten':'table-conten text-secondary'}>
+                                            {docente.actividad}
+                                        </td>
+                                        <td className={docente.estatus === 'Activo' ? 'table-conten':'table-conten text-secondary'}>
+                                            {docente.estatus}
+                                        </td>
                                         <td className='table-action'>
                                             <button onClick={() => this.editDocenteById(docente.id)} className="btn btn-warning mt-0">Actualizar</button>
                                             <button className="btn btn-danger mt-0" style={boton}

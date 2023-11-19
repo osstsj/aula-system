@@ -37,6 +37,8 @@ public class DocenteEntity {
 
     @Column private String actividad;
 
+    @Column private String estatus;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_unidad", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

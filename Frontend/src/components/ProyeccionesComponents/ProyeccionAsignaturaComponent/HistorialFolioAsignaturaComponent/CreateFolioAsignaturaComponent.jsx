@@ -255,20 +255,6 @@ class CreateFolioAsignaturaComponent extends Component {
                                             </div>
 
                                         </div>
-
-                                        <div className="col">
-                                            <div className="form-outline">
-                                                <label>Tipo de Folio:</label>
-                                                <input
-                                                    readOnly={true}
-                                                    type="text"
-                                                    name=""
-                                                    id=""
-                                                    value={this.state.tipo_folio}
-                                                    className="form-control"
-                                                />
-                                            </div>
-                                        </div>
                                     </div>
                                 </fieldset>
                             </form>

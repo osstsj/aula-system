@@ -16,11 +16,14 @@ class CreateDocenteComponent extends Component {
             unidad_academica: '',
             categoria: '',
             actividad: '',
+            estatus: 'Activo',
+            
             isLoading: false, // Nuevo estado para controlar la visibilidad del spinner
 
             unidades: [],
             categorias: [],
             actividades: [],
+            estatusList:[],
         }
 
         this.onChangeNombreHandler = this.onChangeNombreHandler.bind(this);
@@ -28,6 +31,7 @@ class CreateDocenteComponent extends Component {
         this.onChangeApellidoMaternoHandler = this.onChangeApellidoMaternoHandler.bind(this);
         this.onChangeUnidadAcademicaHandler = this.onChangeUnidadAcademicaHandler.bind(this);
         this.onChangeActividadHandler = this.onChangeActividadHandler.bind(this);
+        this.onChangeEstatusHandler = this.onChangeEstatusHandler.bind(this);
         this.createDocente = this.createDocente.bind(this);
     }
 
@@ -39,7 +43,8 @@ class CreateDocenteComponent extends Component {
         this.state.apellido_materno.trim() === '' || 
         this.state.unidad_academica.trim() === '' || 
         this.state.categoria.trim() === '' || 
-        this.state.actividad.trim() === '') {
+        this.state.actividad.trim() === '' ||
+        this.state.estatus === '') {
             alert('Por favor complete todos los campos requeridos.');
             return;
         }
@@ -50,6 +55,7 @@ class CreateDocenteComponent extends Component {
             apellido_materno: this.state.apellido_materno.trim(),
             categoria: this.state.categoria.trim(),
             actividad: this.state.actividad.trim(),
+            estatus: this.state.estatus,
         };
         // Mostrar el spinner al iniciar la acción
         this.setState({ isLoading: true });
@@ -67,6 +73,7 @@ class CreateDocenteComponent extends Component {
         this.getUnidadList();
         this.getActividad();
         this.getCategoria();
+        this.getEstatus();
     }
 
     async getUnidadList() {
@@ -87,18 +94,22 @@ class CreateDocenteComponent extends Component {
         this.setState({unidades: options})
     }
 
+    getEstatus() {
+        const estatusList = [
+            { value: 'Activo', label: 'Activo' },
+            { value: 'Inactivo', label: 'Inactivo' }
+
+        ]
+        this.setState({ estatusList: estatusList })
+    }
 
     getCategoria() {
         const categoriaList = [
-            { value: 'DIRECTOR UNIDAD ACADÉMICA', label: 'DIRECTOR UNIDAD ACADÉMICA' },
-            { value: 'JEFE DE DIVISIÓN', label: 'JEFE DE DIVISIÓN' },
             { value: 'PROFESOR ASIGNATURA A', label: 'PROFESOR ASIGNATURA A' },
             { value: 'PROFESOR ASIGNATURA B', label: 'PROFESOR ASIGNATURA B' },
             { value: 'PROFESOR ASOCIADO A', label: 'PROFESOR ASOCIADO A' },
             { value: 'PROFESOR ASOCIADO B', label: 'PROFESOR ASOCIADO B' },
             { value: 'PROFESOR ASOCIADO C', label: 'PROFESOR ASOCIADO C' },
-            { value: 'CAPTURISTA', label: 'CAPTURISTA' },
-            { value: 'TECNICO DOCENTE', label: 'TECNICO DOCENTE' }
 
         ]
         this.setState({ categorias: categoriaList })
@@ -108,8 +119,7 @@ class CreateDocenteComponent extends Component {
         const actividadList = [
             { value: 'CON ASIGNATURA', label: 'CON ASIGNATURA' },
             { value: 'EXTRAESCOLARES', label: 'EXTRAESCOLARES' }
-
-        ]
+        ]        
         this.setState({ actividades: actividadList })
     }
 
@@ -132,6 +142,10 @@ class CreateDocenteComponent extends Component {
     onChangeActividadHandler = (event) => {
         this.setState({ actividad: event.label });
     }
+    onChangeEstatusHandler = (event) => {
+        this.setState({estatus: event.label})
+    }
+
 
     cancel() {
         this.props.history.push('/list-docente');
@@ -220,21 +234,21 @@ class CreateDocenteComponent extends Component {
                                                     rules={{ required: true }}
                                                         options={this.state.actividades}
                                                         onChange={(e) => this.onChangeActividadHandler(e)}
-                                                        value={{ label: this.state.actividad === "" ? "Seleccione una actividad..." : this.state.actividad }}
+                                                        value={{ label: this.state.actividad === "" ? "Seleccione actividad..." : this.state.actividad }}
                                                     />
                                                 </div>
                                             </div>
                                             <div className="col-2">
                                                 <div className="form-outline">
                                                 <label>Estatus</label>
-                                                <select name="" id="" className='form-control'
-                                                    disabled
-                                                >
-                                                    <option value="" selected>Nuevo</option>
-                                                    <option value="">Baja</option>
-                                                </select>
+                                                    <Select
+                                                    isDisabled={true}
+                                                      onChange={(e) => this.onChangeEstatusHandler(e)}
+                                                      options={this.state.estatusList}
+                                                      value={{label: this.state.estatus}}
+                                                    />
+                                                </div>
                                             </div>
-                                        </div>
                                     </div>
 
                                     <br />

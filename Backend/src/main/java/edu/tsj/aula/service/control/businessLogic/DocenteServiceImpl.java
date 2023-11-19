@@ -79,15 +79,30 @@ public class DocenteServiceImpl implements IDocenteService {
     }
 
     @Override
-    public List<DocenteResponseDto> getAllDocentesByPTCAndUnidadId(Long id_unidad) {
+    public List<DocenteResponseDto> getAllDocentesByPTCAsignaturandUnidadId(Long id_unidad) {
         try {
             unidadEntity = unidadRepository.findById(id_unidad).orElseThrow(
                     () -> new ResourceNotFoundException("No se ha encontrado la unidad con el id: "
                             .concat(id_unidad.toString()), HttpStatus.NOT_FOUND)
             );
 
-//            var list = docenteRepository.findAllByCategoriaPTC(Collections.singletonList(unidadEntity));
-            var list = docenteRepository.findAllByCategoriaPTC(id_unidad);
+            var list = docenteRepository.findAllByCategoriaPTCAsignatura(id_unidad);
+            return list.stream().map(mapper::entityToRespose).collect(Collectors.toList());
+        } catch (Exception e) {
+            LOGGER.debug("Error al intetar traer la lista de docentes por Categoria PTC");
+            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
+        }
+    }
+
+    @Override
+    public List<DocenteResponseDto> getAllDocentesByPTCFulltimeAndUnidadId(Long id_unidad) {
+        try {
+            unidadEntity = unidadRepository.findById(id_unidad).orElseThrow(
+                    () -> new ResourceNotFoundException("No se ha encontrado la unidad con el id: "
+                            .concat(id_unidad.toString()), HttpStatus.NOT_FOUND)
+            );
+
+            var list = docenteRepository.findAllByCategoriaPTCFulltime(id_unidad);
             return list.stream().map(mapper::entityToRespose).collect(Collectors.toList());
         } catch (Exception e) {
             LOGGER.debug("Error al intetar traer la lista de docentes por Categoria PTC");
@@ -142,6 +157,7 @@ public class DocenteServiceImpl implements IDocenteService {
 
             existingDocente.get().setCategoria(docenteRequestDto.getCategoria());
             existingDocente.get().setActividad(docenteRequestDto.getActividad());
+            existingDocente.get().setEstatus(docenteRequestDto.getEstatus());
             existingDocente.get().setUnidad_academica(unidadEntity);
             existingDocente.get().setFecha_actualizacion(LocalDateTime.now());
 

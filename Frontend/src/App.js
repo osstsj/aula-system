@@ -43,7 +43,7 @@ import CreateProyeccionAsignatura from './components/ProyeccionesComponents/Proy
 
 import ListProyeccionFullTimeComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/ListProyeccionFullTimeComponent';
 import CreateProyeccionFulltimeComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/CreateProyeccionFulltimeComponent';
-
+import ViewProyeccionFulltimeComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/ViewProyeccionFulltimeComponent';
 import HomeComponent from './components/PageComponents/HomeComponent/HomeComponent';
 
 import HeaderComponent from './components/PageComponents/Navbar/HeaderComponent';
@@ -117,7 +117,7 @@ function App() {
                            
                            {/* ------------ ProyeccionFullTimeComponent ----------- */}
                            <Route path = "/list-proyeccion_fulltime/:id" component = {ListProyeccionFullTimeComponent}></Route>
-                           <Route path = "/view-proyeccion_fulltime/:id" component = {ViewProyeccionAsignaturaComponent}></Route>
+                           <Route path = "/view-proyeccion_fulltime/:id" component = {ViewProyeccionFulltimeComponent}></Route>
                            <Route path = "/add-proyeccion_fulltime" component = {CreateProyeccionFulltimeComponent}></Route>
                           
                           {/* ------------ Longin ----------- */}

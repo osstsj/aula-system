@@ -35,6 +35,8 @@ public class DocenteResponseDto {
 
     private String actividad;
 
+    private String estatus;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fecha_creacion;
 

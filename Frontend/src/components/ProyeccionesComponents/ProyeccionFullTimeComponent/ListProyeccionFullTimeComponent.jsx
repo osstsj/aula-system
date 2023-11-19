@@ -37,7 +37,7 @@ class ListProyeccionFullTimeComponent extends Component {
     }
 
     viewProyeccionFulltime(id) {
-        this.props.history.push(`/list-proyeccion_fulltime/${id}`);
+        this.props.history.push(`/view-proyeccion_fulltime/${id}`);
     }
 
     // Función para alternar la visibilidad de las columnas
@@ -285,7 +285,7 @@ class ListProyeccionFullTimeComponent extends Component {
                                      <td align="center" className={`text-center table-content ${areColumns2Visible ||areColumnsVisible ? '' : 'collapse'
                                     }`}>    <button onClick={{}} className="btn btn-warning">Actualizar</button>
                                     <button style={boton} onClick={{}} className="btn btn-danger">Eliminar</button>
-                                    <button onClick={{}} className="btn btn-info">Ver</button>	</td>
+                                    <button onClick={() => this.viewProyeccionFulltime(fulltime.id)} className="btn btn-info">Ver</button>	</td>
                             </tr>
                            )
                         }    

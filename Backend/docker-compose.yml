@@ -1,22 +1,16 @@
 services:
-  db:
-    container_name: postgres
-    image: postgres
+  postgres:
+    image: postgres:12-alpine
+    container_name: db-postgres-aula_system
     environment:
-      POSTGRES_USER: <user> // cambiar-> agregar git ignore
-      POSTGRES_PASSWORD: <password> //cambiar -> agregar git ignore
-      PGDATA: /data/postgres
-    volumes:
-      - db:/data/postgres
+      - POSTGRES_DB=aula_system
+      - POSTGRES_PASSWORD=123456
     ports:
-      - "5332:5432"
+      - 5432:5432
     networks:
-      - db
-    restart: unless-stopped
-
+      - netms1
 networks:
-  db:
-    driver: bridge
+  netms1:
+    name: net-ms1
 
-volumes:
-  db:
+#  sudo docker-compose up -d

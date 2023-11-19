@@ -38,7 +38,7 @@ class UpdateCarreraComponent extends Component {
             abreviatura: this.state.abreviatura.trim(), 
             nombre: this.state.nombre.trim(), 
             plan_estudio: this.state.plan_estudio.trim(),
-            dgp: this.state.dgp.trim(), 
+            dgp: this.state.dgp, 
             estatus: this.state.estatus.trim()
         };
         
