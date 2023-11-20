@@ -51,15 +51,17 @@ class CreateFolioAsignatura extends Component {
 
                 // horas_sustantivas_atencion_alumnos
                     // horas_asignatura: 
+                    total_hours: 0,
+                    cumulative_hours: 0,
                     a: 0,
                     b: 0,
 
                 horas_frente_grupo: 0,
-                    
+
                     // academias
                     presidente: 0,
                     secretario: 0,
-                    
+
                     // asesorias
                     asesorias_academica: 0,
                     educacion_dual: 0,
@@ -74,11 +76,12 @@ class CreateFolioAsignatura extends Component {
                 invesigacion_educativa: 0,
                 apoyo_operativo: 0,
                 subtotal_2: 0,
-            
+
             total: 0,
             observaciones: "",
         }
     }
+
 
     createProyeccionAsignatura = (e) => {
         if (this.state.errorInfo !== null) {
@@ -161,7 +164,7 @@ class CreateFolioAsignatura extends Component {
         this.props.history.push('/');
     }
 
-    componentDidMount() {        
+    componentDidMount() {
         this.getUnidadList();
         this.getNivel();
         this.getHorasAcademias_presidente();
@@ -171,9 +174,11 @@ class CreateFolioAsignatura extends Component {
         this.getTipoUnidad();
     }
 
+    componentDidUpdate(prevProps, prevState) {
+    }
+
     async getDocenteList(id_unidad) {
         let options = null;
-        
         await DocenteService.getAllDocentesByCategoriaPTCAsignatura(id_unidad).then(res => {
             const data = res.data;
             options = data.map(d => ({
@@ -187,7 +192,6 @@ class CreateFolioAsignatura extends Component {
 
     async getCarreraList() {
         let options = null;
-        
         await CarreraService.getAllCarreras().then(res => {
             const data = res.data;
             options = data.map(d => ({
@@ -281,92 +285,73 @@ class CreateFolioAsignatura extends Component {
 
     onChangeTipoUnidadHandler = (event) => {
         this.setState({ tipo_unidad: event.label });
-        
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
     }
 
 
     onChangeFolioHandler = (event) => {
-        // this.setState({nombre_docente: event.target.value});
-        this.setState({ folio: event.label });
+        this.setState({ folio: event.label }, this.enableAddButton);
         this.setState({ id_folio: event.id });
 
         this.setState({ nombre_docente: ''})
 
         this.setState({ id_unidad: event.id_unidad});
         this.setState({unidad_academica: event.unidad_academica})
-    
         this.getDocenteList(event.id_unidad);
-        
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
     }
 
     onChangeUnidadHandler = (event) => {
-        this.setState({ unidad_academica: event.label });
+        this.setState({ unidad_academica: event.label }, this.enableAddButton);
         this.setState({ disableDocente: false })
-        // this.setState({ nombre_docente: ''})
-        
-        // this.getDocenteList(event.id);
-        // this.setState({ id_unidad: event.id })
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
     }
 
     onChangeClaveProgramaHandler = (event) => {
-        this.setState({ clave_programa: event.label });
+        this.setState({ clave_programa: event.label }, this.enableAddButton);
         this.setState({ id_carrera: event.id });
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
     }
     onChangeCodigoNominaHandler = (event) => {
-        this.setState({codigo_nomina: event.target.value});
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
+        this.setState({codigo_nomina: event.target.value}, this.enableAddButton);
     }
     onChangeGradoAcademicoaHandler = (event) => {
-        this.setState({grado_academico: event.label});
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
+        this.setState({grado_academico: event.label}, this.enableAddButton);
     }
     onChangeNombreDocenteHandler = (event) => {
-        // this.setState({nombre_docente: event.target.value});
         this.setState({ nombre_docente: event.label });
-        this.setState({ id_docente: event.id});
-        
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
+        this.setState({ id_docente: event.id}, this.enableAddButton);
     }
-
 
     onChangeAHandler = (event) => {
-        this.setState({a: event.target.value});
-        let aux = event.target.value;
-        this.setState({subtotal_1: this.state.subtotal_1 + aux});
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
+        const hour = parseInt(event.target.value);
+        this.setState({
+            a: hour,
+            total_hours: hour
+        });
     }
     onChangeBHandler = (event) => {
-        this.setState({b: event.target.value});
-        this.setState({subtotal_1: this.state.subtotal_1 + event.target.value});
+        const hour = parseInt(event.target.value);
+        this.setState({
+            b: hour,
+            total_hours: hour
+        });
+    }
 
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
+    cleaningHours = () => {
+        this.setState({
+            total_hours: 0,
+            cumulative_hours: 0,
+            a: 0,
+            b: 0,
+            horas_frente_grupo: 0,
+            presidente: 0,
+            secretario: 0,
+            asesorias_academica: 0,
+            educacion_dual: 0,
+            residencias_profesionales: 0,
+            titulacion: 0,
+            tutorias: 0,
+            actividades_complementarias: 0,
+            invesigacion_educativa: 0,
+            apoyo_operativo: 0,
+        });
     }
 
     onChangeADisablerHandler = () => {
@@ -374,157 +359,131 @@ class CreateFolioAsignatura extends Component {
             disableA: false,
             disableB: true
         }));
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
+        this.cleaningHours();
     }
     onChangeBDisablerHandler = () => {
         this.setState(() => ({
             disableB: false,
             disableA: true
         }));
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
+        this.cleaningHours();
     }
     onChangePresidenteDisablerHandler = () => {
         this.setState(() => ({
             disablePresidente: true,
             disableSecretario: false,
         }));
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
+        this.setState({
+            presidente: 0,
+            secretario: 0
+        },this.calcularTotal);
     }
     onChangeSecretarioDisablerHandler = () => {
         this.setState(() => ({
             disableSecretario: true,
             disablePresidente: false,
         }));
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
+        this.setState({
+            presidente: 0,
+            secretario: 0
+        },this.calcularTotal);
     }
 
+    // Método para calcular el nuevo total
+    calcularTotal = () => {
+        const {
+        horas_frente_grupo,
+        presidente,
+        secretario,
+        asesorias_academica,
+        educacion_dual,
+        residencias_profesionales,
+        titulacion,
+        tutorias,
+        actividades_complementarias,
+        invesigacion_educativa,
+        apoyo_operativo,
+        } = this.state;
 
-    onChangeHorasFrenteGrupoHandler = (event) => {
-        this.setState({horas_frente_grupo: event.target.value});
-        this.state.subtotal_1 =+ event.target.value;
+        // Realiza los cálculos necesarios para obtener el nuevo total
+        const nuevoTotal =
+        parseInt(horas_frente_grupo || 0) +
+        parseInt(presidente || 0) +
+        parseInt(secretario || 0) +
+        parseInt(asesorias_academica || 0) +
+        parseInt(educacion_dual || 0) +
+        parseInt(residencias_profesionales || 0) +
+        parseInt(titulacion || 0) +
+        parseInt(tutorias || 0) +
+        parseInt(actividades_complementarias || 0) +
+        parseInt(invesigacion_educativa || 0) +
+        parseInt(apoyo_operativo || 0);
 
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangePresidenteHandler = (event) => {
-        this.setState({presidente: event.label});
-        // this.state.subtotal_1 =+ event.value;
+        const nuevo_subtotal_1 = parseInt(horas_frente_grupo || 0) +
+        parseInt(presidente || 0) +
+        parseInt(secretario || 0) +
+        parseInt(asesorias_academica || 0) +
+        parseInt(educacion_dual || 0) +
+        parseInt(residencias_profesionales || 0) +
+        parseInt(titulacion || 0) +
+        parseInt(tutorias || 0) +
+        parseInt(actividades_complementarias || 0);
 
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
+        const nuevo_subtotal_2 = parseInt(invesigacion_educativa || 0) +
+        parseInt(apoyo_operativo || 0);
+
+        // Actualiza el estado con el nuevo total y subtotales
+        this.setState({
+            total: nuevoTotal,
+            subtotal_1: nuevo_subtotal_1,
+            subtotal_2: nuevo_subtotal_2
+        }, this.enableAddButton);
+    };
+
+    // Método para manejar el cambio en un campo de entrada
+    handleInputChange = (event) => {
+        const { name, value } = event.target;
+        this.setState(
+        {
+            [name]: value,
+        },
+        // Después de actualizar el estado, llama al método para calcular el nuevo total
+        this.calcularTotal
+        );
+    };
+
+    handleInputValidation = (e) => {
+    e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
+    const { total_hours, total } = this.state;
+    const fieldName = e.target.name;
+    const fieldValue = parseInt(e.target.value, 10);
+    e.target.value = Math.min(fieldValue, total_hours - (total - this.state[fieldName]));
+  };
+
+  onChangePresidenteHandler = (event) => {
+        if(parseInt(event.label || 0) > (this.state.total_hours - (this.state.total - this.state.presidente))) {
+            alert('No es posible elegir una hora mayor al limite disponible');
+        } else {
+            this.setState({presidente: event.label}, this.calcularTotal);
+        }
     }
     onChangeSecretarioHandler = (event) => {
-        this.setState({secretario: event.label});
-        this.state.subtotal_1 =+ event.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeAsesoriaAcademicaHandler = (event) => {
-        this.setState({asesorias_academica: event.target.value});
-        this.state.subtotal_1 =+ event.target.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeEducacionDualHandler = (event) => {
-        this.setState({educacion_dual: event.target.value});
-        this.state.subtotal_1 =+ event.target.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeResidenciasProfesionalesHandler = (event) => {
-        this.setState({residencias_profesionales: event.target.value});
-        this.state.subtotal_1 =+ event.target.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeTutoriasHandler = (event) => {
-        this.setState({tutorias: event.target.value});
-        this.state.subtotal_1 =+ event.target.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeTitulacionHandler = (event) => {
-        this.setState({titulacion: event.target.value});
-        this.state.subtotal_1 =+ event.target.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeActividadesComplementariasHandler = (event) => {
-        this.setState({actividades_complementarias: event.target.value});
-        this.state.subtotal_1 =+ event.target.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
+        if(parseInt(event.label || 0) > (this.state.total_hours - (this.state.total - this.state.secretario))) {
+            alert('No es posible elegir una hora mayor al limite disponible');
+        } else {
+            this.setState({secretario: event.label}, this.calcularTotal);
+        }
     }
 
-
-    onChangeInvesigacionEducativaHandler = (event) => {
-        this.setState({invesigacion_educativa: event.target.value});
-        this.state.subtotal_2 =+ event.target.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeApoyoOperativoHandler = (event) => {
-        this.setState({apoyo_operativo: event.target.value});
-        this.state.subtotal_2 =+ event.target.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeSubtotal2Handler = (event) => {
-        this.setState({subtotal_2: event.target.value});
-        this.state.subtotal_2 =+ event.target.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeTotalHandler = (event) => {
-        this.setState({total: event.target.value});
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
     onChangeObservacionesHandler = (event) => {
         this.setState({observaciones: event.target.value});
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
     }
 
-
+    enableAddButton = () => {
+        const { folio, tipo_unidad, clave_programa, nombre_docente, codigo_nomina, grado_academico, total_hours, total } = this.state;
+        const disableAgregar = !(folio !== '' && tipo_unidad !== '' && clave_programa !== '' && nombre_docente !== '' && codigo_nomina !== '' && grado_academico !== '' && total_hours !== 0 && total_hours === total);
+        this.setState({disableAgregar})
+    }
 
     render() {
         return (
@@ -536,8 +495,8 @@ class CreateFolioAsignatura extends Component {
                                 <h2 className='h3'><b>Agregar Proyeccion por Asignatura</b></h2>
                             </div>
                             <br />
-                            <form>    
-                                <div className="row mb-4 justify-content-center ">                              
+                            <form>
+                                <div className="row mb-4 justify-content-center ">
                                     <div className="col-6">
                                         <div className="form-outline">
                                             <label className="">Folio: </label>
@@ -548,7 +507,7 @@ class CreateFolioAsignatura extends Component {
                                                 value={{ label: this.state.folio === '' ? "Seleccione folio de proyeccion..." : this.state.folio}}
                                             />
                                         </div>
-                                    </div>       
+                                    </div>
                                     <div className="col-6">
                                         <div className="form-outline">
                                             <label className="">Tipo de UA: </label>
@@ -559,14 +518,14 @@ class CreateFolioAsignatura extends Component {
                                                 value={{ label: this.state.tipo_unidad === '' ? "Seleccione unidad academica..." : this.state.tipo_unidad}}
                                             />
                                         </div>
-                                    </div>                         
+                                    </div>
                                 </div>
                                 <div className="col">
                                     <div className="row mb-3">
                                         <label className="h5"><b>PROFESORES DE ASIGNATURA</b></label>
                                     </div>
                                 </div>
-                                
+
                                 <fieldset className="border border-info p-3">
                                     <legend className="w-auto text-left h6">Ingrese información de profesor por asignatura</legend>
                                         <div className="row mb-4">
@@ -582,7 +541,7 @@ class CreateFolioAsignatura extends Component {
                                                     />
                                                 </div>
                                             </div>
-                                        
+
                                             <div className="col">
                                                 <div className="form-outline">
                                                     <label className="">Clave de Programa Educativo:</label>
@@ -593,10 +552,10 @@ class CreateFolioAsignatura extends Component {
                                                         value={{ label: this.state.clave_programa === '' ? "Seleccione clave de programa educativo..." : this.state.clave_programa}}
                                                     />
                                                 </div>
-                                            </div>                        
+                                            </div>
                                         </div>
 
-                                        <div className="row mb-4">                              
+                                        <div className="row mb-4">
                                             <div className="col">
                                                 <div className="form-outline">
                                                     <label className="">Nombre del Docente: </label>
@@ -610,14 +569,14 @@ class CreateFolioAsignatura extends Component {
                                                         value={{ label: this.state.nombre_docente === '' ? "Seleccione nombre del docente..." : this.state.nombre_docente}}
                                                     />
                                                 </div>
-                                            </div>                        
+                                            </div>
                                         </div>
 
                                         <div className="row mb-4">
                                             <div className="col">
                                                 <div className="form-outline">
                                                     <label>Código de Nómina:</label>
-                                                    <input 
+                                                    <input
                                                         placeholder="Ingrese código de nómina..."
                                                         className="form-control"
                                                         value={this.state.codigo_nomina}
@@ -626,7 +585,7 @@ class CreateFolioAsignatura extends Component {
                                                     />
                                                 </div>
                                             </div>
-                                        
+
                                             <div className="col">
                                             {/* <div className="form-outline" style={{display: 'none'}}> */}
                                                 <div className="form-outline" style={{display: 'block'}}>
@@ -637,7 +596,7 @@ class CreateFolioAsignatura extends Component {
                                                         value={{ label: this.state.grado_academico  === '' ? "Seleccione nivel academico..." : this.state.grado_academico}}
                                                     />
                                                 </div>
-                                            </div>                    
+                                            </div>
                                         </div>
                                 </fieldset>
                                 <hr />
@@ -673,7 +632,8 @@ class CreateFolioAsignatura extends Component {
                                                             </div>
                                                             <div className="col">
                                                             <div className="input-group">
-                                                                <input type='number'
+                                                                <input
+                                                                    type='number'
                                                                     className="form-control"
                                                                     value={this.state.a}
                                                                     onChange={this.onChangeAHandler}
@@ -681,6 +641,7 @@ class CreateFolioAsignatura extends Component {
                                                                     checked={this.state.disableB}
                                                                     onInput={(e) => {
                                                                         e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
+                                                                        e.target.value = Math.min(parseInt(e.target.value, 10), 40); // Limita el valor a 40
                                                                     }}
                                                                     required
                                                                 />
@@ -690,7 +651,7 @@ class CreateFolioAsignatura extends Component {
                                                             </div>
                                                         </div>
 
-                                                    </div>  
+                                                    </div>
                                                 </div>
                                                 <div className="col">
                                                     <div className="form-group row">
@@ -707,7 +668,7 @@ class CreateFolioAsignatura extends Component {
                                                         <div className="col-sm-1 col-form-label">
                                                             <label className="">B:</label>
                                                         </div>
-                                                
+
                                                         <div className="col">
                                                             <div className="input-group">
                                                                 <input type='number'
@@ -717,6 +678,7 @@ class CreateFolioAsignatura extends Component {
                                                                     disabled={this.state.disableB}
                                                                     onInput={(e) => {
                                                                         e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
+                                                                        e.target.value = Math.min(parseInt(e.target.value, 10), 40); // Limita el valor a 40
                                                                     }}
                                                                     required
                                                                 />
@@ -724,12 +686,12 @@ class CreateFolioAsignatura extends Component {
                                                                     <span className="input-group-text">Hora(s)</span>
                                                                 </div>
                                                             </div>
-                                                        </div>            
-                                                    </div>  
-                                                </div>                                    
-                                            </div>  
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                    <div className="row"> 
+                                    <div className="row">
                                         <div className="col-6">
                                             <div className="form-group row">
                                                     <label className="col-md-5 col-form-label"><b>Horas Frente a Grupo:</b> </label>
@@ -737,13 +699,12 @@ class CreateFolioAsignatura extends Component {
                                                 <div className="col">
                                                     <div className="input-group">
                                                         <input
+                                                            name='horas_frente_grupo'
                                                             type='number'
                                                             className=" form-control"
                                                             value={this.state.horas_frente_grupo}
-                                                            onChange={this.onChangeHorasFrenteGrupoHandler}
-                                                            onInput={(e) => {
-                                                                e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                            }}
+                                                            onChange={this.handleInputChange}
+                                                            onInput={this.handleInputValidation}
                                                             required
                                                         />
                                                         <div className="input-group-append">
@@ -754,13 +715,13 @@ class CreateFolioAsignatura extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                            
+
 
                                     <div className="col">
                                         <div className="row mb-2 mt-3">
                                             <label className="h6"><b>Academias</b></label>
                                         </div>
-                                    </div>                                   
+                                    </div>
 
                                     <div className="row mb-4">
                                         <div className="col">
@@ -792,7 +753,6 @@ class CreateFolioAsignatura extends Component {
                                                 />
                                             </div>
                                         </div>
-                                    
                                         <div className="col">
                                             <div className="form-group row">
                                                 <div className="col">
@@ -817,7 +777,7 @@ class CreateFolioAsignatura extends Component {
                                                     }}
                                                 />
                                             </div>
-                                        </div>                        
+                                        </div>
                                     </div>
                                     <div className="col">
                                         <div className="row mb-2 mt-3">
@@ -830,13 +790,12 @@ class CreateFolioAsignatura extends Component {
                                                 <label>Asesorias Académicas:</label>
                                                 <div className="input-group">
                                                     <input
+                                                        name='asesorias_academica'
                                                         type='number'
                                                         className="form-control"
                                                         value={this.state.asesorias_academica}
-                                                        onChange={this.onChangeAsesoriaAcademicaHandler}
-                                                        onInput={(e) => {
-                                                            e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                        }}
+                                                        onChange={this.handleInputChange}
+                                                        onInput={this.handleInputValidation}
                                                         required
                                                     />
                                                 <div className="input-group-append">
@@ -845,42 +804,18 @@ class CreateFolioAsignatura extends Component {
                                             </div>
                                             </div>
                                         </div>
-                                    
+
                                         <div className="col">
                                             <div className="form-outline">
                                                 <label className="">Educacion Dual:</label>
                                                 <div className="input-group">
                                                     <input
+                                                        name='educacion_dual'
                                                         type='number'
                                                         className="form-control"
                                                         value={this.state.educacion_dual}
-                                                        onChange={this.onChangeEducacionDualHandler}
-                                                        onInput={(e) => {
-                                                            e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                        }}
-                                                        required
-                                                    />
-                                                    <div className="input-group-append">
-                                                        <span className="input-group-text">Hora(s)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>                        
-                                    </div>
-
-                                    <div className="row mb-4">
-                                        <div className="col">
-                                            <div className="form-outline">
-                                                <label>Residencias Profesionales:</label>
-                                                <div className="input-group">
-                                                    <input
-                                                        type='number'
-                                                        className="form-control"
-                                                        value={this.state.residencias_profesionales}
-                                                        onChange={this.onChangeResidenciasProfesionalesHandler}
-                                                        onInput={(e) => {
-                                                            e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                        }}
+                                                        onChange={this.handleInputChange}
+                                                        onInput={this.handleInputValidation}
                                                         required
                                                     />
                                                     <div className="input-group-append">
@@ -889,40 +824,60 @@ class CreateFolioAsignatura extends Component {
                                                 </div>
                                             </div>
                                         </div>
-                                    
+                                    </div>
+
+                                    <div className="row mb-4">
+                                        <div className="col">
+                                            <div className="form-outline">
+                                                <label>Residencias Profesionales:</label>
+                                                <div className="input-group">
+                                                    <input
+                                                        name='residencias_profesionales'
+                                                        type='number'
+                                                        className="form-control"
+                                                        value={this.state.residencias_profesionales}
+                                                        onChange={this.handleInputChange}
+                                                        onInput={this.handleInputValidation}
+                                                        required
+                                                    />
+                                                    <div className="input-group-append">
+                                                        <span className="input-group-text">Hora(s)</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div className="col">
                                             <div className="form-outline">
                                                 <label className="">Titulación:</label>
                                                 <div className="input-group">
                                                     <input
+                                                        name='titulacion'
                                                         type='number'
                                                         className="form-control"
                                                         value={this.state.titulacion}
-                                                        onChange={this.onChangeTitulacionHandler}
-                                                        onInput={(e) => {
-                                                            e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                        }}
+                                                        onChange={this.handleInputChange}
+                                                        onInput={this.handleInputValidation}
                                                         required
                                                     />
                                                 <div className="input-group-append">
                                                         <span className="input-group-text">Hora(s)</span>
                                                     </div>
                                                 </div>
-                                            </div>                            
-                                        </div>      
+                                            </div>
+                                        </div>
 
                                         <div className="col">
                                             <div className="form-outline">
                                                 <label className="">Tutorias:</label>
                                                 <div className="input-group">
                                                     <input
+                                                        name='tutorias'
                                                         type='number'
                                                         className="form-control"
                                                         value={this.state.tutorias}
-                                                        onChange={this.onChangeTutoriasHandler}
-                                                        onInput={(e) => {
-                                                            e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                        }}
+                                                        onChange={this.handleInputChange}
+                                                        onInput={this.handleInputValidation}
                                                         required
                                                     />
                                                     <div className="input-group-append">
@@ -940,13 +895,12 @@ class CreateFolioAsignatura extends Component {
                                                 <div className="col">
                                                     <div className="input-group">
                                                         <input
+                                                            name='actividades_complementarias'
                                                             type='number'
                                                             className=" form-control"
                                                             value={this.state.actividades_complementarias}
-                                                            onChange={this.onChangeActividadesComplementariasHandler}
-                                                            onInput={(e) => {
-                                                                e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                            }}
+                                                            onChange={this.handleInputChange}
+                                                            onInput={this.handleInputValidation}
                                                             required
                                                         />
                                                         <div className="input-group-append">
@@ -966,10 +920,8 @@ class CreateFolioAsignatura extends Component {
                                                     <div className="input-group">
                                                         <input readOnly={true}
                                                             type='number'
-                                                            // placeholder="Subtotal 1 reactivo"
                                                             className=" form-control"
                                                             value={this.state.subtotal_1}
-                                                            // onChange={this.onChangesubtotal1Handler}
                                                         />
                                                         <div className="input-group-append">
                                                             <span className="input-group-text">Hora(s)</span>
@@ -999,14 +951,13 @@ class CreateFolioAsignatura extends Component {
                                                     <div className="col">
                                                         <div className="input-group">
                                                             <input
+                                                                name='invesigacion_educativa'
                                                                 type='number'
                                                                 placeholder="Subtotal 1 reactivo"
                                                                 className=" form-control"
                                                                 value={this.state.invesigacion_educativa}
-                                                                onChange={this.onChangeInvesigacionEducativaHandler}
-                                                                onInput={(e) => {
-                                                                    e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                                }}
+                                                                onChange={this.handleInputChange}
+                                                                onInput={this.handleInputValidation}
                                                                 required
                                                             />
                                                             <div className="input-group-append">
@@ -1024,13 +975,12 @@ class CreateFolioAsignatura extends Component {
                                                     <label className="">Apoyo Operativo:</label>
                                                     <div className="input-group">
                                                         <input
+                                                            name='apoyo_operativo'
                                                             type='number'
                                                             className="form-control"
                                                             value={this.state.apoyo_operativo}
-                                                            onChange={this.onChangeApoyoOperativoHandler}
-                                                            onInput={(e) => {
-                                                                e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                            }}
+                                                            onChange={this.handleInputChange}
+                                                            onInput={this.handleInputValidation}
                                                             required ={true}
                                                         />
                                                         <div className="input-group-append">
@@ -1049,7 +999,6 @@ class CreateFolioAsignatura extends Component {
                                                                 placeholder="Subtotal 2 reactivo"
                                                                 className="form-control"
                                                                 value={this.state.subtotal_2}
-                                                                onChange={this.onChangeSubtotal2Handler}
                                                             />
                                                         <div className="input-group-append">
                                                             <span className="input-group-text">Hora(s)</span>
@@ -1069,9 +1018,8 @@ class CreateFolioAsignatura extends Component {
                                                 <input readOnly={true}
                                                     type='number'
                                                     placeholder="Total reactivo"
-                                                     className="form-control"
+                                                    className="form-control"
                                                     value={this.state.total}
-                                                    onChange={this.onChangeTotalHandler}
                                                 />
                                                 <div className="input-group-append">
                                                     <span className="input-group-text">Hora(s)</span>
@@ -1087,16 +1035,16 @@ class CreateFolioAsignatura extends Component {
                                             <label className=""><b>OBSERVACIONES:</b></label>
                                             <textarea
                                                 placeholder="Ingrese observaciones de la proyeccion por asignatura..."
-                                                 className="form-control"
+                                                className="form-control"
                                                 value={this.state.observaciones}
                                                 onChange={this.onChangeObservacionesHandler}
                                                 required
                                             />
-                                        </div>                            
+                                        </div>
                                     </div>
                                 </div>
 
-                             </form>
+                            </form>
                         </div>
 
                         <br />
