@@ -260,30 +260,49 @@ class ListProyeccionFullTimeComponent extends Component {
                                 {/* OBSERVACIONES */}
                                 <td colSpan="3" align="center" className={`text-center table-content ${areColumnsVisible ? '' : 'collapse'
                                     }`}>{fulltime.observaciones}</td>
-
                                 
+                                {/* ----------------- Table de cambios ------------------------ */}
+                                {/* FECHA SOLICITUD DE MODIFICACIÓN */}
                                 <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
                                     }`}> FECHA SOLICITUD DE MODIFICACIÓN	 	</td>
+                                
+                                {/* CARGAHORARIA  ANTERIOR */}
                                 <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
                                     }`}>  CARGA HORARIA ANTERIOR		</td>
+                                
+                                {/* NIVEL DE PTC ANTERIOR */}
                                 <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
                                     }`}>  NIVEL DE PTC ANTERIOR		</td>
+                               
+                               {/* CARGA HORARIA NUEVA */}
                                 <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
                                     }`}>  CARGA HORARIA NUEVA		</td>
+                               
+                               {/* NIVEL DE PTC NUEVO */}
                                 <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
                                     }`}>  NIVEL DE PTC NUEVO		</td>
-                                <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
+                               
+                               {/* LA MODIFICACIÓN SE APLICA A PARTIR DE (FECHA): */}
+                               <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
                                     }`}>  LA MODIFICACIÓN SE APLICA A PARTIR DE (FECHA):		</td>
+                                
+                                {/* NO. OFICIO RESPUESTA */}
                                 <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
                                     }`}>  NO. OFICIO RESPUESTA		</td>
+                                
+                                {/* NO. DE OFICIO ACADEMIA */}
                                 <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
                                     }`}>  NO. DE OFICIO ACADEMIA		</td>
+
+                                {/* FECHA EN QUE RH APLICA EN EL SISTEMA */}                            
                                 <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
                                     }`}>  FECHA EN QUE RH APLICA EN EL SISTEMA		</td>
+                               
+                               {/* OBSERVACIONES */}
                                 <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
                                     }`}>  OBSERVACIONES	</td>
                                      <td align="center" className={`text-center table-content ${areColumns2Visible ||areColumnsVisible ? '' : 'collapse'
-                                    }`}>    <button onClick={{}} className="btn btn-warning">Actualizar</button>
+                                    }`}>    <button onClick={{}} className="btn btn-warning">Modificar</button>
                                     <button style={boton} onClick={{}} className="btn btn-danger">Eliminar</button>
                                     <button onClick={() => this.viewProyeccionFulltime(fulltime.id)} className="btn btn-info">Ver</button>	</td>
                             </tr>

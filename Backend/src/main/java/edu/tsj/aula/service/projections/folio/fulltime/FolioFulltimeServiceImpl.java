@@ -22,13 +22,13 @@ public class FolioFulltimeServiceImpl implements IFolioFulltimeService {
     private static UnidadEntity unidadAcademica = null; // Singleton Pattern: se intanta ahorrar memoria con una instancia global
     // Singleton Pattern
 
-    @Transactional
+
     @Override
     public List<FolioFulltimeEntity> getAllFoliosFulltime() {
         return folioFulltimeRespository.findAll();
     }
 
-    @Transactional
+
     @Override
     public List<FolioFulltimeEntity> getAllByFoliosAndUnidadAcademica(Long id_unidad) {
         unidadAcademica = unidadRepository.findById(id_unidad).orElseThrow(
@@ -37,6 +37,13 @@ public class FolioFulltimeServiceImpl implements IFolioFulltimeService {
         );
 
         return folioFulltimeRespository.findAllByUnidad_academica(unidadAcademica);
+    }
+
+    @Override
+    public Integer getSecuenciaNumeroFulltime(Long id_unidad, Integer periodo, String AoB) {
+        return folioFulltimeRespository.getSecuenciaByUnidad_academicaAndPeriodoAndPeriodoAoB
+                (id_unidad, periodo, AoB) == 0 ? 1 : folioFulltimeRespository.getSecuenciaByUnidad_academicaAndPeriodoAndPeriodoAoB
+                (id_unidad, periodo, AoB) + 1;
     }
 
     @Transactional

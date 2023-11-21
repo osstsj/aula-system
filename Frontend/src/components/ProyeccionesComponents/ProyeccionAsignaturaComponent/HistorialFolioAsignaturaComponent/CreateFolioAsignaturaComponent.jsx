@@ -18,7 +18,7 @@ class CreateFolioAsignaturaComponent extends Component {
 
         this.state = {
             id_unidad: null,
-            numero: null,
+            numero: 0,
             periodo: 0,
 
             unidad_academica: '',
@@ -68,6 +68,20 @@ class CreateFolioAsignaturaComponent extends Component {
         });
     }
 
+    async getSecuenciaNumero(id_unidad, 
+        periodo, periodoAoB) {
+        let secuencia = 0;
+
+        await FolioAsignaturaService.getSecuenciaNumero(id_unidad, 
+            periodo, periodoAoB).then(res => {
+                secuencia = res.data;
+        }).catch(() => {
+            alert("Error al intentar traer las secuencias...");
+            this.props.history.push('/');
+        });
+        this.setState({numero: secuencia})
+    }
+
     async getUnidadList() {
         let options = null;
 
@@ -100,8 +114,6 @@ class CreateFolioAsignaturaComponent extends Component {
             { value: 2051, label: '2051' },{ value: 2052, label: '2052' },{ value: 2053, label: '2053' },
             { value: 2054, label: '2054' },{ value: 2055, label: '2055' },{ value: 2056, label: '2056' },
             { value: 2057, label: '2058' },{ value: 2059, label: '2059' },{ value: 2060, label: '2060' }
-            
-
         ];
 
         this.setState({ periodos: periodoList });
@@ -114,17 +126,27 @@ class CreateFolioAsignaturaComponent extends Component {
     onChangeUnidadHandler = (event) => {
         this.setState({ unidad_academica: event.abreviatura });
         this.setState({ id_unidad: event.id });
+
+        if ((this.state.periodo !== 0) & (this.state.periodoAoB !== '')) {
+            this.getSecuenciaNumero(event.id,  this.state.periodo, this.state.periodoAoB);
+        }
+        
     }
     
-    onChangeNumeroHandler = (event) => {
-        // if (event.target.value.isString)
-        this.setState({ numero: event.target.value });
-    }
     onChangePeriodoHandler = (event) => {
         this.setState({ periodo: event.target.value });
+
+        if ((this.state.id_unidad !== null) & (this.state.periodoAoB !== '')) {
+            this.getSecuenciaNumero(this.state.id_unidad,  event.target.value, this.state.periodoAoB);
+        }
     }
     onChangePeriodoAoBHandler = (event) => {
         this.setState({ periodoAoB: event.target.value });
+        
+
+        if ((this.state.id_unidad !== null) & (this.state.periodo !== 0)) {
+            this.getSecuenciaNumero(this.state.id_unidad, this.state.periodo, event.target.value);
+        }
     }
 
     cancel() {
@@ -156,7 +178,7 @@ class CreateFolioAsignaturaComponent extends Component {
                                     <legend className="w-auto text-left h6">Nuevo Folio:</legend>
 
                                     <div className="row mb-3">
-                                        <div className="col-3">
+                                        <div className="col-4">
                                             <div className="form-outline">
                                                 <label>Unidad Académica:</label>
 
@@ -173,6 +195,7 @@ class CreateFolioAsignaturaComponent extends Component {
                                             <div className="form-outline">
                                                 <label>Numero:</label>
                                                 <input
+                                                readOnly
                                                     type="number"
                                                     name=""
                                                     id=""
@@ -182,7 +205,6 @@ class CreateFolioAsignaturaComponent extends Component {
                                                     style={{'width' : '10rem'}}
                                                     placeholder="Secuencia..."
                                                     value={this.state.numero}
-                                                    onChange={this.onChangeNumeroHandler}
                                                     required />
                                             </div>
                                         </div>
@@ -197,19 +219,6 @@ class CreateFolioAsignaturaComponent extends Component {
                                                     onChange={(e) => this.onChangePeriodoSelectHandler(e)}
                                                     value={{ label: this.state.periodo === 0 ? "Periodo..." : this.state.periodo}}
                                                 />
-{/* 
-                                                <input
-                                                    style={{'width' : '5rem'}}
-                                                    type="number"
-                                                    name="" id=""
-                                                    className="form-control"
-                                                    min="2023"
-                                                    max="2099"
-                                                    step="1"
-                                                    title="Ingrese solo numeros..."
-                                                    onChange={this.onChangePeriodoHandler}
-                                                    value={this.state.periodo}
-                                                    required /> */}
                                             </div>
                                         </div>
 

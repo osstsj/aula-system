@@ -13,7 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "proyeccion_asesoria_proyecion_asignatura")
+@Table(name = "proyeccion_asignatura_proyecion_asesoria")
 public class AsesoriaAsignatura implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

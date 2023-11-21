@@ -192,7 +192,7 @@ class CreateFolioAsignatura extends Component {
 
     async getCarreraList() {
         let options = null;
-        await CarreraService.getAllCarreras().then(res => {
+        await CarreraService.getAllCarrerasByEstatus().then(res => {
             const data = res.data;
             options = data.map(d => ({
                 "value": d.clave_programa,

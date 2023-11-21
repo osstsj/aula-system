@@ -55,6 +55,17 @@ public class CarreraController {
         }
     }
 
+    @GetMapping(value="/carreras_by_estatus",
+            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
+    public ResponseEntity<List<CarreraResponseDto>> getAllCarrerasByEstatus() {
+        try {
+            List<CarreraResponseDto> carreras = carreraService.getAllCarrerasByEstatus();
+            return new ResponseEntity<>(carreras, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PutMapping(value="/carrera/{id}",
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})

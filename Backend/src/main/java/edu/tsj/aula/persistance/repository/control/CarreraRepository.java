@@ -11,5 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface CarreraRepository extends JpaRepository<CarreraEntity, Long> {
+    @Query("SELECT CA FROM CarreraEntity as CA WHERE CA.estatus = 'Activa'")
+    List<CarreraEntity> findAllCarrerasByEstatus();
 
 }

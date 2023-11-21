@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import AsignaturaProyeccionService from '../../../services/Proyecciones/AsignaturaProyeccionService';
-import UnidadService from '../../../services/Control/UnidadService'
 import '../../StyleGlobal/Style.css';
-import Select from 'react-select'
 import * as XLSX from 'xlsx';  // Importa la librería XLSX
+import FolioAsignaturaService from '../../../services/Proyecciones/FolioAsignaturaService';
 
 
 
@@ -11,10 +10,12 @@ class ListProyeccionAsignaturaComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: this.props.match.params.id,
+            id: this.props.match.params.id, // id_folio
 
             areColumnsVisible: true, // Estado inicial para controlar la visibilidad de las columnas
             areColumns2Visible: true,
+
+            unidad: '',
 
             asignaturas: [],
         };
@@ -32,12 +33,25 @@ class ListProyeccionAsignaturaComponent extends Component {
                 alert("Error al traer las proyecciones de asignatura por folio...");
                 this.props.history.push('/');
             });
+
+            this.getUnidadFromFolioId();
     }
+
+    async getUnidadFromFolioId() {
+        await FolioAsignaturaService.getFolioById(this.state.id).then(res => {
+            const data = res.data;
+            
+            this.setState({ unidad: data.unidad_academica.nombre_completo})
+        }).catch(() => {
+            alert("Error al intentar traer las UAs...");
+            this.props.history.push('/');
+        });
+    }
+
 
     viewProyeccionAsignatura(id) {
         this.props.history.push(`/view-proyeccion_asignatura/${id}`);
     }
-
 
     // Función para alternar la visibilidad de las columnas
     toggleColumns = () => {
@@ -152,7 +166,7 @@ class ListProyeccionAsignaturaComponent extends Component {
                         <thead>
                             <tr>
 
-                                <th className='Title-Table' colSpan="36">UNIDAD ACADÉMICA: {this.state.unidad === "" ? "Sin Filtro de UA" : this.state.unidad}</th>
+                                <th className='Title-Table' colSpan="36">UNIDAD ACADÉMICA: {this.state.unidad}</th>
                             </tr>
                             <tr>
                                 <th rowSpan="3" className={`text-center table-id ${areColumns2Visible || areColumnsVisible ? '' : 'collapse'
@@ -342,46 +356,46 @@ class ListProyeccionAsignaturaComponent extends Component {
                                         {/* ----------------- Table de cambios ------------------------ */}
                                         {/* FECHA SOLICITUD DE MODIFICACIÓN */}
                                         <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`}>	</td>
+                                            }`}>{asignatura.fecha_actualizacion}</td>
 
                                         {/* CARGAHORARIA  ANTERIOR */}
                                         <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} >	</td>
+                                            }`} >{asignatura.carga_horaria_anterior}</td>
 
                                         {/* CATEGORIA DE HORAS DE ASIGNATRURA ANTERIOR */}
                                         <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} >	</td>
+                                            }`} >{asignatura.categoria_horas_asignatura_anterior}</td>
 
                                         {/* CARGA HORARIA NUEVA */}
                                         <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} >	</td>
+                                            }`} >{asignatura.carga_horaria_nueva}</td>
 
                                         {/* TIPO DE HORAS DE ASIGNATRURA NUEVA */}
                                         <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} >	</td>
+                                            }`} >{asignatura.carga_tipo_horas_asignatura_nueva}</td>
 
                                         {/* LA MODIFICACIÓN SE APLICA A PARTIR DE (FECHA): */}
                                         <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} >	</td>
+                                            }`} >{asignatura.modifica_aplica_en}</td>
 
                                         {/* NO. OFICIO RESPUESTA */}
                                         <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} >	</td>
+                                            }`} >{asignatura.oficio_respuesta}</td>
 
                                         {/* NO. DE OFICIO ACADEMIA */}
                                         <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} >	</td>
+                                            }`} >{asignatura.oficio_academia}</td>
 
                                         {/* FECHA EN QUE RH APLICA EN EL SISTEMA */}
                                         <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} >	</td>
+                                            }`} >{asignatura.fecha_rh_aplica_sistema}</td>
 
                                         {/* OBSERVACIONES */}
                                         <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} ></td>
+                                            }`} >{asignatura.observaciones_modificacion}</td>
                                         <td align="center" className={`text-center table-content ${areColumns2Visible || areColumnsVisible ? '' : 'collapse'
                                             }`}>
-                                            <button onClick={{}} className="btn btn-warning mt-0">Actualizar</button>
+                                            <button onClick={{}} className="btn btn-warning mt-0">Modificar</button>
                                             <button style={boton} onClick={{}} className="btn btn-danger mt-0">Eliminar</button>
                                             <button onClick={() => this.viewProyeccionAsignatura(asignatura.id)} className="btn btn-info mt-0">Ver</button>
                                         </td>

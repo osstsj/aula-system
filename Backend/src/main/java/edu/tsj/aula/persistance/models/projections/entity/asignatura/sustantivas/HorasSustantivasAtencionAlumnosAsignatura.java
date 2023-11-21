@@ -15,7 +15,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "proyeccion_horas_sustantivas_atencion_alumnos_asignatura")
+@Table(name = "proyeccion_asignatura_horas_sustantivas_atencion_alumnos")
 public class HorasSustantivasAtencionAlumnosAsignatura implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

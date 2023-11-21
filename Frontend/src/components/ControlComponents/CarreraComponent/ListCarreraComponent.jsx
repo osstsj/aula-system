@@ -168,9 +168,9 @@ class ListCarreraComponent extends Component {
                                 this.state.carreras.map((carrera, index) =>
                                     <tr key={carrera.id} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
                                         <td >{index + 1}</td>
-                                        <td className={carrera.estatus === 'ACTIVA' ? 'table-conten':'table-conten text-secondary'}>{carrera.nombre}</td>
-                                        <td className={carrera.estatus === 'ACTIVA' ? 'table-conten':'table-conten text-secondary'}>{carrera.estatus}</td>
-                                        <td className={carrera.estatus === 'ACTIVA' ? 'table-conten':'table-conten text-secondary'}>{carrera.plan_estudio}</td>
+                                        <td className={carrera.estatus === 'Activa' ? 'table-conten':'table-conten text-secondary'}>{carrera.nombre}</td>
+                                        <td className={carrera.estatus === 'Activa' ? 'table-conten':'table-conten text-secondary'}>{carrera.estatus}</td>
+                                        <td className={carrera.estatus === 'Activa' ? 'table-conten':'table-conten text-secondary'}>{carrera.plan_estudio}</td>
                                         <td className='table-action'>
                                             <button onClick={() => this.updateCarrera(carrera.id)} className="btn btn-warning mt-0">Actualizar</button>
                                             <button className="btn btn-danger mt-0" style={boton}

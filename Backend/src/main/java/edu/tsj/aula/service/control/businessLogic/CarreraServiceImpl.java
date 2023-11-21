@@ -48,7 +48,6 @@ public class CarreraServiceImpl implements ICarreraService {
         }
     }
 
-
     @Override
     public List<CarreraResponseDto> getAllCarreras() {
         LOGGER.info("Se ha ejecutado el metodo getAllCarreras");
@@ -61,6 +60,20 @@ public class CarreraServiceImpl implements ICarreraService {
             throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
         }
     }
+
+    @Override
+    public List<CarreraResponseDto> getAllCarrerasByEstatus() {
+        LOGGER.info("Se ha ejecutado el metodo getAllCarrerasByEstatus");
+        try {
+            var list = carreraRepository.findAllCarrerasByEstatus();
+
+            return list.stream().map(mapper::entityToResponse).collect(Collectors.toList());
+        } catch (Exception e) {
+            LOGGER.error("Error al intentar  traer lista de carreras");
+            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
+        }
+    }
+
 
     @Override
     public CarreraResponseDto getCarreraById(Long id) {
@@ -127,5 +140,4 @@ public class CarreraServiceImpl implements ICarreraService {
             throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
         }
     }
-
 }

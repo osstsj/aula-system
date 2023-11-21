@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "proyeccion_horas_necesidad_institucional_fulltime")
+@Table(name = "proyeccion_fulltime_horas_necesidad_institucional")
 public class HorasNecesidadInstitucionalFulltime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

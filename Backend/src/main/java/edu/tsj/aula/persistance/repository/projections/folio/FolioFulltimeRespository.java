@@ -12,4 +12,8 @@ import java.util.List;
 public interface FolioFulltimeRespository extends JpaRepository<FolioFulltimeEntity, Long> {
     @Query("SELECT FF FROM FolioFulltimeEntity AS FF WHERE FF.unidad_academica= :id_unidad")
     List<FolioFulltimeEntity> findAllByUnidad_academica(UnidadEntity id_unidad);
+
+    @Query("SELECT COUNT(FF.numero) FROM FolioFulltimeEntity AS FF WHERE FF.unidad_academica.id= :id_unidad AND "+
+            "FF.periodo= :periodo AND FF.periodoAoB= :AoB")
+    Integer getSecuenciaByUnidad_academicaAndPeriodoAndPeriodoAoB(Long id_unidad, Integer periodo, String AoB);
 }

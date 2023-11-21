@@ -9,7 +9,7 @@ class CreateCarreraComponent extends Component {
             nombre: '',
             dgp: '',
             plan_estudio: '', 
-            estatus: '',
+            estatus: 'Activa',
             isLoading: false, // Nuevo estado para controlar la visibilidad del spinner
 
             
@@ -140,10 +140,11 @@ class CreateCarreraComponent extends Component {
                                                     value={this.state.estatus}
                                                     onChange={this.changeEstatusHandler} 
                                                     required
+                                                    disabled
                                                 >
-                                                    <option value="" disabled>Seccione un estatus...</option>
-                                                    <option value="ACTIVA">ACTIVA</option>
-                                                    <option value="INACTIVA">INACTIVA</option>                                    
+                                                    {/* <option value="" disabled>Seccione un estatus...</option> */}
+                                                    <option value="Activa" selected>Activa</option>
+                                                    <option value="Inactiva">Inactiva</option>                                    
                                                 </select>
                                             </div>
                                         </div>

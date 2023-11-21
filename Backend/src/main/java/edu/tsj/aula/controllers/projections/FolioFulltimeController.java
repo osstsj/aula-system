@@ -26,6 +26,13 @@ public class FolioFulltimeController {
         return folioFulltimeService.getAllByFoliosAndUnidadAcademica(id_unidad);
     }
 
+    @GetMapping("/folios_fulltime_get_secuencia/{id_unidad}/{periodo}/{AoB}")
+    public Integer getSecuenciaNumero(@PathVariable Long id_unidad,
+                                      @PathVariable Integer periodo,
+                                      @PathVariable String AoB) {
+        return folioFulltimeService.getSecuenciaNumeroFulltime(id_unidad, periodo, AoB);
+    }
+
     @GetMapping("/folios_fulltime")
     public List<FolioFulltimeEntity> getAllFoliosFulltime() {
         return folioFulltimeService.getAllFoliosFulltime();

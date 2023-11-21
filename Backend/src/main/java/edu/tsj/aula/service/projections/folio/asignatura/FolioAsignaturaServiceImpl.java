@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @AllArgsConstructor
@@ -56,5 +57,17 @@ public class FolioAsignaturaServiceImpl implements IFolioAsignaturaService {
         );
 
         return folioAsignaturaRepository.save(proyeccion);
+    }
+
+    @Override
+    public Integer getSecuenciaNumeroAsignatura(Long id_unidad, Integer periodo, String AoB) {
+        return folioAsignaturaRepository.getSecuenciaByUnidad_academicaAndPeriodoAndPeriodoAoB
+                (id_unidad, periodo, AoB) == 0 ? 1 : folioAsignaturaRepository.getSecuenciaByUnidad_academicaAndPeriodoAndPeriodoAoB
+                (id_unidad, periodo, AoB) + 1;
+    }
+
+    @Override
+    public Optional<FolioAsignaturaEntity> getFolioById(Long id) {
+        return folioAsignaturaRepository.findById(id);
     }
 }

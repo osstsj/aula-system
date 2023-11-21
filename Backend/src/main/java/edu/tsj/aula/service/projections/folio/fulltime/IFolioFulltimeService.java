@@ -9,6 +9,8 @@ public interface IFolioFulltimeService {
 
     List<FolioFulltimeEntity> getAllByFoliosAndUnidadAcademica(Long id_unidad);
 
+    Integer getSecuenciaNumeroFulltime(Long id_unidad, Integer periodo, String AoB);
+
     FolioFulltimeEntity createFolioFulltime(FolioFulltimeEntity folioFulltimeEntity, Long id_unidad);
 
 }

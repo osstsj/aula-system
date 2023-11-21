@@ -20,11 +20,24 @@ class CarreraService {
         return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "carreras")
         .catch(err => {
             if (err.response) {
-                console.error("Error in response for createDocente...");
+                console.error("Error in response for getAllCarrera...");
             } else if(err.request) {
-                console.error("Error in request for createDocente...");
+                console.error("Error in request for getAllCarrera...");
             } else {
-                console.error("Something happend, unknown error for createDocente");
+                console.error("Something happend, unknown error for getAllCarrera");
+            }
+        });
+    }
+
+    getAllCarrerasByEstatus() {
+        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "carreras_by_estatus")
+        .catch(err => {
+            if (err.response) {
+                console.error("Error in response for getAllCarrerasByEstatus...");
+            } else if(err.request) {
+                console.error("Error in request for getAllCarrerasByEstatus...");
+            } else {
+                console.error("Something happend, unknown error for getAllCarrerasByEstatus");
             }
         });
     }
@@ -33,11 +46,11 @@ class CarreraService {
         return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "carrera/" + carreraId)
         .catch(err => {
             if (err.response) {
-                console.error("Error in response for createDocente...");
+                console.error("Error in response for getCarreraById...");
             } else if(err.request) {
-                console.error("Error in request for createDocente...");
+                console.error("Error in request for getCarreraById...");
             } else {
-                console.error("Something happend, unknown error for createDocente");
+                console.error("Something happend, unknown error for getCarreraById");
             }
         });
     }
@@ -46,11 +59,11 @@ class CarreraService {
         return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "carrera/" + carreraId, carreraDto)
         .catch(err => {
             if (err.response) {
-                console.error("Error in response for createDocente...");
+                console.error("Error in response for updateCarreralById...");
             } else if(err.request) {
-                console.error("Error in request for createDocente...");
+                console.error("Error in request for updateCarreralById...");
             } else {
-                console.error("Something happend, unknown error for createDocente");
+                console.error("Something happend, unknown error for updateCarreralById");
             }
         });
     }
@@ -59,11 +72,11 @@ class CarreraService {
         return axios.delete(process.env.REACT_APP_LOCAL_API_BASE_URL + "carrera/" + carreraId)
         .catch(err => {
             if (err.response) {
-                console.error("Error in response for createDocente...");
+                console.error("Error in response for deleteCarreralById...");
             } else if(err.request) {
-                console.error("Error in request for createDocente...");
+                console.error("Error in request for deleteCarreralById...");
             } else {
-                console.error("Something happend, unknown error for createDocente");
+                console.error("Something happend, unknown error for deleteCarreralById");
             }
         });
     }

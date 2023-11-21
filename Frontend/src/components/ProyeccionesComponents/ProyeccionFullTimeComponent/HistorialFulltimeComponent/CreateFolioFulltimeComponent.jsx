@@ -19,7 +19,7 @@ class CreateFolioAsignaturaComponent extends Component {
 
         this.state = {
             id_unidad: null,
-            numero: null,
+            numero: 0,
             periodo: 0,
 
             unidad_academica: '',
@@ -69,6 +69,20 @@ class CreateFolioAsignaturaComponent extends Component {
         });
     }
     
+    async getSecuenciaNumero(id_unidad, 
+        periodo, periodoAoB) {
+        let secuencia = 0;
+
+        await FolioFulltimeService.getSecuenciaNumero(id_unidad, 
+            periodo, periodoAoB).then(res => {
+                secuencia = res.data;
+        }).catch(() => {
+            alert("Error al intentar traer las secuencias...");
+            this.props.history.push('/');
+        });
+        this.setState({numero: secuencia})
+    }
+
     async getUnidadList() {
         let options = null;
 
@@ -115,17 +129,25 @@ class CreateFolioAsignaturaComponent extends Component {
     onChangeUnidadHandler = (event) => {
         this.setState({ unidad_academica: event.abreviatura });
         this.setState({ id_unidad: event.id });
+
+        if ((this.state.periodo !== 0) & (this.state.periodoAoB !== '')) {
+            this.getSecuenciaNumero(event.id,  this.state.periodo, this.state.periodoAoB);
+        }
     }
     
-    onChangeNumeroHandler = (event) => {
-        // if (event.target.value.isString)
-        this.setState({ numero: event.target.value });
-    }
     onChangePeriodoHandler = (event) => {
         this.setState({ periodo: event.target.value });
+
+        if ((this.state.id_unidad !== null) & (this.state.periodoAoB !== '')) {
+            this.getSecuenciaNumero(this.state.id_unidad,  event.target.value, this.state.periodoAoB);
+        }
     }
     onChangePeriodoAoBHandler = (event) => {
         this.setState({ periodoAoB: event.target.value });
+
+        if ((this.state.id_unidad !== null) & (this.state.periodo !== 0)) {
+            this.getSecuenciaNumero(this.state.id_unidad, this.state.periodo, event.target.value);
+        }
     }
 
     cancel() {
@@ -157,7 +179,7 @@ class CreateFolioAsignaturaComponent extends Component {
                                     <legend className="w-auto text-left h6">Nuevo Folio:</legend>
 
                                     <div className="row mb-3">
-                                        <div className="col-3">
+                                        <div className="col-4">
                                             <div className="form-outline">
                                                 <label>Unidad Académica:</label>
 
@@ -174,6 +196,7 @@ class CreateFolioAsignaturaComponent extends Component {
                                             <div className="form-outline">
                                                 <label>Numero:</label>
                                                 <input
+                                                readOnly
                                                     type="number"
                                                     name=""
                                                     id=""

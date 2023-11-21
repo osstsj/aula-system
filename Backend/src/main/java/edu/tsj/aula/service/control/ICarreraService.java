@@ -12,6 +12,7 @@ public interface ICarreraService {
 
     List<CarreraResponseDto> getAllCarreras();
 
+    List<CarreraResponseDto> getAllCarrerasByEstatus();
 
     CarreraResponseDto getCarreraById(Long id);
 

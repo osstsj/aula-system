@@ -18,6 +18,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Entity
@@ -66,13 +67,22 @@ public class AsignaturaEntity  implements Serializable {
     @JoinColumn(name = "id_folio", nullable = false)
     private FolioAsignaturaEntity folio;
 
-    @Column
-    private Integer total;
+    @Column private Integer total;
 
-    @Column
-    private String observaciones;
+    @Column private String observaciones;
 
     @CreationTimestamp private LocalDateTime fecha_creacion;
 
+    // ------- seccion de cambios
     @UpdateTimestamp  private LocalDateTime fecha_actualizacion;
+
+    @Column private Integer carga_horaria_anterior;
+    @Column private Integer categoria_horas_asignatura_anterior;
+    @Column private Integer carga_horaria_nueva;
+    @Column private Integer carga_tipo_horas_asignatura_nueva;
+    @Column private String modifica_aplica_en;
+    @Column private String oficio_respuesta;
+    @Column private String oficio_academia;
+    @Column private String fecha_rh_aplica_sistema;
+    @Column private String observaciones_modificacion;
 }
