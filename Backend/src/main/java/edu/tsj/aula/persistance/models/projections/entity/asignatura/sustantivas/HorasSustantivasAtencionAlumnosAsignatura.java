@@ -23,15 +23,15 @@ public class HorasSustantivasAtencionAlumnosAsignatura implements Serializable {
 
     @Column private Integer horas_frente_grupo;
 
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id_asignatura")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private HorasAsignaturaAsignatura horas_asignatura;
 
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id_academias")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private AcademiaAsignatura academias;
 
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id_asesorias")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private AsesoriaAsignatura asesorias;
 

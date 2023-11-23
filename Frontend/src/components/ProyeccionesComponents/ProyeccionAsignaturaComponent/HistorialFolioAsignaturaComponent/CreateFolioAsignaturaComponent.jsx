@@ -119,9 +119,7 @@ class CreateFolioAsignaturaComponent extends Component {
         this.setState({ periodos: periodoList });
     }
 
-    onChangePeriodoSelectHandler = (event) => {
-        this.setState({ periodo: event.value });
-    }
+    
 
     onChangeUnidadHandler = (event) => {
         this.setState({ unidad_academica: event.abreviatura });
@@ -130,19 +128,17 @@ class CreateFolioAsignaturaComponent extends Component {
         if ((this.state.periodo !== 0) & (this.state.periodoAoB !== '')) {
             this.getSecuenciaNumero(event.id,  this.state.periodo, this.state.periodoAoB);
         }
-        
     }
-    
-    onChangePeriodoHandler = (event) => {
-        this.setState({ periodo: event.target.value });
+    onChangePeriodoSelectHandler = (event) => {
+        this.setState({ periodo: event.value });
 
         if ((this.state.id_unidad !== null) & (this.state.periodoAoB !== '')) {
-            this.getSecuenciaNumero(this.state.id_unidad,  event.target.value, this.state.periodoAoB);
+            this.getSecuenciaNumero(this.state.id_unidad,  event.value, this.state.periodoAoB);
         }
     }
+
     onChangePeriodoAoBHandler = (event) => {
         this.setState({ periodoAoB: event.target.value });
-        
 
         if ((this.state.id_unidad !== null) & (this.state.periodo !== 0)) {
             this.getSecuenciaNumero(this.state.id_unidad, this.state.periodo, event.target.value);

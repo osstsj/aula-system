@@ -31,6 +31,19 @@ class FolioFulltimeService {
          + id_unidad);
     }
 
+    getFolioById(id_folio) {
+        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + 'folio_fulltime/' + id_folio)
+        .catch(error => {
+            if (error.response) {
+                console.error("Error in res");
+            } else if (error.request) {
+                console.error("Error req");
+            } else {
+                console.error("algo mas");
+            }
+        });
+    }
+
 }
 
 

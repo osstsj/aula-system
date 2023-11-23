@@ -26,25 +26,17 @@ public class ProfeAsignatura {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE) ///    Tal vez deba quitarse ya que se realaciona con la proyeccion
-//    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
-    @JsonIdentityReference(alwaysAsId=true)
-//    @JsonProperty("id_proyeccion")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_carrera", nullable = false)
     private CarreraEntity clave_programa;
+//    private String clave_programa;
 
-//    @Column(unique = true)
-    @Column
-    private String codigo_nomina;
+    @Column private String codigo_nomina;
 
-    @Column
-    private String grado_academico;
+    @Column private String grado_academico;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE) ///     dependencia con el folio
-//    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
-    @JsonIdentityReference(alwaysAsId=true)
-//    @JsonProperty("id_proyeccion")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_docente", nullable = false)
     private DocenteEntity nombre_docente;
 }

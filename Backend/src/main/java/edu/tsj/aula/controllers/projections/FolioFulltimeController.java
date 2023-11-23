@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1")
@@ -31,6 +32,11 @@ public class FolioFulltimeController {
                                       @PathVariable Integer periodo,
                                       @PathVariable String AoB) {
         return folioFulltimeService.getSecuenciaNumeroFulltime(id_unidad, periodo, AoB);
+    }
+
+    @GetMapping(value = "/folio_fulltime/{id_folio}")
+    public Optional<FolioFulltimeEntity> getFolioById(@PathVariable Long id_folio) {
+        return folioFulltimeService.getFolioById(id_folio);
     }
 
     @GetMapping("/folios_fulltime")

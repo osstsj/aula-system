@@ -14,6 +14,7 @@ class CreateFolioAsignatura extends Component {
 
         this.state = {
             isLoading: false,
+            id: this.props.match.params.id, // folio id
 
             unidades: [],
             niveles: [],
@@ -86,9 +87,7 @@ class CreateFolioAsignatura extends Component {
     createProyeccionAsignatura = (e) => {
         if (this.state.errorInfo !== null) {
             alert('No se puede duplicar clave de empleado.');
-            console.log("Error Info and Error adentro" + this.state.error + this.state.errorInfo);
         }
-        console.log("Error Info and Error adentro" + this.state.error + this.state.errorInfo);
 
         e.preventDefault();
 
@@ -161,33 +160,16 @@ class CreateFolioAsignatura extends Component {
     }
 
     cancel() {
-        this.props.history.push('/');
+        this.props.history.push(`/list-proyeccion_asignatura/${this.state.id_folio}`);
     }
 
     componentDidMount() {
-        this.getUnidadList();
         this.getNivel();
         this.getHorasAcademias_presidente();
         this.getHorasAcademias_secretario();
         this.getCarreraList();
-        this.getFolioList();
+        this.getFolioById();
         this.getTipoUnidad();
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-    }
-
-    async getDocenteList(id_unidad) {
-        let options = null;
-        await DocenteService.getAllDocentesByCategoriaPTCAsignatura(id_unidad).then(res => {
-            const data = res.data;
-            options = data.map(d => ({
-                "value": d.nombre_completo,
-                "label": d.nombre_completo,
-                "id": d.id,
-            }))
-            this.setState({ docentes: options });
-        })
     }
 
     async getCarreraList() {
@@ -206,42 +188,21 @@ class CreateFolioAsignatura extends Component {
         this.setState({ carreras: options });
     }
 
-    async getFolioList() {
-        let options = null;
-
-        await FolioAsignaturaService.getAllFolios().then(res => {
+    async getFolioById() {
+        await FolioAsignaturaService.getFolioById(this.state.id).then(res => {
             const data = res.data;
-            options = data.map(d => ({
-                "value": d.folio,
-                "label": d.folio,
-                "id": d.id,
-                "id_unidad": d.unidad_academica.id,
-                "unidad_academica": d.unidad_academica.nombre_completo
-            }))
-            this.setState({ folios: options });
+            
+            this.setState({ folio: data.folio});
+            this.setState({id_folio: data.id})
+            this.setState({id_unidad: data.unidad_academica.id});
+            this.setState({unidad_academica: data.unidad_academica.nombre_completo});
         }).catch(() => {
-            alert("Error al intentar traer los folios...");
-            this.props.history.push('/');
-        })
-    }
-
-    async getUnidadList() {
-        let options = null;
-
-        await UnidadService.getAllUnidades().then(res => {
-            const data = res.data;
-            options = data.map(d => ({
-                "value": d.tipo_unidad,
-                "label": d.nombre_completo,
-                'id': d.id,
-            }))
-        }).catch(() => {
-            alert("Error al intentar traer las UAs...");
+            alert("Error al intentar traer el folio por id...");
             this.props.history.push('/');
         });
-        this.setState({unidades: options})
-    }
 
+        this.getDocenteList(this.state.id_unidad);
+    }
 
     getTipoUnidad() {
         const tiposlList = [
@@ -250,6 +211,22 @@ class CreateFolioAsignatura extends Component {
         ]
 
         this.setState({ tipos_unidades: tiposlList });
+    }
+
+    async getDocenteList(id_unidad) {
+        let options = null;
+        await DocenteService.getAllDocentesByCategoriaPTCAsignatura(id_unidad).then(res => {
+            const data = res.data;
+            options = data.map(d => ({
+                "value": d.nombre_completo,
+                "label": d.nombre_completo,
+                "id": d.id,
+            }))
+            this.setState({ docentes: options });
+        }).catch(() => {
+            alert("Error al intentar traer los docentes...");
+            this.props.history.push('/');
+        });
     }
 
     getNivel() {
@@ -287,27 +264,11 @@ class CreateFolioAsignatura extends Component {
         this.setState({ tipo_unidad: event.label });
     }
 
-
-    onChangeFolioHandler = (event) => {
-        this.setState({ folio: event.label }, this.enableAddButton);
-        this.setState({ id_folio: event.id });
-
-        this.setState({ nombre_docente: ''})
-
-        this.setState({ id_unidad: event.id_unidad});
-        this.setState({unidad_academica: event.unidad_academica})
-        this.getDocenteList(event.id_unidad);
-    }
-
-    onChangeUnidadHandler = (event) => {
-        this.setState({ unidad_academica: event.label }, this.enableAddButton);
-        this.setState({ disableDocente: false })
-    }
-
     onChangeClaveProgramaHandler = (event) => {
         this.setState({ clave_programa: event.label }, this.enableAddButton);
         this.setState({ id_carrera: event.id });
     }
+
     onChangeCodigoNominaHandler = (event) => {
         this.setState({codigo_nomina: event.target.value}, this.enableAddButton);
     }
@@ -501,6 +462,7 @@ class CreateFolioAsignatura extends Component {
                                         <div className="form-outline">
                                             <label className="">Folio: </label>
                                             <Select
+                                            isDisabled={true}
                                                 rules={{ required: true }}
                                                 options={this.state.folios}
                                                 onChange={(e) => this.onChangeFolioHandler(e)}

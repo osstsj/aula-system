@@ -14,12 +14,12 @@ public interface DocenteRepository extends JpaRepository<DocenteEntity, Long> {
     List<DocenteEntity> findAllByUnidad(Long id_unidad);
 
     @Query("SELECT DE FROM DocenteEntity as DE WHERE (DE.unidad_academica.id=:id_unidad AND DE.estatus = 'Activo')" +
-            "AND (DE.categoria= 'PROFESOR ASIGNATURA A' " +
-            "OR DE.categoria= 'PROFESOR ASIGNATURA B')")
+            "AND (DE.categoria= 'PROFESOR ASIGNATURA - A' " +
+            "OR DE.categoria= 'PROFESOR ASIGNATURA - B')")
     List<DocenteEntity> findAllByCategoriaPTCAsignatura(Long id_unidad);
 
     @Query("SELECT DE FROM DocenteEntity as DE WHERE (DE.unidad_academica.id=:id_unidad AND DE.estatus = 'Activo')" +
-            "AND (DE.categoria= 'PROFESOR ASOCIADO A' " +
-            "OR DE.categoria= 'PROFESOR ASOCIADO B' OR DE.categoria= 'PROFESOR ASOCIADO C')")
+            "AND (DE.categoria= 'PROFESOR ASOCIADO - A' " +
+            "OR DE.categoria= 'PROFESOR ASOCIADO - B' OR DE.categoria= 'PROFESOR ASOCIADO - C')")
     List<DocenteEntity> findAllByCategoriaPTCFulltime(Long id_unidad);
 }

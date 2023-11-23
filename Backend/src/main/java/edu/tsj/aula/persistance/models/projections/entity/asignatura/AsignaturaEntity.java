@@ -50,15 +50,15 @@ public class AsignaturaEntity  implements Serializable {
     @JoinColumn(name = "id_unidad", nullable = false)
     private UnidadEntity unidad_academica;
 
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id_profe")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private ProfeAsignatura profe_asignatura;
 
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id_horas_sustantivas_atencion_alumnos")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private HorasSustantivasAtencionAlumnosAsignatura horas_sustantivas_atencion_alumnos;
 
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id_horas_necesidad_institucional") // si deja solo "id", tomara por default el primary key
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private HorasNecesidadInstitucionalAsignatura horas_necesidad_institucional;
 
@@ -73,16 +73,16 @@ public class AsignaturaEntity  implements Serializable {
 
     @CreationTimestamp private LocalDateTime fecha_creacion;
 
-    // ------- seccion de cambios
+    // ------- seccion de cambios ------------
     @UpdateTimestamp  private LocalDateTime fecha_actualizacion;
 
     @Column private Integer carga_horaria_anterior;
-    @Column private Integer categoria_horas_asignatura_anterior;
+    @Column private String categoria_horas_asignatura_anterior;
     @Column private Integer carga_horaria_nueva;
-    @Column private Integer carga_tipo_horas_asignatura_nueva;
-    @Column private String modifica_aplica_en;
-    @Column private String oficio_respuesta;
-    @Column private String oficio_academia;
-    @Column private String fecha_rh_aplica_sistema;
+    @Column private String categoria_tipo_horas_asignatura_nueva;
+    @Column private String modifica_aplica_en;       // 2da etapa
+    @Column private String oficio_respuesta;         // 2da etapa
+    @Column private String oficio_academia;          // 2da etapa
+    @Column private String fecha_rh_aplica_sistema;  // 2da etapa
     @Column private String observaciones_modificacion;
 }

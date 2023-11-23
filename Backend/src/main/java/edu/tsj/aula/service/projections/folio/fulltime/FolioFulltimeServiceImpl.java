@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @AllArgsConstructor
@@ -44,6 +45,11 @@ public class FolioFulltimeServiceImpl implements IFolioFulltimeService {
         return folioFulltimeRespository.getSecuenciaByUnidad_academicaAndPeriodoAndPeriodoAoB
                 (id_unidad, periodo, AoB) == 0 ? 1 : folioFulltimeRespository.getSecuenciaByUnidad_academicaAndPeriodoAndPeriodoAoB
                 (id_unidad, periodo, AoB) + 1;
+    }
+
+    @Override
+    public Optional<FolioFulltimeEntity> getFolioById(Long id) {
+        return folioFulltimeRespository.findById(id);
     }
 
     @Transactional

@@ -3,7 +3,7 @@ import AsignaturaProyeccionService from '../../../services/Proyecciones/Asignatu
 import '../../StyleGlobal/Style.css';
 import * as XLSX from 'xlsx';  // Importa la librería XLSX
 import FolioAsignaturaService from '../../../services/Proyecciones/FolioAsignaturaService';
-
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 
 class ListProyeccionAsignaturaComponent extends Component {
@@ -18,12 +18,14 @@ class ListProyeccionAsignaturaComponent extends Component {
             unidad: '',
 
             asignaturas: [],
+            isModalOpen: false,
+            docenteToDeleteId: null, 
         };
 
         this.viewProyeccionAsignatura = this.viewProyeccionAsignatura.bind(this);
         this.addAsignatura = this.addAsignatura.bind(this);
         this.exportToExcel = this.exportToExcel.bind(this);  // Método para exportar a Excel
-
+        this.updateProyeccionAsignatura = this.updateProyeccionAsignatura.bind(this);
     }
 
     componentDidMount() {
@@ -48,7 +50,19 @@ class ListProyeccionAsignaturaComponent extends Component {
         });
     }
 
+    updateProyeccionAsignatura(id) {
+        this.props.history.push(`/update-proyeccion_asignatura/${id}`);
+    }
 
+    deleteAsignaturaById(id) {
+        AsignaturaProyeccionService.deleteProyeccionById(id).then(() => {
+            this.setState({
+                asignaturas: this.state.asignaturas.filter(asignatura => asignatura.id !== id),
+                isModalOpen: false,
+                asignaturaToDeleteId: null,
+            })
+        })
+    }
     viewProyeccionAsignatura(id) {
         this.props.history.push(`/view-proyeccion_asignatura/${id}`);
     }
@@ -66,7 +80,7 @@ class ListProyeccionAsignaturaComponent extends Component {
     };
 
     addAsignatura() {
-        this.props.history.push('/add-proyeccion_asignatura');
+        this.props.history.push(`/add-proyeccion_asignatura/${this.state.id}`);
     }
 
     exportToExcel() {
@@ -75,7 +89,7 @@ class ListProyeccionAsignaturaComponent extends Component {
         // Combina los datos de asignaturas en una sola estructura
         const datosCombinados = asignaturas.map((asignatura) => ({
             "No.": asignatura.id,
-            "Clave de Programa Educativo": asignatura.profe_asignatura.clave_programa.clave_programa,
+            "Clave de Programa Educativo": asignatura.profe_asignatura.clave_programa,
             "Código de Nómina": asignatura.profe_asignatura.codigo_nomina,
             "Grado Académico": asignatura.profe_asignatura.grado_academico,
             "Nombre del Docente":asignatura.profe_asignatura.nombre_docente.nombre_completo,
@@ -138,6 +152,22 @@ class ListProyeccionAsignaturaComponent extends Component {
         XLSX.writeFile(wb, 'asignaturas.xlsx');  // Cambia el nombre del archivo de salida si lo deseas
     }
 
+    // Método para abrir el modal
+    toggleModal = (id_asignatura) => {
+        this.setState({
+            isModalOpen: !this.state.isModalOpen,
+            docenteToDeleteId: id_asignatura, // Establece el ID de la colegiatura a eliminar
+        });
+    }
+
+    // Método para cerrar el modal
+    closeModal = () => {
+        this.setState({
+            isModalOpen: false,
+            docenteToDeleteId: null, // Restablece el ID de la colegiatura
+        });
+    }
+
     render() {
         const { areColumnsVisible } = this.state;
         const { areColumns2Visible } = this.state;
@@ -153,8 +183,9 @@ class ListProyeccionAsignaturaComponent extends Component {
                     <div className="col">
                         <button onClick={this.addAsignatura} style={{ marginRight: '2%' }} className="btn btn-outline-dark mb-4" >Agregar proyección</button>
                         <button onClick={this.toggleColumns} style={{ marginRight: '2%' }} className="btn btn-success mb-4" >Comprimir Actual</button>
-                        <button onClick={this.toggleColumn2s} style={{ marginRight: '11.8%' }} className="btn btn-primary mb-4" >Comprimir Anterior</button>
+                        <button onClick={this.toggleColumn2s} style={{ marginRight: '27.8%' }} className="btn btn-primary mb-4" >Comprimir Anterior</button>
                         <button className="btn btn-outline-success mb-4" onClick={this.exportToExcel}>Exportar a Excel</button> {/* Botón de exportar a Excel */}
+                        <button className="btn btn-outline-info mb-4" onClick={{}}>Exportar a PDF</button> {/* Botón de exportar a Excel */}
                     </div>
 
                 </div>
@@ -372,31 +403,31 @@ class ListProyeccionAsignaturaComponent extends Component {
 
                                         {/* TIPO DE HORAS DE ASIGNATRURA NUEVA */}
                                         <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} >{asignatura.carga_tipo_horas_asignatura_nueva}</td>
+                                            }`} >{asignatura.categoria_tipo_horas_asignatura_nueva}</td>
 
                                         {/* LA MODIFICACIÓN SE APLICA A PARTIR DE (FECHA): */}
                                         <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} >{asignatura.modifica_aplica_en}</td>
+                                            }`} >{asignatura.modifica_aplica_en}-</td>
 
                                         {/* NO. OFICIO RESPUESTA */}
                                         <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} >{asignatura.oficio_respuesta}</td>
+                                            }`} >{asignatura.oficio_respuesta}-</td>
 
                                         {/* NO. DE OFICIO ACADEMIA */}
                                         <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} >{asignatura.oficio_academia}</td>
+                                            }`} >{asignatura.oficio_academia}-</td>
 
                                         {/* FECHA EN QUE RH APLICA EN EL SISTEMA */}
                                         <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} >{asignatura.fecha_rh_aplica_sistema}</td>
+                                            }`} >{asignatura.fecha_rh_aplica_sistema}-</td>
 
                                         {/* OBSERVACIONES */}
                                         <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
                                             }`} >{asignatura.observaciones_modificacion}</td>
                                         <td align="center" className={`text-center table-content ${areColumns2Visible || areColumnsVisible ? '' : 'collapse'
                                             }`}>
-                                            <button onClick={{}} className="btn btn-warning mt-0">Modificar</button>
-                                            <button style={boton} onClick={{}} className="btn btn-danger mt-0">Eliminar</button>
+                                            <button onClick={() => this.updateProyeccionAsignatura(asignatura.id)} className="btn btn-warning mt-0">Modificar</button>
+                                            <button style={boton} onClick={() => this.toggleModal(asignatura.id)} className="btn btn-danger mt-0">Eliminar</button>
                                             <button onClick={() => this.viewProyeccionAsignatura(asignatura.id)} className="btn btn-info mt-0">Ver</button>
                                         </td>
 
@@ -406,6 +437,18 @@ class ListProyeccionAsignaturaComponent extends Component {
                         </tbody>
                     </table>
                 </div>
+
+                <Modal isOpen={this.state.isModalOpen} toggle={this.closeModal}>
+                    <ModalHeader>Confirmar Eliminación</ModalHeader>
+                    <ModalBody>
+                        ¿Estás seguro de que deseas eliminar esta proyección?
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="danger" onClick={() => this.deleteAsignaturaById(this.state.docenteToDeleteId)}>Eliminar</Button>
+                        <Button color="secondary" onClick={this.closeModal}>Cancelar</Button>
+                    </ModalFooter>
+                </Modal>
+
             </div>
 
 

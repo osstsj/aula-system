@@ -21,12 +21,9 @@ public class HorasNecesidadInstitucionalAsignatura implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private Integer invesigacion_educativa;
+    @Column private Integer invesigacion_educativa;
 
-    @Column
-    private Integer apoyo_operativo;
+    @Column private Integer apoyo_operativo;
 
-    @Column
-    private Integer subtotal_2;
+    @Column private Integer subtotal_2;
 }

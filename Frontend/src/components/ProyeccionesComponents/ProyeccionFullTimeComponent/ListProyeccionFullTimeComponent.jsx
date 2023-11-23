@@ -4,6 +4,8 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import '../Style/Table.css';
 import '../../StyleGlobal/Style.css'
 import FulltimeProyeccionService from '../../../services/Proyecciones/FulltimeProyeccionService';
+import FolioFulltimeService from '../../../services/Proyecciones/FolioFulltimeService';
+
 
 class ListProyeccionFullTimeComponent extends Component {
     constructor(props) {
@@ -13,6 +15,8 @@ class ListProyeccionFullTimeComponent extends Component {
 
             areColumnsVisible: true, // Estado inicial para controlar la visibilidad de las columnas
             areColumns2Visible: true,
+
+            unidad: '',
 
             fulltimes: []
         };
@@ -29,6 +33,17 @@ class ListProyeccionFullTimeComponent extends Component {
                 alert("Error al traer las proyecciones de asignatura por folio...");
                 this.props.history.push('/');
             });
+    }
+
+    async getUnidadFromFolioId() {
+        await FolioFulltimeService.getFolioById(this.state.id).then(res => {
+            const data = res.data;
+            
+            this.setState({ unidad: data.unidad_academica.nombre_completo})
+        }).catch(() => {
+            alert("Error al intentar traer las UAs...");
+            this.props.history.push('/');
+        });
     }
 
 
@@ -74,7 +89,7 @@ class ListProyeccionFullTimeComponent extends Component {
                     <table className="table table-striped table-bordered" border="3" cellspacing="0" cellpadding="0">
                         <thead>
                             <tr>
-                                <th className='Title-Table' colSpan="36">UNIDAD ACADÉMICA ARANDAS</th>
+                                <th className='Title-Table' colSpan="36">UNIDAD ACADÉMICA: {this.state.unidad}</th>
                             </tr>
                             <tr>
                                 <th rowSpan="3"className={`text-center table-id ${areColumns2Visible ||areColumnsVisible ? '' : 'collapse'
