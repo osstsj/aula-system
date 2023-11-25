@@ -99,6 +99,15 @@ public class UnidadServiceImpl implements IUnidadService {
         }
     }
 
+    @Override
+    public Boolean checkUnidadDependersObjects() {
+        return (
+                unidadRepository.checkUnidadDependersCarreraPorUnidad() + unidadRepository.checkUnidadDependersOfertaAcademica() +
+                unidadRepository.checkUnidadDependersAreas() + unidadRepository.checkUnidadDependersDocente() +
+                unidadRepository.checkUnidadDependersFolioAsignatura() + unidadRepository.checkUnidadDependersFolioFulltime()
+        ) > 0;
+    }
+
     @Transactional
     @Override
     public HashMap<String, String> deleteUnidadById(Long id) {

@@ -68,6 +68,11 @@ public class UnidadController {
         }
     }
 
+    @GetMapping(value = "/unidad_dependers")
+    public Boolean checkUnidadDependers() {
+        return unidadService.checkUnidadDependersObjects();
+    }
+
     @DeleteMapping("/unidad/{id}")
     public ResponseEntity<HashMap<String, String>> deletePlantelById(@PathVariable Long id) {
         try {

@@ -40,10 +40,13 @@ import ViewDocenteComponent from './components/ControlComponents/DocenteComponen
 import ListProyeccionAsignaturaComponent from './components/ProyeccionesComponents/ProyeccionAsignaturaComponent/ListProyeccionAsignaturaComponent';
 import ViewProyeccionAsignaturaComponent from './components/ProyeccionesComponents/ProyeccionAsignaturaComponent/ViewProyeccionAsignaturaComponent'
 import CreateProyeccionAsignatura from './components/ProyeccionesComponents/ProyeccionAsignaturaComponent/CreateProyeccionAsignaturaComponent';
+import UpdateProyeccionAsignaturaComponent from './components/ProyeccionesComponents/ProyeccionAsignaturaComponent/UpdateProyeccionAsignaturaComponent'
+
 
 import ListProyeccionFullTimeComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/ListProyeccionFullTimeComponent';
 import CreateProyeccionFulltimeComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/CreateProyeccionFulltimeComponent';
 import ViewProyeccionFulltimeComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/ViewProyeccionFulltimeComponent';
+
 import HomeComponent from './components/PageComponents/HomeComponent/HomeComponent';
 
 import HeaderComponent from './components/PageComponents/Navbar/HeaderComponent';
@@ -113,8 +116,10 @@ function App() {
                            {/* ------------ ProyeccionAsignaturaComponent ----------- */}
                            <Route path = "/list-proyeccion_asignatura/:id" component = {ListProyeccionAsignaturaComponent}></Route>
                            <Route path = "/view-proyeccion_asignatura/:id" component = {ViewProyeccionAsignaturaComponent}></Route>
-                           <Route path = "/add-proyeccion_asignatura" component = {CreateProyeccionAsignatura}></Route>
-                           
+                           <Route path = "/add-proyeccion_asignatura/:id" component = {CreateProyeccionAsignatura}></Route>
+                           <Route path = "/update-proyeccion_asignatura/:id" component = {UpdateProyeccionAsignaturaComponent}></Route>
+
+                          
                            {/* ------------ ProyeccionFullTimeComponent ----------- */}
                            <Route path = "/list-proyeccion_fulltime/:id" component = {ListProyeccionFullTimeComponent}></Route>
                            <Route path = "/view-proyeccion_fulltime/:id" component = {ViewProyeccionFulltimeComponent}></Route>

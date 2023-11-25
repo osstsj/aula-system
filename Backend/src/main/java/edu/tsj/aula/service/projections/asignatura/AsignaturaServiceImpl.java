@@ -71,8 +71,7 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
 
         asignaturaRequest.getHoras_sustantivas_atencion_alumnos().getHoras_asignatura().setTipoAoB(tipoAoB);
 
-        Integer subtotal_1 = asignaturaRequest.getHoras_sustantivas_atencion_alumnos().getHoras_asignatura().getA() +
-                asignaturaRequest.getHoras_sustantivas_atencion_alumnos().getHoras_asignatura().getB() +
+        Integer subtotal_1 =
                 asignaturaRequest.getHoras_sustantivas_atencion_alumnos().getHoras_frente_grupo() +
                 asignaturaRequest.getHoras_sustantivas_atencion_alumnos().getAcademias().getPresidente() +
                 asignaturaRequest.getHoras_sustantivas_atencion_alumnos().getAcademias().getSecretario() +
@@ -107,6 +106,7 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
                 () -> new  ResourceNotFoundException("No se encontro proyeccion de asignatura con el id:".concat(id_asignatura.toString()),
                         HttpStatus.NOT_FOUND)
         );
+
         carreraEntity = carreraRepository.findById(id_carrera).orElseThrow(
                 ()-> new ResourceNotFoundException((" No se encontro carrera... con el id: ".concat(id_carrera.toString())),
                         HttpStatus.NOT_FOUND));
@@ -148,8 +148,7 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
         exisitingAsignatura.getHoras_sustantivas_atencion_alumnos()
                 .setActividades_complementarias(asignaturaRequest.getHoras_sustantivas_atencion_alumnos().getActividades_complementarias());
 
-        Integer subtotal_1 = asignaturaRequest.getHoras_sustantivas_atencion_alumnos().getHoras_asignatura().getA() +
-                asignaturaRequest.getHoras_sustantivas_atencion_alumnos().getHoras_asignatura().getB() +
+        Integer subtotal_1 =
                 asignaturaRequest.getHoras_sustantivas_atencion_alumnos().getHoras_frente_grupo() +
                 asignaturaRequest.getHoras_sustantivas_atencion_alumnos().getAcademias().getPresidente() +
                 asignaturaRequest.getHoras_sustantivas_atencion_alumnos().getAcademias().getSecretario() +

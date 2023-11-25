@@ -111,11 +111,11 @@ class UpdateDocenteComponent extends Component {
 
     getCategoria() {
         const categoriaList = [
-            { value: 'PROFESOR ASIGNATURA A', label: 'PROFESOR ASIGNATURA A' },
-            { value: 'PROFESOR ASIGNATURA B', label: 'PROFESOR ASIGNATURA B' },
-            { value: 'PROFESOR ASOCIADO A', label: 'PROFESOR ASOCIADO A' },
-            { value: 'PROFESOR ASOCIADO B', label: 'PROFESOR ASOCIADO B' },
-            { value: 'PROFESOR ASOCIADO C', label: 'PROFESOR ASOCIADO C' },
+            { value: 'PROFESOR ASIGNATURA - A', label: 'PROFESOR ASIGNATURA - A' },
+            { value: 'PROFESOR ASIGNATURA - B', label: 'PROFESOR ASIGNATURA - B' },
+            { value: 'PROFESOR ASOCIADO - A', label: 'PROFESOR ASOCIADO - A' },
+            { value: 'PROFESOR ASOCIADO - B', label: 'PROFESOR ASOCIADO - B' },
+            { value: 'PROFESOR ASOCIADO - C', label: 'PROFESOR ASOCIADO - C' },
 
         ]
         this.setState({ categorias: categoriaList })
@@ -165,7 +165,7 @@ class UpdateDocenteComponent extends Component {
             <div  className='' >
                 <div className = "">
                         <div className = "row justify-content-center">
-                            <div className="card col-9 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
+                            <div className="card col-10 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                                 <div className="card-body">
                                     <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                                         <h2 className="h3 Title">Actualizar Docente</h2>
@@ -212,56 +212,51 @@ class UpdateDocenteComponent extends Component {
                                         </div>
 
                                         <div className="row mb-3 mt-4">
-                                            <div className="col-3">
-                                                <div className="form-outline">
-                                                <label>Lista de Lista de UAs</label>
-                                                    <Select
+                                        <div className="col-3">
+                                            <div className="form-outline">
+                                                <label>Lista de Unidades Académicas</label>
+                                                <Select
                                                     rules={{ required: true }}
-                                                        options={this.state.unidades}
-                                                        onChange={(e) => this.onChangeUnidadAcademicaHandler(e)}
-                                                        placeholder="Seleccione un carrera..."
-                                                        value={{ label: this.state.unidad_academica === "" ? "Seleccione UA..." : this.state.unidad_academica }}
-                                                    />
-                                                </div>
+                                                    options={this.state.unidades}
+                                                    onChange={(e) => this.onChangeUnidadAcademicaHandler(e)}
+                                                    value={{ label: this.state.unidad_academica === "" ? "Seleccione UA..." : this.state.unidad_academica }}
+                                                />
                                             </div>
-                                            <div className="col-3">
-                                                <div className="form-outline">
+                                        </div>
+                                        <div className="col-4">
+                                            <div className="form-outline">
                                                 <label>Lista de Categorías</label>
-                                                    <Select
+                                                <Select
                                                     rules={{ required: true }}
                                                         options={this.state.categorias}
                                                         onChange={(e) => this.onChangeCategoriaHandler(e)}
-                                                        placeholder="Seleccione un carrera..."
                                                         value={{ label: this.state.categoria === "" ? "Seleccione una categoria..." : this.state.categoria }}
                                                     />
                                                 </div>
                                             </div>
-                                            <div className="col-4">
+                                            <div className="col-3">
                                                 <div className="form-outline">
                                                 <label>Lista de actividades</label>
-                                                    <Select
+                                                <Select
                                                     rules={{ required: true }}
                                                         options={this.state.actividades}
                                                         onChange={(e) => this.onChangeActividadHandler(e)}
-                                                        placeholder="Seleccione un carrera..."
-                                                        value={{ label: this.state.actividad === "" ? "Seleccione una actividad..." : this.state.actividad }}
+                                                        value={{ label: this.state.actividad === "" ? "Seleccione actividad..." : this.state.actividad }}
                                                     />
                                                 </div>
                                             </div>
-
                                             <div className="col-2">
                                                 <div className="form-outline">
                                                 <label>Estatus</label>
                                                     <Select
+                                                    isDisabled={true}
                                                       onChange={(e) => this.onChangeEstatusHandler(e)}
                                                       options={this.state.estatusList}
-                                                      value={{label: this.state.estatus === "" ? "Estatus..." : this.state.estatus}}
+                                                      value={{label: this.state.estatus}}
                                                     />
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        
+                                    </div>                                    
 
                                         <br />
                                             <div className="card-footer text-muted">

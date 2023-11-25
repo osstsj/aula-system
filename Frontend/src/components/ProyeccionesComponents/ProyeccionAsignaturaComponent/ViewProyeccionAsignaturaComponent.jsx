@@ -6,13 +6,14 @@ class ViewProyeccionAsignaturaComponent extends Component {
         super(props)
 
         this.state = {
-            id: this.props.match.params.id,
+            id: this.props.match.params.id, // asignatura id
                 // profe_asignatura
                 clave_programa: "",
                 codigo_nomina: "",
                 grado_academico: "",
                 nombre_docente: "",
                 folio: "",
+                id_folio: null,
 
                 // horas_sustantivas_atencion_alumnos
                     // horas_asignatura: 
@@ -59,6 +60,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
             this.setState({
                 // Asignatura
                 folio: asignatura.folio.folio,
+                id_folio: asignatura.folio.id,
                     // profe_asignatura: 
                     clave_programa: asignatura.profe_asignatura.clave_programa.clave_programa,
                     codigo_nomina: asignatura.profe_asignatura.codigo_nomina,
@@ -105,8 +107,8 @@ class ViewProyeccionAsignaturaComponent extends Component {
         })
     }
 
-    back(){
-        this.props.history.push('/');
+    back(id){
+        this.props.history.push(`/list-proyeccion_asignatura/${this.state.id_folio}`);
     }
 
 
@@ -481,7 +483,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
 
                             <br />
                             <div className="card-footer text-muted">
-                                <button className = "btn btn-secondary mt-0" onClick={this.back.bind(this)} style= {{marginLeft: "10px"}}>Regresar</button>
+                                <button className = "btn btn-secondary mt-0" onClick={() => this.back(this.state.id)} style= {{marginLeft: "10px"}}>Regresar</button>
                             </div>
                         </div>
                     </div>

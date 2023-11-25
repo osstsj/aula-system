@@ -95,12 +95,7 @@ class HeaderComponent extends Component {
                                         </a>
                                         <a className="dropdown-item" href="/create-folio-asignatura">
                                             Crear Nuevo Folio por Asignatura
-                                        </a>
-
-                                        <hr />    
-                                        <a className="dropdown-item" href="/add-proyeccion_asignatura">
-                                            Crear Proyeccion por Asignatura
-                                        </a>                                                                           
+                                        </a>                                                                          
                                     </div>
                                 </div>
                                 <div className="dropdown-submenu">
@@ -113,12 +108,7 @@ class HeaderComponent extends Component {
                                         </a>
                                         <a className="dropdown-item" href="/create-folio-fulltime">
                                             Crear Nuevo Folio por Tiempo Completo
-                                        </a>
-                                        
-                                        <hr />  
-                                        <a className="dropdown-item" href="/add-proyeccion_fulltime">
-                                            Crear Proyeccion por Tiempo Completo
-                                        </a>                                        
+                                        </a>                                 
                                     </div>
                                 </div>
                             </div>

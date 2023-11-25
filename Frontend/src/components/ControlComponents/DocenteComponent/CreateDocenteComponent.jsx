@@ -105,11 +105,11 @@ class CreateDocenteComponent extends Component {
 
     getCategoria() {
         const categoriaList = [
-            { value: 'PROFESOR ASIGNATURA A', label: 'PROFESOR ASIGNATURA A' },
-            { value: 'PROFESOR ASIGNATURA B', label: 'PROFESOR ASIGNATURA B' },
-            { value: 'PROFESOR ASOCIADO A', label: 'PROFESOR ASOCIADO A' },
-            { value: 'PROFESOR ASOCIADO B', label: 'PROFESOR ASOCIADO B' },
-            { value: 'PROFESOR ASOCIADO C', label: 'PROFESOR ASOCIADO C' },
+            { value: 'PROFESOR ASIGNATURA - A', label: 'PROFESOR ASIGNATURA - A' },
+            { value: 'PROFESOR ASIGNATURA - B', label: 'PROFESOR ASIGNATURA - B' },
+            { value: 'PROFESOR ASOCIADO - A', label: 'PROFESOR ASOCIADO - A' },
+            { value: 'PROFESOR ASOCIADO - B', label: 'PROFESOR ASOCIADO - B' },
+            { value: 'PROFESOR ASOCIADO - C', label: 'PROFESOR ASOCIADO - C' },
 
         ]
         this.setState({ categorias: categoriaList })
@@ -205,7 +205,7 @@ class CreateDocenteComponent extends Component {
                                     </div>
 
                                     <div className="row mb-3 mt-4">
-                                        <div className="col-4">
+                                        <div className="col-3">
                                             <div className="form-outline">
                                                 <label>Lista de Unidades Académicas</label>
                                                 <Select
@@ -216,7 +216,7 @@ class CreateDocenteComponent extends Component {
                                                 />
                                             </div>
                                         </div>
-                                        <div className="col-3">
+                                        <div className="col-4">
                                             <div className="form-outline">
                                                 <label>Lista de Categorías</label>
                                                 <Select

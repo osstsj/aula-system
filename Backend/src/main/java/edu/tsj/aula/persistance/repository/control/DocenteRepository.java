@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -22,4 +23,5 @@ public interface DocenteRepository extends JpaRepository<DocenteEntity, Long> {
             "AND (DE.categoria= 'PROFESOR ASOCIADO - A' " +
             "OR DE.categoria= 'PROFESOR ASOCIADO - B' OR DE.categoria= 'PROFESOR ASOCIADO - C')")
     List<DocenteEntity> findAllByCategoriaPTCFulltime(Long id_unidad);
+
 }
