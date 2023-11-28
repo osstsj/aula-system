@@ -68,9 +68,14 @@ public class UnidadController {
         }
     }
 
-    @GetMapping(value = "/unidad_dependers")
-    public Boolean checkUnidadDependers() {
-        return unidadService.checkUnidadDependersObjects();
+    @GetMapping(value = "/unidad_dependers/{id_unidad}")
+    public ResponseEntity<Boolean> checkUnidadDependersByUnidadId(@PathVariable Long id_unidad) {
+        try {
+           var result = unidadService.checkUnidadDependersByUnidadId(id_unidad);
+           return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/unidad/{id}")

@@ -14,12 +14,13 @@ class ListFolioFulltimeComponent extends Component {
 
             unidad: '',
             unidades: [],
+
+            isModalOpen: false, // Estado para controlar la apertura/cierre del modal
+            folioToDeleteId: null, // Estado para almacenar el ID de la colegiatura a eliminar
         };
 
         this.addFolio = this.addFolio.bind(this);
-        // this.editFolios = this.editFolios.bind(this);
-        // this.deleteFolios = this.deleteFolios.bind(this);
-        // this.viewFolios = this.viewFolios.bind(this);
+        this.deleteFolioById = this.deleteFolioById.bind(this);
 
         this.onChangeUnidadHandler = this.onChangeUnidadHandler.bind(this);
     }
@@ -74,6 +75,49 @@ class ListFolioFulltimeComponent extends Component {
         );
     }
 
+
+    deleteFolioById(id) {
+        FolioFulltimeService.checkFolioFulltimeDependers(id).then( res => {
+            if (res.data === false ) {
+                FolioFulltimeService.deleteFolioFulltimeById(id).then( () => {
+                    this.setState({
+                        folios: this.state.folios.filter(folio => folio.id != id),
+                        isModalOpen: false, // Cierra el modal después de eliminar
+                        folioToDeleteId: null, // Restablece el ID de la colegiatura
+                    })
+                }).catch(() => {
+                    alert("Error al intentar eliminar la proyeccion asignatura...");
+                    this.props.history.push('/list-folio-fulltime');
+                });
+            } else {
+                alert("El folio asignatura no es posible eliminar porque esta presente en otros modulos. \n" +
+                "por favor verifique: Proyecciones Asignatura");
+                this.setState({
+                    isModalOpen: false, // Cierra el modal después de eliminar
+                    folioToDeleteId: null}) // Restablece el ID de la colegiatura)
+
+                this.props.history.push('/list-folio-fulltime');
+            }
+        }).catch(() => {
+            alert("Error al intentar eliminar la proyeccion asignatura...");
+            this.props.history.push('/list-folio-fulltime');
+        });
+    }
+
+    toggleModal = (folioId) => {
+        this.setState({
+            isModalOpen: !this.state.isModalOpen,
+            folioToDeleteId: folioId, // Establece el ID de la colegiatura a eliminar
+        });
+    }
+
+    // Método para cerrar el modal
+    closeModal = () => {
+        this.setState({
+            isModalOpen: false,
+            folioToDeleteId: null, // Restablece el ID de la colegiatura
+        });
+    }
 
     render() {
         return (

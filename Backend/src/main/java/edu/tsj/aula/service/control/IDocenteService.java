@@ -25,4 +25,6 @@ public interface IDocenteService {
     DocenteResponseDto updateDocenteById(Long id, Long id_unidad, DocenteRequestDto docenteRequestDto);
 
     HashMap<String, String> deleteDocenteById(Long id);
+
+    Boolean checkDocenteDependers(Long id_unidad);
 }

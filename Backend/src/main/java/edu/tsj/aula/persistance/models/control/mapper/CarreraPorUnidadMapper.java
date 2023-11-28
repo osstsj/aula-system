@@ -27,5 +27,4 @@ public interface CarreraPorUnidadMapper {
     @Mapping(source = "request.modalidad", target = "modalidad")
     CarreraPorUnidadEntity requestToEntity(CarreraPorUnidadRequestDto request);
 
-
 }

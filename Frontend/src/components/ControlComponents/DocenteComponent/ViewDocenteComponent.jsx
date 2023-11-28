@@ -31,6 +31,7 @@ class ViewPlantelComponent extends Component {
                 categoria: docente.categoria, 
                 actividad: docente.actividad,
                 estatus: docente.estatus,
+                codigo_nomina: docente.codigo_nomina,
                 fecha_creacion: docente.fecha_creacion,
                 fecha_actualizacion: docente.fecha_actualizacion
             });
@@ -129,6 +130,18 @@ class ViewPlantelComponent extends Component {
                                 <div className="col">
                                     <div className="form-outline">
                                         <div className=""><i>{this.state.actividad}</i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="row mb-3">
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <label className=""><b>Codigo Nomina:</b> </label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className=""><i>{this.state.codigo_nomina}</i></div>
                                     </div>
                                 </div>
                             </div>

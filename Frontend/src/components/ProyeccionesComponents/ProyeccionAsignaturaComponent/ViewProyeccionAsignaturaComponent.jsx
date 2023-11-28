@@ -49,9 +49,6 @@ class ViewProyeccionAsignaturaComponent extends Component {
         }
     }
 
-
-
-
     componentDidMount() {
         AsignaturaProyeccionService.getProyeccionesAsignaturaById(this.state.id)
         .then(res =>  {
@@ -62,8 +59,8 @@ class ViewProyeccionAsignaturaComponent extends Component {
                 folio: asignatura.folio.folio,
                 id_folio: asignatura.folio.id,
                     // profe_asignatura: 
-                    clave_programa: asignatura.profe_asignatura.clave_programa.clave_programa,
-                    codigo_nomina: asignatura.profe_asignatura.codigo_nomina,
+                    clave_programa: asignatura.profe_asignatura.clave_programa.carrera_nombre.clave_programa,
+                    codigo_nomina: asignatura.profe_asignatura.nombre_docente.codigo_nomina,
                     grado_academico: asignatura.profe_asignatura.grado_academico,
                     nombre_docente: asignatura.profe_asignatura.nombre_docente.nombre_completo,
                    
@@ -110,7 +107,6 @@ class ViewProyeccionAsignaturaComponent extends Component {
     back(id){
         this.props.history.push(`/list-proyeccion_asignatura/${this.state.id_folio}`);
     }
-
 
     render() {
         

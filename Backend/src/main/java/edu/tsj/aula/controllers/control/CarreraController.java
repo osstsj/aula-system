@@ -79,6 +79,16 @@ public class CarreraController {
         }
     }
 
+    @GetMapping(value="/carrera_dependers/{id}")
+    public ResponseEntity<Boolean> checkCarreraDependersById(@PathVariable Long id) {
+        try {
+            var result = carreraService.checkCarreraDependers(id);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @DeleteMapping("/carrera/{id}")
     public ResponseEntity<HashMap<String, String>> deleteCarreraById(@PathVariable Long id) {
         try {

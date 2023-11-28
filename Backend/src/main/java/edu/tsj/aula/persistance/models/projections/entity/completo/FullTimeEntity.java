@@ -42,7 +42,6 @@ public class FullTimeEntity {
         private CarreraEntity clave_programa;
     */
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -70,17 +69,25 @@ public class FullTimeEntity {
     @JoinColumn(name = "id_folio", nullable = false)
     private FolioFulltimeEntity folio;
 
-    @Column
-    private Integer Total;
+    @Column private Integer Total;
 
-    @CreationTimestamp
-    private LocalDateTime fecha_creacion;
+    @CreationTimestamp private LocalDateTime fecha_creacion;
 
-    @UpdateTimestamp
-    private LocalDateTime fecha_actualizacion;
+    @Column private String observaciones;
 
-    @Column
-    private String observaciones;
+
+    // ------- seccion de cambios ------------
+    @UpdateTimestamp private LocalDateTime fecha_actualizacion;
+
+    @Column private Integer carga_horaria_anterior;
+    @Column private String nivel_ptc_anterior;
+    @Column private Integer carga_horaria_nueva;
+    @Column private String nivel_ptc_nuevo;
+    @Column private String modificacion_aplica_a_partir_de;   // 2da etapa
+    @Column private String no_oficio_respuesta;               // 2da etapa
+    @Column private String no_de_oficio_academia;             // 2da etapa
+    @Column private String fecha_en_que_aplica_sistema;       // 2da etapa
+    @Column private String observacion_modificacion;
 }
 
 

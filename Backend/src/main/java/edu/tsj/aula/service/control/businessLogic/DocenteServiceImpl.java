@@ -158,6 +158,7 @@ public class DocenteServiceImpl implements IDocenteService {
             existingDocente.get().setCategoria(docenteRequestDto.getCategoria());
             existingDocente.get().setActividad(docenteRequestDto.getActividad());
             existingDocente.get().setEstatus(docenteRequestDto.getEstatus());
+            existingDocente.get().setCodigo_nomina(docenteRequestDto.getCodigo_nomina());
             existingDocente.get().setUnidad_academica(unidadEntity);
             existingDocente.get().setFecha_actualizacion(LocalDateTime.now());
 
@@ -192,6 +193,21 @@ public class DocenteServiceImpl implements IDocenteService {
             return null;
         } catch (Exception e) {
             LOGGER.error("Error al intentar eliminar al docente con el id: ".concat(id.toString()));
+            throw new RuntimeException("Runtime Exception: ".concat(e.getMessage()));
+        }
+    }
+
+    @Override
+    public Boolean checkDocenteDependers(Long id_docente) {
+        LOGGER.info("Se ha ejecutado el metodo checkDocenteDependers");
+        try {
+            // true - hay docentes presentes en otras tablas
+            return (docenteRepository.checkDocenteDependersAsignatura(id_docente) +
+                    docenteRepository.checkFulltimeDependersFulltime(id_docente)
+            ) > 0;
+
+        } catch (Exception e) {
+            LOGGER.error("Error al intentar consultar el docente con el id: ".concat(id_docente.toString()));
             throw new RuntimeException("Runtime Exception: ".concat(e.getMessage()));
         }
     }

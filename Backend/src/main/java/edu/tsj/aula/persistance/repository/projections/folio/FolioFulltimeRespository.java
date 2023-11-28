@@ -16,4 +16,7 @@ public interface FolioFulltimeRespository extends JpaRepository<FolioFulltimeEnt
     @Query("SELECT COUNT(FF.numero) FROM FolioFulltimeEntity AS FF WHERE FF.unidad_academica.id= :id_unidad AND "+
             "FF.periodo= :periodo AND FF.periodoAoB= :AoB")
     Integer getSecuenciaByUnidad_academicaAndPeriodoAndPeriodoAoB(Long id_unidad, Integer periodo, String AoB);
+
+    @Query("SELECT COUNT(FTE.folio.id) FROM FullTimeEntity AS FTE WHERE FTE.folio.id= :id_folio_fulltime")
+    Integer checkFolioFulltimeDependers(Long id_folio_fulltime);
 }

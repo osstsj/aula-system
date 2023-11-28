@@ -25,17 +25,29 @@ class ListDocenteComponent extends Component {
     }
 
     deleteDocenteById(id) {
-        // rest api
-        DocenteService.deleteDocenteById(id).then(res => {
-            this.setState({
-                docentes: this.state.docentes.filter(docente => docente.id !== id),
-                isModalOpen: false, // Cierra el modal después de eliminar
-                docenteToDeleteId: null, // Restablece el ID de la colegiatura
-            })
-        }).catch(() => {
-            alert("Error al intentar eliminar al docente...");
-            this.props.history.push('/list-docente');
-        });
+        DocenteService.checkDocenteDependersById(id).then(res => {
+            if (res.data === false) {
+                // rest api
+                DocenteService.deleteDocenteById(id).then( () => {
+                    this.setState({
+                        docentes: this.state.docentes.filter(docente => docente.id !== id),
+                        isModalOpen: false, // Cierra el modal después de eliminar
+                        docenteToDeleteId: null, // Restablece el ID de la colegiatura
+                    })
+                }).catch(() => {
+                    alert("Error al intentar eliminar al docente...");
+                    this.props.history.push('/list-docente');
+                });
+            } else {
+                alert("La unidad academica no es posible eliminar porque esta presente en otros modulos. \n" +
+                "por favor verifique: Proyecciones Asignatura/Tiempo Completo");
+                this.setState({
+                    isModalOpen: false, // Cierra el modal después de eliminar
+                    docenteToDeleteId: null}) // Restablece el ID de la colegiatura)
+
+                this.props.history.push('/list-docente');
+            }
+        })       
     }
 
     viewDocenteById(id) {
@@ -144,10 +156,6 @@ class ListDocenteComponent extends Component {
         const boton = {
             marginLeft: '1rem',
             marginRight: '1rem'
-        }
-
-        const red = {
-            
         }
 
         return (

@@ -5,7 +5,6 @@ import edu.tsj.aula.persistance.models.control.dto.unidadDto.UnidadRequestDto;
 import edu.tsj.aula.persistance.models.control.dto.unidadDto.UnidadResponseDto;
 import edu.tsj.aula.persistance.models.control.entity.UnidadEntity;
 import edu.tsj.aula.persistance.models.control.mapper.UnidadMapper;
-import edu.tsj.aula.persistance.repository.control.ExtensionRepository;
 import edu.tsj.aula.persistance.repository.control.UnidadRepository;
 import edu.tsj.aula.service.control.IUnidadService;
 import lombok.AllArgsConstructor;
@@ -99,15 +98,6 @@ public class UnidadServiceImpl implements IUnidadService {
         }
     }
 
-    @Override
-    public Boolean checkUnidadDependersObjects() {
-        return (
-                unidadRepository.checkUnidadDependersCarreraPorUnidad() + unidadRepository.checkUnidadDependersOfertaAcademica() +
-                unidadRepository.checkUnidadDependersAreas() + unidadRepository.checkUnidadDependersDocente() +
-                unidadRepository.checkUnidadDependersFolioAsignatura() + unidadRepository.checkUnidadDependersFolioFulltime()
-        ) > 0;
-    }
-
     @Transactional
     @Override
     public HashMap<String, String> deleteUnidadById(Long id) {
@@ -129,5 +119,14 @@ public class UnidadServiceImpl implements IUnidadService {
         }
     }
 
+    @Override
+    public Boolean checkUnidadDependersByUnidadId(Long id_unidad) {
+        return (
+                unidadRepository.checkUnidadDependersCarreraPorUnidad(id_unidad) + unidadRepository.checkUnidadDependersOfertaAcademica(id_unidad) +
+                        unidadRepository.checkUnidadDependersAreas(id_unidad) + unidadRepository.checkUnidadDependersDocente(id_unidad) +
+                        unidadRepository.checkUnidadDependersFolioAsignatura(id_unidad) + unidadRepository.checkUnidadDependersFolioFulltime(id_unidad) +
+                        unidadRepository.checkUnidadDependersExtensiones(id_unidad)
+        ) > 0; // true - hay unidades presentes en otras tablas
+    }
 
 }

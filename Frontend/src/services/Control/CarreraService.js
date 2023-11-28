@@ -80,6 +80,20 @@ class CarreraService {
             }
         });
     }
+
+    checkCarreraDependersById(carreraId) {
+        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "carrera_dependers/" + carreraId)
+        .catch(err => {
+            if (err.response) {
+                console.error("Error in response for checkCarreraDependersById...");
+            } else if(err.request) {
+                console.error("Error in request for checkCarreraDependersById...");
+            } else {
+                console.error("Something happend, unknown error for checkCarreraDependersById");
+            }
+        });
+    }
+
 }
 
 // Exporting the class' objects

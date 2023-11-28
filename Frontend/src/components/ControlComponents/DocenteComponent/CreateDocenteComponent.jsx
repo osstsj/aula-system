@@ -16,6 +16,7 @@ class CreateDocenteComponent extends Component {
             unidad_academica: '',
             categoria: '',
             actividad: '',
+            codigo_nomina: '',
             estatus: 'Activo',
             
             isLoading: false, // Nuevo estado para controlar la visibilidad del spinner
@@ -32,6 +33,7 @@ class CreateDocenteComponent extends Component {
         this.onChangeUnidadAcademicaHandler = this.onChangeUnidadAcademicaHandler.bind(this);
         this.onChangeActividadHandler = this.onChangeActividadHandler.bind(this);
         this.onChangeEstatusHandler = this.onChangeEstatusHandler.bind(this);
+        this.onChangeCodigoNominaHandler = this.onChangeCodigoNominaHandler.bind(this);
         this.createDocente = this.createDocente.bind(this);
     }
 
@@ -44,7 +46,8 @@ class CreateDocenteComponent extends Component {
         this.state.unidad_academica.trim() === '' || 
         this.state.categoria.trim() === '' || 
         this.state.actividad.trim() === '' ||
-        this.state.estatus === '') {
+        this.state.estatus === '' || 
+        this.state.codigo_nomina.trim() === '') {
             alert('Por favor complete todos los campos requeridos.');
             return;
         }
@@ -56,6 +59,7 @@ class CreateDocenteComponent extends Component {
             categoria: this.state.categoria.trim(),
             actividad: this.state.actividad.trim(),
             estatus: this.state.estatus,
+            codigo_nomina: this.state.codigo_nomina.trim(),
         };
         // Mostrar el spinner al iniciar la acción
         this.setState({ isLoading: true });
@@ -143,7 +147,10 @@ class CreateDocenteComponent extends Component {
         this.setState({ actividad: event.label });
     }
     onChangeEstatusHandler = (event) => {
-        this.setState({estatus: event.label})
+        this.setState({estatus: event.label});
+    }
+    onChangeCodigoNominaHandler = (event) => {
+        this.setState({ codigo_nomina: event.target.value });
     }
 
 
@@ -164,7 +171,7 @@ class CreateDocenteComponent extends Component {
                                     <h2 className="h3 Title" >Agregar Docente</h2>
                                 </div>
                                 <br />
-                                <form>
+                                <form>                             
                                     <div className="row mb-3">
                                         <div className="col-6">
                                             <div className="form-outline">
@@ -240,17 +247,32 @@ class CreateDocenteComponent extends Component {
                                             </div>
                                             <div className="col-2">
                                                 <div className="form-outline">
-                                                <label>Estatus</label>
-                                                    <Select
-                                                    isDisabled={true}
-                                                      onChange={(e) => this.onChangeEstatusHandler(e)}
-                                                      options={this.state.estatusList}
-                                                      value={{label: this.state.estatus}}
+                                                    <label className="">Codigo de nomina: </label>
+                                                    <input
+                                                        placeholder="No de nomina..."
+                                                        className="form-control"
+                                                        value={this.state.codigo_nomina}
+                                                        onChange={this.onChangeCodigoNominaHandler}
+                                                        required
                                                     />
                                                 </div>
                                             </div>
                                     </div>
 
+                                    <hr />
+                                        <div className="row justify-content-end">
+                                        <div className="col-2">
+                                            <div className="row">
+                                                <label className='mr-2'>Estatus:</label>
+                                                    <Select
+                                                    isDisabled={true}
+                                                        onChange={(e) => this.onChangeEstatusHandler(e)}
+                                                        options={this.state.estatusList}
+                                                        value={{label: this.state.estatus}}
+                                                    />                                    
+                                            </div>
+                                        </div>
+                                    </div>
                                     <br />
                                     <div className="card-footer text-muted">
                                         {this.state.isLoading ? (

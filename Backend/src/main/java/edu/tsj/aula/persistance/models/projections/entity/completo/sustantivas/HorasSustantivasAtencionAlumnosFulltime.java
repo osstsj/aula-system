@@ -20,6 +20,8 @@ public class HorasSustantivasAtencionAlumnosFulltime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+//   para fines de consulta, en tabla se muestre el ptc estatico,
+//   para fines de actualizacion se muestra el ptc (categoria) de la entitidad de docente
     @Column private String ptc;
 
     @Column private Integer horas_frente_grupo;

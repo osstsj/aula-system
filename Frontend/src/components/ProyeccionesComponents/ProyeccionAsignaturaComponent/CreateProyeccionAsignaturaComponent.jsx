@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import AsignaturaProyeccionService from '../../../services/Proyecciones/AsignaturaProyeccionService';
 import FolioAsignaturaService from '../../../services/Proyecciones/FolioAsignaturaService';
-import CarreraService from '../../../services/Control/CarreraService';
-import UnidadService from '../../../services/Control/UnidadService';
+import CarreraPorUnidadService from '../../../services/Control/CarreraPorUnidadService';
 
 import Select from 'react-select'
 import '../../StyleGlobal/Style.css'
@@ -93,7 +92,7 @@ class CreateFolioAsignatura extends Component {
 
         let asignatura = {
             profe_asignatura: {
-                codigo_nomina: this.state.codigo_nomina,
+                // codigo_nomina: this.state.codigo_nomina,
                 grado_academico: this.state.grado_academico,
             },
                 horas_sustantivas_atencion_alumnos: {
@@ -160,33 +159,23 @@ class CreateFolioAsignatura extends Component {
     }
 
     cancel() {
-        this.props.history.push(`/list-proyeccion_asignatura/${this.state.id_folio}`);
+        this.props.history.push(`/list-proyeccion_asignatura/${this.state.id}`);
     }
 
     componentDidMount() {
         this.getNivel();
         this.getHorasAcademias_presidente();
         this.getHorasAcademias_secretario();
-        this.getCarreraList();
         this.getFolioById();
         this.getTipoUnidad();
+
+        this.setState(() => ({
+            disableA: true,
+            disableB: true
+        }));
     }
 
-    async getCarreraList() {
-        let options = null;
-        await CarreraService.getAllCarrerasByEstatus().then(res => {
-            const data = res.data;
-            options = data.map(d => ({
-                "value": d.clave_programa,
-                "label": d.clave_programa,
-                "id": d.id,
-            }))
-        }).catch(() => {
-            alert("Error al intentar traer las carreras...");
-            this.props.history.push('/');
-        });
-        this.setState({ carreras: options });
-    }
+
 
     async getFolioById() {
         await FolioAsignaturaService.getFolioById(this.state.id).then(res => {
@@ -202,15 +191,22 @@ class CreateFolioAsignatura extends Component {
         });
 
         this.getDocenteList(this.state.id_unidad);
+        this.getCarreraList(this.state.id_unidad);
     }
-
-    getTipoUnidad() {
-        const tiposlList = [
-            { value: 'Unidad Academica', label: 'Unidad Academica' },
-            { value: 'Unidad Academica + Extension', label:'Unidad Academica + Extension'},
-        ]
-
-        this.setState({ tipos_unidades: tiposlList });
+    async getCarreraList(id_unidad) {
+        let options = null;
+        await CarreraPorUnidadService.getCarreraPorUnidadEntitiesByUnidad_academicaId(id_unidad).then((res) => {
+            const data = res.data;
+            options = data.map(d => ({
+                "value": d.carrera_nombre.clave_programa,
+                "label": d.carrera_nombre.clave_programa,
+                "id": d.id,
+            }))
+        }).catch(() => {
+            alert("Error al intentar traer las carreras...");
+            this.props.history.push('/');
+        });
+        this.setState({ carreras: options });
     }
 
     async getDocenteList(id_unidad) {
@@ -221,6 +217,8 @@ class CreateFolioAsignatura extends Component {
                 "value": d.nombre_completo,
                 "label": d.nombre_completo,
                 "id": d.id,
+                "codigo_nomina": d.codigo_nomina,
+                "categoria":d.categoria,
             }))
             this.setState({ docentes: options });
         }).catch(() => {
@@ -229,6 +227,14 @@ class CreateFolioAsignatura extends Component {
         });
     }
 
+    getTipoUnidad() {
+        const tiposlList = [
+            { value: 'Unidad Academica', label: 'Unidad Academica' },
+            { value: 'Unidad Academica + Extension', label:'Unidad Academica + Extension'},
+        ]
+
+        this.setState({ tipos_unidades: tiposlList });
+    }
     getNivel() {
         const nivelList = [
             { value: 'LICENCIATURA', label: 'LICENCIATURA' },
@@ -277,6 +283,20 @@ class CreateFolioAsignatura extends Component {
     }
     onChangeNombreDocenteHandler = (event) => {
         this.setState({ nombre_docente: event.label });
+        this.setState({ codigo_nomina: event.codigo_nomina });
+ 
+        if(event.categoria === "PROFESOR ASIGNATURA - A") {
+            this.setState(() => ({
+                disableA: false,
+                disableB: true
+            }));
+        } else if(event.categoria === "PROFESOR ASIGNATURA - B") {
+            this.setState(() => ({
+                disableB: false,
+                disableA: true
+            }));
+        }
+
         this.setState({ id_docente: event.id}, this.enableAddButton);
     }
 
@@ -316,17 +336,11 @@ class CreateFolioAsignatura extends Component {
     }
 
     onChangeADisablerHandler = () => {
-        this.setState(() => ({
-            disableA: false,
-            disableB: true
-        }));
+        
         this.cleaningHours();
     }
     onChangeBDisablerHandler = () => {
-        this.setState(() => ({
-            disableB: false,
-            disableA: true
-        }));
+        
         this.cleaningHours();
     }
     onChangePresidenteDisablerHandler = () => {
@@ -419,9 +433,9 @@ class CreateFolioAsignatura extends Component {
     const fieldName = e.target.name;
     const fieldValue = parseInt(e.target.value, 10);
     e.target.value = Math.min(fieldValue, total_hours - (total - this.state[fieldName]));
-  };
+    };
 
-  onChangePresidenteHandler = (event) => {
+    onChangePresidenteHandler = (event) => {
         if(parseInt(event.label || 0) > (this.state.total_hours - (this.state.total - this.state.presidente))) {
             alert('No es posible elegir una hora mayor al limite disponible');
         } else {
@@ -539,6 +553,7 @@ class CreateFolioAsignatura extends Component {
                                                 <div className="form-outline">
                                                     <label>Código de Nómina:</label>
                                                     <input
+                                                    readOnly
                                                         placeholder="Ingrese código de nómina..."
                                                         className="form-control"
                                                         value={this.state.codigo_nomina}

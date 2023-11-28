@@ -108,6 +108,19 @@ class DocenteService {
             }
         });
     }
+
+    checkDocenteDependersById(id) {
+        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "docente_dependers/" + id)
+        .catch(err => {
+            if (err.response) {
+                console.error("Error in response for checkDocenteDependersById...");
+            } else if(err.request) {
+                console.error("Error in request for checkDocenteDependersById...");
+            } else {
+                console.error("Something happend, unknown error for checkDocenteDependersById");
+            }
+        });
+    }
 }
 
 

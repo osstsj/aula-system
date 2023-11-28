@@ -66,6 +66,21 @@ class UnidadService {
             }
         });
     }
+
+    checkUnidadDependersByUnidadId(unidadId) {
+        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL  + "unidad_dependers/" + unidadId)
+        .catch(err => {
+            if (err.response) {
+                console.error("Error in response for checkUnidadDependersByUnidadId...");
+            } else if(err.request) {
+                console.error("Error in request for checkUnidadDependersByUnidadId...");
+            } else {
+                console.error("Something happend, unknown error for checkUnidadDependersByUnidadId");
+            }
+        });
+    }
+
+
 }
 
 // Exporting the class' objects

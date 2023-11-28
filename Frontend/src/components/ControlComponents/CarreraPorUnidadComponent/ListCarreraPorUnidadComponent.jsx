@@ -27,17 +27,34 @@ class ListCarreraPorUnidadComponent extends Component {
     }
 
     deleteCarreraPorUnidad(id) {
-        // rest api
-        CarreraPorUnidadService.deleteCarreraPorUnidadlById(id).then(res => {
-            this.setState({
-                unidades: this.state.unidades.filter(unidad => unidad.id !== id),
-                isModalOpen: false, // Cierra el modal después de eliminar
-                unidadeToDeleteId: null, // Restablece el ID de la colegiatura
-            });
+        CarreraPorUnidadService.checkCarreraPorUnidadById(id).then( res => {
+            if (res.data ===  false) {
+                // rest api
+                CarreraPorUnidadService.deleteCarreraPorUnidadlById(id).then(res => {
+                    this.setState({
+                        unidades: this.state.unidades.filter(unidad => unidad.id !== id),
+                        isModalOpen: false, // Cierra el modal después de eliminar
+                        unidadeToDeleteId: null, // Restablece el ID de la colegiatura
+                    });
+                }).catch(() => {
+                    alert("Error al intentar eliminar la carrera por unidad...");
+                    this.props.history.push('/list-carrera_por_unidad');
+                });
+            } else {
+                alert("La unidad academica no es posible eliminar porque esta presente en otros modulos. \n" +
+                "por favor verifique: Proyecciones Asignatura/Tiempo Completo");
+               
+                this.setState({
+                    isModalOpen: false, // Cierra el modal después de eliminar
+                    unidadeToDeleteId: null}) // Restablece el ID de la colegiatura)
+
+                this.props.history.push('/list-carrera_por_unidad');
+            }
         }).catch(() => {
             alert("Error al intentar eliminar la carrera por unidad...");
             this.props.history.push('/list-carrera_por_unidad');
         });
+          
     }
     viewCarreraPorUnidad(id) {
         this.props.history.push(`view-carrera_por_unidad/${id}`);
@@ -181,7 +198,7 @@ class ListCarreraPorUnidadComponent extends Component {
                                 this.state.unidades.map((unidad, index) =>
                                     <tr key={unidad.id} >
                                         <td >{index + 1}</td>
-                                        <td className='table-conten'>{unidad.carrera_nombre}</td>
+                                        <td className='table-conten'>{unidad.carrera_nombre.nombre}</td>
                                         <td className='table-conten'>{unidad.nivel}</td>
                                         <td className='table-conten'>{unidad.unidad_academica.nombre_completo}</td>
                                         <td className='table-conten'>{unidad.modalidad}</td>

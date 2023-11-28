@@ -140,4 +140,11 @@ public class CarreraServiceImpl implements ICarreraService {
             throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
         }
     }
+
+    @Override
+    public Boolean checkCarreraDependers(Long id_unidad) {
+        return (carreraRepository.checkCarreraDependersCarreraPorUnidad(id_unidad) +
+                carreraRepository.checkCarreraDependersOfertaAcademica(id_unidad)
+                ) > 0; // true - hay carreras presentes en otras tablas
+    }
 }

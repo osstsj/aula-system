@@ -7,6 +7,12 @@ import CreateUnidadComponent  from './components/ControlComponents/UnidadCompone
 import UpdateUnidadComponent  from './components/ControlComponents/UnidadComponent/UpdateUnidadComponent';
 import ViewUnidadComponent  from './components/ControlComponents/UnidadComponent/ViewUnidadComponent';
 
+import ListExtensionComponent  from './components/ControlComponents/ExtensionesComponent/ListExtensionComponent';
+import CreateExtensionComponent  from './components/ControlComponents/ExtensionesComponent/CreateExtensionComponent';
+import UpdateExtensionComponent  from './components/ControlComponents/ExtensionesComponent/UpdateExtensionComponent';
+import ViewExtensionComponent  from './components/ControlComponents/ExtensionesComponent/ViewExtensionComponent';
+
+
 import CreateCarreraComponent from './components/ControlComponents/CarreraComponent/CreateCarreraComponent';
 import ListCarreraComponent from './components/ControlComponents/CarreraComponent/ListCarreraComponent';
 import UpdateCarreraComponent from './components/ControlComponents/CarreraComponent/UpdateCarreraComponent';
@@ -46,6 +52,7 @@ import UpdateProyeccionAsignaturaComponent from './components/ProyeccionesCompon
 import ListProyeccionFullTimeComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/ListProyeccionFullTimeComponent';
 import CreateProyeccionFulltimeComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/CreateProyeccionFulltimeComponent';
 import ViewProyeccionFulltimeComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/ViewProyeccionFulltimeComponent';
+import UpdateProyeccionFulltimeComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/UpdateProyeccionFulltimeComponent';
 
 import HomeComponent from './components/PageComponents/HomeComponent/HomeComponent';
 
@@ -76,6 +83,12 @@ function App() {
                           <Route path = "/add-unidad" component = {CreateUnidadComponent}></Route>
                           <Route path = "/update-unidad/:id" component = {UpdateUnidadComponent}></Route>
                           <Route path = "/view-unidad/:id" component = {ViewUnidadComponent}></Route>
+
+                          {/* -----------extension----------- */}
+                          <Route path = "/list-extension" exact component = {ListExtensionComponent}></Route>
+                          <Route path = "/add-extension" component = {CreateExtensionComponent}></Route>
+                          <Route path = "/update-extension/:id" component = {UpdateExtensionComponent}></Route>
+                          <Route path = "/view-extension/:id" component = {ViewExtensionComponent}></Route>
 
                           {/* -----------carrera---------------- */}
                           <Route path = "/list-carrera" component = {ListCarreraComponent}></Route>
@@ -123,13 +136,12 @@ function App() {
                            {/* ------------ ProyeccionFullTimeComponent ----------- */}
                            <Route path = "/list-proyeccion_fulltime/:id" component = {ListProyeccionFullTimeComponent}></Route>
                            <Route path = "/view-proyeccion_fulltime/:id" component = {ViewProyeccionFulltimeComponent}></Route>
-                           <Route path = "/add-proyeccion_fulltime" component = {CreateProyeccionFulltimeComponent}></Route>
+                           <Route path = "/add-proyeccion_fulltime/:id" component = {CreateProyeccionFulltimeComponent}></Route>
+                           <Route path = "/update-proyeccion_fulltime/:id" component = {UpdateProyeccionFulltimeComponent}></Route>
                           
                           {/* ------------ Longin ----------- */}
                           <Route path = "/login" component = {LoginComponents}></Route>
-                          <Route path = "/add-login" component = {CreateLoginComponent}></Route>
-                          {/* ------------ DocenteAsignaturaComponent ----------- */}
-
+                          <Route path = "/add-login" component = {CreateLoginComponent}></Route>        
 
                           {/* ------------ Acuse ----------- */}
                           <Route path = "/acuse" component = {AcuseComponent}></Route>

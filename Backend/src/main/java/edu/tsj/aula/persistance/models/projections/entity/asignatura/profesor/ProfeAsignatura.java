@@ -3,6 +3,7 @@ package edu.tsj.aula.persistance.models.projections.entity.asignatura.profesor;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import edu.tsj.aula.persistance.models.control.entity.CarreraEntity;
+import edu.tsj.aula.persistance.models.control.entity.CarreraPorUnidadEntity;
 import edu.tsj.aula.persistance.models.control.entity.DocenteEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,10 +29,7 @@ public class ProfeAsignatura {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_carrera", nullable = false)
-    private CarreraEntity clave_programa;
-//    private String clave_programa;
-
-    @Column private String codigo_nomina;
+    private CarreraPorUnidadEntity clave_programa;
 
     @Column private String grado_academico;
 
@@ -39,4 +37,6 @@ public class ProfeAsignatura {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_docente", nullable = false)
     private DocenteEntity nombre_docente;
+//    @Column private String codigo_nomina; se optiene de docente
+
 }

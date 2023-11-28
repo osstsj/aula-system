@@ -3,6 +3,7 @@ import '../../../StyleGlobal/Style.css';
 import FolioAsignaturaService from "../../../../services/Proyecciones/FolioAsignaturaService";
 import UnidadService from "../../../../services/Control/UnidadService";
 import Select from 'react-select'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'; // Importa Reactstrap para el modal
 
 class ListFolioAsignaturaComponent extends Component {
     constructor(props) {
@@ -14,12 +15,13 @@ class ListFolioAsignaturaComponent extends Component {
 
             unidad: '',
             unidades: [],
+
+            isModalOpen: false, // Estado para controlar la apertura/cierre del modal
+            folioToDeleteId: null, // Estado para almacenar el ID de la colegiatura a eliminar
         };
 
         this.addFolio = this.addFolio.bind(this);
-        // this.editFolios = this.editFolios.bind(this);
-        // this.deleteFolios = this.deleteFolios.bind(this);
-        // this.viewFolios = this.viewFolios.bind(this);
+        this.deleteFolioById = this.deleteFolioById.bind(this);
 
         this.onChangeUnidadHandler = this.onChangeUnidadHandler.bind(this);
     }
@@ -36,7 +38,7 @@ class ListFolioAsignaturaComponent extends Component {
             this.setState({folios: res.data});
         }).catch(() => {
             alert("Error al intentar traer los folios...");
-            this.props.history.push('/');
+            this.props.history.push('/list-folio-asignatura');
         });
 
         this.getUnidadList();
@@ -70,6 +72,49 @@ class ListFolioAsignaturaComponent extends Component {
         FolioAsignaturaService.getAllFoliosByUA(event.id).then(
             res => this.setState({ folios: res.data })
         );
+    }
+
+    deleteFolioById(id) {
+        FolioAsignaturaService.checkFolioAsignaturaDependers(id).then( res => {
+            if (res.data === false ) {
+                FolioAsignaturaService.deleteFolioAsignaturaById(id).then( () => {
+                    this.setState({
+                        folios: this.state.folios.filter(folio => folio.id != id),
+                        isModalOpen: false, // Cierra el modal después de eliminar
+                        folioToDeleteId: null, // Restablece el ID de la colegiatura
+                    })
+                }).catch(() => {
+                    alert("Error al intentar eliminar la proyeccion asignatura...");
+                    this.props.history.push('/list-folio-asignatura');
+                });
+            } else {
+                alert("El folio asignatura no es posible eliminar porque esta presente en otros modulos. \n" +
+                "por favor verifique: Proyecciones Asignatura");
+                this.setState({
+                    isModalOpen: false, // Cierra el modal después de eliminar
+                    folioToDeleteId: null}) // Restablece el ID de la colegiatura)
+
+                this.props.history.push('/list-folio-asignatura');
+            }
+        }).catch(() => {
+            alert("Error al intentar eliminar la proyeccion asignatura...");
+            this.props.history.push('/list-folio-asignatura');
+        });
+    }
+
+    toggleModal = (folioId) => {
+        this.setState({
+            isModalOpen: !this.state.isModalOpen,
+            folioToDeleteId: folioId, // Establece el ID de la colegiatura a eliminar
+        });
+    }
+
+    // Método para cerrar el modal
+    closeModal = () => {
+        this.setState({
+            isModalOpen: false,
+            folioToDeleteId: null, // Restablece el ID de la colegiatura
+        });
     }
 
 
@@ -125,22 +170,29 @@ class ListFolioAsignaturaComponent extends Component {
                                     <td className="table-conten">{folio.fecha_creacion}</td>
                                     <td className="table-conten">"Activo/Cerrado"</td>
                                     <td className="table-action">
-                                        {/* <button onClick={() => updateEstatus(folio.id)} className="btn btn-warning mt-0">
-                                            Actualizar
-                                        </button> */}
-                                        {/* <button style={boton} onClick={() => this.deletePlantel(folio.id)} className="btn btn-danger mt-0">
-                                            Eliminar
-                                        </button> */}
-                                        {/* <button onClick={() => this.viewProyeccion(folio.id === null | undefined ? )} className="btn btn-info mt-0"> */}
                                          <button onClick={() => this.viewProyeccion(folio.id)} className="btn btn-info mt-0">
                                             Ver Proyecion
                                         </button>
+                                        <button className="btn btn-danger mt-0" style={boton}
+                                                onClick={() => this.toggleModal(folio.id)} // Abre el modal y pasa el ID de la colegiatura
+                                            > Eliminar Folio</button>
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
+
+                <Modal isOpen={this.state.isModalOpen} toggle={this.closeModal}>
+                    <ModalHeader>Confirmar Eliminación</ModalHeader>
+                    <ModalBody>
+                        ¿Estás seguro de que deseas eliminar este docente?
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="danger" onClick={() => this.deleteFolioById(this.state.folioToDeleteId)}>Eliminar Folio</Button>
+                        <Button color="secondary" onClick={this.closeModal}>Cancelar</Button>
+                    </ModalFooter>
+                </Modal>
             </div>
         );
     }

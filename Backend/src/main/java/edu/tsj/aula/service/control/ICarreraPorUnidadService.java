@@ -7,13 +7,17 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface ICarreraPorUnidadService {
-    CarreraPorUnidadResponseDto createCarreraPorUnidad(CarreraPorUnidadRequestDto carreraPorUnidadRequestDto, Long id_unidad);
+    CarreraPorUnidadResponseDto createCarreraPorUnidad(CarreraPorUnidadRequestDto carreraPorUnidadRequestDto, Long id_unidad, Long id_carrera);
 
     List<CarreraPorUnidadResponseDto> getAllCarrerasPorUnidad();
 
     CarreraPorUnidadResponseDto getCarreraPorUnidadById(Long id);
 
-    CarreraPorUnidadResponseDto updateCarreraPorUnidadById(Long id, CarreraPorUnidadRequestDto carreraPorUnidadRequestDto, Long id_unidad);
+    List<CarreraPorUnidadResponseDto> getCarreraPorUnidadEntitiesByUnidad_academicaId(Long id_unidad);
+
+    CarreraPorUnidadResponseDto updateCarreraPorUnidadById(Long id, CarreraPorUnidadRequestDto carreraPorUnidadRequestDto, Long id_unidad, Long id_carrera);
 
     HashMap<String, String> deleteCarreraPorUnidadById(Long id);
+
+    Boolean checkCarreraPorUnidadById(Long id);
 }

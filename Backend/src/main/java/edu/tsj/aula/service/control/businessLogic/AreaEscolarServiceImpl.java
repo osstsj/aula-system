@@ -37,12 +37,10 @@ public class AreaEscolarServiceImpl implements IAreaEscolarService {
     @Override
     public AreaEscolarResponseDto createAreaEscolar(AreaEscolarRequestDto areaEscolarRequestDto, Long id_unidad) {
         LOGGER.info("Se ha ejecutado el metodo createAreaEscolar");
+        UnidadEntity getUnidadById = unidadRepository.findById(id_unidad).orElseThrow(
+                () -> new ResourceNotFoundException("No se encontrol unidad con el id {}".concat(id_unidad.toString()),
+                        HttpStatus.NOT_FOUND));
         try {
-            UnidadEntity getUnidadById = unidadRepository.findById(id_unidad).orElseThrow(
-                    () -> new ResourceNotFoundException("No se encontrol unidad con el id {}".concat(id_unidad.toString()),
-                    HttpStatus.NOT_FOUND));
-
-
             areaEscolarRequestDto.setUnidad_academica(getUnidadById);
 
             AreaEscolarEntity areaEscolarEntity = mapper.requestToEntity(areaEscolarRequestDto);
@@ -83,16 +81,16 @@ public class AreaEscolarServiceImpl implements IAreaEscolarService {
     @Override
     public AreaEscolarResponseDto updateAreaEscolar(Long id, AreaEscolarRequestDto areaEscolarRequestDto, Long id_unidad) {
         LOGGER.info("Se ha ejecutado el metodo updateAreaEscolarById");
-        try {
-            Optional<AreaEscolarEntity> existingAreaEscolarEntity = areaRepository.findById(id);
-            if (existingAreaEscolarEntity.isEmpty()) {
-                throw new ResourceNotFoundException("No se encontro un area ascolar para actualizar... con el id: ".concat(id.toString()),
-                        HttpStatus.NOT_FOUND);
-            }
+        Optional<AreaEscolarEntity> existingAreaEscolarEntity = areaRepository.findById(id);
+        if (existingAreaEscolarEntity.isEmpty()) {
+            throw new ResourceNotFoundException("No se encontro un area ascolar para actualizar... con el id: ".concat(id.toString()),
+                    HttpStatus.NOT_FOUND);
+        }
 
-            UnidadEntity getUnidadById = unidadRepository.findById(id_unidad).orElseThrow(
-                    () -> new ResourceNotFoundException("No se encontrol unidad con el id {}".concat(id_unidad.toString()),
-                            HttpStatus.NOT_FOUND));
+        UnidadEntity getUnidadById = unidadRepository.findById(id_unidad).orElseThrow(
+                () -> new ResourceNotFoundException("No se encontrol unidad con el id {}".concat(id_unidad.toString()),
+                        HttpStatus.NOT_FOUND));
+        try {
             areaEscolarRequestDto.setUnidad_academica(getUnidadById);
 
             existingAreaEscolarEntity.get().setArea(areaEscolarRequestDto.getArea());

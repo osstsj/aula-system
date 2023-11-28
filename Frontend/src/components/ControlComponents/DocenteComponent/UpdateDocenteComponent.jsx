@@ -17,6 +17,7 @@ class UpdateDocenteComponent extends Component {
             categoria: '',
             actividad: '',
             estatus: '',
+            codigo_nomina: '',
 
             unidades: [],
             categorias: [],
@@ -33,7 +34,8 @@ class UpdateDocenteComponent extends Component {
             this.state.apellido_materno.trim() === '' || 
             this.state.unidad_academica.trim() === '' || 
             this.state.categoria.trim() === '' || 
-            this.state.actividad.trim() === '') {
+            this.state.actividad.trim() === '' || 
+            this.state.codigo_nomina.trim() === '') {
                 alert('Por favor complete todos los campos requeridos.');
                 return;
             }
@@ -44,6 +46,7 @@ class UpdateDocenteComponent extends Component {
                 apellido_materno: this.state.apellido_materno.trim(),
                 categoria: this.state.categoria.trim(),
                 actividad: this.state.actividad.trim(),
+                codigo_nomina: this.state.codigo_nomina.trim(),
                 estatus: this.state.estatus,
             };
             // Mostrar el spinner al iniciar la acción
@@ -71,6 +74,7 @@ class UpdateDocenteComponent extends Component {
                 id_unidad: docente.unidad_academica.id,
                 actividad: docente.actividad,
                 estatus: docente.estatus,
+                codigo_nomina: docente.codigo_nomina,
             })
         })
         
@@ -149,10 +153,13 @@ class UpdateDocenteComponent extends Component {
     onChangeActividadHandler = (event) => {
         this.setState({actividad: event.label});
     }
-
     onChangeEstatusHandler = (event) => {
         this.setState({estatus: event.label})
     }
+    onChangeCodigoNominaHandler = (event) => {
+        this.setState({ codigo_nomina: event.target.value });
+    }
+
    
     cancel(){
         this.props.history.push('/list-docente');
@@ -247,16 +254,32 @@ class UpdateDocenteComponent extends Component {
                                             </div>
                                             <div className="col-2">
                                                 <div className="form-outline">
-                                                <label>Estatus</label>
-                                                    <Select
-                                                    isDisabled={true}
-                                                      onChange={(e) => this.onChangeEstatusHandler(e)}
-                                                      options={this.state.estatusList}
-                                                      value={{label: this.state.estatus}}
+                                                    <label className="">Codigo de nomina: </label>
+                                                    <input
+                                                        placeholder="No de nomina..."
+                                                        className="form-control"
+                                                        value={this.state.codigo_nomina}
+                                                        onChange={this.onChangeCodigoNominaHandler}
+                                                        required
                                                     />
                                                 </div>
                                             </div>
-                                    </div>                                    
+                                    </div>
+
+                                    <hr />
+                                        <div className="row justify-content-end">
+                                        <div className="col-2">
+                                            <div className="row">
+                                                <label className='mr-2'>Estatus:</label>
+                                                    <Select
+                                                    // isDisabled={true}
+                                                        onChange={(e) => this.onChangeEstatusHandler(e)}
+                                                        options={this.state.estatusList}
+                                                        value={{label: this.state.estatus}}
+                                                    />                                    
+                                            </div>
+                                        </div>
+                                    </div>                                   
 
                                         <br />
                                             <div className="card-footer text-muted">

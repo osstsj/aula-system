@@ -7,33 +7,24 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UnidadRepository extends JpaRepository<UnidadEntity, Long> {
-    @Query("SELECT COUNT(DE.unidad_academica) FROM DocenteEntity AS DE WHERE EXISTS " +
-            "(SELECT U.id FROM UnidadEntity as U WHERE U.id = DE.unidad_academica.id)"
-    )
-    Integer checkUnidadDependersDocente();
+    @Query("SELECT COUNT(DE.unidad_academica.id) FROM DocenteEntity AS DE WHERE DE.unidad_academica.id= :id_unidad")
+    Integer checkUnidadDependersDocente(Long id_unidad);
 
-    @Query("SELECT COUNT(CU.unidad_academica) FROM CarreraPorUnidadEntity AS CU WHERE EXISTS " +
-            "(SELECT U.id FROM UnidadEntity as U WHERE U.id = CU.unidad_academica.id)"
-    )
-    Integer checkUnidadDependersCarreraPorUnidad();
+    @Query("SELECT COUNT(EX.unidad.id) FROM ExtensionEntity AS EX WHERE EX.unidad.id= :id_unidad")
+    Integer checkUnidadDependersExtensiones(Long id_unidad);
 
-    @Query("SELECT COUNT(OA.unidad_academica) FROM OfertaAcademicaEntity AS OA WHERE EXISTS " +
-            "(SELECT U.id FROM UnidadEntity as U WHERE U.id = OA.unidad_academica.id)"
-    )
-    Integer checkUnidadDependersOfertaAcademica();
+    @Query("SELECT COUNT(CU.unidad_academica.id) FROM CarreraPorUnidadEntity AS CU WHERE CU.unidad_academica.id= :id_unidad")
+    Integer checkUnidadDependersCarreraPorUnidad(Long id_unidad);
 
-    @Query("SELECT COUNT(AE.unidad_academica) FROM AreaEscolarEntity AS AE WHERE EXISTS " +
-            "(SELECT U.id FROM UnidadEntity as U WHERE U.id = AE.unidad_academica.id)"
-    )
-    Integer checkUnidadDependersAreas();
+    @Query("SELECT COUNT(OA.unidad_academica.id) FROM OfertaAcademicaEntity AS OA WHERE OA.unidad_academica.id= :id_unidad")
+    Integer checkUnidadDependersOfertaAcademica(Long id_unidad);
 
-    @Query("SELECT COUNT(FA.unidad_academica) FROM FolioAsignaturaEntity AS FA WHERE EXISTS " +
-            "(SELECT U.id FROM UnidadEntity as U WHERE U.id = FA.unidad_academica.id)"
-    )
-    Integer checkUnidadDependersFolioAsignatura();
+    @Query("SELECT COUNT(AE.unidad_academica.id) FROM AreaEscolarEntity AS AE WHERE AE.unidad_academica.id= :id_unidad")
+    Integer checkUnidadDependersAreas(Long id_unidad);
 
-    @Query("SELECT COUNT(FF.unidad_academica) FROM FolioFulltimeEntity AS FF WHERE EXISTS " +
-            "(SELECT U.id FROM UnidadEntity as U WHERE U.id = FF.unidad_academica.id)"
-    )
-    Integer checkUnidadDependersFolioFulltime();
+    @Query("SELECT COUNT(FA.unidad_academica.id) FROM FolioAsignaturaEntity AS FA WHERE FA.unidad_academica.id= :id_unidad")
+    Integer checkUnidadDependersFolioAsignatura(Long id_unidad);
+
+    @Query("SELECT COUNT(FF.unidad_academica.id) FROM FolioFulltimeEntity AS FF WHERE FF.unidad_academica.id= :id_unidad")
+    Integer checkUnidadDependersFolioFulltime(Long id_unidad);
 }

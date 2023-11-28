@@ -31,7 +31,6 @@ public class OfertaAcademicaEntity {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIdentityReference(alwaysAsId=true)
     @JoinColumn(name = "id_carrera", nullable = false)
     private CarreraEntity carrera;
 

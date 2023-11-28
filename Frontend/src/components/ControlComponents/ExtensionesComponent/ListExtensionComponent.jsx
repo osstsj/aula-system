@@ -7,7 +7,7 @@ import 'jspdf-autotable'; // Importa la extensión jspdf-autotable
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'; // Importa Reactstrap para el modal
 
 
-class ListUnidadComponent extends Component {
+class ListExtensionComponent extends Component {
     constructor(props) {
         super(props);
 
@@ -193,4 +193,4 @@ closeModal = () => {
     }
 }
 
-export default ListUnidadComponent;
+export default ListExtensionComponent;

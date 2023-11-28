@@ -19,6 +19,7 @@ public interface DocenteMapper {
     @Mapping(source = "entity.categoria", target = "categoria")
     @Mapping(source = "entity.actividad",target = "actividad")
     @Mapping(source = "entity.estatus", target = "estatus")
+    @Mapping(source = "entity.codigo_nomina", target = "codigo_nomina")
     @Mapping(source = "entity.fecha_creacion", target = "fecha_creacion")
     @Mapping(source = "entity.fecha_actualizacion", target = "fecha_actualizacion")
     DocenteResponseDto entityToRespose(DocenteEntity entity);
@@ -32,5 +33,6 @@ public interface DocenteMapper {
     @Mapping(source = "request.categoria", target = "categoria")
     @Mapping(source = "request.actividad", target = "actividad")
     @Mapping(source = "request.estatus", target = "estatus")
+    @Mapping(source = "request.codigo_nomina", target = "codigo_nomina")
     DocenteEntity requestToEntity(DocenteRequestDto request);
 }

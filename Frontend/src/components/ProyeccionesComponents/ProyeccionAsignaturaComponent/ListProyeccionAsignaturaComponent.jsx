@@ -301,11 +301,11 @@ class ListProyeccionAsignaturaComponent extends Component {
 
                                         {/* PROFESORES DE ASIGNATURA - Clave de Programa Educativo */}
                                         <td align="center" className={`text-center table-content ${areColumnsVisible ? '' : 'collapse'
-                                            }`}>{asignatura.profe_asignatura.clave_programa.clave_programa}</td>
+                                            }`}>{asignatura.profe_asignatura.clave_programa.carrera_nombre.clave_programa}</td>
 
                                         {/* PROFESORES DE ASIGNATURA - Código de Nómina */}
                                         <td align="center" className={`text-center table-content  ${areColumnsVisible ? '' : 'collapse'
-                                            }`}>{asignatura.profe_asignatura.codigo_nomina}</td>
+                                            }`}>{asignatura.profe_asignatura.nombre_docente.codigo_nomina}</td>
 
                                         {/* PROFESORES DE ASIGNATURA - Grado Académico */}
                                         <td align="center" className={`text-center table-content  ${areColumnsVisible ? '' : 'collapse'

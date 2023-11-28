@@ -17,4 +17,7 @@ public interface FolioAsignaturaRepository extends JpaRepository<FolioAsignatura
     @Query("SELECT COUNT(FA.numero) FROM FolioAsignaturaEntity AS FA WHERE FA.unidad_academica.id= :id_unidad AND " +
             "FA.periodo= :periodo AND FA.periodoAoB= :AoB")
     Integer getSecuenciaByUnidad_academicaAndPeriodoAndPeriodoAoB(Long id_unidad, Integer periodo, String AoB);
+
+    @Query("SELECT COUNT(AE.folio.id) FROM AsignaturaEntity AS AE WHERE AE.folio.id= :id_folio_asignatura")
+    Integer checkFolioAsignaturaDependers(Long id_folio_asignatura);
 }

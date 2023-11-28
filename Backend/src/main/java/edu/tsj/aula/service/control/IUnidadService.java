@@ -17,8 +17,8 @@ public interface IUnidadService {
 
     UnidadResponseDto updateUnidadById(Long id, UnidadRequestDto unidadRequestDto);
 
-    Boolean checkUnidadDependersObjects();
-
     HashMap<String, String> deleteUnidadById(Long id);
+
+    Boolean checkUnidadDependersByUnidadId(Long id_unidad);
 
 }

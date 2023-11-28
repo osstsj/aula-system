@@ -15,6 +15,8 @@ class UpdateCarreraPorUnidadComponent extends Component {
         this.state = {
             id: this.props.match.params.id,
             id_unidad: null,
+            id_carrera: null,
+
             //inicializacion para lista de select
             carreras:[],
             planteles:[],
@@ -32,7 +34,7 @@ class UpdateCarreraPorUnidadComponent extends Component {
         CarreraPorUnidadService.getCarreraPorUnidadById(this.state.id).then((res) => {
             let unidad = res.data;
             this.setState({
-                carrera_nombre: unidad.carrera_nombre, 
+                carrera_nombre: unidad.carrera_nombre.nombre, 
                 unidad_academica: unidad.unidad_academica.nombre_completo, 
                 id_unidad: unidad.unidad_academica.id,
                 modalidad: unidad.modalidad,
@@ -51,14 +53,14 @@ class UpdateCarreraPorUnidadComponent extends Component {
     updateCarrera = (e) =>{
         e.preventDefault();
         let unidad = {
-            carrera_nombre: this.state.carrera_nombre.trim(), 
             modalidad: this.state.modalidad.trim(),
             nivel: this.state.nivel.trim()
         };
         
         console.log('unidad => ' + JSON.stringify(unidad));
         
-        CarreraPorUnidadService.updateCarreraPorUnidadById(this.state.id, unidad, this.state.id_unidad).then(res => {
+        CarreraPorUnidadService.updateCarreraPorUnidadById(this.state.id, unidad, this.state.id_unidad, this.state.id_carrera).then(
+            () => {
             this.props.history.push('/list-carrera_por_unidad');
         }).catch(() => {
             alert("Error al intentar actualizar la carrera por unidad...");
@@ -73,7 +75,8 @@ class UpdateCarreraPorUnidadComponent extends Component {
             const data = res.data;
             options = data.map(d => ({
                 "value": d.nombre,
-                "label": d.nombre
+                "label": d.nombre,
+                "id": d.id,
             }))
         }).catch(() => {
             alert("Error al intentar traer las carreras...");
@@ -121,6 +124,7 @@ class UpdateCarreraPorUnidadComponent extends Component {
 
     changeCarrerasHandler  = (event) => {
         this.setState({carrera_nombre: event.label});
+        this.setState({id_carrera: event.id});
     }
 
     changeUnidadesHandler = (event) => {
@@ -135,6 +139,7 @@ class UpdateCarreraPorUnidadComponent extends Component {
     changeNivelHandler = (event) => {
         this.setState({nivel: event.label});
     }
+    
 
     
    

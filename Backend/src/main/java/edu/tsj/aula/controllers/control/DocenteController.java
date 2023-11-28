@@ -87,6 +87,16 @@ public class DocenteController {
         }
     }
 
+    @GetMapping(value = "/docente_dependers/{id}")
+    public ResponseEntity<Boolean> checkDocenteDependersById(@PathVariable Long id) {
+        try {
+            var result = docenteService.checkDocenteDependers(id);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PutMapping(value = "/docente/{id}/{id_unidad}",
         produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE},
         consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})

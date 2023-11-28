@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import edu.tsj.aula.persistance.models.control.entity.CarreraEntity;
 import edu.tsj.aula.persistance.models.control.entity.UnidadEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +21,8 @@ import java.time.LocalDateTime;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class CarreraPorUnidadResponseDto {
     private Long id;
-    private String carrera_nombre;
+    private CarreraEntity carrera_nombre;
+
     private String nivel;
     private UnidadEntity unidad_academica;
     private String modalidad;

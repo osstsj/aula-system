@@ -24,4 +24,9 @@ public interface DocenteRepository extends JpaRepository<DocenteEntity, Long> {
             "OR DE.categoria= 'PROFESOR ASOCIADO - B' OR DE.categoria= 'PROFESOR ASOCIADO - C')")
     List<DocenteEntity> findAllByCategoriaPTCFulltime(Long id_unidad);
 
+    @Query("SELECT COUNT(A.profe_asignatura.nombre_docente.id) FROM AsignaturaEntity AS A WHERE A.profe_asignatura.nombre_docente.id= :id_docente")
+    Integer checkDocenteDependersAsignatura(Long id_docente);
+
+    @Query("SELECT COUNT(FT.profesor_fulltime.nombre_docente.id) FROM FullTimeEntity AS FT WHERE FT.profesor_fulltime.nombre_docente.id= :id_docente")
+    Integer checkFulltimeDependersFulltime(Long id_docente);
 }

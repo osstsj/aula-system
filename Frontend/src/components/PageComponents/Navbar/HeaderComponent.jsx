@@ -54,19 +54,30 @@ class HeaderComponent extends Component {
                                 Control Escolar
                             </a>
                             <div className="dropdown-menu">
-                                <a className="dropdown-item" href="/list-unidad">
-                                    <b>Lista de Unidades Académicas</b>
+                            <div className="dropdown-submenu">
+                                <a className="dropdown-item" href="/list-unidad">   
+                                    <b>Unidades Académicas</b>
                                 </a>
+                                    <div className="dropdown-menu">
+                                        <a className="dropdown-item" href="/list-unidad">
+                                            Lista Unidades Académicas
+                                        </a>
+                                        <a className="dropdown-item" href="/list-extension">
+                                            Lista de extensiones
+                                        </a>                                                                          
+                                    </div>
+                                </div>
+                                
                                 <a className="dropdown-item" href="/list-docente">
                                     <b>Lista de Docentes</b>
                                 </a>
                                 <a className="dropdown-item" href="/list-carrera">
                                     <b>Lista de Carreras</b>
                                 </a>
-                                <hr />
                                 <a className="dropdown-item" href="/list-carrera_por_unidad">
-                                    Lista de Carreras Por Unidad
+                                    <b> Lista de Carreras Por Unidad </b>
                                 </a>
+                                <hr />
                                 <a className="dropdown-item" href="/list-oferta-academica">
                                     Lista de Ofertas Académicas
                                 </a>

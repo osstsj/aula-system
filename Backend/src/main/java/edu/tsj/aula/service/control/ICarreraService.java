@@ -19,4 +19,6 @@ public interface ICarreraService {
     CarreraResponseDto updateCarreraById(Long id, CarreraRequestDto carreraRequestDto);
 
     HashMap<String, String> deleteCarreraById(Long id);
+
+    Boolean checkCarreraDependers(Long id_unidad);
 }

@@ -16,6 +16,7 @@ class CreateCarreraPorUnidadComponent extends Component {
             modalidades: [],
             niveles: [],
             id_unidad: null,
+            id_carrera: null,
 
             carrera_nombre: '',
             unidad_academica: '',
@@ -35,7 +36,6 @@ class CreateCarreraPorUnidadComponent extends Component {
         }
         e.preventDefault();
         let cPorU = {
-            carrera_nombre: this.state.carrera_nombre.trim(),
             modalidad: this.state.modalidad.trim(),
             nivel: this.state.nivel.trim()
         }
@@ -43,8 +43,8 @@ class CreateCarreraPorUnidadComponent extends Component {
         this.setState({ isLoading: true });
         console.log('Carrera por unidad academica: ' + JSON.stringify(cPorU));
 
-        CarreraPorUnidadService.createCarreraPorUnidad(cPorU, this.state.id_unidad).then(
-            res => {
+        CarreraPorUnidadService.createCarreraPorUnidad(cPorU, this.state.id_unidad, this.state.id_carrera).then(
+            () => {
                 this.props.history.push('/list-carrera_por_unidad')
         }).catch(() => {
             alert("Error al intentar crear la carrera por unidad...");
@@ -66,7 +66,8 @@ class CreateCarreraPorUnidadComponent extends Component {
             const data = res.data;
             options = data.map(d => ({
                 "value": d.nombre,
-                "label": d.nombre
+                "label": d.nombre,
+                "id": d.id,
             }))
         }).catch(() => {
             alert("Error al intentar traer las carreras...");
@@ -113,6 +114,8 @@ class CreateCarreraPorUnidadComponent extends Component {
 
     changeCarrerasHandler = (event) => {
         this.setState({ carrera_nombre: event.label });
+        this.setState({ id_carrera: event.id });
+
     }
     changeUnidadesHandler = (event) => {
         this.setState({ unidad_academica: event.label });

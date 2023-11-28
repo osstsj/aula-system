@@ -3,8 +3,8 @@ require('dotenv').config();
 
 
 class CarreraPorUnidadService {
-    createCarreraPorUnidad(carreraDto, id_unidad) {
-        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "carreraPorUnidad/" + id_unidad, carreraDto)
+    createCarreraPorUnidad(carreraDto, id_unidad, id_carrera) {
+        return axios.post(process.env.REACT_APP_LOCAL_API_BASE_URL + "carreraPorUnidad/" + id_unidad + "/" + id_carrera, carreraDto)
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for createCarreraPorUnidad...");
@@ -42,8 +42,21 @@ class CarreraPorUnidadService {
         });
     }
 
-    updateCarreraPorUnidadById(id, carreraPorUnidadDto, id_unidad) {
-        return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "carreraPorUnidad/" + id + "/" + id_unidad, carreraPorUnidadDto)
+    getCarreraPorUnidadEntitiesByUnidad_academicaId(id_unidad) {
+        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "carreraPorUnidad_by_id_unidad/" + id_unidad )
+        .catch(err => {
+            if (err.response) {
+                console.error("Error in response for getCarreraPorUnidadById...");
+            } else if(err.request) {
+                console.error("Error in request for getCarreraPorUnidadById...");
+            } else {
+                console.error("Something happend, unknown error for getCarreraPorUnidadById");
+            }
+        });
+    }
+    
+    updateCarreraPorUnidadById(id, carreraPorUnidadDto, id_unidad, id_carrera) {
+        return axios.put(process.env.REACT_APP_LOCAL_API_BASE_URL + "carreraPorUnidad/" + id + "/" + id_unidad + "/" + id_carrera, carreraPorUnidadDto)
         .catch(err => {
             if (err.response) {
                 console.error("Error in response for updateCarreraPorUnidadById...");
@@ -64,6 +77,19 @@ class CarreraPorUnidadService {
                 console.error("Error in request for deleteCarreraPorUnidadlById...");
             } else {
                 console.error("Something happend, unknown error for deleteCarreraPorUnidadlById");
+            }
+        });
+    }
+
+    checkCarreraPorUnidadById(id) {
+        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "carrerasPorUnidad_dependers/" + id)
+        .catch(err => {
+            if (err.response) {
+                console.error("Error in response for checkCarreraPorUnidadById...");
+            } else if(err.request) {
+                console.error("Error in request for checkCarreraPorUnidadById...");
+            } else {
+                console.error("Something happend, unknown error for checkCarreraPorUnidadById");
             }
         });
     }

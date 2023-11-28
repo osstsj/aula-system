@@ -11,7 +11,7 @@ class ListProyeccionFullTimeComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: this.props.match.params.id,
+            id: this.props.match.params.id, // id_folio
 
             areColumnsVisible: true, // Estado inicial para controlar la visibilidad de las columnas
             areColumns2Visible: true,
@@ -23,6 +23,7 @@ class ListProyeccionFullTimeComponent extends Component {
 
         this.viewProyeccionFulltime = this.viewProyeccionFulltime.bind(this);
         this.addFulltime = this.addFulltime.bind(this);
+        this.updateProyeccionFulltime = this.updateProyeccionFulltime.bind(this);
         // this.exportToExcel = this.exportToExcel.bind(this);  // Método para exportar a Excel
     }
 
@@ -33,6 +34,8 @@ class ListProyeccionFullTimeComponent extends Component {
                 alert("Error al traer las proyecciones de asignatura por folio...");
                 this.props.history.push('/');
             });
+
+            this.getUnidadFromFolioId();
     }
 
     async getUnidadFromFolioId() {
@@ -48,7 +51,11 @@ class ListProyeccionFullTimeComponent extends Component {
 
 
     addFulltime() {
-        this.props.history.push('/add-proyeccion_fulltime');
+        this.props.history.push(`/add-proyeccion_fulltime/${this.state.id}`);
+    }
+
+    updateProyeccionFulltime(id) {
+        this.props.history.push(`/update-proyeccion_fulltime/${id}`);
     }
 
     viewProyeccionFulltime(id) {
@@ -79,10 +86,11 @@ class ListProyeccionFullTimeComponent extends Component {
             <div className='container' >
                 <h2 className="text-center mt-5 mb-5 Title" >PROYECCIONES TIEMPO COMPLETO</h2>
                 <div>
-                     <button onClick={this.addFulltime} style={{ marginRight: '2%' }} className="btn btn-outline-dark mb-4" >Agregar proyección</button>
+                <button onClick={this.addFulltime} style={{ marginRight: '2%' }} className="btn btn-outline-dark mb-4" >Agregar proyección</button>
                         <button onClick={this.toggleColumns} style={{ marginRight: '2%' }} className="btn btn-success mb-4" >Comprimir Actual</button>
-                        <button onClick={this.toggleColumn2s} style={{ marginRight: '11.8%' }} className="btn btn-primary mb-4" >Comprimir Anterior</button>
+                        <button onClick={this.toggleColumn2s} style={{ marginRight: '27.8%' }} className="btn btn-primary mb-4" >Comprimir Anterior</button>
                         <button className="btn btn-outline-success mb-4" onClick={this.exportToExcel}>Exportar a Excel</button> {/* Botón de exportar a Excel */}
+                        <button className="btn btn-outline-info mb-4" onClick={{}}>Exportar a PDF</button> {/* Botón de exportar a Excel */}
 
                 </div>
                 <div className="row" style={{ overflowX: 'auto',boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)'  }}>
@@ -193,11 +201,11 @@ class ListProyeccionFullTimeComponent extends Component {
                                 
                                 {/* PROFESORES FULLTIME - Clave de Programa Educativo */}
                                 <td  align="center" className={`text-center table-content ${areColumnsVisible ? '' : 'collapse'
-                                    }`}> {fulltime.profesor_fulltime.clave_programa.clave_programa} </td>
+                                    }`}> {fulltime.profesor_fulltime.clave_programa.carrera_nombre.clave_programa} </td>
                                 
                                 {/* PROFESORES FULLTIME- Código de Nómina */}
                                 <td   align="center" className={`text-center table-content ${areColumnsVisible ? '' : 'collapse'
-                                    }`}>{fulltime.profesor_fulltime.codigo_nomina}</td>
+                                    }`}>{fulltime.profesor_fulltime.nombre_docente.codigo_nomina}</td>
                                 
                                 {/* PROFESORES DE FULLTIME - Grado Académico */}
                                 <td   align="center" className={`text-center table-content ${areColumnsVisible ? '' : 'collapse'
@@ -279,45 +287,45 @@ class ListProyeccionFullTimeComponent extends Component {
                                 {/* ----------------- Table de cambios ------------------------ */}
                                 {/* FECHA SOLICITUD DE MODIFICACIÓN */}
                                 <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
-                                    }`}> FECHA SOLICITUD DE MODIFICACIÓN	 	</td>
+                                    }`}> {fulltime.carga_horaria_anterior}	</td>
                                 
                                 {/* CARGAHORARIA  ANTERIOR */}
                                 <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
-                                    }`}>  CARGA HORARIA ANTERIOR		</td>
+                                    }`}>  {fulltime.carga_horaria_anterior}</td>
                                 
                                 {/* NIVEL DE PTC ANTERIOR */}
                                 <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
-                                    }`}>  NIVEL DE PTC ANTERIOR		</td>
+                                    }`}>  {fulltime.nivel_ptc_anterior}	</td>
                                
                                {/* CARGA HORARIA NUEVA */}
                                 <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
-                                    }`}>  CARGA HORARIA NUEVA		</td>
+                                    }`}>  {fulltime.carga_horaria_nueva} </td>
                                
                                {/* NIVEL DE PTC NUEVO */}
                                 <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
-                                    }`}>  NIVEL DE PTC NUEVO		</td>
+                                    }`}>  {fulltime.nivel_ptc_nuevo}		</td>
                                
                                {/* LA MODIFICACIÓN SE APLICA A PARTIR DE (FECHA): */}
                                <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
-                                    }`}>  LA MODIFICACIÓN SE APLICA A PARTIR DE (FECHA):		</td>
+                                    }`}> -	</td>
                                 
                                 {/* NO. OFICIO RESPUESTA */}
                                 <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
-                                    }`}>  NO. OFICIO RESPUESTA		</td>
+                                    }`}>  -	</td>
                                 
                                 {/* NO. DE OFICIO ACADEMIA */}
                                 <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
-                                    }`}>  NO. DE OFICIO ACADEMIA		</td>
+                                    }`}>  -	</td>
 
                                 {/* FECHA EN QUE RH APLICA EN EL SISTEMA */}                            
                                 <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
-                                    }`}>  FECHA EN QUE RH APLICA EN EL SISTEMA		</td>
+                                    }`}>  -	</td>
                                
                                {/* OBSERVACIONES */}
                                 <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
-                                    }`}>  OBSERVACIONES	</td>
+                                    }`}>  {fulltime.observacion_modificacion}	</td>
                                      <td align="center" className={`text-center table-content ${areColumns2Visible ||areColumnsVisible ? '' : 'collapse'
-                                    }`}>    <button onClick={{}} className="btn btn-warning">Modificar</button>
+                                    }`}>    <button onClick={() => this.updateProyeccionFulltime(fulltime.id)} className="btn btn-warning">Modificar</button>
                                     <button style={boton} onClick={{}} className="btn btn-danger">Eliminar</button>
                                     <button onClick={() => this.viewProyeccionFulltime(fulltime.id)} className="btn btn-info">Ver</button>	</td>
                             </tr>
