@@ -8,13 +8,13 @@ import Select from 'react-select'
 import axios from 'axios';
 import '../../StyleGlobal/Style.css'
 
-class CreateProyeccionFulltimeComponent extends Component {
+class UpdateProyeccionFulltimeComponent extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
             isLoading: false,
-            id: this.props.match.params.id, // folio id
+            id: this.props.match.params.id, // id proyeccion
 
             unidades: [],
             niveles: [],
@@ -81,13 +81,7 @@ class CreateProyeccionFulltimeComponent extends Component {
         }
     }
 
-    createProyeccionFulltime= (e) => {
-        if (this.state.errorInfo !== null) {
-            alert('No se puede duplicar clave de empleado.');
-            console.log("Error Info and Error adentro" + this.state.error + this.state.errorInfo);
-        }
-        console.log("Error Info and Error adentro" + this.state.error + this.state.errorInfo);
-
+    updateProyeccionFulltime= (e) => {
         e.preventDefault();
 
         let fulltime = {
@@ -133,7 +127,7 @@ class CreateProyeccionFulltimeComponent extends Component {
 
         console.log("Proyeccion por asignatura: " + JSON.stringify(fulltime));
 
-        FulltimeProyeccionService.createProyeccionFulltime(fulltime, 
+        FulltimeProyeccionService.updateProyeccionFulltimeById(fulltime, this.state.id,
             this.state.id_folio, this.state.id_unidad,
             this.state.id_docente, this.state.id_carrera)
         .then(
@@ -153,30 +147,61 @@ class CreateProyeccionFulltimeComponent extends Component {
     }
 
     componentDidMount() {        
+        FulltimeProyeccionService.getProyeccioneFulltimeById(this.state.id)
+        .then(res => {
+            let fulltime = res.data;
+            
+            this.setState({
+                // fulltime
+                folio: fulltime.folio.folio,
+                id_folio: fulltime.folio.id,
+                    // profesor_fulltime 
+                    clave_programa: fulltime.profesor_fulltime.clave_programa.carrera_nombre.clave_programa,
+                    codigo_nomina: fulltime.profesor_fulltime.nombre_docente.codigo_nomina,
+                    grado_academico: fulltime.profesor_fulltime.grado_academico,
+                    nombre_docente: fulltime.profesor_fulltime.nombre_docente.nombre_completo,
+                   
+
+                    // horas_sustantivas_atencion_alumnos
+                    ptc: fulltime.profesor_fulltime.nombre_docente.categoria,
+                    horas_frente_grupo:fulltime.horas_sustantivas_atencion_alumnos_fulltime.horas_frente_grupo,
+
+                        // academias
+                        presidente: fulltime.horas_sustantivas_atencion_alumnos_fulltime.academias.presidente,
+                        secretario: fulltime.horas_sustantivas_atencion_alumnos_fulltime.academias.secretario,
+
+                        // asesorias
+                        residencias_profesionales: fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.residencias_profesionales,
+                        educacion_dual: fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.educacion_dual,
+                        titulacion: fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.titulacion,
+                        asesorias_academica: fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.asesorias_academica,
+                        tutorias: fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.tutorias,
+
+                    actividades_complementarias: fulltime.horas_sustantivas_atencion_alumnos_fulltime.actividades_complementarias,
+                    subtotal_1: fulltime.horas_sustantivas_atencion_alumnos_fulltime.subtotal_1,
+
+                    // horas_necesidad_institucional
+                    proyecto_investigacion: fulltime.horas_necesidad_institucional_fulltime.proyecto_investigacion,
+                    apoyo_operativo: fulltime.horas_necesidad_institucional_fulltime.apoyo_operativo,
+                    subtotal_2: fulltime.horas_necesidad_institucional_fulltime.subtotal_2,
+
+                total: fulltime.total,
+                unidad_academica: fulltime.unidad_academica.nombre_completo,
+
+                id_unidad: fulltime.unidad_academica.id,
+                id_docente: fulltime.profesor_fulltime.nombre_docente.id,
+                id_carrera: fulltime.profesor_fulltime.clave_programa.id,
+                id_folio: fulltime.folio.id,
+                
+        })
+    })
         this.getNivel();
         this.getHorasAcademias_presidente();
         this.getHorasAcademias_secretario();
-        this.getFolioById();
+        this.getFolioList();
         this.getTipoUnidad();
     }
 
-
-    async getFolioById() {
-        await FolioFulltimeService.getFolioById(this.state.id).then(res => {
-            const data = res.data;
-            
-            this.setState({ folio: data.folio });
-            this.setState({ id_folio: data.id })
-            this.setState({ id_unidad: data.unidad_academica.id });
-            this.setState({ unidad_academica: data.unidad_academica.nombre_completo });
-        }).catch(() => {
-            alert("Error al intentar traer el folio por id...");
-            this.props.history.push('/');
-        });
-
-        this.getDocenteList(this.state.id_unidad);
-        this.getCarreraList(this.state.id_unidad);
-    }
 
     async getCarreraList(id_unidad) {
         let options = null;
@@ -192,24 +217,52 @@ class CreateProyeccionFulltimeComponent extends Component {
             this.props.history.push('/');
         });
         this.setState({ carreras: options });
+
+        this.getFolioById();
     }
 
-    async getDocenteList(id_unidad) {
-        let options = null;
-        await DocenteService.getAllDocentesByCategoriaPTCFulltime(id_unidad).then(res => {
+    async getFolioById() {
+        await FolioFulltimeService.getFolioById(this.state.id_folio).then(res => {
             const data = res.data;
-            options = data.map(d => ({
-                "value": d.nombre_completo,
-                "label": d.nombre_completo,
-                "id": d.id,
-                "codigo_nomina": d.codigo_nomina,
-                "ptc":d.categoria,
-            }))
-            this.setState({ docentes: options });
+            
+            this.setState({ folio: data.folio });
+            this.setState({ id_folio: data.id })
+            this.setState({ id_unidad: data.unidad_academica.id });
+            this.setState({ unidad_academica: data.unidad_academica.nombre_completo });
         }).catch(() => {
-            alert("Error al intentar traer los docentes...");
+            alert("Error al intentar traer el folio por id...");
             this.props.history.push('/');
         });
+
+        if ((this.state.ptc === 'PROFESOR ASIGNATURA - A') || (this.state.ptc === 'PROFESOR ASIGNATURA - B')) {
+            alert("La proyeccion no puede modificarse ya que el PTC del docente pertence a la categoria: " + this.state.ptc);
+            this.props.history.push(`/list-proyeccion_fulltime/${this.state.id_folio}`);
+        }
+    }
+
+    async getFolioList() {
+        let options = null;
+
+        await FolioFulltimeService.getAllFolios().then(res => {
+            const data = res.data;
+            options = data.map(d => ({
+                "value": d.folio,
+                "label": d.folio,
+                "id": d.id,
+                "id_unidad": d.unidad_academica.id,
+                "unidad_academica": d.unidad_academica.nombre_completo
+            }))
+            this.setState({ folios: options });
+        }).catch(() => {
+            alert("Error al intentar traer los folios...");
+            this.props.history.push(`/list-proyeccion_fulltime/${this.state.id_folio}`);
+        })
+
+        this.getCarreraList(this.state.id_unidad);
+        // se puso aqui ya que no se puede consultar el valor de categoria en el metodo compountDidMount
+        // porque una vez que se realize el setState con getById... no se puede consultar el valor al mismo
+        // tiempo (paralelismo), y se tiene que delegar a otra funcion para que siga la ejecucion en secuncia...
+        // y se optenga el valor el en prop de categoria.
     }
 
     getTipoUnidad() {
@@ -252,6 +305,7 @@ class CreateProyeccionFulltimeComponent extends Component {
         this.setState({ horas_secretario: academiasList });
     }
 
+
     onChangeTipoUnidadHandler = (event) => {
         this.setState({ tipo_unidad: event.label });
     }
@@ -274,10 +328,6 @@ class CreateProyeccionFulltimeComponent extends Component {
     onChangeUnidadHandler = (event) => {
         this.setState({ unidad_academica: event.label });
         this.setState({ disableDocente: false })
-        // this.setState({ nombre_docente: ''})
-        
-        // this.getDocenteList(event.id);
-        // this.setState({ id_unidad: event.id })
 
     }
 
@@ -294,12 +344,12 @@ class CreateProyeccionFulltimeComponent extends Component {
         this.setState({grado_academico: event.label});
     }
     onChangeNombreDocenteHandler = (event) => {
-        // this.setState({nombre_docente: event.target.value});
         this.setState({ nombre_docente: event.label });
         this.setState({ id_docente: event.id });
         this.setState({ ptc: ''});
         this.setState({ ptc: event.ptc });
         this.setState({ codigo_nomina: event.codigo_nomina });
+
     }
 
 
@@ -418,7 +468,7 @@ class CreateProyeccionFulltimeComponent extends Component {
 
 
     onChangeProyecto_InvestigacionHandler = (event) => {
-        this.setState({invesigacion_educativa: event.target.value});
+        this.setState({proyecto_investigacion: event.target.value});
         this.state.subtotal_2 =+ event.target.value;
 
         this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
@@ -465,7 +515,7 @@ class CreateProyeccionFulltimeComponent extends Component {
                     <div className="card col-10" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                         <div className="card-body">
                             <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                                <h2 className='h3'><b>Agregar Proyeccion Profesor Tiempo Completo</b></h2>
+                                <h2 className='h3'><b>Modificar Proyeccion Profesor Tiempo Completo</b></h2>
                             </div>
                             <br />
                             <form>    
@@ -537,6 +587,7 @@ class CreateProyeccionFulltimeComponent extends Component {
                                                     // depende que se realize el cambio en unidad academcia para que se pueda habilidar
                                                     // y se reseteara si se cambia la unidad academica, al igual se resetea el valor de nivel academico.
                                                         // isDisabled={this.state.disableDocente}
+                                                        isDisabled={true}
                                                         rules={{ required: true }}
                                                         options={this.state.docentes}
                                                         onChange={(e) => this.onChangeNombreDocenteHandler(e)}
@@ -982,7 +1033,7 @@ class CreateProyeccionFulltimeComponent extends Component {
                                     </div>
                                 </div>
                             ) : (
-                            <button className="btn btn-primary mt-0" onClick={this.createProyeccionFulltime} disabled={this.state.disableAgregar}>Agregar</button>
+                            <button className="btn btn-primary mt-0" onClick={this.updateProyeccionFulltime} disabled={this.state.disableAgregar}>Agregar</button>
                             )}
                             <button className="btn btn-danger mt-0" onClick={this.cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancelar</button>
                         </div>
@@ -994,4 +1045,4 @@ class CreateProyeccionFulltimeComponent extends Component {
 
 }
 
-export default CreateProyeccionFulltimeComponent;
+export default UpdateProyeccionFulltimeComponent;

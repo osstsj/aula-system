@@ -13,6 +13,7 @@ class ViewProyeccionFulltimeComponent extends Component {
                 grado_academico: "",
                 nombre_docente: "",
                 folio: "",
+                id_folio: null,
 
                 // horas_sustantivas_atencion_alumnos
                 // Nivel de PTC
@@ -61,9 +62,10 @@ class ViewProyeccionFulltimeComponent extends Component {
             this.setState({
                 // fulltime
                 folio: fulltime.folio.folio,
+                id_folio: fulltime.folio.id,
                     // profesor_fulltime 
-                    clave_programa: fulltime.profesor_fulltime.clave_programa.clave_programa,
-                    codigo_nomina: fulltime.profesor_fulltime.codigo_nomina,
+                    clave_programa: fulltime.profesor_fulltime.clave_programa.carrera_nombre.clave_programa,
+                    codigo_nomina: fulltime.profesor_fulltime.nombre_docente.codigo_nomina,
                     grado_academico: fulltime.profesor_fulltime.grado_academico,
                     nombre_docente: fulltime.profesor_fulltime.nombre_docente.nombre_completo,
                    
@@ -80,7 +82,7 @@ class ViewProyeccionFulltimeComponent extends Component {
                         residencias_profesionales: fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.residencias_profesionales,
                         educacion_dual: fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.educacion_dual,
                         titulacion: fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.titulacion,
-                        asesorias_academica: fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.asesoria_academica,
+                        asesorias_academica: fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.asesorias_academica,
                         tutorias: fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.tutorias,
 
                     actividades_complementarias: fulltime.horas_sustantivas_atencion_alumnos_fulltime.actividades_complementarias,
@@ -105,7 +107,7 @@ class ViewProyeccionFulltimeComponent extends Component {
     }
 
     back(){
-        this.props.history.push('/');
+        this.props.history.push(`/list-proyeccion_fulltime/${this.state.id_folio}`);
     }
 
 
