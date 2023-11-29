@@ -31,7 +31,7 @@ class ListProyeccionFullTimeComponent extends Component {
         FulltimeProyeccionService.getAllProyeccionesFulltimeByFolio(this.state.id).then(res =>
             this.setState({ fulltimes: res.data }))
             .catch(() => {
-                alert("Error al traer las proyecciones de asignatura por folio...");
+                alert("Error al traer las proyecciones tiempo completo por folio...");
                 this.props.history.push('/');
             });
 
@@ -287,7 +287,7 @@ class ListProyeccionFullTimeComponent extends Component {
                                 {/* ----------------- Table de cambios ------------------------ */}
                                 {/* FECHA SOLICITUD DE MODIFICACIÓN */}
                                 <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'
-                                    }`}> {fulltime.carga_horaria_anterior}	</td>
+                                    }`}> {fulltime.fecha_actualizacion}	</td>
                                 
                                 {/* CARGAHORARIA  ANTERIOR */}
                                 <td  align="center" className={`text-center table-content ${areColumns2Visible ? '' : 'collapse'

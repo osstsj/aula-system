@@ -1,5 +1,6 @@
 package edu.tsj.aula.persistance.models.projections.entity.completo.sustantivas;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Table(name = "proyeccion_fultime_proyecion_asesoria")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class AsesoriasFulltime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

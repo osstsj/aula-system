@@ -418,7 +418,7 @@ class CreateProyeccionFulltimeComponent extends Component {
 
 
     onChangeProyecto_InvestigacionHandler = (event) => {
-        this.setState({invesigacion_educativa: event.target.value});
+        this.setState({proyecto_investigacion: event.target.value});
         this.state.subtotal_2 =+ event.target.value;
 
         this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&

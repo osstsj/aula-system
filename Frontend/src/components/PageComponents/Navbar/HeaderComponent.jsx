@@ -97,7 +97,7 @@ class HeaderComponent extends Component {
                             </a>
                             <div className="dropdown-menu">
                                 <div className="dropdown-submenu">
-                                    <a className="dropdown-item dropdown-toggle" href="#">
+                                    <a className="dropdown-item dropdown-toggle" href="/list-folio-asignatura">
                                         Proyeccion por Asignatura
                                     </a>
                                     <div className="dropdown-menu">
@@ -106,11 +106,15 @@ class HeaderComponent extends Component {
                                         </a>
                                         <a className="dropdown-item" href="/create-folio-asignatura">
                                             Crear Nuevo Folio por Asignatura
-                                        </a>                                                                          
+                                        </a>    
+                                        <hr />
+                                        <a className="dropdown-item" href="/comparacion-asignatura">
+                                            Comparar Folios Asignatura
+                                        </a>                                                                        
                                     </div>
                                 </div>
                                 <div className="dropdown-submenu">
-                                    <a className="dropdown-item dropdown-toggle" href="">
+                                    <a className="dropdown-item dropdown-toggle" href="/list-folio-fulltime">
                                         Proyeccion por Tiempo Completo
                                     </a>
                                     <div className="dropdown-menu">
@@ -119,7 +123,11 @@ class HeaderComponent extends Component {
                                         </a>
                                         <a className="dropdown-item" href="/create-folio-fulltime">
                                             Crear Nuevo Folio por Tiempo Completo
-                                        </a>                                 
+                                        </a>               
+                                        <hr />
+                                        <a className="dropdown-item" href="/comparacion-fulltime">
+                                            Comparar Folios Tiempo Completo
+                                        </a>                   
                                     </div>
                                 </div>
                             </div>

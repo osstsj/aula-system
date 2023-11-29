@@ -11,9 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @AllArgsConstructor
@@ -28,7 +26,9 @@ public class FolioFulltimeServiceImpl implements IFolioFulltimeService {
     @Override
     public List<FolioFulltimeEntity> getAllFoliosFulltime() {
         try {
-            return folioFulltimeRespository.findAll();
+            List<FolioFulltimeEntity> folioToBeRotated = folioFulltimeRespository.findAll();
+            Collections.reverse(folioToBeRotated);
+            return folioToBeRotated;
         } catch (Exception e) {
             log.error("Error al intentar seguir trear la lista de folios asignatura");
             throw new RuntimeException("Runtime Exception: ".concat(e.getMessage()));
@@ -41,7 +41,9 @@ public class FolioFulltimeServiceImpl implements IFolioFulltimeService {
                 () -> new ResourceNotFoundException("No se encontro unidad academica con el id: ".concat(id_unidad.toString()),
                         HttpStatus.NOT_FOUND));
         try {
-            return folioFulltimeRespository.findAllByUnidad_academica(unidadAcademica);
+            List<FolioFulltimeEntity> folioToBeRotated = folioFulltimeRespository.findAllByUnidad_academica(unidadAcademica);
+            Collections.reverse(folioToBeRotated);
+            return folioToBeRotated;
         }  catch (Exception e) {
             log.error("Error al intentar seguir trear la lista de folios asignatura con el id unidad: {}", id_unidad);
             throw new RuntimeException("Runtime Exception: ".concat(e.getMessage()));

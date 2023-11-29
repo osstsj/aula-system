@@ -1,5 +1,6 @@
 package edu.tsj.aula.persistance.models.projections.entity.folio;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import edu.tsj.aula.persistance.models.control.entity.UnidadEntity;
 import lombok.AllArgsConstructor;
@@ -40,9 +41,11 @@ public class FolioAsignaturaEntity {
     @Column private String folio;
 
     @CreationTimestamp
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fecha_creacion;
 
     @UpdateTimestamp
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fecha_actualizacion;
 
     @Column

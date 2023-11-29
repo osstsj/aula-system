@@ -26,11 +26,11 @@ public class HorasSustantivasAtencionAlumnosFulltime {
 
     @Column private Integer horas_frente_grupo;
 
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id_academias")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private AcademiaFullTime academias;
 
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id_asesorias")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private AsesoriasFulltime asesorias;
 

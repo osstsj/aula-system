@@ -41,7 +41,7 @@ class ListCarreraPorUnidadComponent extends Component {
                     this.props.history.push('/list-carrera_por_unidad');
                 });
             } else {
-                alert("La unidad academica no es posible eliminar porque esta presente en otros modulos. \n" +
+                alert("La carrera por unidad no es posible eliminar porque esta presente en otros modulos. \n" +
                 "por favor verifique: Proyecciones Asignatura/Tiempo Completo");
                
                 this.setState({
@@ -61,7 +61,17 @@ class ListCarreraPorUnidadComponent extends Component {
     }
 
     updateCarreraPorUnidad(id) {
-        this.props.history.push(`update-carrera-por-unidad/${id}`);
+        CarreraPorUnidadService.checkCarreraPorUnidadById(id).then( res => {
+            if (res.data === false) {
+                this.props.history.push(`update-carrera-por-unidad/${id}`);
+            } else {
+                alert("La carrera por unidad no es posible editar porque esta presente en otros modulos. \n" +
+                "por favor verifique: Proyecciones Asignatura/Tiempo Completo");
+            }
+        }).catch(() => {
+            alert("Error al intentar eliminar la carrera por unidad...");
+            this.props.history.push('/list-carrera_por_unidad');
+        });
     }
 
     componentDidMount() {

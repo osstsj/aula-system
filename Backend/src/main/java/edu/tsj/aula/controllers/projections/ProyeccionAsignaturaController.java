@@ -1,8 +1,7 @@
 package edu.tsj.aula.controllers.projections;
 
-import edu.tsj.aula.persistance.models.projections.dto.asignatura.AsignaturaRequestDto;
-import edu.tsj.aula.persistance.models.projections.dto.asignatura.AsignaturaResponseDto;
 import edu.tsj.aula.persistance.models.projections.entity.asignatura.AsignaturaEntity;
+import edu.tsj.aula.persistance.models.projections.entity.asignatura.IComparacionAsignaturaDto;
 import edu.tsj.aula.service.projections.asignatura.IAsignaturaService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -79,6 +78,17 @@ public class ProyeccionAsignaturaController {
                 return ResponseEntity.ok(response);
             }
             return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/asignatura_comparativo/{id_folio_1}/{id_folio_2}")
+    public ResponseEntity<List<IComparacionAsignaturaDto>> showComparativeAsignaturaByIdsFolios(
+            @PathVariable Long id_folio_1, @PathVariable Long id_folio_2) {
+        try {
+            var result = asignaturaService.showComparativeAsignaturaByIdsFolios(id_folio_1, id_folio_2);
+            return ResponseEntity.ok(result);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

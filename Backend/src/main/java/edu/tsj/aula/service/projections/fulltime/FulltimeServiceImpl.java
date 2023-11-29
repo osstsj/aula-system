@@ -6,6 +6,7 @@ import edu.tsj.aula.persistance.models.control.entity.CarreraPorUnidadEntity;
 import edu.tsj.aula.persistance.models.control.entity.DocenteEntity;
 import edu.tsj.aula.persistance.models.control.entity.UnidadEntity;
 import edu.tsj.aula.persistance.models.projections.entity.completo.FullTimeEntity;
+import edu.tsj.aula.persistance.models.projections.entity.completo.IComparacionFulltimeDto;
 import edu.tsj.aula.persistance.models.projections.entity.folio.FolioFulltimeEntity;
 import edu.tsj.aula.persistance.repository.control.CarreraPorUnidadRepository;
 import edu.tsj.aula.persistance.repository.control.CarreraRepository;
@@ -218,6 +219,17 @@ public class FulltimeServiceImpl implements IFulltimeService {
         } catch (Exception e) {
                 log.error("Error al intentar eliminar la proyeccion de tiempo completo con el id: ".concat(id.toString()));
                 throw new RuntimeException("Runtime Exception: ".concat(e.getMessage()));
+        }
+    }
+
+    @Override
+    public List<IComparacionFulltimeDto> showComparativeFulltomeByIdsFolios(Long id_folio_1, Long id_folio_2) {
+        log.debug("Se ha ejecutado el metodo showComparativeFulltomeByIdsFolios");
+        try {
+            return fulltimeRepository.showComparativeAsignaturaByIdsFolios(id_folio_1, id_folio_2);
+        } catch (Exception e) {
+            log.error("Error al intentar ejecutar el metodo showComparativeFulltomeByIdsFolios: ".concat("id folio 1: " + id_folio_1.toString()).concat("id folio 2: " + id_folio_2.toString()));
+            throw new RuntimeException("Runtime Exception: ".concat(e.getMessage()));
         }
     }
 

@@ -1,6 +1,7 @@
 package edu.tsj.aula.service.projections.fulltime;
 
 import edu.tsj.aula.persistance.models.projections.entity.completo.FullTimeEntity;
+import edu.tsj.aula.persistance.models.projections.entity.completo.IComparacionFulltimeDto;
 
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -22,4 +23,6 @@ public interface IFulltimeService {
     List<FullTimeEntity> findAllByFolioById(Long id_folio);
 
     HashMap<String, String> deleteFulltimeById(Long id);
+
+    List<IComparacionFulltimeDto> showComparativeFulltomeByIdsFolios(Long id_folio_1, Long id_folio_2);
 }

@@ -1,6 +1,7 @@
 package edu.tsj.aula.controllers.projections;
 
 import edu.tsj.aula.persistance.models.projections.entity.completo.FullTimeEntity;
+import edu.tsj.aula.persistance.models.projections.entity.completo.IComparacionFulltimeDto;
 import edu.tsj.aula.service.projections.fulltime.IFulltimeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -77,6 +78,17 @@ public class ProyeccionFulltimeController {
             if (response != null)
                 return ResponseEntity.ok(response);
             return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/fulltime_comparativo/{id_folio_1}/{id_folio_2}")
+    public ResponseEntity<List<IComparacionFulltimeDto>> showComparativeFulltimeByIdsFolios(
+            @PathVariable Long id_folio_1, @PathVariable Long id_folio_2) {
+        try {
+            var result = fulltimeService.showComparativeFulltomeByIdsFolios(id_folio_1, id_folio_2);
+            return ResponseEntity.ok(result);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

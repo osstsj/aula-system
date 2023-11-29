@@ -1,6 +1,7 @@
 package edu.tsj.aula.persistance.models.projections.entity.completo;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import edu.tsj.aula.persistance.models.control.entity.CarreraEntity;
@@ -51,15 +52,15 @@ public class FullTimeEntity {
     @JoinColumn(name = "id_unidad", nullable = false)
     private UnidadEntity unidad_academica;
 
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id_profesor")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private ProfesorFulltimeEntity profesor_fulltime;
 
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id_horas_sustantivas")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private HorasSustantivasAtencionAlumnosFulltime horas_sustantivas_atencion_alumnos_fulltime;
 
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id_horas_necesidad")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private HorasNecesidadInstitucionalFulltime horas_necesidad_institucional_fulltime;
 
@@ -71,13 +72,17 @@ public class FullTimeEntity {
 
     @Column private Integer Total;
 
-    @CreationTimestamp private LocalDateTime fecha_creacion;
+    @CreationTimestamp
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime fecha_creacion;
 
     @Column private String observaciones;
 
 
     // ------- seccion de cambios ------------
-    @UpdateTimestamp private LocalDateTime fecha_actualizacion;
+    @UpdateTimestamp
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime fecha_actualizacion;
 
     @Column private Integer carga_horaria_anterior;
     @Column private String nivel_ptc_anterior;

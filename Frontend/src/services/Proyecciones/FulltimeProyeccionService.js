@@ -55,6 +55,19 @@ class FulltimeProyeccionService {
             }
         })
     }
+
+    showComparativeFulltomeByIdsFolios(id_folio_1, id_folio_2) {
+        return axios.get(process.env.REACT_APP_LOCAL_API_BASE_URL + "fulltime_comparativo/" + id_folio_1 + "/" + id_folio_2)
+        .catch(error => {
+            if (error.response) {
+                console.error("Error paso!");
+            } else if (error.request) {
+                console.error("error request!");
+            } else {
+                console.error("algo mas paso!");
+            }
+        })
+    }
 }
 
 export default new FulltimeProyeccionService()

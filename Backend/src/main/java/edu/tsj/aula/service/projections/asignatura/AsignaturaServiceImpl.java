@@ -5,6 +5,7 @@ import edu.tsj.aula.configuration.exception.ResourceNotFoundException;
 import edu.tsj.aula.persistance.models.control.entity.CarreraPorUnidadEntity;
 import edu.tsj.aula.persistance.models.control.entity.DocenteEntity;
 import edu.tsj.aula.persistance.models.control.entity.UnidadEntity;
+import edu.tsj.aula.persistance.models.projections.entity.asignatura.IComparacionAsignaturaDto;
 import edu.tsj.aula.persistance.models.projections.entity.folio.FolioAsignaturaEntity;
 import edu.tsj.aula.persistance.models.projections.entity.asignatura.AsignaturaEntity;
 import edu.tsj.aula.persistance.repository.control.CarreraPorUnidadRepository;
@@ -229,6 +230,17 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
             return asignaturaRepository.findAllByFolio(folioAsignaturaEntity);
         } catch (Exception e) {
             log.error("Error al intentar traer la lista de proyecciones de asignatura con el id folio: ".concat(id_folio.toString()));
+            throw new RuntimeException("Runtime Exception: ".concat(e.getMessage()));
+        }
+    }
+
+    @Override
+    public List<IComparacionAsignaturaDto> showComparativeAsignaturaByIdsFolios(Long id_folio_1, Long id_folio_2) {
+        log.debug("Se ha ejecutado el metodo showComparativeAsignaturaByIdsFolios");
+        try {
+            return asignaturaRepository.showComparativeAsignaturaByIdsFolios(id_folio_1, id_folio_2);
+        } catch (Exception e) {
+            log.error("Error al intentar ejecutar el metodo showComparativeAsignaturaByIdsFolios: ".concat("id folio 1: " + id_folio_1.toString()).concat("id folio 2: " + id_folio_2.toString()));
             throw new RuntimeException("Runtime Exception: ".concat(e.getMessage()));
         }
     }

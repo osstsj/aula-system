@@ -12,9 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.Collections.rotate;
 
 @Slf4j
 @AllArgsConstructor
@@ -29,7 +32,9 @@ public class FolioAsignaturaServiceImpl implements IFolioAsignaturaService {
     public List<FolioAsignaturaEntity> getAllFoliosAsignatura() {
         log.info("Se ha ejecutado el metodo getAllFoliosAsignatura");
         try {
-            return folioAsignaturaRepository.findAll();
+            List<FolioAsignaturaEntity> folioToBeRotated = folioAsignaturaRepository.findAll();
+            Collections.reverse(folioToBeRotated);
+            return folioToBeRotated;
         } catch (Exception e) {
             log.error("Error al intentar traer la lista de de folios asignatura");
             throw new RuntimeException("Runtime Exception: ".concat(e.getMessage()));
@@ -44,7 +49,9 @@ public class FolioAsignaturaServiceImpl implements IFolioAsignaturaService {
                 () -> new ResourceNotFoundException("No se encontro unidad academica con el id: ".concat(id_unidad.toString()),
                         HttpStatus.NOT_FOUND));
         try {
-            return folioAsignaturaRepository.findAllByUnidad_academica(unidadAcademica);
+            List<FolioAsignaturaEntity> folioToBeRotated =folioAsignaturaRepository.findAllByUnidad_academica(unidadAcademica);
+            Collections.reverse(folioToBeRotated);
+            return folioToBeRotated;
         } catch (Exception e) {
             log.error("Error al intentar traer la lista de folios asignatura por id unidad:{}", id_unidad.toString());
             throw new RuntimeException("Runtime Exception: ".concat(e.getMessage()));

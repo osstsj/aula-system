@@ -54,6 +54,8 @@ import CreateProyeccionFulltimeComponent from './components/ProyeccionesComponen
 import ViewProyeccionFulltimeComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/ViewProyeccionFulltimeComponent';
 import UpdateProyeccionFulltimeComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/UpdateProyeccionFulltimeComponent';
 
+import ComparacionAsigntaturaComponent from './components/ProyeccionesComponents/ProyeccionAsignaturaComponent/ComparacionAsignaturaComponent/ComparacionAsigntaturaComponent';
+import ComparacionFulltimeComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/ComparacionFulltimeComponent/ComparacionFulltimeComponent'
 import HomeComponent from './components/PageComponents/HomeComponent/HomeComponent';
 
 import HeaderComponent from './components/PageComponents/Navbar/HeaderComponent';
@@ -138,8 +140,13 @@ function App() {
                            <Route path = "/view-proyeccion_fulltime/:id" component = {ViewProyeccionFulltimeComponent}></Route>
                            <Route path = "/add-proyeccion_fulltime/:id" component = {CreateProyeccionFulltimeComponent}></Route>
                            <Route path = "/update-proyeccion_fulltime/:id" component = {UpdateProyeccionFulltimeComponent}></Route>
-                          
-                          {/* ------------ Longin ----------- */}
+
+                          {/* ------------- Comparacions--------- */}
+                          <Route path = "/comparacion-asignatura" component={ComparacionAsigntaturaComponent}></Route>
+                          <Route path = "/comparacion-fulltime" component={ComparacionFulltimeComponent}></Route>
+
+
+                          {/* ------------ Login ----------- */}
                           <Route path = "/login" component = {LoginComponents}></Route>
                           <Route path = "/add-login" component = {CreateLoginComponent}></Route>        
 
