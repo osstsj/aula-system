@@ -3,7 +3,7 @@ import UnidadService from '../../../services/Control/UnidadService';
 import ExtensionService from '../../../services/Control/ExtensionsService';
 import '../../StyleGlobal/Style.css';
 import Select from 'react-select'
-import axios from 'axios';
+
 require('dotenv').config();
 
 
@@ -12,7 +12,7 @@ class CreateExtensionComponent extends Component {
         super(props)
         this.state = {
             id: 0,
-            tipo_unidad: '', 
+            tipo_unidad: 'Extension', 
             clave_dgp: '', 
             abreviatura: '',
             nombre_corto: '', 
@@ -43,6 +43,7 @@ class CreateExtensionComponent extends Component {
     
     componentDidMount() {
         this.getUnidadList();
+        this.changeTipoUnidadHandler();
     }
 
     createUnidad = (e) =>{
@@ -72,10 +73,10 @@ class CreateExtensionComponent extends Component {
             console.log('Unidad Academica => ' + JSON.stringify(unidad));
             
             UnidadService.createUnidad(unidad).then(() => {
-                this.props.history.push('/list-unidad');
+                this.props.history.push('/list-extension');
             }).catch(() => {
                 alert("Error al intentar crear la unidad...");
-                this.props.history.push('/list-unidad');
+                this.props.history.push('/list-extension');
             });
 
         } else {
@@ -94,23 +95,23 @@ class CreateExtensionComponent extends Component {
 
                 console.log('Unidad Academica + Extension => ' + JSON.stringify(unidadExtensiones));
                 ExtensionService.createExtensionByUnidadId(this.state.id, unidadExtensiones).then(res => {
-                    this.props.history.push('/list-unidad');
+                    this.props.history.push('/list-extension');
                 }).catch(() => {
                     alert("Error al intentar crear la extension academica...");
-                    this.props.history.push('/list-unidad');
+                    this.props.history.push('/list-extension');
                 });
             })
             .catch(() => {
                 alert("Error al intentar traer la unidad para crear extension...");
-                this.props.history.push('/list-unidad');
+                this.props.history.push('/list-extension');
             });           
         }   
         
     }
 
     changeTipoUnidadHandler = (event) => {
-        this.setState({tipo_unidad: event.target.value});
-        if (event.target.value === 'Extension') {
+        // this.setState({tipo_unidad: event.target.value});
+        if (this.state.tipo_unidad === 'Extension') {
             this.setState({ disablePlantelList: true });
             
             this.setState({clave_dgp: ''});
@@ -160,7 +161,7 @@ class CreateExtensionComponent extends Component {
     }
    
     cancel(){
-        this.props.history.push('/list-unidad');
+        this.props.history.push('/list-extension');
     }
 
     async getUnidadList() {
@@ -176,11 +177,10 @@ class CreateExtensionComponent extends Component {
             }))
         }).catch(() => {
             alert("Error al intentar traer las UAs...");
-            this.props.history.push('/list-unidad');
+            this.props.history.push('/list-extension');
         });
         
         this.setState({unidades: options})
-        
     }
 
     render() {
@@ -191,24 +191,23 @@ class CreateExtensionComponent extends Component {
                         <div className="card col-9 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                             <div className="card-body">
                                 <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                                    <h2 className="h3 Title">Agregar Unidad Académica</h2>
+                                    <h2 className="h3 Title">Agregar Extension Académica</h2>
                                 </div>
                                 <br />
                                 <form>
                                     <div className="row mb-3">
                                     <div className="col">
                                             <div className="form-outline">
-                                                <label className="">Unidad Académica: </label>
+                                                <label className="">Tipo Unidad Académica: </label>
                                                 <select 
                                                     name="tipoUnidad" 
                                                     className="form-control" 
                                                     value={this.state.tipo_unidad} 
                                                     onChange={this.changeTipoUnidadHandler} 
                                                     required
+                                                    disabled
                                                 >
-                                                    <option value=""  disabled>Seleccione un tipo de UA...</option>
-                                                    <option value="Unidad">Unidad académicas</option>
-                                                    <option value="Extension">Unidad académicas con extension</option>
+                                                    <option value="Extension">Unidad académica con extension</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -219,7 +218,7 @@ class CreateExtensionComponent extends Component {
                                             <div className="form-outline">
                                                 <label className="">Lista de unidades académicas: </label>
                                                 <Select
-                                                    isDisabled={!this.state.disablePlantelList}
+                                                    // isDisabled={!this.state.disablePlantelList}
                                                     rules={{ required: true }}
                                                     options={this.state.unidades}
                                                     onChange={(e) => this.onChangeUnidadHandler(e)}

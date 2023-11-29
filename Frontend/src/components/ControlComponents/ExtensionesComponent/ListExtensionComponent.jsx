@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import '../../StyleGlobal/Style.css';
 import UnidadService from '../../../services/Control/UnidadService';
+import ExtensionService from '../../../services/Control/ExtensionsService';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable'; // Importa la extensión jspdf-autotable
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'; // Importa Reactstrap para el modal
-
+import Select from 'react-select'
 
 class ListExtensionComponent extends Component {
     constructor(props) {
@@ -13,6 +14,7 @@ class ListExtensionComponent extends Component {
 
         this.state = {
             unidades: [],
+            extensiones:[],
             isModalOpen: false, // Estado para controlar la apertura/cierre del modal
             colegiaturaToDeleteId: null, // Estado para almacenar el ID de la colegiatura a eliminar
         };
@@ -23,6 +25,7 @@ class ListExtensionComponent extends Component {
         this.viewUnidad = this.viewUnidad.bind(this);
         this.exportToExcel = this.exportToExcel.bind(this);
         this.exportToPDF = this.exportToPDF.bind(this); // Método para exportar a PDF
+        this.onChangeUnidadHandler = this.onChangeUnidadHandler.bind(this);
     }
 
     deleteUnidad(id) {
@@ -35,8 +38,8 @@ class ListExtensionComponent extends Component {
                         colegiaturaToDeleteId: null, // Restablece el ID de la colegiatura
                     });
                 }).catch(() => {
-                    alert("Error al intentar eliminar la unida academica...");
-                    this.props.history.push('/list-unidad');
+                    alert("Error al intentar eliminar la extension academica...");
+                    this.props.history.push('/list-extension');
                 });
             } else {
                 alert("La unidad academica no es posible eliminar porque esta presente en otros modulos. \n" +
@@ -45,11 +48,11 @@ class ListExtensionComponent extends Component {
                     isModalOpen: false, // Cierra el modal después de eliminar
                     colegiaturaToDeleteId: null}) // Restablece el ID de la colegiatura)
 
-                this.props.history.push('/list-unidad');
+                this.props.history.push('/list-extension');
             }
         }).catch(() => {
-            alert("Error al intentar eliminar la unida academica...");
-            this.props.history.push('/list-unidad');
+            alert("Error al intentar eliminar la extension academica...");
+            this.props.history.push('/list-extension');
         });            
     }
 
@@ -62,17 +65,49 @@ class ListExtensionComponent extends Component {
     }
 
     componentDidMount(){
-        //promise
-        UnidadService.getAllUnidades().then((res) => {
-            this.setState({unidades: res.data});
-        }).catch(() => {
-            alert("Error al intentar trear las unidades academicas...");
-            this.props.history.push('/list-unidad');
-        });
+        this.getUnidadList();
+        
     }
 
     addUnidad() {
-        this.props.history.push('/add-unidad/');
+        this.props.history.push('/add-extension/');
+    }
+
+    onChangeUnidadHandler = (event) => {
+        this.setState({ unidad_academica: event.label });
+        this.setState({ id: event.value })
+        this.setState({ clave_dgp: event.dgp })
+        this.setState({ direccion_completa: event.direccion })
+
+        this.getExtensiones(event.value);
+    }
+
+    async getUnidadList() {
+        let options = null;
+
+        await UnidadService.getAllUnidades().then(res => {
+            const data = res.data;
+            options = data.map(d => ({
+                "value": d.id,
+                "label": d.nombre_completo,
+                "dgp": d.clave_dgp,
+                'direccion': d.direccion_completa,
+            }))
+        }).catch(() => {
+            alert("Error al intentar traer las UAs...");
+            this.props.history.push('/list-extension');
+        });
+        
+        this.setState({unidades: options})
+    }
+
+    async getExtensiones(id_unidad) {
+        await ExtensionService.getAllExtensionsByUnidadId(id_unidad).then(res => {
+            this.setState({ extensiones: res.data });
+            }).catch(() => {
+                alert("Error al intentar traer todas la extensiones academicas...");
+                this.props.history.push('/list-unidad');
+            });
     }
 
     exportToExcel() {
@@ -112,20 +147,21 @@ class ListExtensionComponent extends Component {
         doc.save('unidades.pdf');
     }
   // Método para abrir el modal
-  toggleModal = (colegiaturaId) => {
-    this.setState({
-        isModalOpen: !this.state.isModalOpen,
-        colegiaturaToDeleteId: colegiaturaId, // Establece el ID de la colegiatura a eliminar
-    });
-}
+    toggleModal = (colegiaturaId) => {
+        this.setState({
+            isModalOpen: !this.state.isModalOpen,
+            colegiaturaToDeleteId: colegiaturaId, // Establece el ID de la colegiatura a eliminar
+        });
+    }
 
-// Método para cerrar el modal
-closeModal = () => {
-    this.setState({
-        isModalOpen: false,
-        colegiaturaToDeleteId: null, // Restablece el ID de la colegiatura
-    });
-}
+    // Método para cerrar el modal
+    closeModal = () => {
+        this.setState({
+            isModalOpen: false,
+            colegiaturaToDeleteId: null, // Restablece el ID de la colegiatura
+        });
+    }
+
     render() {
         const boton = {
             marginLeft: '1rem',
@@ -134,16 +170,28 @@ closeModal = () => {
 
         return (
             <div className="container">
-                <h2 className="text-center mt-5 mb-5 Title">LISTA DE UNIDADES ACADÉMICAS</h2>
-                <button style={{ width: '20%' }} className="btn btn-primary mb-4" onClick={this.addUnidad}>
-                    Agregar Unidad Académica
-                </button>
-                <button style={{ width: '15%', marginLeft: '1rem' }} className="btn  btn-outline-success mb-4" onClick={this.exportToExcel}>
-                    Exportar a Excel
-                </button>
-                <button style={{ width: '15%',marginLeft: '1rem' }} className="btn  btn-outline-dark mb-4" onClick={this.exportToPDF}>
-                    Exportar a PDF
-                </button>
+                <h2 className="text-center mt-5 mb-5 Title">LISTA DE EXTENSIONES ACADÉMICAS</h2>
+                <label className="">Lista de unidades académicas: </label>
+                <div className="row">
+                    <div className="col">
+                    <Select
+                        rules={{ required: true }}
+                        options={this.state.unidades}
+                        onChange={(e) => this.onChangeUnidadHandler(e)}
+                        value={{ label: this.state.unidad_academica === '' ? "Seleccione UA..." : this.state.unidad_academica}}
+                    />
+                    <button style={{ width: '24%' }} className="btn btn-primary mb-4" onClick={this.addUnidad}>
+                        Agregar Extension Académica
+                    </button>
+                    <button style={{ width: '15%', marginLeft: '1rem' }} className="btn  btn-outline-success mb-4" onClick={this.exportToExcel}>
+                        Exportar a Excel
+                    </button>
+                    <button style={{ width: '15%',marginLeft: '1rem' }} className="btn  btn-outline-dark mb-4" onClick={this.exportToPDF}>
+                        Exportar a PDF
+                    </button>
+                    </div>
+                </div>
+                    
                 <div className="row" style={{ overflowX: 'auto' }}>
                     <table className="table table-striped table-bordered" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                         <thead>
@@ -156,7 +204,7 @@ closeModal = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.unidades.map((unidad, index) => (
+                            {this.state.extensiones.map((unidad, index) => (
                                 <tr key={unidad.id} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
                                     <td>{index + 1}</td>
                                     <td className="table-conten">{unidad.clave_dgp}</td>

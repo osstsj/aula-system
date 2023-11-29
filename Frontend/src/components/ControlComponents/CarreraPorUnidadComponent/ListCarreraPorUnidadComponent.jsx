@@ -3,6 +3,7 @@ import CarreraPorUnidadService from '../../../services/Control/CarreraPorUnidadS
 import * as XLSX from 'xlsx';  // Importa la librería XLSX
 import jsPDF from 'jspdf';
 import 'jspdf-autotable'; // Importa la extensión jspdf-autotable
+import swal from 'sweetalert';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'; // Importa Reactstrap para el modal
 
 //rcc->enter
@@ -37,13 +38,14 @@ class ListCarreraPorUnidadComponent extends Component {
                         unidadeToDeleteId: null, // Restablece el ID de la colegiatura
                     });
                 }).catch(() => {
-                    alert("Error al intentar eliminar la carrera por unidad...");
+                    swal("Oops!","Error al intentar eliminar la carrera por unidad...\n" +
+                    "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
                     this.props.history.push('/list-carrera_por_unidad');
                 });
             } else {
-                alert("La carrera por unidad no es posible eliminar porque esta presente en otros modulos. \n" +
-                "por favor verifique: Proyecciones Asignatura/Tiempo Completo");
-               
+                swal("Oops!", "La carrera por unidad no es posible eliminar porque esta presente en otros modulos.\n" +
+                "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
+
                 this.setState({
                     isModalOpen: false, // Cierra el modal después de eliminar
                     unidadeToDeleteId: null}) // Restablece el ID de la colegiatura)
@@ -65,8 +67,8 @@ class ListCarreraPorUnidadComponent extends Component {
             if (res.data === false) {
                 this.props.history.push(`update-carrera-por-unidad/${id}`);
             } else {
-                alert("La carrera por unidad no es posible editar porque esta presente en otros modulos. \n" +
-                "por favor verifique: Proyecciones Asignatura/Tiempo Completo");
+                swal("Oops!","La carrera por unidad no es posible editar porque esta presente en otros modulos. \n" +
+                "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
             }
         }).catch(() => {
             alert("Error al intentar eliminar la carrera por unidad...");
@@ -79,7 +81,7 @@ class ListCarreraPorUnidadComponent extends Component {
         CarreraPorUnidadService.getAllCarrerasPorUnidad().then((res) => {
             this.setState({ unidades: res.data });
         }).catch(() => {
-            alert("Error al intentar traer las carreras por unidad...");
+            swal("Oops!","Error al intentar traer las carreras por unidad...", "error");
             this.props.history.push('/list-carrera_por_unidad');
         });
     }

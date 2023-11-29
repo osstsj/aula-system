@@ -16,11 +16,12 @@
     "react-scripts": "3.4.1",
     "react-select": "^5.7.5",
     "reactstrap": "^9.2.0",
+    "sweetalert": "^2.1.2",
     "xlsx": "^0.18.5",
     "xlsx-style": "^0.8.13"
   },
   "scripts": {
-     "start": "react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

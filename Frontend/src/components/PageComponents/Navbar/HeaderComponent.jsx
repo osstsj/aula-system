@@ -63,7 +63,7 @@ class HeaderComponent extends Component {
                                             Lista Unidades Académicas
                                         </a>
                                         <a className="dropdown-item" href="/list-extension">
-                                            Lista de extensiones
+                                            Lista de Extensiones
                                         </a>                                                                          
                                     </div>
                                 </div>

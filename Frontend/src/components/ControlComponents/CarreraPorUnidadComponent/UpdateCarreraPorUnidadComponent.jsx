@@ -3,8 +3,8 @@ import CarreraPorUnidadService from '../../../services/Control/CarreraPorUnidadS
 import UnidadService from '../../../services/Control/UnidadService';
 import CarreraService from '../../../services/Control/CarreraService';
 import Select from 'react-select'
-import axios from 'axios';
 import '../../StyleGlobal/Style.css'
+import swal from 'sweetalert';
 
 
 
@@ -58,14 +58,23 @@ class UpdateCarreraPorUnidadComponent extends Component {
         };
         
         console.log('unidad => ' + JSON.stringify(unidad));
-        
-        CarreraPorUnidadService.updateCarreraPorUnidadById(this.state.id, unidad, this.state.id_unidad, this.state.id_carrera).then(
-            () => {
-            this.props.history.push('/list-carrera_por_unidad');
-        }).catch(() => {
-            alert("Error al intentar actualizar la carrera por unidad...");
-            this.props.history.push('/list-carrera_por_unidad');
-        });
+        // por si quieren meter gol por la URL
+        CarreraPorUnidadService.checkCarreraPorUnidadById(this.state.id).then( res => {
+            if (res.data ===  false) {
+                CarreraPorUnidadService.updateCarreraPorUnidadById(this.state.id, unidad, this.state.id_unidad, this.state.id_carrera).then(
+                    () => {
+                    this.props.history.push('/list-carrera_por_unidad');
+                }).catch(() => {
+                    alert("Error al intentar actualizar la carrera por unidad...");
+                    this.props.history.push('/list-carrera_por_unidad');
+                });
+            } else {
+                swal("Oops!", "La carrera por unidad no es posible eliminar porque esta presente en otros modulos.\n" +
+                "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
+
+                this.props.history.push('/list-carrera_por_unidad');
+            }
+        })
     }
 
     async getCarrerasList() {

@@ -198,7 +198,7 @@ class CreateUnidadComponent extends Component {
                                     <div className="row mb-3">
                                     <div className="col">
                                             <div className="form-outline">
-                                                <label className="">Unidad Académica: </label>
+                                                <label className="">Tipo Unidad Académica: </label>
                                                 <select 
                                                     name="tipoUnidad" 
                                                     className="form-control" 
@@ -208,7 +208,7 @@ class CreateUnidadComponent extends Component {
                                                 >
                                                     <option value=""  disabled>Seleccione un tipo de UA...</option>
                                                     <option value="Unidad">Unidad académicas</option>
-                                                    <option value="Extension">Unidad académicas con extension</option>
+                                                    <option value="Extension">Unidad académica con extension</option>
                                                 </select>
                                             </div>
                                         </div>
