@@ -22,4 +22,7 @@ public class CarreraRequestDto {
     private String plan_estudio;
     private String estatus;
     private String clave_programa;
+
+    private String realizado_por;
+    private String actualizado_por;
 }

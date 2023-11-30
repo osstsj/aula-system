@@ -23,12 +23,13 @@ public class ColegiaturaRequestDto {
 
     private String descripcion;
 
-//    private Float monto;
-
     private String monto;
 
     private String colegiatura_estatus;
 
     private String comentarios;
+
+    private String realizado_por;
+    private String actualizado_por;
 
 }

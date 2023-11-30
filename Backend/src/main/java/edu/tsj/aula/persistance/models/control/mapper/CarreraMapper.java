@@ -17,6 +17,8 @@ public interface CarreraMapper {
     @Mapping(source = "entity.plan_estudio", target = "plan_estudio")
     @Mapping(source = "entity.estatus", target = "estatus")
     @Mapping(source = "entity.clave_programa", target = "clave_programa")
+    @Mapping(source = "entity.realizado_por", target = "realizado_por")
+    @Mapping(source = "entity.actualizado_por", target = "actualizado_por")
     @Mapping(source = "entity.fecha_creacion", target = "fecha_creacion")
     @Mapping(source = "entity.fecha_actualizacion", target = "fecha_actualizacion")
     CarreraResponseDto entityToResponse(CarreraEntity entity);
@@ -28,6 +30,8 @@ public interface CarreraMapper {
     @Mapping(source = "request.plan_estudio", target = "plan_estudio")
     @Mapping(source = "request.estatus", target = "estatus")
     @Mapping(source = "request.clave_programa", target = "clave_programa")
+    @Mapping(source = "request.realizado_por", target = "realizado_por")
+    @Mapping(source = "request.actualizado_por", target = "actualizado_por")
     CarreraEntity requestToEntity(CarreraRequestDto request);
 
 }

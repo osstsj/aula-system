@@ -19,17 +19,17 @@ import java.time.LocalDateTime;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ColegiaturaResponseDto {
     private Long id;
-//    private Integer clave;
     private String clave;
     private String descripcion;
-//    private Float monto;
     private String monto;
     private String colegiatura_estatus;
     private String comentarios;
 
+    private String realizado_por;
+    private String actualizado_por;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fecha_creacion;
-
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fecha_actualizacion;
 }

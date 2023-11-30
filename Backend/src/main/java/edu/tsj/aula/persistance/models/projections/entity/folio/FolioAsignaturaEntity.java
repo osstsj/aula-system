@@ -48,7 +48,10 @@ public class FolioAsignaturaEntity {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fecha_actualizacion;
 
-    @Column
-    private String creadoPor;
+    // se puede agregar un boton (ver detalle de folio) ademas de los existentes (Ver Proyecciones, Elimnar Proyeccion)
+    // para que se muestre el usuario que creo el folio, con fecha y horas de creacion
+    // Nota, el folio no puede ser elimnado si ya esta presente en una proyeccion de un docente...
+    @Column private String realizado_por;
+    @Column private String actualizado_por;
 }
 

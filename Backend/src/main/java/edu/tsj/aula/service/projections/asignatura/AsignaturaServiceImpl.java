@@ -91,6 +91,10 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
 
             asignaturaRequestDto.setTotal(total);
 
+            //----- Detalles del docente-------
+            docenteEntity.setUltima_horas(total);
+            docenteEntity.setFolio_ultimo_registro_y_tipo_folio(folioAsignaturaEntity.getFolio().concat(" - ").concat("Proyección Asignatura"));
+
             return asignaturaRepository.save(asignaturaRequestDto);
         } catch (Exception e) {
             log.error("Error al intentar crear la proyeccion asignatura con el DTO: {}", asignaturaRequestDto.toString());
@@ -186,7 +190,9 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
             exisitingAsignatura.setCategoria_tipo_horas_asignatura_nueva(tipoAoB);
             exisitingAsignatura.setObservaciones_modificacion(asignaturaUpdateRequestDto.getObservaciones());
 
-
+            //----- Detalles del docente-------
+            docenteEntity.setUltima_horas(total);
+            docenteEntity.setFolio_ultimo_registro_y_tipo_folio(folioAsignaturaEntity.getFolio().concat(" - ").concat("Proyección Asignatura"));
 
             return asignaturaRepository.save(exisitingAsignatura);
 
@@ -241,6 +247,19 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
             return asignaturaRepository.showComparativeAsignaturaByIdsFolios(id_folio_1, id_folio_2);
         } catch (Exception e) {
             log.error("Error al intentar ejecutar el metodo showComparativeAsignaturaByIdsFolios: ".concat("id folio 1: " + id_folio_1.toString()).concat("id folio 2: " + id_folio_2.toString()));
+            throw new RuntimeException("Runtime Exception: ".concat(e.getMessage()));
+        }
+    }
+
+    @Override
+    public IComparacionAsignaturaDto showComparativeAsignaturaByIdsFoliosByIdDocente(Long id_folio_1, Long id_folio_2, Long id_docente) {
+        log.debug("Se ha ejecutado el metodo showComparativeAsignaturaByIdsFoliosByIdDocente");
+        try {
+            Optional<IComparacionAsignaturaDto> tableComparable = asignaturaRepository.showComparativeAsignaturaByIdsFoliosAndDocenteId(id_folio_1, id_folio_2, id_docente);
+            return tableComparable.orElse(null);
+        } catch (Exception e) {
+            log.error("Error al intentar ejecutar el metodo showComparativeAsignaturaByIdsFolios: ".concat("id folio 1: " + id_folio_1.toString()).concat("id folio 2: " + id_folio_2.toString())
+                    .concat("id docente: " + id_docente.toString()));
             throw new RuntimeException("Runtime Exception: ".concat(e.getMessage()));
         }
     }

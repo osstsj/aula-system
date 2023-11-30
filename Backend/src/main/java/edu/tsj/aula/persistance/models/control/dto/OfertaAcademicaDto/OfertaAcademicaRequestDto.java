@@ -25,4 +25,6 @@ public class OfertaAcademicaRequestDto {
     private String turno;
     private String periodo;
 
+    private String realizado_por;
+    private String actualizado_por;
 }

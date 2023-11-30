@@ -154,11 +154,11 @@ class ListProyeccionFullTimeComponent extends Component {
                                 <th rowSpan="2"  className={`text-center text-white table-blue  ${areColumns2Visible ? '' : 'collapse'
                                     }`}>FECHA SOLICITUD DE MODIFICACIÓN</th>
                                 <th rowSpan="2"  className={`text-center text-white table-blue  ${areColumns2Visible ? '' : 'collapse'
-                                    }`}>CARGA HORARIA ANTERIOR</th>
+                                    }`}>CARGA HORARIA ANTERIOR (Horas frente a Grupo)</th>
                                 <th rowSpan="2"  className={`text-center text-white table-blue  ${areColumns2Visible ? '' : 'collapse'
                                     }`}>NIVEL DE PTC ANTERIOR</th>
                                 <th rowSpan="2"  className={`text-center text-white table-blue  ${areColumns2Visible ? '' : 'collapse'
-                                    }`}>CARGA HORARIA NUEVA</th>
+                                    }`}>CARGA HORARIA NUEVA (Horas frente a Grupo)</th>
                                 <th rowSpan="2"  className={`text-center text-white table-blue  ${areColumns2Visible ? '' : 'collapse'
                                     }`}>NIVEL DE PTC NUEVO</th>
                                 <th rowSpan="2"  className={`text-center text-white table-blue  ${areColumns2Visible ? '' : 'collapse'

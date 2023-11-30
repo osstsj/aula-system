@@ -91,6 +91,10 @@ public class FulltimeServiceImpl implements IFulltimeService {
 
             fullTimeDto.setTotal(total);
 
+            //----- Detalles del docent-------
+            docenteEntity.setUltima_horas(total);
+            docenteEntity.setFolio_ultimo_registro_y_tipo_folio(folioFulltimeEntity.getFolio().concat(" - ").concat("Proyeccion Asignatura"));
+
             return fulltimeRepository.save(fullTimeDto);
         } catch (Exception e) {
             log.error("Error al intentar crear la proyeccion tiempo completo: {}", fullTimeDto);
@@ -98,6 +102,7 @@ public class FulltimeServiceImpl implements IFulltimeService {
         }
     }
 
+    @Transactional
     @Override
     public FullTimeEntity updateFulltimeById(FullTimeEntity fullTimeDto,
                                              Long id_fulltime, Long id_folio,
@@ -180,6 +185,11 @@ public class FulltimeServiceImpl implements IFulltimeService {
             existingFulltime.setNivel_ptc_nuevo(fullTimeDto.getHoras_sustantivas_atencion_alumnos_fulltime().getPtc());
             existingFulltime.setObservacion_modificacion(fullTimeDto.getObservaciones());
 
+            //----- Detalles del docent-------
+            docenteEntity.setUltima_horas(total);
+            docenteEntity.setFolio_ultimo_registro_y_tipo_folio(folioFulltimeEntity.getFolio().concat(" - ").concat("Proyeccion Asignatura"));
+
+
             return fulltimeRepository.save(existingFulltime);
         } catch (Exception e) {
             log.error("Error al intentar actualizar la proyeccion tiempo completo: {}", fullTimeDto);
@@ -203,6 +213,7 @@ public class FulltimeServiceImpl implements IFulltimeService {
         }
     }
 
+    @Transactional
     @Override
     public HashMap<String, String> deleteFulltimeById(Long id) {
         log.debug("Se ha ejecutado el metodo deleteFulltime");
@@ -232,6 +243,20 @@ public class FulltimeServiceImpl implements IFulltimeService {
             throw new RuntimeException("Runtime Exception: ".concat(e.getMessage()));
         }
     }
+
+    @Override
+    public IComparacionFulltimeDto showComparativeFulltimeByIdsFoliosAndIdDocente(Long id_folio_1, Long id_folio_2, Long id_docente) {
+        log.debug("Se ha ejecutado el metodo showComparativeFulltimeByIdsFoliosAndIdDocente");
+        try {
+            Optional<IComparacionFulltimeDto> tableComparable = fulltimeRepository.showComparativeAsignaturaByIdsFoliosAndDocenteId(id_folio_1, id_folio_2, id_docente);
+            return tableComparable.orElse(null);
+        } catch (Exception e) {
+            log.error("Error al intentar ejecutar el metodo showComparativeFulltomeByIdsFolios: ".concat("id folio 1: " + id_folio_1.toString()).concat("id folio 2: " + id_folio_2.toString())
+                    .concat("id docente: " + id_docente.toString()));
+            throw new RuntimeException("Runtime Exception: ".concat(e.getMessage()));
+        }
+    }
+
 
     @Override
     public FullTimeEntity getFulltimeById(Long id) {

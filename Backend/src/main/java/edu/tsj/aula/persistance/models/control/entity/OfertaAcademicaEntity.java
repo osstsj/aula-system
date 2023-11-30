@@ -40,7 +40,9 @@ public class OfertaAcademicaEntity {
 
     @Column private String periodo;
 
-    @CreationTimestamp private LocalDateTime fecha_creacion;
+    @Column private String realizado_por;
+    @Column private String actualizado_por;
 
+    @CreationTimestamp private LocalDateTime fecha_creacion;
     @UpdateTimestamp private LocalDateTime fecha_actualizacion;
 }

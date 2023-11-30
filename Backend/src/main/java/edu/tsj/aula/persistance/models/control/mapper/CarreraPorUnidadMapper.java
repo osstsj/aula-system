@@ -16,6 +16,8 @@ public interface CarreraPorUnidadMapper {
     @Mapping(source = "entity.nivel", target = "nivel")
     @Mapping(source = "entity.unidad_academica", target = "unidad_academica")
     @Mapping(source = "entity.modalidad", target = "modalidad")
+    @Mapping(source = "entity.realizado_por", target = "realizado_por")
+    @Mapping(source = "entity.actualizado_por", target = "actualizado_por")
     @Mapping(source = "entity.fecha_creacion", target = "fecha_creacion")
     @Mapping(source = "entity.fecha_actualizacion", target = "fecha_actualizacion")
     CarreraPorUnidadResponseDto entityToResponse(CarreraPorUnidadEntity entity);
@@ -25,6 +27,8 @@ public interface CarreraPorUnidadMapper {
     @Mapping(source = "request.nivel", target = "nivel")
     @Mapping(source = "request.unidad_academica", target = "unidad_academica")
     @Mapping(source = "request.modalidad", target = "modalidad")
+    @Mapping(source = "request.realizado_por", target = "realizado_por")
+    @Mapping(source = "request.actualizado_por", target = "actualizado_por")
     CarreraPorUnidadEntity requestToEntity(CarreraPorUnidadRequestDto request);
 
 }

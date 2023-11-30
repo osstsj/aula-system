@@ -19,6 +19,8 @@ public interface UnidadMapper {
     @Mapping(source = "entity.direccion_completa", target = "direccion_completa")
     @Mapping(source = "entity.fecha_creacion", target = "fecha_creacion")
     @Mapping(source = "entity.fecha_actualizacion", target = "fecha_actualizacion")
+    @Mapping(source = "entity.realizado_por", target = "realizado_por")
+    @Mapping(source = "entity.actualizado_por", target = "actualizado_por")
     UnidadResponseDto entityToResponse(UnidadEntity entity);
 
 
@@ -31,6 +33,8 @@ public interface UnidadMapper {
     @Mapping(source = "request.nombre_corto", target = "nombre_corto")
     @Mapping(source = "request.nombre_completo", target = "nombre_completo")
     @Mapping(source = "request.direccion_completa", target = "direccion_completa")
+    @Mapping(source = "request.realizado_por", target = "realizado_por")
+    @Mapping(source = "request.actualizado_por", target = "actualizado_por")
     UnidadEntity requestToEntity(UnidadRequestDto request);
 
 }

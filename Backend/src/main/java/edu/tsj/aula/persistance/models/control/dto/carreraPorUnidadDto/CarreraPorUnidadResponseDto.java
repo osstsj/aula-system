@@ -27,9 +27,11 @@ public class CarreraPorUnidadResponseDto {
     private UnidadEntity unidad_academica;
     private String modalidad;
 
+    private String realizado_por;
+    private String actualizado_por;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fecha_creacion;
-
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fecha_actualizacion;
 }

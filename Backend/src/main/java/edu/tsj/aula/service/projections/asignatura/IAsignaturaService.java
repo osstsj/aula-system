@@ -25,4 +25,6 @@ public interface IAsignaturaService {
 
     List<IComparacionAsignaturaDto> showComparativeAsignaturaByIdsFolios(Long id_folio_1, Long id_folio_2);
 
+    IComparacionAsignaturaDto showComparativeAsignaturaByIdsFoliosByIdDocente(Long id_folio_1, Long id_folio_2, Long id_docente);
+
 }

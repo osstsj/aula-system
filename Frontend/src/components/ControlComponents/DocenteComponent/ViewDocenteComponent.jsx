@@ -16,7 +16,10 @@ class ViewPlantelComponent extends Component {
                 actividad: '',
                 estatus: '',
                 fecha_creacion: '',
-                fecha_actualizacion: ''
+                fecha_actualizacion: '',
+                ultima_horas: null,
+                folio_ultimo_registro_y_tipo_folio: null,
+
             }
         }
 
@@ -33,7 +36,9 @@ class ViewPlantelComponent extends Component {
                 estatus: docente.estatus,
                 codigo_nomina: docente.codigo_nomina,
                 fecha_creacion: docente.fecha_creacion,
-                fecha_actualizacion: docente.fecha_actualizacion
+                fecha_actualizacion: docente.fecha_actualizacion,
+                ultima_horas: docente.ultima_horas,
+                folio_ultimo_registro_y_tipo_folio: docente.folio_ultimo_registro_y_tipo_folio,                
             });
         }).catch(() => {
             alert("Error al intentar traer al docente...");
@@ -157,7 +162,33 @@ class ViewPlantelComponent extends Component {
                                     </div>
                                 </div>
                             </div>
+                            <br />
+                            <hr />
 
+                            <div className="row mt-2">
+                                    <div className="col-4">
+                                        <div className="form-outline">
+                                            <label className=""><b>Horas en proyeccion:</b></label>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <div className="">{this.state.ultima_horas}</div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div className="row mt-2">
+                                    <div className="col-4">
+                                        <div className="form-outline">
+                                            <label className=""><b>Folio de Ultimo Registro y Tipo Folio:</b></label>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="form-outline">
+                                            <div className="">{this.state.folio_ultimo_registro_y_tipo_folio}</div>
+                                        </div>
+                                    </div>
+                            </div>
                             <div className="row mt-2">
                                     <div className="col-4">
                                         <div className="form-outline">
@@ -169,45 +200,45 @@ class ViewPlantelComponent extends Component {
                                             <div className="">{this.state.fecha_creacion}</div>
                                         </div>
                                     </div>
-                                </div>
+                            </div>
 
-                                <div className="row mb-3">
-                                    <div className="col-4">
-                                        <div className="form-outline">
-                                            <label className="">Fecha de creación:</label>
-                                        </div>
-                                    </div>
-                                    <div className="col">
-                                        <div className="form-outline">
-                                            <div className="">{this.state.fecha_creacion}</div>
-                                        </div>
+                            <div className="row mb-3">
+                                <div className="col-4">
+                                    <div className="form-outline">
+                                        <label className="">Fecha de creación:</label>
                                     </div>
                                 </div>
-                                <div className="row">
-                                    <div className="col-4">
-                                        <div className="form-outline">
-                                            <label className=""><b>Actualización  realizada por:</b></label>
-                                        </div>
-                                    </div>
-                                    <div className="col">
-                                        <div className="form-outline">
-                                            <div className="">{this.state.fecha_actualizacion}</div>
-                                        </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.fecha_creacion}</div>
                                     </div>
                                 </div>
-                                <div className="row">
-                                    <div className="col-4">
-                                        <div className="form-outline">
-                                            <label className="">Fecha de actualización:</label>
-                                        </div>
-                                    </div>
-                                    <div className="col">
-                                        <div className="form-outline">
-                                            <div className="">{this.state.fecha_actualizacion}</div>
-                                        </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-4">
+                                    <div className="form-outline">
+                                        <label className=""><b>Actualización  realizada por:</b></label>
                                     </div>
                                 </div>
-                            
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.fecha_actualizacion}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-4">
+                                    <div className="form-outline">
+                                        <label className="">Fecha de actualización:</label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.fecha_actualizacion}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        
                                 <br />
                         </div>
                             <br />

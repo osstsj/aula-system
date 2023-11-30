@@ -17,11 +17,14 @@ import javax.validation.constraints.NotBlank;
 //@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class CicloEscolarRequestDto {
-    @NotBlank private String clave;
+    private String clave;
 
-    @NotBlank private String nombre;
+    private String nombre;
 
-    @NotBlank private String inscripcion;
+    private String inscripcion;
 
-    @NotBlank String duracion;
+    private String duracion;
+
+    private String realizado_por;
+    private String actualizado_por;
 }

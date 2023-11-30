@@ -39,16 +39,18 @@ public class DocenteEntity {
 
     @Column private String estatus;
 
-    private String codigo_nomina;
+    @Column private String codigo_nomina;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_unidad", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private UnidadEntity unidad_academica;
 
-    @CreationTimestamp
-    private LocalDateTime fecha_creacion;
+    @Column private Integer ultima_horas;
+    @Column private String folio_ultimo_registro_y_tipo_folio;
+    @Column private String realizado_por;
+    @Column private String actualizado_por;
 
-    @UpdateTimestamp
-    private LocalDateTime fecha_actualizacion;
+    @CreationTimestamp private LocalDateTime fecha_creacion;
+    @UpdateTimestamp private LocalDateTime fecha_actualizacion;
 }

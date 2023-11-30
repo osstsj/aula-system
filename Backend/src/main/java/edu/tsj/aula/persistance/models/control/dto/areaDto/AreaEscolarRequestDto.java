@@ -23,4 +23,7 @@ public class AreaEscolarRequestDto {
     private String responsable;
 
     private UnidadEntity unidad_academica;
+
+    private String realizado_por;
+    private String actualizado_por;
 }

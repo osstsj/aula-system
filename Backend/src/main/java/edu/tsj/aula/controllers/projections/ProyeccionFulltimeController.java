@@ -94,4 +94,15 @@ public class ProyeccionFulltimeController {
         }
     }
 
+    @GetMapping(value = "/fulltime_comparativo_for_docente/{id_folio_1}/{id_folio_2}/{id_docente}")
+    public ResponseEntity<IComparacionFulltimeDto> showComparativeFulltimeByIdsFoliosByIdDocente(
+            @PathVariable Long id_folio_1, @PathVariable Long id_folio_2, @PathVariable Long id_docente) {
+        try {
+            var result = fulltimeService.showComparativeFulltimeByIdsFoliosAndIdDocente(id_folio_1, id_folio_2, id_docente);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

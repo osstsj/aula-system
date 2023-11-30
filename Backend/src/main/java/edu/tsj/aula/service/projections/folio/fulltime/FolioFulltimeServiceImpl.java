@@ -109,6 +109,7 @@ public class FolioFulltimeServiceImpl implements IFolioFulltimeService {
         }
     }
 
+    @Transactional
     @Override
     public HashMap<String, String> deleteFolioFulltimeById(Long id) {
         log.info("Se ha ejecutado el metodo deleteFolioFulltimeById");

@@ -94,5 +94,16 @@ public class ProyeccionAsignaturaController {
         }
     }
 
+    @GetMapping(value = "/asignatura_comparativo_for_docente/{id_folio_1}/{id_folio_2}/{id_docente}")
+    public ResponseEntity<IComparacionAsignaturaDto> showComparativeAsignaturaByIdsFolios(
+            @PathVariable Long id_folio_1, @PathVariable Long id_folio_2, @PathVariable Long id_docente) {
+        try {
+            var result = asignaturaService.showComparativeAsignaturaByIdsFoliosByIdDocente(id_folio_1, id_folio_2, id_docente);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 }

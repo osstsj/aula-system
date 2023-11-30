@@ -52,7 +52,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                 grado_academico: "", // nivel: '',
                 nombre_docente: "",
 
-                categoria: "",
+                categoria: '',
 
                 // horas_sustantivas_atencion_alumnos
                     // horas_asignatura: 
@@ -111,7 +111,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                         b: asignatura.horas_sustantivas_atencion_alumnos.horas_asignatura.b,
                         tipoAoB: asignatura.horas_sustantivas_atencion_alumnos.horas_asignatura.tipoAoB,
                     
-                    ptc: asignatura.profe_asignatura.nombre_docente.categoria,
+                    // ptc: asignatura.profe_asignatura.nombre_docente.categoria,
                     horas_frente_grupo:asignatura.horas_sustantivas_atencion_alumnos.horas_frente_grupo,
 
                         // academias
@@ -242,16 +242,18 @@ class UpdateProyeccionAsignaturaComponent extends Component {
             const data = res.data;
             
             this.setState({ folio: data.folio});
-            this.setState({id_unidad: data.unidad_academica.id});
-            this.setState({unidad_academica: data.unidad_academica.nombre_completo});
+            this.setState({ id_unidad: data.unidad_academica.id });
+            this.setState({ unidad_academica: data.unidad_academica.nombre_completo });
         }).catch(() => {
             alert("Error al intentar traer el folio por id...");
             this.props.history.push('/');
         });
 
 
-        if ((this.state.ptc !== 'PROFESOR ASIGNATURA - A') || (this.state.ptc !== 'PROFESOR ASIGNATURA - B')) {
-            alert("La proyeccion no puede modificarse ya que el PTC del docente pertence a la categoria: " + this.state.ptc);
+        this.getCarreraList(this.state.id_unidad);
+        
+        if ((this.state.categoria !== 'PROFESOR ASIGNATURA - A') || (this.state.categoria !== 'PROFESOR ASIGNATURA - B')) {
+            alert("La proyeccion no puede modificarse ya que la categoria del docente pertence a la categoria: " + this.state.categoria);
             this.props.history.push(`/list-proyeccion_asignatura/${this.state.id_folio}`);
         }
     }
@@ -292,13 +294,12 @@ class UpdateProyeccionAsignaturaComponent extends Component {
             alert("Error al intentar traer los folios...");
             this.props.history.push(`/list-proyeccion_asignatura/${this.state.id_folio}`);
         })
-
-        this.getCarreraList(this.state.id_unidad);
         this.setUpAoB(); 
         // se puso aqui ya que no se puede consultar el valor de categoria en el metodo compountDidMount
         // porque una vez que se realize el setState con getById... no se puede consultar el valor al mismo
         // tiempo (paralelismo), y se tiene que delegar a otra funcion para que siga la ejecucion en secuncia...
         // y se optenga el valor el en prop de categoria.
+
     }
 
     async getUnidadList() {
@@ -360,7 +361,6 @@ class UpdateProyeccionAsignaturaComponent extends Component {
     }
 
     setUpAoB() {
-
         let categoria_interna = this.state.categoria;
         if(categoria_interna === "PROFESOR ASIGNATURA - A") {
             if (this.state.b !== 0) {

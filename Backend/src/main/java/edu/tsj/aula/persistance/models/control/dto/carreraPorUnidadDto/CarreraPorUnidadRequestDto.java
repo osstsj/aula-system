@@ -22,5 +22,8 @@ public class CarreraPorUnidadRequestDto {
     private CarreraEntity carrera_nombre;
     private String nivel;
     private UnidadEntity unidad_academica;
-    String modalidad;
+    private String modalidad;
+
+    private String realizado_por;
+    private String actualizado_por;
 }

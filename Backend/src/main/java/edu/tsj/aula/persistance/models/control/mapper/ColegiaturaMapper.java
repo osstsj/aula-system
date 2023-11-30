@@ -17,6 +17,8 @@ public interface ColegiaturaMapper {
     @Mapping(source = "entity.monto", target = "monto")
     @Mapping(source = "entity.colegiatura_estatus", target = "colegiatura_estatus")
     @Mapping(source = "entity.comentarios", target = "comentarios")
+    @Mapping(source = "entity.realizado_por", target = "realizado_por")
+    @Mapping(source = "entity.actualizado_por", target = "actualizado_por")
     @Mapping(source = "entity.fecha_creacion", target = "fecha_creacion")
     @Mapping(source = "entity.fecha_actualizacion", target = "fecha_actualizacion")
     ColegiaturaResponseDto entityToResponse(ColegiaturaEntity entity);
@@ -27,5 +29,7 @@ public interface ColegiaturaMapper {
     @Mapping(source = "request.monto", target = "monto")
     @Mapping(source = "request.colegiatura_estatus", target = "colegiatura_estatus")
     @Mapping(source = "request.comentarios", target = "comentarios")
+    @Mapping(source = "request.realizado_por", target = "realizado_por")
+    @Mapping(source = "request.actualizado_por", target = "actualizado_por")
     ColegiaturaEntity requestToEntity(ColegiaturaRequestDto request);
 }

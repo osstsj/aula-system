@@ -34,4 +34,9 @@ public class DocenteRequestDto {
     private String estatus;
 
     private String codigo_nomina;
+
+    private Integer ultima_horas;
+    private String folio_ultimo_registro_y_tipo_folio;
+    private String realizado_por;
+    private String actualizado_por;
 }

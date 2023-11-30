@@ -135,8 +135,17 @@ class ComparacionFulltimeComponent extends Component {
 
         return (
             <div className="container">
-                <h2 className="text-center mt-5 mb-5 Title">COMPARACION DE FOLIOS DE PROYECCIONES ACADEMICAS, TIEMPO COMPLETO DEL TECNOLÓGICO SUPERIROR DE JALISCO</h2>
-                    
+                <h2 className="text-center mt-5 mb-5 Title">COMPARACION DE FOLIOS DE PROYECCIONES ACADEMICAS, TIEMPO COMPLETO DEL TECNOLÓGICO SUPERIOR DE JALISCO</h2>
+                    <div className="row justify-content-center mb-4">
+                        <fieldset className="border border-info p-0">
+                            {/* <legend className="w-auto text-left h6">Referencia</legend> */}
+                            <div className="col" style={{"text-align": "center"}}>
+                                <span><small><b>Selección:</b> Folio 1 (Anterior: [ZA - 1 - 2024 A]), Folio 2 (Reciente:[ ZA - 4 - 2024 B ])<br /></small></span>
+                                <span><small><b>Cálculo Comparación:</b> [ ZA - 4 - 2024 B ] - [ZA - 1 - 2024 A]</small></span><br />
+                                <span><small><b>Bandera:</b> Rojo: comparación menor a 5 | Negro: comparación mayor que 0 y menor que 5 | Verde: comparación mayor que 5</small></span>
+                            </div>
+                        </fieldset>
+                    </div>
                     <div className="row mb-3">
                         <div className="col-4">
                             <div>
@@ -178,18 +187,26 @@ class ComparacionFulltimeComponent extends Component {
                                 <th></th>
                                 <th className="table-title">UA</th>
                                 <th className="table-title">Nombre del Docente</th>
-                                <th className="table-title"> COM Horas Frente a Grupo</th>
-                                <th className="table-action">COM Total</th>
+                                <th className="table-title"> COM Horas Frente a Grupo <br /> {this.state.folio1}</th>
+                                <th className="table-title"> COM Horas Frente a Grupo <br /> {this.state.folio2}</th>
+                                <th className="table-title"> Comparacion Horas Frente a Grupo <br /> ({this.state.folio2}) - ({this.state.folio1})</th>
+                                <th className="table-title">COM Total <br /> {this.state.folio1}</th>
+                                <th className="table-title">COM Total <br /> {this.state.folio2}</th>
+                                <th className="table-title">Comparativa Total <br /> ({this.state.folio2}) - ({this.state.folio1})</th>
                             </tr>
                         </thead>
                         <tbody>
                             {this.state.comparaciones.map((comparacion, index) => (
-                                <tr key={{}} className={(index % 2 === 0 ? 'even-row' : 'odd-row') && (comparacion.com_Total < 0 ? 'style: red' : 'style: black')}>
+                                <tr key={{}} className={(index % 2 === 0 ? 'even-row' : 'odd-row')}>
                                     <td>{index + 1}</td>
-                                    <td className="table-conten">{comparacion.nombre_Ua}</td>
-                                    <td className="table-conten">{comparacion.nombre_Docente}</td>
-                                    <td className="table-conten">{comparacion.com_Horas_grupo}</td>
-                                    <td className="table-conten">{comparacion.com_Total}</td>
+                                    <td className={parseInt(comparacion.com_Total) < 5 ? 'table-conten text-danger' : 'table-conten text-success'}>{comparacion.nombre_Ua}</td>
+                                    <td className={parseInt(comparacion.com_Total) < 5 ? 'table-conten text-danger' : 'table-conten text-success'}>{comparacion.nombre_Docente}</td>
+                                    <td className={parseInt(comparacion.com_Total) < 5 ? 'table-conten text-danger' : 'table-conten text-success'}>{comparacion.horas_Grupo_1}</td>
+                                    <td className={parseInt(comparacion.com_Total) < 5 ? 'table-conten text-danger' : 'table-conten text-success'}>{comparacion.horas_Grupo_2}</td>
+                                    <td className={parseInt(comparacion.com_Total) < 5 ? 'table-conten text-danger' : 'table-conten text-success'}>{comparacion.com_Horas_grupo}</td>
+                                    <td className={parseInt(comparacion.com_Total) < 5 ? 'table-conten text-danger' : 'table-conten text-success'}>{comparacion.com_Total}</td>
+                                    <td className={parseInt(comparacion.com_Total) < 5 ? 'table-conten text-danger' : 'table-conten text-success'}>{comparacion.total_1}</td>
+                                    <td className={parseInt(comparacion.com_Total) < 5 ? 'table-conten text-danger' : 'table-conten text-success'}>{comparacion.total_2}</td>
                                 </tr>
                             ))}
                         </tbody>

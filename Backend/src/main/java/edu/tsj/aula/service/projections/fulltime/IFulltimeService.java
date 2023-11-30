@@ -25,4 +25,6 @@ public interface IFulltimeService {
     HashMap<String, String> deleteFulltimeById(Long id);
 
     List<IComparacionFulltimeDto> showComparativeFulltomeByIdsFolios(Long id_folio_1, Long id_folio_2);
+
+    IComparacionFulltimeDto showComparativeFulltimeByIdsFoliosAndIdDocente(Long id_folio_1, Long id_folio_2, Long id_docente);
 }

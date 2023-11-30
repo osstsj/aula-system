@@ -618,7 +618,7 @@ class CreateFolioAsignatura extends Component {
                                                                     checked={this.state.disableB}
                                                                     onInput={(e) => {
                                                                         e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                                        e.target.value = Math.min(parseInt(e.target.value, 10), 40); // Limita el valor a 40
+                                                                        e.target.value = Math.min(parseInt(e.target.value, 10), 39); // Limita el valor a 40
                                                                     }}
                                                                     required
                                                                 />
@@ -655,7 +655,7 @@ class CreateFolioAsignatura extends Component {
                                                                     disabled={this.state.disableB}
                                                                     onInput={(e) => {
                                                                         e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                                        e.target.value = Math.min(parseInt(e.target.value, 10), 40); // Limita el valor a 40
+                                                                        e.target.value = Math.min(parseInt(e.target.value, 10), 39); // Limita el valor a 40
                                                                     }}
                                                                     required
                                                                 />

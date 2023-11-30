@@ -16,6 +16,8 @@ public interface OfertaAcademicaMapper {
     @Mapping(source = "entity.modalidad", target = "modalidad")
     @Mapping(source = "entity.turno", target = "turno")
     @Mapping(source = "entity.periodo", target = "periodo")
+    @Mapping(source = "entity.realizado_por", target = "realizado_por")
+    @Mapping(source = "entity.actualizado_por", target = "actualizado_por")
     @Mapping(source = "entity.fecha_creacion", target = "fecha_creacion")
     @Mapping(source = "entity.fecha_actualizacion", target = "fecha_actualizacion")
     OfertaAcademicaResposeDto entityToResponse(OfertaAcademicaEntity entity);
@@ -26,5 +28,7 @@ public interface OfertaAcademicaMapper {
     @Mapping(source = "request.modalidad", target = "modalidad")
     @Mapping(source = "request.turno", target = "turno")
     @Mapping(source = "request.periodo", target = "periodo")
+    @Mapping(source = "request.realizado_por", target = "realizado_por")
+    @Mapping(source = "request.actualizado_por", target = "actualizado_por")
     OfertaAcademicaEntity requestToEntity(OfertaAcademicaRequestDto request);
 }

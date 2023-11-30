@@ -31,14 +31,15 @@ public class ColegiaturaEntity {
 
     @Column private String descripcion;
 
-//    @Column private Float monto;
     @Column private String monto;
 
     @Column private String colegiatura_estatus;
 
     @Column private String comentarios;
 
-    @CreationTimestamp private LocalDateTime fecha_creacion;
+    @Column private String realizado_por;
+    @Column private String actualizado_por;
 
+    @CreationTimestamp private LocalDateTime fecha_creacion;
     @UpdateTimestamp private LocalDateTime fecha_actualizacion;
 }

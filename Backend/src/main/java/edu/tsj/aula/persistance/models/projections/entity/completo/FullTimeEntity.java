@@ -93,6 +93,9 @@ public class FullTimeEntity {
     @Column private String no_de_oficio_academia;             // 2da etapa
     @Column private String fecha_en_que_aplica_sistema;       // 2da etapa
     @Column private String observacion_modificacion;
+
+    @Column private String realizado_por;
+    @Column private String actualizado_por;
 }
 
 

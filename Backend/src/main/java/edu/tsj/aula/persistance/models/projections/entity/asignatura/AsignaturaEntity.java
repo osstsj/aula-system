@@ -76,6 +76,7 @@ public class AsignaturaEntity  implements Serializable {
     private LocalDateTime fecha_creacion;
 
     // ------- seccion de cambios ------------
+
     @UpdateTimestamp
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fecha_actualizacion;
@@ -89,4 +90,7 @@ public class AsignaturaEntity  implements Serializable {
     @Column private String oficio_academia;          // 2da etapa
     @Column private String fecha_rh_aplica_sistema;  // 2da etapa
     @Column private String observaciones_modificacion;
+
+    @Column private String realizado_por;
+    @Column private String actualizado_por;
 }
