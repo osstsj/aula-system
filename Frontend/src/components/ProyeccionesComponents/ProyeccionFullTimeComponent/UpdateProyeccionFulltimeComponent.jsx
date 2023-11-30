@@ -234,7 +234,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
             this.props.history.push('/');
         });
 
-        if ((this.state.ptc === 'PROFESOR ASIGNATURA - A') || (this.state.ptc === 'PROFESOR ASIGNATURA - B')) {
+        if ((this.state.ptc !== 'PROFESOR ASIGNATURA - A') || (this.state.ptc !== 'PROFESOR ASIGNATURA - B')) {
             alert("La proyeccion no puede modificarse ya que el PTC del docente pertence a la categoria: " + this.state.ptc);
             this.props.history.push(`/list-proyeccion_fulltime/${this.state.id_folio}`);
         }

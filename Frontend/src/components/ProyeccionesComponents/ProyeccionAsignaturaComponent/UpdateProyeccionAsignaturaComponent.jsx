@@ -26,6 +26,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
             docentes: [],
             folios: [],
             tipos_unidades: [],
+            asignaturas:[],
 
             folio: '',
             id_folio: null,
@@ -276,7 +277,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
 
         this.getFolioById();
     }
-
+    
     async getFolioList() {
         let options = null;
 
@@ -395,7 +396,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
         this.setState({ nombre_docente: ''})
 
         this.setState({ id_unidad: event.id_unidad});
-        this.setState({unidad_academica: event.unidad_academica})
+        this.setState({unidad_academica: event.unidad_academica});
         this.getDocenteList(event.id_unidad);
     }
 
@@ -748,7 +749,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                                                                     checked={this.state.disableB}
                                                                     onInput={(e) => {
                                                                         e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                                        e.target.value = Math.min(parseInt(e.target.value, 10), 40); // Limita el valor a 40
+                                                                        e.target.value = Math.min(parseInt(e.target.value, 10),39); // Limita el valor a 39
                                                                     }}
                                                                     required
                                                                 />
@@ -785,7 +786,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                                                                     disabled={this.state.disableB}
                                                                     onInput={(e) => {
                                                                         e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                                        e.target.value = Math.min(parseInt(e.target.value, 10), 40); // Limita el valor a 40
+                                                                        e.target.value = Math.min(parseInt(e.target.value, 10), 39); // Limita el valor a 39
                                                                     }}
                                                                     required
                                                                 />

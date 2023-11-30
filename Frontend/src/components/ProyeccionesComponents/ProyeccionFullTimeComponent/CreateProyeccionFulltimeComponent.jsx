@@ -158,6 +158,34 @@ class CreateProyeccionFulltimeComponent extends Component {
         this.getHorasAcademias_secretario();
         this.getFolioById();
         this.getTipoUnidad();
+        this.getAllProyeccionesToFilterDocente(this.state.id_folio);
+    }
+
+
+    async getAllProyeccionesToFilterDocente(id_folio) {
+        let fulltimeList = [];
+        await FulltimeProyeccionService.getAllProyeccionesFulltimeByFolio(id_folio)
+            .then(
+                res =>
+                    fulltimeList = res.data,
+            ).catch(() => {
+                alert("Error al traer las proyecciones de asignatura por folio...");
+                this.props.history.push('/');
+        });
+
+        // When you use this.setState inside a loop, it doesn't immediately update the state synchronously. 
+        // The setState function is asynchronous, and if you call it in a loop, it might not behave as expected.
+        // To filter elements based on your condition, it's better to create a new array and then update the state once.
+        
+        let updatedDocentes = this.state.docentes;
+        
+        fulltimeList.map((fulltime) => {
+            updatedDocentes = updatedDocentes.filter(docente =>
+                 docente.id !== fulltime.profesor_fulltime.nombre_docente.id
+              );
+        })
+
+          this.setState({ docentes: updatedDocentes });
     }
 
 

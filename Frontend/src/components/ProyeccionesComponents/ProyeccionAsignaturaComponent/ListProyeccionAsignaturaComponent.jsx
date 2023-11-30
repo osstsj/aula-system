@@ -61,7 +61,10 @@ class ListProyeccionAsignaturaComponent extends Component {
                 isModalOpen: false,
                 asignaturaToDeleteId: null,
             })
-        })
+        }).catch(() => {
+            alert("Error al intentar eliminar la prye...");
+            this.props.history.push('/');
+        });
     }
     viewProyeccionAsignatura(id) {
         this.props.history.push(`/view-proyeccion_asignatura/${id}`);

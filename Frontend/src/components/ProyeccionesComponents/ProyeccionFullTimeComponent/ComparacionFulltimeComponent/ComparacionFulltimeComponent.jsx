@@ -187,9 +187,9 @@ class ComparacionFulltimeComponent extends Component {
                                 <th></th>
                                 <th className="table-title">UA</th>
                                 <th className="table-title">Nombre del Docente</th>
-                                <th className="table-title"> COM Horas Frente a Grupo <br /> {this.state.folio1}</th>
-                                <th className="table-title"> COM Horas Frente a Grupo <br /> {this.state.folio2}</th>
-                                <th className="table-title"> Comparacion Horas Frente a Grupo <br /> ({this.state.folio2}) - ({this.state.folio1})</th>
+                                <th className="table-title"> COM Horas Frente a Grupo <br /> Horas de apoyo a la docencia <br /> {this.state.folio1}</th>
+                                <th className="table-title"> COM Horas Frente a Grupo <br /> Horas de apoyo a la docencia <br /> {this.state.folio2}</th>
+                                <th className="table-title"> Comparacion Horas Frente a Grupo <br /> Horas de apoyo a la docencia <br /> ({this.state.folio2}) - ({this.state.folio1})</th>
                                 <th className="table-title">COM Total <br /> {this.state.folio1}</th>
                                 <th className="table-title">COM Total <br /> {this.state.folio2}</th>
                                 <th className="table-title">Comparativa Total <br /> ({this.state.folio2}) - ({this.state.folio1})</th>
@@ -199,14 +199,14 @@ class ComparacionFulltimeComponent extends Component {
                             {this.state.comparaciones.map((comparacion, index) => (
                                 <tr key={{}} className={(index % 2 === 0 ? 'even-row' : 'odd-row')}>
                                     <td>{index + 1}</td>
-                                    <td className={parseInt(comparacion.com_Total) < 5 ? 'table-conten text-danger' : 'table-conten text-success'}>{comparacion.nombre_Ua}</td>
-                                    <td className={parseInt(comparacion.com_Total) < 5 ? 'table-conten text-danger' : 'table-conten text-success'}>{comparacion.nombre_Docente}</td>
-                                    <td className={parseInt(comparacion.com_Total) < 5 ? 'table-conten text-danger' : 'table-conten text-success'}>{comparacion.horas_Grupo_1}</td>
-                                    <td className={parseInt(comparacion.com_Total) < 5 ? 'table-conten text-danger' : 'table-conten text-success'}>{comparacion.horas_Grupo_2}</td>
-                                    <td className={parseInt(comparacion.com_Total) < 5 ? 'table-conten text-danger' : 'table-conten text-success'}>{comparacion.com_Horas_grupo}</td>
-                                    <td className={parseInt(comparacion.com_Total) < 5 ? 'table-conten text-danger' : 'table-conten text-success'}>{comparacion.com_Total}</td>
-                                    <td className={parseInt(comparacion.com_Total) < 5 ? 'table-conten text-danger' : 'table-conten text-success'}>{comparacion.total_1}</td>
-                                    <td className={parseInt(comparacion.com_Total) < 5 ? 'table-conten text-danger' : 'table-conten text-success'}>{comparacion.total_2}</td>
+                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'ROJO' ? 'table-conten text-success' : 'table-conten'}>{comparacion.nombre_Ua}</td>
+                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'ROJO' ? 'table-conten text-success' : 'table-conten'}>{comparacion.nombre_Docente}</td>
+                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'ROJO' ? 'table-conten text-success' : 'table-conten'}>{comparacion.horas_Grupo_1}</td>
+                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'ROJO' ? 'table-conten text-success' : 'table-conten'}>{comparacion.horas_Grupo_2}</td>
+                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'ROJO' ? 'table-conten text-success' : 'table-conten'}>{comparacion.com_Horas_grupo}</td>
+                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'ROJO' ? 'table-conten text-success' : 'table-conten'}>{comparacion.com_Total}</td>
+                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'ROJO' ? 'table-conten text-success' : 'table-conten'}>{comparacion.total_1}</td>
+                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'ROJO' ? 'table-conten text-success' : 'table-conten'}>{comparacion.total_2}</td>
                                 </tr>
                             ))}
                         </tbody>

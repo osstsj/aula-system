@@ -23,6 +23,7 @@ class CreateFolioAsignatura extends Component {
             docentes: [],
             folios: [],
             tipos_unidades: [],
+            asignaturas:[],
 
             folio: '',
             id_folio: null,
@@ -172,9 +173,9 @@ class CreateFolioAsignatura extends Component {
         this.setState(() => ({
             disableA: true,
             disableB: true
-        }));
+        })); 
+        
     }
-
 
 
     async getFolioById() {
@@ -190,8 +191,11 @@ class CreateFolioAsignatura extends Component {
             this.props.history.push('/');
         });
 
-        this.getDocenteList(this.state.id_unidad);
+        
         this.getCarreraList(this.state.id_unidad);
+        this.getDocenteList(this.state.id_unidad);
+        this.getAllProyeccionesToFilterDocente(this.state.id_folio);
+        
     }
     async getCarreraList(id_unidad) {
         let options = null;
@@ -206,11 +210,38 @@ class CreateFolioAsignatura extends Component {
             alert("Error al intentar traer las carreras...");
             this.props.history.push('/');
         });
-        this.setState({ carreras: options });
+        this.setState({ carreras: options });     
+    }
+
+    async getAllProyeccionesToFilterDocente(id_folio) {
+        let asignaturaList = [];
+        await AsignaturaProyeccionService.getAllProyeccionesAsignaturaByFolio(id_folio)
+            .then(
+                res =>
+                    // this.setState({ asignaturas: res.data })
+                    asignaturaList = res.data,
+            ).catch(() => {
+                alert("Error al traer las proyecciones de asignatura por folio...");
+                this.props.history.push('/');
+        });
+
+        // When you use this.setState inside a loop, it doesn't immediately update the state synchronously. 
+        // The setState function is asynchronous, and if you call it in a loop, it might not behave as expected.
+        // To filter elements based on your condition, it's better to create a new array and then update the state once.
+        
+        let updatedDocentes = this.state.docentes;
+        
+        asignaturaList.map((asignatura) => {
+            updatedDocentes = updatedDocentes.filter(docente =>
+                 docente.id !== asignatura.profe_asignatura.nombre_docente.id
+              );
+        })
+
+          this.setState({ docentes: updatedDocentes });
     }
 
     async getDocenteList(id_unidad) {
-        let options = null;
+        let options = [];
         await DocenteService.getAllDocentesByCategoriaPTCAsignatura(id_unidad).then(res => {
             const data = res.data;
             options = data.map(d => ({
@@ -221,10 +252,9 @@ class CreateFolioAsignatura extends Component {
                 "categoria":d.categoria,
             }))
             this.setState({ docentes: options });
-        }).catch(() => {
-            alert("Error al intentar traer los docentes...");
-            this.props.history.push('/');
+            
         });
+        
     }
 
     getTipoUnidad() {
@@ -264,6 +294,10 @@ class CreateFolioAsignatura extends Component {
         ]
 
         this.setState({ horas_secretario: academiasList });
+    }
+
+    getDocenteFiltered() {
+        
     }
 
     onChangeTipoUnidadHandler = (event) => {
@@ -618,7 +652,7 @@ class CreateFolioAsignatura extends Component {
                                                                     checked={this.state.disableB}
                                                                     onInput={(e) => {
                                                                         e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                                        e.target.value = Math.min(parseInt(e.target.value, 10), 39); // Limita el valor a 40
+                                                                        e.target.value = Math.min(parseInt(e.target.value, 10), 39); // Limita el valor 39
                                                                     }}
                                                                     required
                                                                 />
@@ -655,7 +689,7 @@ class CreateFolioAsignatura extends Component {
                                                                     disabled={this.state.disableB}
                                                                     onInput={(e) => {
                                                                         e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                                        e.target.value = Math.min(parseInt(e.target.value, 10), 39); // Limita el valor a 40
+                                                                        e.target.value = Math.min(parseInt(e.target.value, 10), 39); // Limita el valor a 39
                                                                     }}
                                                                     required
                                                                 />

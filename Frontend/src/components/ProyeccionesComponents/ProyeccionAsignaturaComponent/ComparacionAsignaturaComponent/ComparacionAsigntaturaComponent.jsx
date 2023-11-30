@@ -189,12 +189,12 @@ class ComparacionAsigntaturaComponent extends Component {
                                 <th></th>
                                 <th className="table-title">UA</th>
                                 <th className="table-title">Nombre del Docente</th>
-                                <th className="table-title">COM Subtotal1 <br />{this.state.folio1}</th>
-                                <th className="table-title">COM Subtotal1 <br /> {this.state.folio2}</th>
-                                <th className="table-title">Comparativa Subtotal1 <br /> ({this.state.folio2}) - ({this.state.folio1})</th>
-                                <th className="table-title">COM Subtotal2 <br /> {this.state.folio1}</th>
-                                <th className="table-title">COM Subtotal2 <br /> {this.state.folio2}</th>
-                                <th className="table-title">Comparativa Subtotal2 <br /> ({this.state.folio2}) - ({this.state.folio1})</th>
+                                <th className="table-title">COM Subtotal1 <br /> Horas de apoyo a la docencia <br />{this.state.folio1}</th>
+                                <th className="table-title">COM Subtotal1 <br /> Horas de apoyo a la docencia <br /> {this.state.folio2}</th>
+                                <th className="table-title">Comparativa Subtotal1 <br /> Horas de apoyo a la docencia <br /> ({this.state.folio2}) - ({this.state.folio1})</th>
+                                <th className="table-title">COM Subtotal2 <br /> Horas Institucional <br /> {this.state.folio1}</th>
+                                <th className="table-title">COM Subtotal2 <br /> Horas Institucional <br /> {this.state.folio2}</th>
+                                <th className="table-title">Comparativa Subtotal2 <br /> Horas Institucional <br /> ({this.state.folio2}) - ({this.state.folio1})</th>
                                 <th className="table-title">COM Total <br /> {this.state.folio1}</th>
                                 <th className="table-title">COM Total <br /> {this.state.folio2}</th>
                                 <th className="table-title">Comparativa Total <br /> ({this.state.folio2}) - ({this.state.folio1})</th>
