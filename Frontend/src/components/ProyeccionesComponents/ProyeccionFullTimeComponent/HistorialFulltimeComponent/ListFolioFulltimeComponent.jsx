@@ -3,6 +3,7 @@ import '../../../StyleGlobal/Style.css';
 import UnidadService from '../../../../services/Control/UnidadService';
 import Select from 'react-select'
 import FolioFulltimeService from '../../../../services/Proyecciones/FolioFulltimeService';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'; // Importa Reactstrap para el modal
 
 class ListFolioFulltimeComponent extends Component {
     constructor(props) {
@@ -46,7 +47,21 @@ class ListFolioFulltimeComponent extends Component {
     addFolio() {
         this.props.history.push(`/create-folio-fulltime`);
     }
-
+    
+    
+    toggleModal = (folioId) => {
+        this.setState({
+            isModalOpen: !this.state.isModalOpen,
+            folioToDeleteId: folioId, // Establece el ID de la colegiatura a eliminar
+        });
+    }
+     // Método para cerrar el modal
+     closeModal = () => {
+        this.setState({
+            isModalOpen: false,
+            folioToDeleteId: null, // Restablece el ID de la colegiatura
+        });
+    }
     
     async getUnidadList() {
         let options = null;
@@ -68,8 +83,7 @@ class ListFolioFulltimeComponent extends Component {
 
     onChangeUnidadHandler = (event) => {
         this.setState({ unidad: event.label });
-        // this.setState({ asignaturas: this.state.asignaturas.filter((asignatura) => asignatura.unidad_academica === this.state.unidad)})
-
+        
         FolioFulltimeService.getAllFoliosByUA(event.id).then(
             res => this.setState({ folios: res.data })
         );
@@ -86,12 +100,12 @@ class ListFolioFulltimeComponent extends Component {
                         folioToDeleteId: null, // Restablece el ID de la colegiatura
                     })
                 }).catch(() => {
-                    alert("Error al intentar eliminar la proyeccion asignatura...");
+                    alert("Error al intentar eliminar la proyeccion tiempo completo...");
                     this.props.history.push('/list-folio-fulltime');
                 });
             } else {
-                alert("El folio asignatura no es posible eliminar porque esta presente en otros modulos. \n" +
-                "por favor verifique: Proyecciones Asignatura");
+                alert("El folio tiempo completo no es posible eliminar porque esta presente en otros modulos. \n" +
+                "por favor verifique: proyecciones Tiempo Completo.");
                 this.setState({
                     isModalOpen: false, // Cierra el modal después de eliminar
                     folioToDeleteId: null}) // Restablece el ID de la colegiatura)
@@ -99,7 +113,7 @@ class ListFolioFulltimeComponent extends Component {
                 this.props.history.push('/list-folio-fulltime');
             }
         }).catch(() => {
-            alert("Error al intentar eliminar la proyeccion asignatura...");
+            alert("Error al intentar eliminar la proyeccion tiempo completo...");
             this.props.history.push('/list-folio-fulltime');
         });
     }
@@ -120,6 +134,11 @@ class ListFolioFulltimeComponent extends Component {
     }
 
     render() {
+        const boton = {
+            marginLeft: '1rem',
+            marginRight: '1rem',
+        };
+
         return (
             <div className="container">
                 <div className="row">
@@ -169,12 +188,26 @@ class ListFolioFulltimeComponent extends Component {
                                          <button onClick={() => this.viewProyeccion(folio.id)} className="btn btn-info mt-0">
                                             Ver Proyeciones
                                         </button>
+                                        <button className="btn btn-danger mt-0" style={boton}
+                                                onClick={() => this.toggleModal(folio.id)} // Abre el modal y pasa el ID de la colegiatura
+                                            > Eliminar Folio</button>
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
+
+                <Modal isOpen={this.state.isModalOpen} toggle={this.closeModal}>
+                    <ModalHeader>Confirmar Eliminación</ModalHeader>
+                    <ModalBody>
+                        ¿Estás seguro de que deseas eliminar este docente?
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="danger" onClick={() => this.deleteFolioById(this.state.folioToDeleteId)}>Eliminar Folio</Button>
+                        <Button color="secondary" onClick={this.closeModal}>Cancelar</Button>
+                    </ModalFooter>
+                </Modal>
             </div>
         );
     }

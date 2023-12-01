@@ -10,6 +10,17 @@
     text-align: center;
          /*white-space: nowrap; */
 }
+
+.table-grey {
+    min-width: 200px;
+    overflow: auto;
+    vertical-align: middle!important;
+    background-color: hwb(180 45% 53% / 0.239);;
+    border-Color: #000000!important;
+    color: #000000 !important;
+    text-align: center;
+         /*white-space: nowrap; */
+}
 .table-blue{
     min-width: 300px;
             overflow: auto;

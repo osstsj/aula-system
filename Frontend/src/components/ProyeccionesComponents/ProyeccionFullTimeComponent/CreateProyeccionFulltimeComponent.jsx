@@ -71,7 +71,7 @@ class CreateProyeccionFulltimeComponent extends Component {
                 subtotal_1: 0,
 
                 // horas_necesidad_institucional
-                proyecto_investigacion: 0,
+                invesigacion_educativa: 0,
                 apoyo_operativo: 0,
                 subtotal_2: 0,
             
@@ -153,7 +153,7 @@ class CreateProyeccionFulltimeComponent extends Component {
             },
 
             horas_necesidad_institucional_fulltime:  {
-                proyecto_investigacion: this.state.proyecto_investigacion,
+                proyecto_investigacion: this.state.invesigacion_educativa,
                 apoyo_operativo: this.state.apoyo_operativo,
             },
 

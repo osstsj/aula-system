@@ -96,7 +96,8 @@ class CreateCarreraPorUnidadComponent extends Component {
     getModalidad() {
         const modalidadList = [
             { value: 'ESCOLARIZADA', label: 'ESCOLARIZADA' },
-            { value: 'MIXTA', label: 'MIXTA' }
+            { value: 'MIXTA', label: 'MIXTA' },
+            { value: 'VIRTUAL', label: 'VIRTUAL' }
         ]
         this.setState({ modalidades: modalidadList })
     }

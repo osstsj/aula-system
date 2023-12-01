@@ -17,6 +17,8 @@ class ListExtensionComponent extends Component {
             extensiones:[],
             isModalOpen: false, // Estado para controlar la apertura/cierre del modal
             colegiaturaToDeleteId: null, // Estado para almacenar el ID de la colegiatura a eliminar
+
+            unidad_academica: '',
         };
 
         this.addUnidad = this.addUnidad.bind(this);
@@ -171,22 +173,25 @@ class ListExtensionComponent extends Component {
         return (
             <div className="container">
                 <h2 className="text-center mt-5 mb-5 Title">LISTA DE EXTENSIONES ACADÉMICAS</h2>
-                <label className="">Lista de unidades académicas: </label>
                 <div className="row">
-                    <div className="col">
-                    <Select
-                        rules={{ required: true }}
-                        options={this.state.unidades}
-                        onChange={(e) => this.onChangeUnidadHandler(e)}
-                        value={{ label: this.state.unidad_academica === '' ? "Seleccione UA..." : this.state.unidad_academica}}
-                    />
-                    <button style={{ width: '24%' }} className="btn btn-primary mb-4" onClick={this.addUnidad}>
-                        Agregar Extension Académica
+                <div className="col-5">
+                <div style={{ marginTop: '4.5%' }}>
+                        <Select                        
+                            rules={{ required: true }}
+                            options={this.state.unidades}
+                            onChange={(e) => this.onChangeUnidadHandler(e)}
+                            value={{ label: this.state.unidad_academica === '' ? "Seleccione Unidad Académica..." : this.state.unidad_academica}}
+                        />
+                    </div>
+                    </div>
+                    <div className="col-7">
+                    <button style={{ width: '29%' , marginRight: '5rem' }} className="btn btn-primary mb-4" onClick={this.addUnidad}>
+                        Agregar Extension
                     </button>
-                    <button style={{ width: '15%', marginLeft: '1rem' }} className="btn  btn-outline-success mb-4" onClick={this.exportToExcel}>
+                    <button style={{ width: '25%', marginLeft: '1rem'}} className="btn  btn-outline-success mb-4" onClick={this.exportToExcel}>
                         Exportar a Excel
                     </button>
-                    <button style={{ width: '15%',marginLeft: '1rem' }} className="btn  btn-outline-dark mb-4" onClick={this.exportToPDF}>
+                    <button style={{ width: '25%',marginLeft: '1rem' }} className="btn  btn-outline-dark mb-4" onClick={this.exportToPDF}>
                         Exportar a PDF
                     </button>
                     </div>

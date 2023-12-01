@@ -105,6 +105,7 @@ class UpdateUnidadComponent extends Component {
                                             <div className="form-outline">
                                                 <label className="">Tipo de Unidad: </label>
                                                 <select 
+                                                disabled
                                                     name="tipoUnidad" 
                                                     className="form-control" 
                                                     value={this.state.tipo_unidad} 
