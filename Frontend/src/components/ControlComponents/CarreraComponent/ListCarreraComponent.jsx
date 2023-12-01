@@ -63,17 +63,7 @@ class ListCarreraComponent extends Component {
     }
 
     updateCarrera(id) {
- CarreraService.checkCarreraDependersById(id).then( res => {
-            if (res.data === false) {
-                this.props.history.push(`update-carrera/${id}`);            } else {
-                swal("Oops!","La carrera por unidad no es posible editar porque esta presente en otros modulos. \n" +
-                "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
-            }
-        }).catch(() => {
-            alert("Error al intentar eliminar la carrera por unidad...");
-            this.props.history.push('/list-carrera');
-        });
-
+        this.props.history.push(`update-carrera/${id}`);     
     }
 
     componentDidMount() {

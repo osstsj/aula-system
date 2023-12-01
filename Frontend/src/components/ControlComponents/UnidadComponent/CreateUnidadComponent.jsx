@@ -64,10 +64,7 @@ class CreateUnidadComponent extends Component {
                     return;
         }
         this.setState({disableCreate: true});
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
         if (this.state.disablePlantelList === false) { 
             let unidad = {
                 tipo_unidad: this.state.tipo_unidad.trim(), 

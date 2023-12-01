@@ -68,6 +68,20 @@ class FulltimeProyeccionService {
             }
         })
     }
+
+    deleteFulltimeById(id) {
+        return axios.delete(process.env.REACT_APP_LOCAL_API_BASE_URL + "fulltime/" + id)
+        .catch(error => {
+            if (error.response) {
+                console.error("Error paso!");
+            } else if (error.request) {
+                console.error("error request!");
+            } else {
+                console.error("algo mas paso!");
+            }
+        })
+    }
+
 }
 
 export default new FulltimeProyeccionService()

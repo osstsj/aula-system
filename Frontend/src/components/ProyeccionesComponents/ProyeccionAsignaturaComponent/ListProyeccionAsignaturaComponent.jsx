@@ -62,7 +62,7 @@ class ListProyeccionAsignaturaComponent extends Component {
                 asignaturaToDeleteId: null,
             })
         }).catch(() => {
-            alert("Error al intentar eliminar la prye...");
+            alert("Error al intentar eliminar la proyeccion?...");
             this.props.history.push('/');
         });
     }

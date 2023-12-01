@@ -5,6 +5,7 @@ import '../Style/Table.css';
 import '../../StyleGlobal/Style.css'
 import FulltimeProyeccionService from '../../../services/Proyecciones/FulltimeProyeccionService';
 import FolioFulltimeService from '../../../services/Proyecciones/FolioFulltimeService';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 
 class ListProyeccionFullTimeComponent extends Component {
@@ -18,7 +19,9 @@ class ListProyeccionFullTimeComponent extends Component {
 
             unidad: '',
 
-            fulltimes: []
+            fulltimes: [],
+            isModalOpen: false,
+            asignaturaToDeleteId: null, 
         };
 
         this.viewProyeccionFulltime = this.viewProyeccionFulltime.bind(this);
@@ -62,6 +65,19 @@ class ListProyeccionFullTimeComponent extends Component {
         this.props.history.push(`/view-proyeccion_fulltime/${id}`);
     }
 
+    deleteProyeccionFulltime(id) {
+        FolioFulltimeService.deleteFolioFulltimeById(this.state.id).then(() => {
+            this.setState({
+                fulltimes: this.state.fulltimes.filter(fulltime => fulltime.id !== id),
+                isModalOpen: false,
+                asignaturaToDeleteId: null,
+            })
+        }).catch(() => {
+            alert("Error al intentar traer las UAs...");
+            this.props.history.push('/');
+        });
+    }
+
     // Función para alternar la visibilidad de las columnas
     toggleColumns = () => {
         this.setState((prevState) => ({
@@ -73,6 +89,22 @@ class ListProyeccionFullTimeComponent extends Component {
             areColumns2Visible: !prevState.areColumns2Visible,
         }));
     };
+
+     // Método para abrir el modal
+     toggleModal = (id_asignatura) => {
+        this.setState({
+            isModalOpen: !this.state.isModalOpen,
+            asignaturaToDeleteId: id_asignatura, // Establece el ID de la colegiatura a eliminar
+        });
+    }
+
+    // Método para cerrar el modal
+    closeModal = () => {
+        this.setState({
+            isModalOpen: false,
+            asignaturaToDeleteId: null, // Restablece el ID de la colegiatura
+        });
+    }
     render() {
         const { areColumnsVisible } = this.state;
         const { areColumns2Visible } = this.state;
@@ -326,7 +358,7 @@ class ListProyeccionFullTimeComponent extends Component {
                                     }`}>  {fulltime.observacion_modificacion}	</td>
                                      <td align="center" className={`text-center table-content ${areColumns2Visible ||areColumnsVisible ? '' : 'collapse'
                                     }`}>    <button onClick={() => this.updateProyeccionFulltime(fulltime.id)} className="btn btn-warning">Modificar</button>
-                                    <button style={boton} onClick={{}} className="btn btn-danger">Eliminar</button>
+                                    <button style={boton} onClick={() => this.toggleModal(fulltime.id)} className="btn btn-danger">Eliminar</button>
                                     <button onClick={() => this.viewProyeccionFulltime(fulltime.id)} className="btn btn-info">Ver</button>	</td>
                             </tr>
                            )
@@ -335,6 +367,18 @@ class ListProyeccionFullTimeComponent extends Component {
                         
                     </table>
                 </div>
+
+                <Modal isOpen={this.state.isModalOpen} toggle={this.closeModal}>
+                    <ModalHeader>Confirmar Eliminación</ModalHeader>
+                    <ModalBody>
+                        ¿Estás seguro de que deseas eliminar esta proyección?
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="danger" onClick={() => this.deleteProyeccionFulltime(this.state.asignaturaToDeleteId)}>Eliminar</Button>
+                        <Button color="secondary" onClick={this.closeModal}>Cancelar</Button>
+                    </ModalFooter>
+                </Modal>
+
             </div>
 
 

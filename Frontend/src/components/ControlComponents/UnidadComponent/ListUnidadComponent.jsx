@@ -61,12 +61,10 @@ class ListUnidadComponent extends Component {
     }
 
     updateUnidad(id) {
-            this.props.history.push('/list-carrera_por_unidad');
+        this.props.history.push(`/update-unidad/${id}`);
        
         
-        }
-       
-    
+    }   
 
     componentDidMount(){
         //promise

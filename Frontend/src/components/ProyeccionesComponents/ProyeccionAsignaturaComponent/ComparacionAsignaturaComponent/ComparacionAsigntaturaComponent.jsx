@@ -252,17 +252,17 @@ class ComparacionAsigntaturaComponent extends Component {
                             {this.state.comparaciones.map((comparacion, index) => (
                                 <tr key={{}} className={(index % 2 === 0 ? 'even-row' : 'odd-row')}>
                                     <td>{index + 1}</td>
-                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'ROJO' ? 'table-conten text-success' : 'table-conten'}>{comparacion.nombre_Ua}</td>
-                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'ROJO' ? 'table-conten text-success' : 'table-conten'}>{comparacion.nombre_Docente}</td>
-                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'ROJO' ? 'table-conten text-success' : 'table-conten'}>{comparacion.subtotal_1_1}</td>
-                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'ROJO' ? 'table-conten text-success' : 'table-conten'}>{comparacion.subtotal_1_2}</td>
-                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'ROJO' ? 'table-conten text-success' : 'table-conten'}>{comparacion.com_Subtotal_1}</td>
-                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'ROJO' ? 'table-conten text-success' : 'table-conten'}>{comparacion.subtotal_2_1}</td>
-                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'ROJO' ? 'table-conten text-success' : 'table-conten'}>{comparacion.subtotal_2_2}</td>
-                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'ROJO' ? 'table-conten text-success' : 'table-conten'}>{comparacion.com_Subtotal_2}</td>
-                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'ROJO' ? 'table-conten text-success' : 'table-conten'}>{comparacion.total_1}</td>
-                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'ROJO' ? 'table-conten text-success' : 'table-conten'}>{comparacion.total_2}</td>
-                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'ROJO' ? 'table-conten text-success' : 'table-conten'}>{comparacion.com_Total}</td>
+                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{comparacion.nombre_Ua}</td>
+                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{comparacion.nombre_Docente}</td>
+                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{comparacion.subtotal_1_1}</td>
+                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{comparacion.subtotal_1_2}</td>
+                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{comparacion.com_Subtotal_1}</td>
+                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{comparacion.subtotal_2_1}</td>
+                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{comparacion.subtotal_2_2}</td>
+                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{comparacion.com_Subtotal_2}</td>
+                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{comparacion.total_1}</td>
+                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{comparacion.total_2}</td>
+                                    <td className={comparacion.bandera === 'ROJO' ? 'table-conten text-danger' : comparacion.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{comparacion.com_Total}</td>
                                 </tr>
                             ))}
                         </tbody>
