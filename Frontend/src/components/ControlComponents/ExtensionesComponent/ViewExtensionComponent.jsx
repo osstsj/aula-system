@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import '../../StyleGlobal/Style.css';
 import UnidadService from '../../../services/Control/UnidadService';
 import ExtensionService from '../../../services/Control/ExtensionsService';
+import ExtensionsService from "../../../services/Control/ExtensionsService";
 
 class ViewExtensionComponent extends Component {
     constructor(props) {
@@ -23,7 +24,7 @@ class ViewExtensionComponent extends Component {
         }
 
     componentDidMount() {
-        UnidadService.getUnidadById(this.state.id).then((res) => {
+        ExtensionsService.getExtensionById(this.state.id).then((res) => {
             let unidad = res.data;
             this.setState({
                 tipo_unidad: unidad.tipo_unidad, 
@@ -40,16 +41,16 @@ class ViewExtensionComponent extends Component {
             this.props.history.push('/list-unidad');
         });
 
-        ExtensionService.getAllExtensionsByUnidadId(this.state.id).then(res => {
-            this.setState({ extensiones: res.data });
-        }).catch(() => {
-            alert("Error al intentar traer todas la extensiones academicas...");
-            this.props.history.push('/list-unidad');
-        });
+        // ExtensionService.getAllExtensionsByUnidadId(this.state.id).then(res => {
+        //     this.setState({ extensiones: res.data });
+        // }).catch(() => {
+        //     alert("Error al intentar traer todas la extensiones academicas...");
+        //     this.props.history.push('/list-unidad');
+        // });
     }
 
     cancel(){
-        this.props.history.push('/list-unidad');
+        this.props.history.push('/list-extension');
     }
 
     render() {
@@ -193,155 +194,6 @@ class ViewExtensionComponent extends Component {
                             </div>                            
 
                             <hr />
-                            <label className="mb-3"><b>Extensiones: </b><br /></label>
-                            
-                            { this.state.extensiones.map((extension, index) => (
-                                <>
-
-                                    <div className="row">
-                                        <div className="col-4">
-                                            <div className="form-outline">
-                                                <label className="">Extension: </label>
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="form-outline">
-                                                <div className=""><i>{index + 1}</i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-4">
-                                            <div className="form-outline">
-                                                <label className="">Tipo de Unidad: </label>
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="form-outline">
-                                                <div className=""><i>{extension.tipo_unidad}</i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="row">
-                                        <div className="col-4">
-                                            <div className="form-outline">
-                                                <label className="">Clave DGP: </label>
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="form-outline">
-                                                <div className=""><i>{extension.clave_dgp}</i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="row">
-                                        <div className="col-4">
-                                            <div className="form-outline">
-                                                <label className="">Abreviatura:</label>
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="form-outline">
-                                                <div className=""><i>{extension.abreviatura}</i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="row">
-                                        <div className="col-4">
-                                            <div className="form-outline">
-                                                <label className="">Nombre Corto:</label>
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="form-outline">
-                                                <div className=""><i>{extension.nombre_corto}</i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="row">
-                                        <div className="col-4">
-                                            <div className="form-outline">
-                                                <label className="">Nombre Completo:</label>
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="form-outline">
-                                                <div className="">{extension.nombre_completo}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="row">
-                                        <div className="col-4">
-                                            <div className="form-outline">
-                                                <label className="">Direccion completa: </label>
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="form-outline">
-                                                <div className=""><i>{extension.direccion_completa}</i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="row mt-2">
-                                        <div className="col-4">
-                                            <div className="form-outline">
-                                                <label className="">Creado por:</label>
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="form-outline">
-                                                <div className="">{extension.fecha_creacion}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="row mb-3">
-                                        <div className="col-4">
-                                            <div className="form-outline">
-                                                <label className="">Fecha de creacion:</label>
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="form-outline">
-                                                <div className="">{extension.fecha_creacion}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="row">
-                                        <div className="col-4">
-                                            <div className="form-outline">
-                                                <label className="">Fecha de actualizacion:</label>
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="form-outline">
-                                                <div className="">{extension.fecha_actualizacion}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="row">
-                                        <div className="col-4">
-                                            <div className="form-outline">
-                                                <label className="">Actualizacion realizada por:</label>
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="form-outline">
-                                                <div className="">{extension.fecha_actualizacion}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br />
-                                </>
-                            ))}
                             </div>
                             <br />
                         <div className="card-footer text-muted">

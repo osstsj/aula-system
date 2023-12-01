@@ -215,7 +215,7 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
                 response.put("message", String.format("La proyeccion de asignatura con el id: %s ha sido eliminado exitosamente!",
                         id.toString()));
 
-                log.debug("Se ha eliminado al docente con el id: {}", id.toString());
+                log.debug("Se ha eliminado la proyeccion con el id: {}", id.toString());
                 return response;
             }
             return null;

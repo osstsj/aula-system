@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
@@ -45,13 +46,25 @@ public class ExtensionesServiceImpl implements IExtensionService {
     @Transactional
     @Override
     public ExtensionEntity updateExtensionById(Long id_extension, ExtensionEntity extensionEntity) {
-        LOGGER.info("Se ha ejecutado el metodo createExtensionByUnidadId");
+        LOGGER.info("Se ha ejecutado el metodo updateExtensionById");
+        try {
             ExtensionEntity existingExtensions = extensionRepository.findById(id_extension).orElseThrow(
                     () -> new ResourceNotFoundException("No se ha encontrado la extension con el id: "
                             .concat(id_extension.toString()), HttpStatus.NOT_FOUND)
             );
 
-            return null;
+            existingExtensions.setClave_dgp(extensionEntity.getClave_dgp());
+            existingExtensions.setAbreviatura(extensionEntity.getAbreviatura());
+            existingExtensions.setNombre_completo(extensionEntity.getNombre_completo());
+            existingExtensions.setDireccion_completa(extensionEntity.getDireccion_completa());
+
+            existingExtensions.setFecha_actualizacion(LocalDateTime.now());;
+
+            return existingExtensions;
+        } catch (Exception e) {
+            LOGGER.error("Error al intentar actualizar la extension: {}", extensionEntity.toString());
+            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
+        }
     }
 
     @Override
@@ -77,8 +90,24 @@ public class ExtensionesServiceImpl implements IExtensionService {
     }
 
     @Override
-    public HashMap<String, String> deleteExtensionById() {
-        return null;
+    public HashMap<String, String> deleteExtensionById(Long id) {
+        LOGGER.info("Se a ejecutado el metodo deleteExtensionById");
+        try {
+            ExtensionEntity existingExtension = extensionRepository.findById(id).orElse(null);
+            if (existingExtension != null) {
+                HashMap<String, String> response = new HashMap<>();
+                response.put("message", String.format("La extension con el id %s ha sido elimido exitosamente!", id.toString()));
+
+                extensionRepository.deleteById(id);
+
+                LOGGER.debug("Se ha eliminado la extension con el id: {}", id.toString());
+                return response;
+            }
+            return null;
+        } catch (Exception e) {
+            LOGGER.error("Error al intentar elimniar la extension por id {}", id.toString());
+            throw new RuntimeException("Runtime exception: ".concat(e.getMessage()));
+        }
     }
 
     @Override

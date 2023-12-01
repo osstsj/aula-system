@@ -14,7 +14,7 @@ public interface IExtensionService {
 
     ExtensionEntity getExtensionById(Long id_extension);
 
-    HashMap<String, String> deleteExtensionById();
+    HashMap<String, String> deleteExtensionById(Long id);
 
     Boolean checkDependersExtension(Long id);
 }

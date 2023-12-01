@@ -59,11 +59,11 @@ class ListExtensionComponent extends Component {
     }
 
     viewUnidad(id) {
-        this.props.history.push(`view-unidad/${id}`);
+        this.props.history.push(`view-extension/${id}`);
     }
 
     updateUnidad(id) {
-        this.props.history.push(`update-unidad/${id}`);
+        this.props.history.push(`update-extension/${id}`);
     }
 
     componentDidMount(){
@@ -108,7 +108,7 @@ class ListExtensionComponent extends Component {
             this.setState({ extensiones: res.data });
             }).catch(() => {
                 alert("Error al intentar traer todas la extensiones academicas...");
-                this.props.history.push('/list-unidad');
+                this.props.history.push('/list-extension');
             });
     }
 

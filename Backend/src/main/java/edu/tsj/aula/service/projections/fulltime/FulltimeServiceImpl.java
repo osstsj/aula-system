@@ -225,6 +225,9 @@ public class FulltimeServiceImpl implements IFulltimeService {
 
                 response.put("message", String.format("La proyeccion de tiempo completo con el id: %s a sido eliminado exitosamente!",
                         id.toString()));
+
+                log.debug("Se ha eliminado la proyeccion con el id: {}", id.toString());
+                return response;
             }
             return null;
         } catch (Exception e) {

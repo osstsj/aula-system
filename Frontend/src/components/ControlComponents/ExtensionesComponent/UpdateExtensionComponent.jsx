@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../../StyleGlobal/Style.css';
 import UnidadService from '../../../services/Control/UnidadService';
+import ExtensionsService from '../../../services/Control/ExtensionsService';
 
 class UpdateExtensionComponent extends Component {
     constructor(props){
@@ -25,7 +26,7 @@ class UpdateExtensionComponent extends Component {
     }
 
     componentDidMount() {
-        UnidadService.getUnidadById(this.state.id).then((res) => {
+        ExtensionsService.getExtensionById(this.state.id).then((res) => {
             let unidad = res.data;
             this.setState({
                 tipo_unidad: unidad.tipo_unidad, 
@@ -37,7 +38,7 @@ class UpdateExtensionComponent extends Component {
             });
         }).catch(() => {
             alert("Error al intentar trear la unidad academica...");
-            this.props.history.push('/list-unidad');
+            this.props.history.push('/list-extension');
         });
     }
 
@@ -54,11 +55,11 @@ class UpdateExtensionComponent extends Component {
         
         console.log('unidad=> ' + JSON.stringify(unidad));
         
-        UnidadService.updateUnidadById(unidad, this.state.id).then(() => {
-            this.props.history.push('/list-unidad');
+        ExtensionsService.updateExtensionById(this.state.id, unidad).then(() => {
+            this.props.history.push('/list-extension');
         }).catch(() => {
             alert("Error al intentar actualizar la unidad academica...");
-            this.props.history.push('/list-unidad');
+            this.props.history.push('/list-extension');
         });;
     }
 
@@ -82,7 +83,7 @@ class UpdateExtensionComponent extends Component {
     }
  
     cancel(){
-        this.props.history.push('/list-unidad');
+        this.props.history.push('/list-extension');
     }
 
 
@@ -105,6 +106,7 @@ class UpdateExtensionComponent extends Component {
                                             <div className="form-outline">
                                                 <label className="">Tipo de Unidad: </label>
                                                 <select 
+                                                disabled
                                                     name="tipoUnidad" 
                                                     className="form-control" 
                                                     value={this.state.tipo_unidad} 
@@ -112,8 +114,8 @@ class UpdateExtensionComponent extends Component {
                                                     required
                                                 >
                                                     <option value=""  disabled>Seleccione una opcion...</option>
-                                                    <option value="Unidad">Unidad</option>
-                                                    <option value="Extension">Extension</option>
+                                                    {/* <option value="Unidad">Unidad</option> */}
+                                                    <option value="Extension" selected>Extension</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -121,6 +123,7 @@ class UpdateExtensionComponent extends Component {
                                             <div className="form-outline">
                                                 <label className="">Clave DGP: </label>
                                                 <input 
+                                                readOnly
                                                     placeholder="Ingrese clave DGP..." 
                                                     name="claveDGP" className="form-control" 
                                                     value={this.state.clave_dgp} 
@@ -176,6 +179,7 @@ class UpdateExtensionComponent extends Component {
                                         <div className="form-group">
                                             <label className="mt-3">Dirección  completa: </label>
                                             <textarea 
+                                             readOnly
                                                 name="direccionCompleta" 
                                                 className="form-control" 
                                                 value={this.state.direccion_completa} 
