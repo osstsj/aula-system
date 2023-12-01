@@ -4,6 +4,8 @@ import DocenteService from '../../../services/Control/DocenteService';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable'; // Importa la extensión jspdf-autotable
+import swal from 'sweetalert';
+
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'; // Importa Reactstrap para el modal
 
 class ListDocenteComponent extends Component {
@@ -35,12 +37,14 @@ class ListDocenteComponent extends Component {
                         docenteToDeleteId: null, // Restablece el ID de la colegiatura
                     })
                 }).catch(() => {
-                    alert("Error al intentar eliminar al docente...");
+                    swal("Oops!","Error al intentar eliminar la carrera por unidad...\n" +
+                    "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
                     this.props.history.push('/list-docente');
                 });
             } else {
-                alert("La unidad academica no es posible eliminar porque esta presente en otros modulos. \n" +
-                "por favor verifique: Proyecciones Asignatura/Tiempo Completo");
+                swal("Oops!", "La carrera por unidad no es posible eliminar porque esta presente en otros modulos.\n" +
+                "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
+
                 this.setState({
                     isModalOpen: false, // Cierra el modal después de eliminar
                     docenteToDeleteId: null}) // Restablece el ID de la colegiatura)
@@ -55,7 +59,18 @@ class ListDocenteComponent extends Component {
     }
 
     editDocenteById(id) {
-        this.props.history.push(`update-docente/${id}`);
+        DocenteService.checkDocenteDependersById(id).then(res => {
+            if (res.data === false) {
+                this.props.history.push(`update-docente/${id}`);
+
+            } else {
+                swal("Oops!","La carrera por unidad no es posible editar porque esta presente en otros modulos. \n" +
+                "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
+            }
+        }).catch(() => {
+            alert("Error al intentar eliminar la carrera por unidad...");
+            this.props.history.push('/list-carrera_por_unidad');
+        });
     }
 
     componentDidMount() {

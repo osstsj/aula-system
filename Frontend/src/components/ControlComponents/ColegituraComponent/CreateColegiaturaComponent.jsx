@@ -27,7 +27,13 @@ class CreateColegiaturaComponent extends Component {
     createColegiatura = (e) => {
         // Validar que los campos requeridos no estén vacíos
         if (this.state.clave.trim() === '' || this.state.descripcion.trim() === '' || this.state.monto.trim() === '' || this.state.colegiatura_estatus.trim() === '' || this.state.comentarios.trim() === '') {
-            alert('Por favor complete todos los campos requeridos.');
+            this.setState({
+                alert: (
+                    <div className="alert alert-dismissible alert-danger">
+                         Por favor complete todos los campos requeridos.
+                    </div>
+                ),
+            });
             return;
         }
         e.preventDefault();
@@ -54,19 +60,19 @@ class CreateColegiaturaComponent extends Component {
     }
 
     onChangeClaveHandler = (event) => {
-        this.setState({ clave: event.target.value });
+        this.setState({ clave: event.target.value, alert:null });
     }
     onChangeDescripcionHandler = (event) => {
-        this.setState({ descripcion: event.target.value });
+        this.setState({ descripcion: event.target.value, alert:null });
     }
     onChangeMontoHandler = (event) => {
-        this.setState({ monto: event.target.value });
+        this.setState({ monto: event.target.value, alert:null });
     }
     onChangeColegiaturaStatusHandler = (event) => {
-        this.setState({ colegiatura_estatus: event.target.value });
+        this.setState({ colegiatura_estatus: event.target.value, alert:null });
     }
     onChangeComentariosHandler = (event) => {
-        this.setState({ comentarios: event.target.value });
+        this.setState({ comentarios: event.target.value, alert:null });
     }
 
 
@@ -186,6 +192,7 @@ class CreateColegiaturaComponent extends Component {
 
                                     <br />
                                     <div className="card-footer text-muted center-vertically">
+                                    {this.state.alert}
 
                                         {this.state.isLoading ? (
                                             // Mostrar el spinner si isLoading es true

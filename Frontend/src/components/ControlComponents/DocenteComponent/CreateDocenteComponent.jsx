@@ -25,6 +25,7 @@ class CreateDocenteComponent extends Component {
             categorias: [],
             actividades: [],
             estatusList:[],
+            alert: null, // Nuevo estado para mostrar alerta
         }
 
         this.onChangeNombreHandler = this.onChangeNombreHandler.bind(this);
@@ -48,7 +49,13 @@ class CreateDocenteComponent extends Component {
         this.state.actividad.trim() === '' ||
         this.state.estatus === '' || 
         this.state.codigo_nomina.trim() === '') {
-            alert('Por favor complete todos los campos requeridos.');
+            this.setState({
+                alert: (
+                    <div className="alert alert-dismissible alert-danger">
+                        Por favor complete todos los campos requeridos.
+                    </div>
+                ),
+            });
             return;
         }
 
@@ -128,29 +135,29 @@ class CreateDocenteComponent extends Component {
     }
 
     onChangeNombreHandler = (event) => {
-        this.setState({ nombre: event.target.value });
+        this.setState({ nombre: event.target.value, alert:null });
     }
     onChangeApellidoPaternoHandler = (event) => {
-        this.setState({ apellido_paterno: event.target.value });
+        this.setState({ apellido_paterno: event.target.value, alert:null });
     }
     onChangeApellidoMaternoHandler = (event) => {
-        this.setState({ apellido_materno: event.target.value });
+        this.setState({ apellido_materno: event.target.value, alert:null });
     }
     onChangeUnidadAcademicaHandler = (event) => {
         this.setState({ unidad_academica: event.label });
-        this.setState({ id_unidad: event.id });
+        this.setState({ id_unidad: event.id, alert:null });
     }
     onChangeCategoriaHandler = (event) => {
-        this.setState({ categoria: event.label });
+        this.setState({ categoria: event.label, alert:null });
     }
     onChangeActividadHandler = (event) => {
-        this.setState({ actividad: event.label });
+        this.setState({ actividad: event.label, alert:null });
     }
     onChangeEstatusHandler = (event) => {
-        this.setState({estatus: event.label});
+        this.setState({estatus: event.label, alert:null});
     }
     onChangeCodigoNominaHandler = (event) => {
-        this.setState({ codigo_nomina: event.target.value });
+        this.setState({ codigo_nomina: event.target.value, alert:null });
     }
 
 
@@ -275,6 +282,8 @@ class CreateDocenteComponent extends Component {
                                     </div>
                                     <br />
                                     <div className="card-footer text-muted">
+                                    {this.state.alert}
+
                                         {this.state.isLoading ? (
                                             // Mostrar el spinner si isLoading es true
                                             <div className="text-center">

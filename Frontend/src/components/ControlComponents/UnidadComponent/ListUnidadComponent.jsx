@@ -4,6 +4,8 @@ import UnidadService from '../../../services/Control/UnidadService';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable'; // Importa la extensión jspdf-autotable
+import swal from 'sweetalert';
+
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'; // Importa Reactstrap para el modal
 
 
@@ -35,12 +37,13 @@ class ListUnidadComponent extends Component {
                         colegiaturaToDeleteId: null, // Restablece el ID de la colegiatura
                     });
                 }).catch(() => {
-                    alert("Error al intentar eliminar la unida academica...");
+                    swal("Oops!","Error al intentar eliminar la carrera por unidad...\n" +
+                    "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
                     this.props.history.push('/list-unidad');
                 });
             } else {
-                alert("La unidad academica no es posible eliminar porque esta presente en otros modulos. \n" +
-                "por favor verifique: Areas Academicas, Docentes, Carrera Por Unidad, Oferta Academica, Proyecciones Asignatura/Tiempo Completo");
+                swal("Oops!", "La carrera por unidad no es posible eliminar porque esta presente en otros modulos.\n" +
+                "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
                 this.setState({
                     isModalOpen: false, // Cierra el modal después de eliminar
                     colegiaturaToDeleteId: null}) // Restablece el ID de la colegiatura)
@@ -58,16 +61,20 @@ class ListUnidadComponent extends Component {
     }
 
     updateUnidad(id) {
-        this.props.history.push(`update-unidad/${id}`);
-    }
+            this.props.history.push('/list-carrera_por_unidad');
+       
+        
+        }
+       
+    
 
     componentDidMount(){
         //promise
         UnidadService.getAllUnidades().then((res) => {
             this.setState({unidades: res.data});
         }).catch(() => {
-            alert("Error al intentar trear las unidades academicas...");
-            this.props.history.push('/list-unidad');
+            swal("Oops!","Error al intentar traer las carreras por unidad...", "error");
+             this.props.history.push('/list-unidad');
         });
     }
 

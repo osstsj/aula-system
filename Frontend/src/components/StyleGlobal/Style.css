@@ -58,3 +58,22 @@ tbody tr:nth-child(odd) {
     color: #000000 !important;
     text-align: center;
 }
+@media print {
+    @page { size: auto; margin: 0; }
+
+    .acuse {
+      text-align: center;
+      margin: 0 auto;
+    }
+    .acuse-container {
+        position: absolute;
+        top: 50%; /* Coloca el elemento en el 50% superior de la página */
+        transform: translateY(-50%); /* Centra verticalmente el contenido */
+        left: 0; /* Asegura que el contenido esté alineado a la izquierda */
+        right: 0; /* Asegura que el contenido esté alineado a la derecha */
+        text-align: center!important; /* Centra el contenido horizontalmente en la página */
+      }
+      button {
+        display: none!important;
+      }
+  }

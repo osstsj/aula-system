@@ -55,7 +55,7 @@ class HeaderComponent extends Component {
                             </a>
                             <div className="dropdown-menu">
                             <div className="dropdown-submenu">
-                                <a className="dropdown-item" href="/list-unidad">   
+                                <a className="dropdown-item" >   
                                     <b>Unidades Académicas</b>
                                 </a>
                                     <div className="dropdown-menu">

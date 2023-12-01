@@ -43,7 +43,9 @@ class viewColegiaturaComponent extends Component {
     }
 
     render() {
-        
+        const handleImprimir = () => {
+            window.print();
+          };
         return (
             <div className="mt-4 container"  >
                 <div className="row justify-content-center">
@@ -175,6 +177,8 @@ class viewColegiaturaComponent extends Component {
                         <br />
                         <div className="card-footer text-muted">
                             <button className = "btn btn-secondary mt-0" onClick={this.back.bind(this)} style= {{marginLeft: "10px"}}>Regresar</button>
+                            <button className="btn btn-secondary mt-0" onClick={handleImprimir} style={{ marginLeft: "10px", backgroundColor: "rgb(0, 128, 0)" }}>Imprimir</button>
+
                         </div>
                     </div>
                 </div>                

@@ -25,6 +25,7 @@ class CreateOfertaAcademicaComponent extends Component {
             turno: '',
             periodo: '',
             isLoading: false, // Nuevo estado para controlar la visibilidad del spinner      
+            alert:null
         }
 
     }
@@ -36,7 +37,13 @@ class CreateOfertaAcademicaComponent extends Component {
         this.state.modalidad.trim() === '' || 
         this.state.turno.trim() === '' || 
         this.state.periodo.trim() === '') {
-            alert('Por favor complete todos los campos requeridos.');
+            this.setState({
+                alert: (
+                    <div className="alert alert-dismissible alert-danger">
+                         Por favor complete todos los campos requeridos.
+                    </div>
+                ),
+            });
             return;
         }
 
@@ -123,20 +130,20 @@ class CreateOfertaAcademicaComponent extends Component {
 
     changeUnidadHandler = (event) => {
         this.setState({ unidad: event.label });
-        this.setState({ id_unidad: event.id})
+        this.setState({ id_unidad: event.id, alert:null})
     }
     changeCarreraHandler = (event) => {
         this.setState({ carrera: event.label });
-        this.setState({ id_carrera: event.id})
+        this.setState({ id_carrera: event.id, alert:null})
     }
     changeModalidadHandler = (event) => {
-        this.setState({ modalidad: event.label });
+        this.setState({ modalidad: event.label, alert:null });
     }
     changeTurnoHandler = (event) => {
-        this.setState({ turno: event.label });
+        this.setState({ turno: event.label, alert:null });
     }
     changePeriodoHandler = (event) => {
-        this.setState({ periodo: event.target.value });
+        this.setState({ periodo: event.target.value, alert:null });
     }
     cancel() {
         this.props.history.push('/list-oferta-academica');
@@ -219,6 +226,9 @@ class CreateOfertaAcademicaComponent extends Component {
 
                         <br />
                         <div className="card-footer text-muted">
+
+                        {this.state.alert}
+
                             {this.state.isLoading ? (
                                 // Mostrar el spinner si isLoading es true
                                 <div className="text-center">

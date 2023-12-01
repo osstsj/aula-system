@@ -35,6 +35,8 @@ class ComparacionAsigntaturaComponent extends Component {
 
         };
         this.onChangeUnidadHandler = this.onChangeUnidadHandler.bind(this);
+        this.exportToExcel = this.exportToExcel.bind(this);
+
 
     }
 
@@ -126,7 +128,50 @@ class ComparacionAsigntaturaComponent extends Component {
         this.getFolioById(event.id);
     }
 
-
+    exportToExcel = () => {
+        const { comparaciones } = this.state;
+    
+        // Modificar la estructura de los datos para incluir la información de la unidad académica
+        const datosParaExportar = comparaciones.map(comparacion => ({
+            'UA': comparacion.nombre_Ua,
+            'Nombre del Docente': comparacion.nombre_Docente,
+            ['COM Subtotal1 Horas de apoyo a la docencia ' + this.state.folio1]: comparacion.subtotal_1_1,
+            ['COM Subtotal1 Horas de apoyo a la docencia ' + this.state.folio2]: comparacion.subtotal_1_2,
+            ['Comparativa Subtotal1 Horas de apoyo a la docencia ' + '(' + this.state.folio2 + ') - (' + this.state.folio1 + ')']: comparacion.com_Subtotal_1,
+            ['COM Subtotal2 Horas Institucional ' + this.state.folio1]: comparacion.subtotal_2_1,
+            ['COM Subtotal2 Horas Institucional ' + this.state.folio2]: comparacion.subtotal_2_2,
+            ['Comparativa Subtotal2 Horas Institucional ' + '(' + this.state.folio2 + ') - (' + this.state.folio1 + ')']: comparacion.com_Subtotal_2,
+            ['COM Total ' + this.state.folio1]: comparacion.total_1,
+            ['COM Total ' + this.state.folio2]: comparacion.total_2,
+            ['Comparativa Total ' + '(' + this.state.folio2 + ') - (' + this.state.folio1 + ')']: comparacion.com_Total,
+        }));
+        
+    
+        // Crear una nueva hoja de cálculo
+        const ws = XLSX.utils.json_to_sheet(datosParaExportar);
+        const colWidths = [
+            { wch: 25 },
+            { wch: 25 },
+            { wch: 25 },
+            { wch: 25 },
+            { wch: 25 },
+            { wch: 25 },
+            { wch: 25 },
+            { wch: 25 },
+            { wch: 25 },
+            { wch: 25 },
+            { wch: 25 },
+            { wch: 25 },
+        ];
+        ws['!cols'] = colWidths;
+    
+        // Crear un nuevo libro de trabajo
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Comparaciones');
+    
+        // Generar el archivo XLSX
+        XLSX.writeFile(wb, 'comparaciones.xlsx');
+    }
 
     render() {
         const boton = {
@@ -145,6 +190,9 @@ class ComparacionAsigntaturaComponent extends Component {
                             <span><small><b>Cálculo Comparación:</b> [ ZA - 4 - 2024 B ] - [ZA - 1 - 2024 A]</small></span><br />
                             <span><small><b>Bandera:</b> Rojo: comparación menor a 5 | Negro: comparación mayor que 0 y menor que 5 | Verde: comparación mayor que 5</small></span>
                         </div>
+                        <button style={{ width: '15%', marginLeft: '1rem' }} className="btn  btn-outline-success mb-4" onClick={this.exportToExcel}>
+                    Exportar a Excel
+                </button>
                     </fieldset>
                 </div>
 

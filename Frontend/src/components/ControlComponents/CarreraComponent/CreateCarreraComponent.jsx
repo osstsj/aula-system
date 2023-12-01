@@ -11,7 +11,7 @@ class CreateCarreraComponent extends Component {
             plan_estudio: '', 
             estatus: 'Activa',
             isLoading: false, // Nuevo estado para controlar la visibilidad del spinner
-
+            alert:null,
             
         }
 
@@ -27,7 +27,13 @@ class CreateCarreraComponent extends Component {
         e.preventDefault();
        // Validar que los campos requeridos no estén vacíos
     if (this.state.abreviatura.trim() === '' || this.state.nombre.trim() === '' || this.state.dgp.trim() === '' || this.state.estatus.trim() === '' || this.state.plan_estudio.trim() === '') {
-        alert('Por favor complete todos los campos requeridos.');
+        this.setState({
+            alert: (
+                <div className="alert alert-dismissible alert-danger">
+                     Por favor complete todos los campos requeridos.
+                </div>
+            ),
+        });
         return;
     }
         let carrera = {
@@ -51,19 +57,19 @@ class CreateCarreraComponent extends Component {
     
 
     changeAbreviaturataHandler  = (event) => {
-        this.setState({abreviatura: event.target.value});
+        this.setState({abreviatura: event.target.value, alert:null});
     }
 
     changeNombreHandler = (event) => {
-        this.setState({nombre: event.target.value});
+        this.setState({nombre: event.target.value, alert:null});
     }
     
     changePlanEstudioHandler = (event) => {
-        this.setState({plan_estudio: event.target.value});
+        this.setState({plan_estudio: event.target.value, alert:null});
     }
 
     changeDGPHandler = (event) => {
-        this.setState({dgp: event.target.value});
+        this.setState({dgp: event.target.value, alert:null});
     }
 
     changeEstatusHandler = (event) => {
@@ -166,6 +172,8 @@ class CreateCarreraComponent extends Component {
 
                                     <br />
                                         <div className="card-footer text-muted">
+                                        {this.state.alert}
+
                                         {this.state.isLoading ? (
                                             // Mostrar el spinner si isLoading es true
                                             <div className="text-center">

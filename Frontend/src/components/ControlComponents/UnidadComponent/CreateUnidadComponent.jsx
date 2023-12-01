@@ -27,9 +27,9 @@ class CreateUnidadComponent extends Component {
 
             unidades: [],
             isLoading: false, // Nuevo estado para controlar la visibilidad del spinner
+            alert: null, // Nuevo estado para mostrar alerta
 
-
-            
+            disableCreate:false
         }
         this.changeTipoUnidadHandler = this.changeTipoUnidadHandler.bind(this);
         this.changeClaveDGPHandler = this.changeClaveDGPHandler.bind(this);
@@ -54,11 +54,20 @@ class CreateUnidadComponent extends Component {
                 this.state.abreviatura.trim() === '' || 
                 this.state.nombre_corto.trim() === '' || 
                 this.state.direccion_completa.trim() === '') {
-            alert('Por favor complete todos los campos requeridos.');
-            return;
+                    this.setState({
+                        alert: (
+                            <div className="alert alert-dismissible alert-danger">
+                                 Por favor complete todos los campos requeridos.
+                            </div>
+                        ),
+                    });
+                    return;
         }
         this.setState({disableCreate: true});
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
         if (this.state.disablePlantelList === false) { 
             let unidad = {
                 tipo_unidad: this.state.tipo_unidad.trim(), 
@@ -111,7 +120,7 @@ class CreateUnidadComponent extends Component {
     }
 
     changeTipoUnidadHandler = (event) => {
-        this.setState({tipo_unidad: event.target.value});
+        this.setState({tipo_unidad: event.target.value,alert:null});
         if (event.target.value === 'Extension') {
             this.setState({ disablePlantelList: true });
             
@@ -133,21 +142,21 @@ class CreateUnidadComponent extends Component {
         }
     }
     changeClaveDGPHandler = (event) => {
-            this.setState({clave_dgp: event.target.value});
+            this.setState({clave_dgp: event.target.value,alert:null});
        
     }
     changeAbreviaturaHandler = (event) => {
-        this.setState({abreviatura: event.target.value});
+        this.setState({abreviatura: event.target.value,alert:null});
     }
     changeNombreCortoHandler = (event) => {
-        this.setState({nombre_corto: event.target.value});
+        this.setState({nombre_corto: event.target.value,alert:null});
         
     }
     changeNombreCompletoHandler = (event) => {
-        this.setState({nombre_completo: event.target.value})       
+        this.setState({nombre_completo: event.target.value,alert:null})       
     }
     changeDireccionCompletaHandler = (event) => {
-        this.setState({direccion_completa: event.target.value});
+        this.setState({direccion_completa: event.target.value,alert:null});
     }
     onChangeUnidadHandler = (event) => {
         if (this.state.disablePlantelList === true) {
@@ -301,6 +310,8 @@ class CreateUnidadComponent extends Component {
 
                                     <br />
                                         <div className="card-footer text-muted">
+                                        {this.state.alert}
+
                                         {this.state.isLoading ? (
                                             // Mostrar el spinner si isLoading es true
                                             <div className="text-center">

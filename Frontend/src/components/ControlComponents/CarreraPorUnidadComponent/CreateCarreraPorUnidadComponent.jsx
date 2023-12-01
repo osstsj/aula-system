@@ -23,6 +23,7 @@ class CreateCarreraPorUnidadComponent extends Component {
             modalidad: '',
             nivel: '',
             isLoading: false, // Nuevo estado para controlar la visibilidad del spinner
+            alert:null,
 
         }
 
@@ -31,7 +32,13 @@ class CreateCarreraPorUnidadComponent extends Component {
     createCarreraPorUnidad = (e) => {
         // Validar que los campos requeridos no estén vacíos
         if (this.state.carrera_nombre.trim() === '' || this.state.unidad_academica.trim() === '' || this.state.modalidad.trim() === '' || this.state.nivel.trim() === '') {
-            alert('Por favor complete todos los campos requeridos.');
+            this.setState({
+                alert: (
+                    <div className="alert alert-dismissible alert-danger">
+                         Por favor complete todos los campos requeridos.
+                    </div>
+                ),
+            });
             return;
         }
         e.preventDefault();
@@ -107,26 +114,26 @@ class CreateCarreraPorUnidadComponent extends Component {
             { value: 'LICENCIATURA', label: 'LICENCIATURA' },
             { value: 'INGENIERIA', label: 'INGENIERIA' },
             { value: 'MAESTRIA', label: 'MAESTRIA' },
-            { value: 'DOCTORADO', label: 'DOCTORADO' },
+            { value: 'DOCTORADO', label: 'DOCTORADO', },
         ]
 
-        this.setState({ niveles: nivelList });
+        this.setState({ niveles: nivelList, });
     }
 
     changeCarrerasHandler = (event) => {
         this.setState({ carrera_nombre: event.label });
-        this.setState({ id_carrera: event.id });
+        this.setState({ id_carrera: event.id , alert:null});
 
     }
     changeUnidadesHandler = (event) => {
         this.setState({ unidad_academica: event.label });
-        this.setState({ id_unidad: event.id });
+        this.setState({ id_unidad: event.id , alert:null});
     }
     changeModalidadHandler = (event) => {
-        this.setState({ modalidad: event.label });
+        this.setState({ modalidad: event.label, alert:null });
     }
     changeNivelHandler = (event) => {
-        this.setState({ nivel: event.label });
+        this.setState({ nivel: event.label, alert:null });
     }
 
     cancel() {
@@ -201,6 +208,8 @@ class CreateCarreraPorUnidadComponent extends Component {
 
                         <br />
                         <div className="card-footer text-muted">
+                        {this.state.alert}
+
                             {this.state.isLoading ? (
                                 // Mostrar el spinner si isLoading es true
                                 <div className="text-center">

@@ -4,6 +4,8 @@ import CarreraService from '../../../services/Control/CarreraService';
 import * as XLSX from 'xlsx';  // Importa la librería XLSX
 import jsPDF from 'jspdf';
 import 'jspdf-autotable'; // Importa la extensión jspdf-autotable
+import swal from 'sweetalert';
+
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'; // Importa Reactstrap para el modal
 
 
@@ -26,16 +28,32 @@ class ListCarreraComponent extends Component {
     }
 
     deleteCarrera(id) {
-        // rest api
-        CarreraService.deleteCarreralById(id).then(res => {
-            this.setState({
-                carreras: this.state.carreras.filter(carrera => carrera.id !== id),
-                isModalOpen: false, // Cierra el modal después de eliminar
-                carreraToDeleteId: null, // Restablece el ID de la colegiatura
-            });
+        CarreraService.checkCarreraDependersById(id).then( res => {
+            if (res.data ===  false) {
+                // rest api
+                CarreraService.deleteCarreralById(id).then(res => {
+                    this.setState({
+                        unidades: this.state.unidades.filter(unidad => unidad.id !== id),
+                        isModalOpen: false, // Cierra el modal después de eliminar
+                        unidadeToDeleteId: null, // Restablece el ID de la colegiatura
+                    });
+                }).catch(() => {
+                    swal("Oops!","Error al intentar eliminar la carrera por unidad...\n" +
+                    "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
+                    this.props.history.push('/list-carrera');
+                });
+            } else {
+                swal("Oops!", "La carrera por unidad no es posible eliminar porque esta presente en otros modulos.\n" +
+                "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
 
+                this.setState({
+                    isModalOpen: false, // Cierra el modal después de eliminar
+                    unidadeToDeleteId: null}) // Restablece el ID de la colegiatura)
+
+                    this.props.history.push('/list-carrera');
+                }
         }).catch(() => {
-            alert("Error al intentar eliminar la carrera...");
+            alert("Error al intentar eliminar la carrera por unidad...");
             this.props.history.push('/list-carrera');
         });
     }
@@ -45,7 +63,17 @@ class ListCarreraComponent extends Component {
     }
 
     updateCarrera(id) {
-        this.props.history.push(`update-carrera/${id}`);
+ CarreraService.checkCarreraDependersById(id).then( res => {
+            if (res.data === false) {
+                this.props.history.push(`update-carrera/${id}`);            } else {
+                swal("Oops!","La carrera por unidad no es posible editar porque esta presente en otros modulos. \n" +
+                "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
+            }
+        }).catch(() => {
+            alert("Error al intentar eliminar la carrera por unidad...");
+            this.props.history.push('/list-carrera');
+        });
+
     }
 
     componentDidMount() {
@@ -53,7 +81,7 @@ class ListCarreraComponent extends Component {
         CarreraService.getAllCarreras().then((res) => {
             this.setState({ carreras: res.data });
         }).catch(() => {
-            alert("Error al intentar traer las carreras...");
+            swal("Oops!","Error al intentar traer las carreras por unidad...", "error");
             this.props.history.push('/list-carrera');
         });
     }
