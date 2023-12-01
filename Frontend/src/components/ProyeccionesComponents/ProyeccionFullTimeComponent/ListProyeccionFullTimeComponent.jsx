@@ -122,7 +122,7 @@ class ListProyeccionFullTimeComponent extends Component {
                             <tr>
 
                                 <th rowSpan="2"  className={`text-center text-white  table-green ${areColumnsVisible ? '' : 'collapse'
-                                    }`}>No.</th>
+                                    }`}>No. Folio</th>
                                 <th rowSpan="2"  className={`text-center text-white table-green ${areColumnsVisible ? '' : 'collapse'
                                     }`} >Clave de Programa  Educativo</th>
                                 <th rowSpan="2"  className={`text-center text-white table-green ${areColumnsVisible ? '' : 'collapse'
@@ -197,7 +197,7 @@ class ListProyeccionFullTimeComponent extends Component {
                                 <td  className={`text-center table-id ${areColumns2Visible ||areColumnsVisible ? '' : 'collapse'
                                     }`}>{index + 1}</td>
                                 <td scope="row"  align="center"  className={`text-center table-content ${areColumnsVisible ? '' : 'collapse'
-                                    }`}>{fulltime.id}</td>
+                                    }`}>{fulltime.folio.folio}</td>
                                 
                                 {/* PROFESORES FULLTIME - Clave de Programa Educativo */}
                                 <td  align="center" className={`text-center table-content ${areColumnsVisible ? '' : 'collapse'

@@ -3,7 +3,6 @@ import AsignaturaProyeccionService from '../../../services/Proyecciones/Asignatu
 import FolioAsignaturaService from '../../../services/Proyecciones/FolioAsignaturaService';
 import CarreraService from '../../../services/Control/CarreraService';
 import UnidadService from '../../../services/Control/UnidadService';
-import CarreraPorUnidadService from '../../../services/Control/CarreraPorUnidadService';
 
 import Select from 'react-select'
 import '../../StyleGlobal/Style.css'
@@ -26,7 +25,6 @@ class UpdateProyeccionAsignaturaComponent extends Component {
             docentes: [],
             folios: [],
             tipos_unidades: [],
-            asignaturas:[],
 
             folio: '',
             id_folio: null,
@@ -52,8 +50,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                 codigo_nomina: "",
                 grado_academico: "", // nivel: '',
                 nombre_docente: "",
-
-                categoria: '',
+                ptc: "",
 
                 // horas_sustantivas_atencion_alumnos
                     // horas_asignatura: 
@@ -63,7 +60,6 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                     b: 0,
                     tipoAoB: '',
 
-                ptc: '',
                 horas_frente_grupo: 0,
 
                     // academias
@@ -98,21 +94,20 @@ class UpdateProyeccionAsignaturaComponent extends Component {
             this.setState({
                 // Asignatura
                 folio: asignatura.folio.folio,
-                id_folio: asignatura.folio.id,
                     // profe_asignatura: 
                     clave_programa: asignatura.profe_asignatura.clave_programa.carrera_nombre.clave_programa,
                     codigo_nomina: asignatura.profe_asignatura.nombre_docente.codigo_nomina,
                     grado_academico: asignatura.profe_asignatura.grado_academico,
                     nombre_docente: asignatura.profe_asignatura.nombre_docente.nombre_completo,
+                    
+                    ptc: asignatura.profe_asignatura.nombre_docente.categoria,
 
-                    categoria: asignatura.profe_asignatura.nombre_docente.categoria,
                     // horas_sustantivas_atencion_alumnos
                         // horas_asignatura
                         a: asignatura.horas_sustantivas_atencion_alumnos.horas_asignatura.a,
                         b: asignatura.horas_sustantivas_atencion_alumnos.horas_asignatura.b,
                         tipoAoB: asignatura.horas_sustantivas_atencion_alumnos.horas_asignatura.tipoAoB,
-                    
-                    // ptc: asignatura.profe_asignatura.nombre_docente.categoria,
+
                     horas_frente_grupo:asignatura.horas_sustantivas_atencion_alumnos.horas_frente_grupo,
 
                         // academias
@@ -141,18 +136,27 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                 id_docente: asignatura.profe_asignatura.nombre_docente.id,
                 id_carrera: asignatura.profe_asignatura.clave_programa.id,
                 id_folio: asignatura.folio.id,
+
+                // observaciones: asignatura.observaciones,
+                fecha_creacion: asignatura.fecha_creacion,
+                fecha_actualizacion: asignatura.fecha_actualizacion
             });
+
+            this.getUnidadList();
+            this.getNivel();
+            this.getHorasAcademias_presidente();
+            this.getHorasAcademias_secretario();
+            this.getCarreraList();
+            this.getFolioList();
+            this.getTipoUnidad();
+            this.setUpAoB();
+            this.setUpPoS();
+
         })
         .catch(() => {
             alert("Error al intentar traer la proyeccion por asignatura");
             this.props.history.push('/');
         })
-
-        this.getNivel();
-        this.getHorasAcademias_presidente();
-        this.getHorasAcademias_secretario();
-        this.getFolioList();
-        this.getTipoUnidad();
     }
 
     updateProyeccionAsignatura = (e) => {
@@ -236,48 +240,76 @@ class UpdateProyeccionAsignaturaComponent extends Component {
         this.props.history.push(`/list-proyeccion_asignatura/${this.state.id_folio}`);
     }
 
+    setUpAoB() {
+        let categoria_interna = this.state.ptc;
+        if(categoria_interna === "PROFESOR ASIGNATURA - A") {
+            if (this.state.b !== 0) {
+                this.cleaningHours();
+            }
+            this.setState(() => ({
+                disableA: false,
+                disableB: true,
+                b:0,
+            }));
+        } else if(categoria_interna === "PROFESOR ASIGNATURA - B") {
+            if( this.state.a !== 0) {
+                this.cleaningHours();
+            }
+            this.setState(() => ({
+                disableB: false,
+                disableA: true,
+                a:0
+            }));
+        }
 
+        // if (this.state.a !== 0) { 
+        //     this.setState({disableA: false}); // radiobutton
+        //     this.setState({disableB: true});
+        // } else {
+        //     this.setState({disableB: false});
+        //     this.setState({disableA: true});
+        // }
+    }
 
-    async getFolioById() {
-        await FolioAsignaturaService.getFolioById(this.state.id_folio).then(res => {
-            const data = res.data;
-            
-            this.setState({ folio: data.folio});
-            this.setState({ id_unidad: data.unidad_academica.id });
-            this.setState({ unidad_academica: data.unidad_academica.nombre_completo });
-        }).catch(() => {
-            alert("Error al intentar traer el folio por id...");
-            this.props.history.push('/');
-        });
-
-
-        this.getCarreraList(this.state.id_unidad);
-        
-        if ((this.state.categoria !== 'PROFESOR ASIGNATURA - A') || (this.state.categoria !== 'PROFESOR ASIGNATURA - B')) {
-            alert("La proyeccion no puede modificarse ya que la categoria del docente pertence a la categoria: " + this.state.categoria);
-            this.props.history.push(`/list-proyeccion_asignatura/${this.state.id_folio}`);
+    setUpPoS() {
+        if (this.state.presidente !== 0) { 
+            this.setState({disablePresidente: true}); // radiobutton
+            this.setState({disableSecretario: false});
+        } else {
+            this.setState({disableSecretario: true});
+            this.setState({disablePresidente: false});
         }
     }
 
-
-    async getCarreraList(id_unidad) {
+    async getDocenteList(id_unidad) {
         let options = null;
-        await CarreraPorUnidadService.getCarreraPorUnidadEntitiesByUnidad_academicaId(id_unidad).then((res) => {
+        await DocenteService.getAllDocentesByCategoriaPTCAsignatura(id_unidad).then(res => {
             const data = res.data;
             options = data.map(d => ({
-                "value": d.carrera_nombre.clave_programa,
-                "label": d.carrera_nombre.clave_programa,
+                "value": d.nombre_completo,
+                "label": d.nombre_completo,
+                "id": d.id,
+            }))
+            this.setState({ docentes: options });
+        })
+    }
+
+    async getCarreraList() {
+        let options = null;
+        await CarreraService.getAllCarrerasByEstatus().then(res => {
+            const data = res.data;
+            options = data.map(d => ({
+                "value": d.clave_programa,
+                "label": d.clave_programa,
                 "id": d.id,
             }))
         }).catch(() => {
             alert("Error al intentar traer las carreras...");
-            this.props.history.push(`/list-proyeccion_asignatura/${this.state.id_folio}`);
+            this.props.history.push('/');
         });
         this.setState({ carreras: options });
-
-        this.getFolioById();
     }
-    
+
     async getFolioList() {
         let options = null;
 
@@ -293,14 +325,8 @@ class UpdateProyeccionAsignaturaComponent extends Component {
             this.setState({ folios: options });
         }).catch(() => {
             alert("Error al intentar traer los folios...");
-            this.props.history.push(`/list-proyeccion_asignatura/${this.state.id_folio}`);
+            this.props.history.push('/');
         })
-        this.setUpAoB(); 
-        // se puso aqui ya que no se puede consultar el valor de categoria en el metodo compountDidMount
-        // porque una vez que se realize el setState con getById... no se puede consultar el valor al mismo
-        // tiempo (paralelismo), y se tiene que delegar a otra funcion para que siga la ejecucion en secuncia...
-        // y se optenga el valor el en prop de categoria.
-
     }
 
     async getUnidadList() {
@@ -315,7 +341,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
             }))
         }).catch(() => {
             alert("Error al intentar traer las UAs...");
-            this.props.history.push(`/list-proyeccion_asignatura/${this.state.id_folio}`);
+            this.props.history.push('/');
         });
         this.setState({unidades: options})
     }
@@ -361,29 +387,6 @@ class UpdateProyeccionAsignaturaComponent extends Component {
         this.setState({ horas_secretario: academiasList });
     }
 
-    setUpAoB() {
-        let categoria_interna = this.state.categoria;
-        if(categoria_interna === "PROFESOR ASIGNATURA - A") {
-            if (this.state.b !== 0) {
-                this.cleaningHours();
-            }
-            this.setState(() => ({
-                disableA: false,
-                disableB: true,
-                b:0,
-            }));
-        } else if(categoria_interna === "PROFESOR ASIGNATURA - B") {
-            if( this.state.a !== 0) {
-                this.cleaningHours();
-            }
-            this.setState(() => ({
-                disableB: false,
-                disableA: true,
-                a:0
-            }));
-        }
-    }
-
     onChangeTipoUnidadHandler = (event) => {
         this.setState({ tipo_unidad: event.label });
     }
@@ -396,7 +399,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
         this.setState({ nombre_docente: ''})
 
         this.setState({ id_unidad: event.id_unidad});
-        this.setState({unidad_academica: event.unidad_academica});
+        this.setState({unidad_academica: event.unidad_academica})
         this.getDocenteList(event.id_unidad);
     }
 
@@ -418,9 +421,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
     }
     onChangeNombreDocenteHandler = (event) => {
         this.setState({ nombre_docente: event.label });
-        this.setState({codigo_nomina: event.codigo_nomina});
-
-        this.setState({ id_docente: event.id}, this.enableAddButton);
+        // this.setState({ id_docente: event.id}, this.enableAddButton);
         this.setState({ id_docente: event.id});
     }
 
@@ -749,7 +750,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                                                                     checked={this.state.disableB}
                                                                     onInput={(e) => {
                                                                         e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                                        e.target.value = Math.min(parseInt(e.target.value, 10),39); // Limita el valor a 39
+                                                                        e.target.value = Math.min(parseInt(e.target.value, 10), 39); // Limita el valor a 39
                                                                     }}
                                                                     required
                                                                 />

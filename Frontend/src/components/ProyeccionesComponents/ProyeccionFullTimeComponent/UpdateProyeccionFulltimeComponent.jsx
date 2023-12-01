@@ -200,9 +200,20 @@ class UpdateProyeccionFulltimeComponent extends Component {
         this.getHorasAcademias_secretario();
         this.getFolioList();
         this.getTipoUnidad();
+        this.setUpPoS();
     }
 
 
+    setUpPoS() {
+        if (this.state.presidente !== 0) { 
+            this.setState({disablePresidente: true}); // radiobutton
+            this.setState({disableSecretario: false});
+        } else {
+            this.setState({disableSecretario: true});
+            this.setState({disablePresidente: false});
+        }
+    }
+    
     async getCarreraList(id_unidad) {
         let options = null;
         await CarreraPorUnidadService.getCarreraPorUnidadEntitiesByUnidad_academicaId(id_unidad).then((res) => {
@@ -234,7 +245,8 @@ class UpdateProyeccionFulltimeComponent extends Component {
             this.props.history.push('/');
         });
 
-        if ((this.state.ptc !== 'PROFESOR ASIGNATURA - A') || (this.state.ptc !== 'PROFESOR ASIGNATURA - B')) {
+
+        if ((this.state.ptc === 'PROFESOR ASIGNATURA - A') || (this.state.ptc === 'PROFESOR ASIGNATURA - B')) {
             alert("La proyeccion no puede modificarse ya que el PTC del docente pertence a la categoria: " + this.state.ptc);
             this.props.history.push(`/list-proyeccion_fulltime/${this.state.id_folio}`);
         }
@@ -261,7 +273,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
         this.getCarreraList(this.state.id_unidad);
         // se puso aqui ya que no se puede consultar el valor de categoria en el metodo compountDidMount
         // porque una vez que se realize el setState con getById... no se puede consultar el valor al mismo
-        // tiempo (paralelismo), y se tiene que delegar a otra funcion para que siga la ejecucion en secuncia...
+        // tiempo (async), y se tiene que delegar a otra funcion para que siga la ejecucion en secuncia...
         // y se optenga el valor el en prop de categoria.
     }
 

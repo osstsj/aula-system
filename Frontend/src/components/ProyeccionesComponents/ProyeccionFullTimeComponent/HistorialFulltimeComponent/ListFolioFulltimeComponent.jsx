@@ -164,15 +164,8 @@ class ListFolioFulltimeComponent extends Component {
                                     <td>{index + 1}</td>
                                     <td className="table-conten">{folio.folio}</td>
                                     <td className="table-conten">{folio.fecha_creacion}</td>
-                                    <td className="table-conten">"Activo/Cerrado"</td>
+                                    <td className="table-conten">"Activo"</td>
                                     <td className="table-action">
-                                        {/* <button onClick={() => this.editPlantel(folio.id)} className="btn btn-warning mt-0">
-                                            Actualizar
-                                        </button>
-                                        <button style={boton} onClick={() => this.deletePlantel(folio.id)} className="btn btn-danger mt-0">
-                                            Eliminar
-                                        </button> */}
-                                        {/* <button onClick={() => this.viewProyeccion(folio.id === null | undefined ? )} className="btn btn-info mt-0"> */}
                                          <button onClick={() => this.viewProyeccion(folio.id)} className="btn btn-info mt-0">
                                             Ver Proyeciones
                                         </button>

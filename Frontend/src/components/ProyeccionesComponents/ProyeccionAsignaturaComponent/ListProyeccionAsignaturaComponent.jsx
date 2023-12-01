@@ -222,7 +222,7 @@ class ListProyeccionAsignaturaComponent extends Component {
                             </tr>
                             <tr>
                                 <th className={`text-center text-white table-green  ${areColumnsVisible ? '' : 'collapse'
-                                    }`} rowspan="2">No.</th>
+                                    }`} rowspan="2">No. Folio</th>
                                 <th rowspan="2" className={`text-center text-white table-green ${areColumnsVisible ? '' : 'collapse'
                                     }`}>Clave de Programa  Educativo</th>
                                 <th rowspan="2" className={`text-center text-white table-green ${areColumnsVisible ? '' : 'collapse'
@@ -300,7 +300,7 @@ class ListProyeccionAsignaturaComponent extends Component {
                                         <td className={`text-center table-id ${areColumns2Visible || areColumnsVisible ? '' : 'collapse'
                                             }`}>{index + 1}</td>
                                         <td align="center" className={`text-center table-content  ${areColumnsVisible ? '' : 'collapse'
-                                            }`}>{asignatura.id}</td>
+                                            }`}>{asignatura.folio.folio}</td>
 
                                         {/* PROFESORES DE ASIGNATURA - Clave de Programa Educativo */}
                                         <td align="center" className={`text-center table-content ${areColumnsVisible ? '' : 'collapse'

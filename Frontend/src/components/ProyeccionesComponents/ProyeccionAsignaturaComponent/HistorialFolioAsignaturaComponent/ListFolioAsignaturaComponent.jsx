@@ -168,7 +168,7 @@ class ListFolioAsignaturaComponent extends Component {
                                     <td>{index + 1}</td>
                                     <td className="table-conten">{folio.folio}</td>
                                     <td className="table-conten">{folio.fecha_creacion}</td>
-                                    <td className="table-conten">"Activo/Cerrado"</td>
+                                    <td className="table-conten">"Activo"</td>
                                     <td className="table-action">
                                          <button onClick={() => this.viewProyeccion(folio.id)} className="btn btn-info mt-0">
                                             Ver Proyecion

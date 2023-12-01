@@ -78,15 +78,15 @@ public interface AsignaturaRepository  extends JpaRepository<AsignaturaEntity, L
             "\n" +
             "PA.total AS total_1,\n" +
             "PA2.total AS total_2,\n" +
-            "PA2.total - PA.total AS com_Total," +
+            "PA2.total - PA.total AS com_Total,\n" +
             "CASE" +
-            "   WHEN PA2.total - PA.total < 0 THEN" +
+            "   WHEN PA2.total - PA.total < 0 THEN\n" +
             "      CASE " +
-            "           WHEN ABS(PA2.total - PA.total) >= 5 " +
+            "           WHEN ABS(PA2.total - PA.total) >= 5\n " +
             "               THEN 'ROJO'\n" +
             "           ELSE 'NEGRO'\n" +
             "       END\n" +
-            "   WHEN (PA2.total - PA.total) > 0 AND (PA2.total - PA.total) < 5" +
+            "   WHEN (PA2.total - PA.total) > 0 AND (PA2.total - PA.total) < 5\n" +
             "        THEN 'NEGRO' \n" +
             "   ELSE 'VERDE'\n" +
             "END AS bandera\n" +

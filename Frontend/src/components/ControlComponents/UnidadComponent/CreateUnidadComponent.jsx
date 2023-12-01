@@ -20,6 +20,7 @@ class CreateUnidadComponent extends Component {
             direccion_completa: '',
 
             disablePlantelList: false,
+            disableCreate: false,
             direccion: '',
             
             unidad_academica: '',
@@ -56,6 +57,7 @@ class CreateUnidadComponent extends Component {
             alert('Por favor complete todos los campos requeridos.');
             return;
         }
+        this.setState({disableCreate: true});
 
         if (this.state.disablePlantelList === false) { 
             let unidad = {
@@ -307,7 +309,7 @@ class CreateUnidadComponent extends Component {
                                                 </div>
                                             </div>
                                         ) : (
-                                            <button className = "btn btn-primary mt-0" onClick={this.createUnidad}>Guardar</button>
+                                            <button className = "btn btn-primary mt-0" onClick={this.createUnidad} disabled={this.state.disableCreate}>Guardar</button>
                                         )}
                                             <button className = "btn btn-danger mt-0" onClick={this.cancel.bind(this)} style= {{marginLeft: "10px"}}>Cancelar</button>
                                         </div>
