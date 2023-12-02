@@ -35,7 +35,7 @@ public interface AsignaturaRepository  extends JpaRepository<AsignaturaEntity, L
             "               THEN 'ROJO'\n" +
             "           ELSE 'NEGRO'\n" +
             "       END\n" +
-            "   WHEN (PA2.total - PA.total) > 0 AND (PA2.total - PA.total) < 5" +
+            "   WHEN (PA2.total - PA.total) >= 0 AND (PA2.total - PA.total) < 5" +
             "        THEN 'NEGRO' \n" +
             "   ELSE 'VERDE'\n" +
             "END AS bandera\n" +
@@ -86,7 +86,7 @@ public interface AsignaturaRepository  extends JpaRepository<AsignaturaEntity, L
             "               THEN 'ROJO'\n" +
             "           ELSE 'NEGRO'\n" +
             "       END\n" +
-            "   WHEN (PA2.total - PA.total) > 0 AND (PA2.total - PA.total) < 5\n" +
+            "   WHEN (PA2.total - PA.total) >= 0 AND (PA2.total - PA.total) < 5\n" +
             "        THEN 'NEGRO' \n" +
             "   ELSE 'VERDE'\n" +
             "END AS bandera\n" +

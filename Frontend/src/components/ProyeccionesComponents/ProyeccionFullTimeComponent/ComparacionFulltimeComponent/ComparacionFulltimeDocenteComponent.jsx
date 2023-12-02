@@ -158,14 +158,20 @@ class ComparacionFulltimeComponent extends Component {
         this.setState({folio1: ''});
         this.setState({folio2: ''});
         this.setState({ unidad: event.label });
+        
         this.getFolioById(event.id);
-
         this.getDocenteList(event.id);
     }
 
     onChangeDocenteHandler = (event) => {
         this.setState({ docente: event.label });
-        this.setState({ id_docente: event.id })
+        this.setState({ id_docente: event.id });
+
+        if ((this.state.id_folio_1 === null) || (this.state.id_folio_2 === null)) {
+            return;
+        } else {
+            this.showListComparacionFulltime(event.id, this.state.id_folio_2, this.state.id_docente );
+        }
     }
 
 

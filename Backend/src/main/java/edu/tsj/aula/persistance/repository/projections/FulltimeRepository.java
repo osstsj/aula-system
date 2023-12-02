@@ -31,7 +31,7 @@ public interface FulltimeRepository extends JpaRepository<FullTimeEntity, Long> 
             "               THEN 'ROJO' \n" +
             "           ELSE 'NEGRO'\n" +
             "       END \n" +
-            "   WHEN (PFHSAA2.horas_frente_grupo - PFHSAA.horas_frente_grupo) > 0 AND (PFHSAA2.horas_frente_grupo - PFHSAA.horas_frente_grupo) < 5\n" +
+            "   WHEN (PFHSAA2.horas_frente_grupo - PFHSAA.horas_frente_grupo) >= 0 AND (PFHSAA2.horas_frente_grupo - PFHSAA.horas_frente_grupo) < 5\n" +
             "       THEN 'NEGRO'\n" +
             "   ELSE 'VERDE'\n" +
             "END AS bandera\n" +
@@ -70,7 +70,7 @@ public interface FulltimeRepository extends JpaRepository<FullTimeEntity, Long> 
             "               THEN 'ROJO' \n" +
             "           ELSE 'NEGRO'\n" +
             "       END \n" +
-            "   WHEN (PFHSAA2.horas_frente_grupo - PFHSAA.horas_frente_grupo) > 0 AND (PFHSAA2.horas_frente_grupo - PFHSAA.horas_frente_grupo) < 5\n" +
+            "   WHEN (PFHSAA2.horas_frente_grupo - PFHSAA.horas_frente_grupo) >= 0 AND (PFHSAA2.horas_frente_grupo - PFHSAA.horas_frente_grupo) < 5\n" +
             "       THEN 'NEGRO'\n" +
             "   ELSE 'VERDE'\n" +
             "END AS bandera\n" +
