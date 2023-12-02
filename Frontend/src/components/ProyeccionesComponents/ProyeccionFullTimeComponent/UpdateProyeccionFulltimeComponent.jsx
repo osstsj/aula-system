@@ -3,10 +3,7 @@ import FulltimeProyeccionService from '../../../services/Proyecciones/FulltimePr
 import FolioFulltimeService from '../../../services/Proyecciones/FolioFulltimeService';
 import CarreraPorUnidadService from '../../../services/Control/CarreraPorUnidadService';
 import ExtensionsService from "../../../services/Control/ExtensionsService";
-<<<<<<< Updated upstream
-=======
 import DocenteService from '../../../services/Control/DocenteService';
->>>>>>> Stashed changes
 import Select from 'react-select'
 import '../../StyleGlobal/Style.css'
 

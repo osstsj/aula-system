@@ -43,7 +43,7 @@ class ListCarreraComponent extends Component {
                     this.props.history.push('/list-carrera');
                 });
             } else {
-                swal("Oops!", "La carrera por unidad no es posible eliminar porque esta presente en otros modulos.\n" +
+                swal("Oops!", "la carrera  no es posible eliminar porque esta presente en otros modulos.\n" +
                 "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
 
                 this.setState({

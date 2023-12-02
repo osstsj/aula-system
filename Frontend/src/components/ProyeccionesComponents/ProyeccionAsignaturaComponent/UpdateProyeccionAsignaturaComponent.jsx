@@ -7,6 +7,7 @@ import UnidadService from '../../../services/Control/UnidadService';
 import Select from 'react-select'
 import '../../StyleGlobal/Style.css'
 import DocenteService from '../../../services/Control/DocenteService';
+import { thistle } from 'color-name';
 
 class UpdateProyeccionAsignaturaComponent extends Component {
     constructor(props) {
@@ -214,7 +215,11 @@ class UpdateProyeccionAsignaturaComponent extends Component {
 
         if (this.state.disablePresidente === false) {
             asignatura.horas_sustantivas_atencion_alumnos.academias.presidente = 0;
-        } else {
+        } if  (this.state.disableSecretario === false) { 
+            asignatura.horas_sustantivas_atencion_alumnos.academias.secretario = 0;
+        }
+        else{
+            asignatura.horas_sustantivas_atencion_alumnos.academias.presidente = 0;
             asignatura.horas_sustantivas_atencion_alumnos.academias.secretario = 0;
         }
 
@@ -277,14 +282,18 @@ class UpdateProyeccionAsignaturaComponent extends Component {
     }
 
     setUpPoS() {
-        if (this.state.presidente !== 0) { 
-            this.setState({disablePresidente: true}); // radiobutton
+        if (this.state.disableAll === true) {
+            this.setState({disablePresidente: false}); // radiobutton
             this.setState({disableSecretario: false});
-        } else {
-            this.setState({disableSecretario: true});
-            this.setState({disablePresidente: false});
         }
-    }
+            else if(this.state.presidente !== 0) { 
+                this.setState({disablePresidente: true}); // radiobutton
+                this.setState({disableSecretario: false});
+            } else {
+                this.setState({disableSecretario: true});
+                this.setState({disablePresidente: false});
+            }
+}
 
     async getDocenteList(id_unidad) {
         let options = null;
@@ -511,9 +520,11 @@ class UpdateProyeccionAsignaturaComponent extends Component {
 
     onChangeADisablerHandler = () => {
         this.cleaningHours();
+        this.setUpPoS();
     }
     onChangeBDisablerHandler = () => {
         this.cleaningHours();
+        this.setUpPoS();
     }
     onChangePresidenteDisablerHandler = () => {
         this.setState(() => ({
@@ -608,17 +619,27 @@ class UpdateProyeccionAsignaturaComponent extends Component {
   };
 
   onChangePresidenteHandler = (event) => {
+    if (this.state.disableAll === true ) {
+        this.cleaningHours();
+    } else {
         if(parseInt(event.label || 0) > (this.state.total_hours - (this.state.total - this.state.presidente))) {
             alert('No es posible elegir una hora mayor al limite disponible');
         } else {
             this.setState({presidente: event.label}, this.calcularTotal);
         }
     }
+      
+    }
     onChangeSecretarioHandler = (event) => {
-        if(parseInt(event.label || 0) > (this.state.total_hours - (this.state.total - this.state.secretario))) {
-            alert('No es posible elegir una hora mayor al limite disponible');
-        } else {
-            this.setState({secretario: event.label}, this.calcularTotal);
+        if (this.state.disableAll === true){
+            this.cleaningHours();
+        } else{
+
+            if(parseInt(event.label || 0) > (this.state.total_hours - (this.state.total - this.state.secretario))) {
+                alert('No es posible elegir una hora mayor al limite disponible');
+            } else {
+                this.setState({secretario: event.label}, this.calcularTotal);
+            }
         }
     }
 
@@ -892,6 +913,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                                             <div className="form-outline">
                                                 <label>Presidente:</label>
                                                 <Select
+                                                    
                                                     isDisabled= {!this.state.disablePresidente}
                                                     hideSelectedOptions={!this.state.disablePresidente}
                                                     rules={{ required: true }}
