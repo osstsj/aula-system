@@ -139,7 +139,10 @@ class UpdateProyeccionAsignaturaComponent extends Component {
 
                 // observaciones: asignatura.observaciones,
                 fecha_creacion: asignatura.fecha_creacion,
-                fecha_actualizacion: asignatura.fecha_actualizacion
+                fecha_actualizacion: asignatura.fecha_actualizacion,
+
+
+                disableAll: true
             });
 
             this.getUnidadList();
@@ -168,6 +171,8 @@ class UpdateProyeccionAsignaturaComponent extends Component {
 
         e.preventDefault();
 
+
+        console.log("horas_frente_grupo" + this.state.horas_frente_grupo);
         let asignatura = {
             profe_asignatura: {
                 codigo_nomina: this.state.codigo_nomina,
@@ -178,7 +183,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                     a: this.state.a,
                     b: this.state.b,
                 },
-                horas_frente_grupo: this.state.horas_frente_grupo,
+                horas_frente_grupo: this.state.horas_frente_grupo === "" || null ? 0 : this.state.horas_frente_grupo,
 
                     academias: {
                     presidente: this.state.presidente,
@@ -186,23 +191,25 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                     },
 
                     asesorias: {
-                    asesorias_academica: this.state.asesorias_academica,
-                    educacion_dual: this.state.educacion_dual,
-                    residencias_profesionales: this.state.residencias_profesionales,
-                    titulacion: this.state.titulacion,
-                    tutorias: this.state.titulacion,
+                    asesorias_academica: this.state.asesorias_academica === "" || null ? 0 : this.state.asesorias_academica,
+                    educacion_dual: this.state.educacion_dual === "" || null ? 0 : this.state.educacion_dual,
+                    residencias_profesionales: this.state.residencias_profesionales === "" || null ? 0 : this.state.residencias_profesionales,
+                    titulacion: this.state.titulacion === "" || null ? 0 : this.state.titulacion,
+                    tutorias: this.state.tutorias === "" || null ? 0 : this.state.tutorias,
                     },
 
-                actividades_complementarias: this.state.actividades_complementarias,
+                actividades_complementarias: this.state.actividades_complementarias === "" || null ? 0 : this.state.actividades_complementarias,
                 },
 
                 horas_necesidad_institucional:  {
-                invesigacion_educativa: this.state.invesigacion_educativa,
-                apoyo_operativo: this.state.apoyo_operativo,
+                invesigacion_educativa: this.state.invesigacion_educativa === "" || null ? 0 : this.state.invesigacion_educativa,
+                apoyo_operativo: this.state.apoyo_operativo === "" || null ? 0 : this.state.apoyo_operativo,
                 },
 
             // unidad_academica: this.state.unidad_academica.trim(),
             observaciones: this.state.observaciones.trim(),
+
+            extensiones: this.state.extensions,
         }
 
         if (this.state.disablePresidente === false) {
@@ -222,8 +229,11 @@ class UpdateProyeccionAsignaturaComponent extends Component {
         console.log("Proyeccion por asignatura: " + JSON.stringify(asignatura));
 
         AsignaturaProyeccionService.updateProyeccionAsignatura(asignatura, 
-            this.state.id, this.state.id_folio, this.state.id_unidad,
-            this.state.id_docente, this.state.id_carrera)
+            this.state.id, 
+            this.state.id_folio, 
+            this.state.id_unidad,
+            this.state.id_docente, 
+            this.state.id_carrera)
         .then(
          () => {
                 this.props.history.push(`/list-proyeccion_asignatura/${this.state.id_folio}`);
@@ -260,15 +270,10 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                 disableA: true,
                 a:0
             }));
-        }
-
-        // if (this.state.a !== 0) { 
-        //     this.setState({disableA: false}); // radiobutton
-        //     this.setState({disableB: true});
-        // } else {
-        //     this.setState({disableB: false});
-        //     this.setState({disableA: true});
-        // }
+        } else {
+            alert("La proyeccion no puede modificarse ya que el PTC del docente pertence a la categoria: " + this.state.ptc);
+            this.props.history.push(`/list-proyeccion_asignatura/${this.state.id_folio}`);
+        } 
     }
 
     setUpPoS() {
@@ -426,6 +431,9 @@ class UpdateProyeccionAsignaturaComponent extends Component {
     }
 
     onChangeAHandler = (event) => {
+        this.setState({disableAll: false});
+
+        this.cleaningHours();
         const hour = parseInt(event.target.value);
         this.setState({
             a: hour,
@@ -433,6 +441,8 @@ class UpdateProyeccionAsignaturaComponent extends Component {
         });
     }
     onChangeBHandler = (event) => {
+        this.setState({disableAll: false});
+        this.cleaningHours();
         const hour = parseInt(event.target.value);
         this.setState({
             b: hour,
@@ -457,21 +467,17 @@ class UpdateProyeccionAsignaturaComponent extends Component {
             actividades_complementarias: 0,
             invesigacion_educativa: 0,
             apoyo_operativo: 0,
+
+            subtotal_1: 0,
+            subtotal_2: 0,
+            total: 0,
         });
     }
 
     onChangeADisablerHandler = () => {
-        this.setState(() => ({
-            disableA: false,
-            disableB: true
-        }));
         this.cleaningHours();
     }
     onChangeBDisablerHandler = () => {
-        this.setState(() => ({
-            disableB: false,
-            disableA: true
-        }));
         this.cleaningHours();
     }
     onChangePresidenteDisablerHandler = () => {
@@ -815,6 +821,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                                                             onChange={this.handleInputChange}
                                                             onInput={this.handleInputValidation}
                                                             required
+                                                            readOnly={this.state.disableAll}
                                                         />
                                                         <div className="input-group-append">
                                                             <span className="input-group-text">Hora(s)</span>
@@ -899,6 +906,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                                                 <label>Asesorias Académicas:</label>
                                                 <div className="input-group">
                                                     <input
+                                                    readOnly={this.state.disableAll}
                                                         name='asesorias_academica'
                                                         type='number'
                                                         className="form-control"
@@ -919,6 +927,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                                                 <label className="">Educacion Dual:</label>
                                                 <div className="input-group">
                                                     <input
+                                                    readOnly={this.state.disableAll}
                                                         name='educacion_dual'
                                                         type='number'
                                                         className="form-control"
@@ -941,6 +950,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                                                 <label>Residencias Profesionales:</label>
                                                 <div className="input-group">
                                                     <input
+                                                    readOnly={this.state.disableAll}
                                                         name='residencias_profesionales'
                                                         type='number'
                                                         className="form-control"
@@ -961,6 +971,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                                                 <label className="">Titulación:</label>
                                                 <div className="input-group">
                                                     <input
+                                                    readOnly={this.state.disableAll}
                                                         name='titulacion'
                                                         type='number'
                                                         className="form-control"
@@ -981,6 +992,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                                                 <label className="">Tutorias:</label>
                                                 <div className="input-group">
                                                     <input
+                                                    readOnly={this.state.disableAll}
                                                         name='tutorias'
                                                         type='number'
                                                         className="form-control"
@@ -1004,6 +1016,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                                                 <div className="col">
                                                     <div className="input-group">
                                                         <input
+                                                        readOnly={this.state.disableAll}
                                                             name='actividades_complementarias'
                                                             type='number'
                                                             className=" form-control"
@@ -1060,6 +1073,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                                                     <div className="col">
                                                         <div className="input-group">
                                                             <input
+                                                            readOnly={this.state.disableAll}
                                                                 name='invesigacion_educativa'
                                                                 type='number'
                                                                 placeholder="Subtotal 1 reactivo"
@@ -1084,6 +1098,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                                                     <label className="">Apoyo Operativo:</label>
                                                     <div className="input-group">
                                                         <input
+                                                        readOnly={this.state.disableAll}
                                                             name='apoyo_operativo'
                                                             type='number'
                                                             className="form-control"

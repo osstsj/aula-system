@@ -137,11 +137,11 @@ class ComparacionFulltimeComponent extends Component {
             <div className="container">
                 <h2 className="text-center mt-5 mb-5 Title">COMPARACION DE FOLIOS DE PROYECCIONES ACADEMICAS, TIEMPO COMPLETO DEL TECNOLÓGICO SUPERIOR DE JALISCO</h2>
                     <div className="row justify-content-center mb-4">
-                        <fieldset className="border border-info p-0">
+                        <fieldset className="border border-info p-0 mb-3">
                             {/* <legend className="w-auto text-left h6">Referencia</legend> */}
                             <div className="col" style={{"text-align": "center"}}>
                                 <span><small><b>Selección:</b> Folio 1 (Anterior: [ZA - 1 - 2024 A]), Folio 2 (Reciente:[ ZA - 4 - 2024 B ])<br /></small></span>
-                                <span><small><b>Cálculo Comparación:</b> [ ZA - 4 - 2024 B ] - [ZA - 1 - 2024 A]</small></span><br />
+                                <span><small><b>Cálculo Comparación:</b> [ ZA - 4 - 2024 B ] (Horas Frente a Grupo) - [ZA - 1 - 2024 A] (Horas Frente a Grupo)</small></span><br />
                                 <span><small><b>Bandera:</b> Rojo: comparación menor a 5 | Negro: comparación mayor que 0 y menor que 5 | Verde: comparación mayor que 5</small></span>
                             </div>
                         </fieldset>

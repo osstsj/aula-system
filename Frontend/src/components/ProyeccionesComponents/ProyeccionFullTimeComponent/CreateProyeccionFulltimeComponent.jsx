@@ -134,7 +134,7 @@ class CreateProyeccionFulltimeComponent extends Component {
 
             horas_sustantivas_atencion_alumnos_fulltime: {
              
-                horas_frente_grupo: this.state.horas_frente_grupo,
+                horas_frente_grupo: this.state.horas_frente_grupo === "" || null ? 0 : this.state.horas_frente_grupo,
                 ptc: this.state.ptc,
                 academias: {
                     presidente: this.state.presidente,
@@ -142,19 +142,19 @@ class CreateProyeccionFulltimeComponent extends Component {
                 },
 
                 asesorias: {
-                    asesorias_academica: this.state.asesorias_academica,
-                    educacion_dual: this.state.educacion_dual,
-                    residencias_profesionales: this.state.residencias_profesionales,
-                    titulacion: this.state.titulacion,
-                    tutorias: this.state.titulacion,
+                    asesorias_academica: this.state.asesorias_academica === "" || null ? 0 : this.state.asesorias_academica,
+                    educacion_dual: this.state.educacion_dual === "" || null ? 0 : this.state.educacion_dual,
+                    residencias_profesionales: this.state.residencias_profesionales  === "" || null ? 0 : this.state.residencias_profesionales,
+                    titulacion: this.state.titulacion === "" || null ? 0 :this.state.titulacion,
+                    tutorias: this.state.tutorias === "" || null ? 0 : this.state.tutorias,
                 },
 
-                actividades_complementarias: this.state.actividades_complementarias,
+                actividades_complementarias: this.state.actividades_complementarias === "" || null ? 0 : this.state.actividades_complementarias,
             },
 
             horas_necesidad_institucional_fulltime:  {
-                proyecto_investigacion: this.state.invesigacion_educativa,
-                apoyo_operativo: this.state.apoyo_operativo,
+                proyecto_investigacion: this.state.invesigacion_educativa === "" || null ? 0 : this.state.invesigacion_educativa,
+                apoyo_operativo: this.state.apoyo_operativo === "" || null ? 0 : this.state.apoyo_operativo,
             },
 
             observaciones: this.state.observaciones.trim(),
@@ -215,9 +215,8 @@ class CreateProyeccionFulltimeComponent extends Component {
             this.props.history.push('/');
         });
 
-        this.getDocenteList(this.state.id_unidad);
+        this.getDocenteList(this.state.id_unidad, this.state.id_folio);
         this.getCarreraList(this.state.id_unidad);
-        this.getAllProyeccionesToFilterDocente(this.state.id_folio);
     }
 
   
@@ -267,7 +266,7 @@ class CreateProyeccionFulltimeComponent extends Component {
     }
 
 
-    async getDocenteList(id_unidad) {
+    async getDocenteList(id_unidad, id_folio) {
         let options = null;
         await DocenteService.getAllDocentesByCategoriaPTCFulltime(id_unidad).then(res => {
             const data = res.data;
@@ -283,6 +282,8 @@ class CreateProyeccionFulltimeComponent extends Component {
             alert("Error al intentar traer los docentes...");
             this.props.history.push('/');
         });
+
+        this.getAllProyeccionesToFilterDocente(id_folio);
     }
 
     async getAllExtensionsByUnidadId() {
@@ -390,7 +391,7 @@ class CreateProyeccionFulltimeComponent extends Component {
         this.setState({ id_unidad: event.id_unidad});
         this.setState({unidad_academica: event.unidad_academica})
     
-        this.getDocenteList(event.id_unidad);
+        // this.getDocenteList(event.id_unidad);
     }
 
     onChangeUnidadHandler = (event) => {

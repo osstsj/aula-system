@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import FulltimeProyeccionService from '../../../services/Proyecciones/FulltimeProyeccionService';
 import FolioFulltimeService from '../../../services/Proyecciones/FolioFulltimeService';
 import CarreraPorUnidadService from '../../../services/Control/CarreraPorUnidadService';
-import UnidadService from '../../../services/Control/UnidadService';
-import DocenteService from '../../../services/Control/DocenteService';
+import ExtensionsService from "../../../services/Control/ExtensionsService";
 import Select from 'react-select'
-import axios from 'axios';
 import '../../StyleGlobal/Style.css'
 
 class UpdateProyeccionFulltimeComponent extends Component {
@@ -14,7 +12,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
 
         this.state = {
             isLoading: false,
-            id: this.props.match.params.id, // id proyeccion
+            id: this.props.match.params.id, // folio id
 
             unidades: [],
             niveles: [],
@@ -52,8 +50,8 @@ class UpdateProyeccionFulltimeComponent extends Component {
 
                 // horas_sustantivas_atencion_alumnos
                     // horas_fulltime: 
-                    a: 0,
-                    b: 0,
+                    total_hours: 40,
+                    cumulative_hours: 0,
 
                 horas_frente_grupo: 0,
                 ptc: '',
@@ -72,15 +70,21 @@ class UpdateProyeccionFulltimeComponent extends Component {
                 subtotal_1: 0,
 
                 // horas_necesidad_institucional
-                proyecto_investigacion: 0,
+                invesigacion_educativa: 0,
                 apoyo_operativo: 0,
                 subtotal_2: 0,
             
             total: 0,
             observaciones: "",
+            show_extensions: false,
+            extensions: [],
+                //validar
+                seleccionadoTipoUA: false,
+                seleccionadoClavePrograma: false,
+                seleccionadoDocente: false,
+                seleccionadoAcademico: false,
         }
     }
-
     updateProyeccionFulltime= (e) => {
         e.preventDefault();
 
@@ -91,7 +95,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
 
             horas_sustantivas_atencion_alumnos_fulltime: {
              
-                horas_frente_grupo: this.state.horas_frente_grupo,
+                horas_frente_grupo: this.state.horas_frente_grupo === "" || null ? 0 : this.state.horas_frente_grupo,
                 ptc: this.state.ptc,
                 academias: {
                     presidente: this.state.presidente,
@@ -99,19 +103,19 @@ class UpdateProyeccionFulltimeComponent extends Component {
                 },
 
                 asesorias: {
-                    asesorias_academica: this.state.asesorias_academica,
-                    educacion_dual: this.state.educacion_dual,
-                    residencias_profesionales: this.state.residencias_profesionales,
-                    titulacion: this.state.titulacion,
-                    tutorias: this.state.titulacion,
+                    asesorias_academica: this.state.asesorias_academica === "" || null ? 0 : this.state.asesorias_academica,
+                    educacion_dual: this.state.educacion_dual  === "" || null ? 0 : this.state.educacion_dual ,
+                    residencias_profesionales: this.state.residencias_profesionales  === "" || null ? 0 : this.state.residencias_profesionales,
+                    titulacion: this.state.titulacion === "" || null ? 0 : this.state.titulacion,
+                    tutorias: this.state.tutorias === "" || null ? 0 : this.state.tutorias,
                 },
 
-                actividades_complementarias: this.state.actividades_complementarias,
+                actividades_complementarias: this.state.actividades_complementarias === "" || null ? 0 : this.state.actividades_complementarias,
             },
 
             horas_necesidad_institucional_fulltime:  {
-                proyecto_investigacion: this.state.proyecto_investigacion,
-                apoyo_operativo: this.state.apoyo_operativo,
+                proyecto_investigacion: this.state.proyecto_investigacion === "" || null ? 0 : this.state.proyecto_investigacion,
+                apoyo_operativo: this.state.apoyo_operativo === "" || null ? 0 : this.state.apoyo_operativo,
             },
 
             observaciones: this.state.observaciones.trim(),
@@ -128,8 +132,10 @@ class UpdateProyeccionFulltimeComponent extends Component {
         console.log("Proyeccion por asignatura: " + JSON.stringify(fulltime));
 
         FulltimeProyeccionService.updateProyeccionFulltimeById(fulltime, this.state.id,
-            this.state.id_folio, this.state.id_unidad,
-            this.state.id_docente, this.state.id_carrera)
+            this.state.id_folio, 
+            this.state.id_unidad,
+            this.state.id_docente, 
+            this.state.id_carrera)
         .then(
          () => {
                 this.props.history.push(`/list-proyeccion_fulltime/${this.state.id_folio}`);
@@ -195,12 +201,13 @@ class UpdateProyeccionFulltimeComponent extends Component {
                 
         })
     })
+        
         this.getNivel();
         this.getHorasAcademias_presidente();
         this.getHorasAcademias_secretario();
         this.getFolioList();
         this.getTipoUnidad();
-        this.setUpPoS();
+        
     }
 
 
@@ -213,7 +220,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
             this.setState({disablePresidente: false});
         }
     }
-    
+
     async getCarreraList(id_unidad) {
         let options = null;
         await CarreraPorUnidadService.getCarreraPorUnidadEntitiesByUnidad_academicaId(id_unidad).then((res) => {
@@ -251,7 +258,6 @@ class UpdateProyeccionFulltimeComponent extends Component {
             this.props.history.push(`/list-proyeccion_fulltime/${this.state.id_folio}`);
         }
     }
-
     async getFolioList() {
         let options = null;
 
@@ -275,14 +281,60 @@ class UpdateProyeccionFulltimeComponent extends Component {
         // porque una vez que se realize el setState con getById... no se puede consultar el valor al mismo
         // tiempo (async), y se tiene que delegar a otra funcion para que siga la ejecucion en secuncia...
         // y se optenga el valor el en prop de categoria.
+
+        this.setUpPoS(); // debido a que this.state, es una funcion asyc, se debe agregar aqui para que realize su tarea...
     }
+
+
+
+    async getAllExtensionsByUnidadId() {
+        await ExtensionsService.getAllExtensionsByUnidadId(this.state.id_unidad)
+          .then((res) => {
+            const extensions = res.data.map((item, index) => {
+              return {
+                ...item,
+                index,
+                value: 0,
+                input_name: `extension_${index}`,
+                form: {
+                  disablePresidente: true,
+                  disableSecretario: false,
+                  horas_frente_grupo: 0,
+                  // academias
+                  presidente: 0,
+                  secretario: 0,
+                  // asesorias
+                  asesorias_academica: 0,
+                  educacion_dual: 0,
+                  residencias_profesionales: 0,
+                  titulacion: 0,
+                  tutorias: 0,
+                  actividades_complementarias: 0,
+                  subtotal_1: 0,
+                  invesigacion_educativa: 0,
+                  apoyo_operativo: 0,
+                  subtotal_2: 0,
+                },
+              };
+            });
+            this.setState({
+              extensions,
+              show_extensions: true,
+            });
+          })
+          .catch(() => {
+            alert("Error al intentar traer las extensiones...");
+            this.props.history.push("/");
+          });
+      }
+
 
     getTipoUnidad() {
         const tiposlList = [
-            { value: 'Unidad Academica', label: 'Unidad Academica' },
-            { value: 'Unidad Academica + Extension', label:'Unidad Academica + Extension'},
-        ]
-
+          { value: 1, label: "Unidad Academica" },
+          { value: 2, label: "Unidad Academica + Extension" },
+        ];
+    
         this.setState({ tipos_unidades: tiposlList });
     }
 
@@ -317,15 +369,21 @@ class UpdateProyeccionFulltimeComponent extends Component {
         this.setState({ horas_secretario: academiasList });
     }
 
-
     onChangeTipoUnidadHandler = (event) => {
-        this.setState({ tipo_unidad: event.label });
-    }
-
+        if (event.value === 2) {
+            this.getAllExtensionsByUnidadId();
+            } else {
+            this.setState({
+                show_extensions: false,
+            });
+        }
+        this.setState({
+        tipo_unidad: event.label,   seleccionadoTipoUA: true,  errorTipoUA: null,
+        });
+    };
 
     onChangeFolioHandler = (event) => {
-        // this.setState({nombre_docente: event.target.value});
-        this.setState({ folio: event.label });
+        this.setState({ folio: event.label }, this.enableAddButton);
         this.setState({ id_folio: event.id });
 
         this.setState({ nombre_docente: ''})
@@ -338,722 +396,1505 @@ class UpdateProyeccionFulltimeComponent extends Component {
     }
 
     onChangeUnidadHandler = (event) => {
-        this.setState({ unidad_academica: event.label });
-        this.setState({ disableDocente: false })
-
+        this.setState({ unidad_academica: event.label }, this.enableAddButton);
+        this.setState({ disableDocente: false });
     }
 
     onChangeClaveProgramaHandler = (event) => {
-        this.setState({ clave_programa: event.label });
+        this.setState({ clave_programa: event.label, seleccionadoClavePrograma:true, errorClavePrograma:null }, this.enableAddButton);
         this.setState({ id_carrera: event.id });
 
     }
 
     onChangeCodigoNominaHandler = (event) => {
-
+        this.setState({ codigo_nomina: event.target.value }, this.enableAddButton);
     }
     onChangeGradoAcademicoaHandler = (event) => {
-        this.setState({grado_academico: event.label});
+        this.setState({ grado_academico: event.label,seleccionadoAcademico:true,errorAcademico:null  }, this.enableAddButton);
     }
     onChangeNombreDocenteHandler = (event) => {
-        this.setState({ nombre_docente: event.label });
+        this.setState({ nombre_docente: event.label, seleccionadoDocente:true,errorDocente:null  });
+        this.setState({ id_docente: event.id }, this.enableAddButton);
         this.setState({ id_docente: event.id });
         this.setState({ ptc: ''});
         this.setState({ ptc: event.ptc });
         this.setState({ codigo_nomina: event.codigo_nomina });
-
     }
 
 
     onChangeAHandler = (event) => {
-        this.setState({a: event.target.value});
-        let aux = event.target.value;
-        this.setState({subtotal_1: this.state.subtotal_1 + aux});
+        const hour = parseInt(event.target.value);
+        this.setState({
+          a: hour,
+          total_hours: hour,
+        });
+    };
 
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
     onChangeBHandler = (event) => {
-        this.setState({b: event.target.value});
-        this.setState({subtotal_1: this.state.subtotal_1 + event.target.value});
+        const hour = parseInt(event.target.value);
+        this.setState({
+          b: hour,
+          total_hours: hour,
+        });
+    };
 
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
+    cleaningHours = () => {
+    const { extensions } = this.state
+    const newExtensions = extensions.map((item) => {
+        const {
+            horas_frente_grupo,
+            presidente,
+            secretario,
+            asesorias_academica,
+            educacion_dual,
+            residencias_profesionales,
+            titulacion,
+            tutorias,
+            actividades_complementarias,
+            subtotal_1,
+            invesigacion_educativa,
+            apoyo_operativo,
+            subtotal_2} = item.form
+        const newFom = item.form;
+        newFom[horas_frente_grupo] = 0;
+        newFom[presidente] = 0;
+        newFom[secretario] = 0;
+        newFom[asesorias_academica] = 0;
+        newFom[educacion_dual] = 0;
+        newFom[residencias_profesionales] = 0;
+        newFom[titulacion] = 0;
+        newFom[tutorias] = 0;
+        newFom[actividades_complementarias] = 0;
+        newFom[subtotal_1] = 0;
+        newFom[invesigacion_educativa] = 0;
+        newFom[apoyo_operativo] = 0;
+        newFom[subtotal_2] = 0;
+        return {
+            ...item,
+            form: newFom
+        }
+    });
+    this.setState({
+        total_hours: 0,
+        cumulative_hours: 0,
+        horas_frente_grupo: 0,
+        presidente: 0,
+        secretario: 0,
+        asesorias_academica: 0,
+        educacion_dual: 0,
+        residencias_profesionales: 0,
+        titulacion: 0,
+        tutorias: 0,
+        actividades_complementarias: 0,
+        invesigacion_educativa: 0,
+        apoyo_operativo: 0,
+        extensions: newExtensions
+    });
+    };
+
+
+  onChangePresidenteDisablerHandler = (event) => {
+    const parentValue = event.target.getAttribute('parent');
+    const { extensions } = this.state;
+    if(parentValue) {
+        const newExtensions = extensions.map((item) => {
+            if(item.input_name === parentValue) {
+                const newForm = { ...item.form };
+                newForm.disablePresidente = true;
+                newForm.disableSecretario = false;
+                newForm.presidente = 0;
+                newForm.secretario = 0;
+                return {
+                    ...item,
+                    form: newForm,
+                };
+            }
+            return {
+                ...item,
+            };
+        });
+        this.setState(
+            {
+                extensions: newExtensions,
+            },
+            this.calcularTotal
+        );
     }
-
-    onChangePresidenteDisablerHandler = () => {
+    else {
         this.setState(() => ({
             disablePresidente: true,
             disableSecretario: false,
-        }));
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
+          }));
+          this.setState(
+            {
+              presidente: 0,
+              secretario: 0,
+            },
+            this.calcularTotal
+          );
     }
-    onChangeSecretarioDisablerHandler = () => {
+  };
+
+  onChangeSecretarioDisablerHandler = (event) => {
+    const parentValue = event.target.getAttribute('parent');
+    const { extensions } = this.state;
+    if(parentValue) {
+        const newExtensions = extensions.map((item) => {
+            if(item.input_name === parentValue) {
+                const newForm = { ...item.form };
+                newForm.disablePresidente = false;
+                newForm.disableSecretario = true;
+                newForm.presidente = 0;
+                newForm.secretario = 0;
+                return {
+                    ...item,
+                    form: newForm,
+                };
+            }
+            return {
+                ...item,
+            };
+        });
+        this.setState(
+            {
+                extensions: newExtensions,
+            },
+            this.calcularTotal
+        );
+    }
+    else {
         this.setState(() => ({
             disableSecretario: true,
             disablePresidente: false,
         }));
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-
-
-    onChangeHorasFrenteGrupoHandler = (event) => {
-        this.setState({horas_frente_grupo: event.target.value});
-        this.state.subtotal_1 =+ event.target.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangePresidenteHandler = (event) => {
-        this.setState({presidente: event.label});
-        // this.state.subtotal_1 =+ event.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeSecretarioHandler = (event) => {
-        this.setState({secretario: event.label});
-        this.state.subtotal_1 =+ event.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeAsesoriaAcademicaHandler = (event) => {
-        this.setState({asesorias_academica: event.target.value});
-        this.state.subtotal_1 =+ event.target.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeEducacionDualHandler = (event) => {
-        this.setState({educacion_dual: event.target.value});
-        this.state.subtotal_1 =+ event.target.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeResidenciasProfesionalesHandler = (event) => {
-        this.setState({residencias_profesionales: event.target.value});
-        this.state.subtotal_1 =+ event.target.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeTutoriasHandler = (event) => {
-        this.setState({tutorias: event.target.value});
-        this.state.subtotal_1 =+ event.target.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeTitulacionHandler = (event) => {
-        this.setState({titulacion: event.target.value});
-        this.state.subtotal_1 =+ event.target.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeActividadesComplementariasHandler = (event) => {
-        this.setState({actividades_complementarias: event.target.value});
-        this.state.subtotal_1 =+ event.target.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-
-
-    onChangeProyecto_InvestigacionHandler = (event) => {
-        this.setState({proyecto_investigacion: event.target.value});
-        this.state.subtotal_2 =+ event.target.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeApoyoOperativoHandler = (event) => {
-        this.setState({apoyo_operativo: event.target.value});
-        this.state.subtotal_2 =+ event.target.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeSubtotal2Handler = (event) => {
-        this.setState({subtotal_2: event.target.value});
-        this.state.subtotal_2 =+ event.target.value;
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeTotalHandler = (event) => {
-        this.setState({total: event.target.value});
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-    onChangeObservacionesHandler = (event) => {
-        this.setState({observaciones: event.target.value});
-
-        this.setState({ disableAgregar: (this.state.clave_programa.length !== 0) && (this.state.codigo_nomina.length !== 0) &&
-        (this.state.grado_academico.length !== 0) && (this.state.nombre_docente.length !== 0) ?
-            false : true });
-    }
-
-
-
-    render() {
-        return (
-            <div className="container">
-                <div className="row justify-content-center mt-3 mb-3">
-                    <div className="card col-10" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                        <div className="card-body">
-                            <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                                <h2 className='h3'><b>Modificar Proyeccion Profesor Tiempo Completo</b></h2>
-                            </div>
-                            <br />
-                            <form>    
-                                <div className="row mb-4 justify-content-center ">                              
-                                        <div className="col-6">
-                                            <div className="form-outline">
-                                                <label className="">Folio: </label>
-                                                <Select
-                                                 isDisabled={true}
-                                                    rules={{ required: true }}
-                                                    options={this.state.folios}
-                                                    onChange={(e) => this.onChangeFolioHandler(e)}
-                                                    value={{ label: this.state.folio === '' ? "Seleccione folio de proyeccion..." : this.state.folio}}
-                                                />
-                                            </div>
-                                        </div>       
-                                        <div className="col-6">
-                                            <div className="form-outline">
-                                                <label className="">Tipo de UA: </label>
-                                                <Select
-                                                    rules={{ required: true }}
-                                                    options={this.state.tipos_unidades}
-                                                    onChange={(e) => this.onChangeTipoUnidadHandler(e)}
-                                                    value={{ label: this.state.tipo_unidad === '' ? "Seleccione unidad academica..." : this.state.tipo_unidad}}
-                                                />
-                                            </div>
-                                        </div>                         
-                                    </div>
-                                <div className="col">
-                                    <div className="row mb-3">
-                                        <label className="h5"><b>PROFESORES DE ASIGNATURA</b></label>
-                                    </div>
-                                </div>
-                                
-                                <fieldset className="border border-info p-3">
-                                    <legend className="w-auto text-left h6">Ingrese información de profesor por asignatura</legend>
-                                        <div className="row mb-4">
-                                            <div className="col">
-                                                <div className="form-outline">
-                                                    <label>Unidad Academica</label>
-                                                    <Select
-                                                        isDisabled={true}
-                                                        rules={{ required: true }}
-                                                        options={this.state.unidades}
-                                                        onChange={(e) => this.onChangeUnidadHandler(e)}
-                                                        value={{ label: this.state.unidad_academica === '' ? "Seleccione unidad academica..." : this.state.unidad_academica}}
-                                                    />
-                                                </div>
-                                            </div>
-                                        
-                                            <div className="col">
-                                                <div className="form-outline">
-                                                    <label className="">Clave de Programa Educativo:</label>
-                                                    <Select
-                                                        rules={{ required: true }}
-                                                        options={this.state.carreras}
-                                                        onChange={(e) => this.onChangeClaveProgramaHandler(e)}
-                                                        value={{ label: this.state.clave_programa === '' ? "Seleccione clave de programa educativo..." : this.state.clave_programa}}
-                                                    />
-                                                </div>
-                                            </div>                        
-                                        </div>
-
-                                        <div className="row mb-4">                              
-                                            <div className="col">
-                                                <div className="form-outline">
-                                                    <label className="">Nombre del Docente: </label>
-                                                    <Select
-                                                    // depende que se realize el cambio en unidad academcia para que se pueda habilidar
-                                                    // y se reseteara si se cambia la unidad academica, al igual se resetea el valor de nivel academico.
-                                                        // isDisabled={this.state.disableDocente}
-                                                        isDisabled={true}
-                                                        rules={{ required: true }}
-                                                        options={this.state.docentes}
-                                                        onChange={(e) => this.onChangeNombreDocenteHandler(e)}
-                                                        value={{ label: this.state.nombre_docente === '' ? "Seleccione nombre del docente..." : this.state.nombre_docente}}
-                                                    />
-                                                </div>
-                                            </div>                        
-                                        </div>
-
-                                        <div className="row mb-4">
-                                            <div className="col">
-                                                <div className="form-outline">
-                                                    <label>Código de Nómina:</label>
-                                                    <input 
-                                                    readOnly
-                                                        placeholder="Ingrese código de nómina..."
-                                                        className="form-control"
-                                                        value={this.state.codigo_nomina}
-                                                        onChange={this.onChangeCodigoNominaHandler}
-                                                        required
-                                                    />
-                                                </div>
-                                            </div>
-                                        
-                                            <div className="col">
-                                            {/* <div className="form-outline" style={{display: 'none'}}> */}
-                                                <div className="form-outline" style={{display: 'block'}}>
-                                                    <label>Nivel Academico</label>
-                                                    <Select
-                                                        options={this.state.niveles}
-                                                        onChange={(e) => this.onChangeGradoAcademicoaHandler(e)}
-                                                        value={{ label: this.state.grado_academico  === '' ? "Seleccione nivel academico..." : this.state.grado_academico}}
-                                                    />
-                                                </div>
-                                            </div>                    
-                                        </div>
-                                </fieldset>
-                                <hr />
-                                <div className="col">
-                                    <div className="row">
-                                        <label className="h5"><b>HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS</b></label>
-                                    </div>
-                                </div>
-
-                                <fieldset className="border border-info p-3">
-                                    <legend className="w-auto text-left h6">Ingrese información de horas sustantivas para atención de alumnos</legend>
-                                        <div className="col">
-                                            <div className="row mb-2 ">
-                                                <label className="h6"><b>Horas de Asignatura</b></label>
-                                            </div>
-                                        </div>
-
-
-                                    <div className="row"> 
-                                        <div className="col">
-                                            <div className="form-group row">                                                
-                                                <div className="col">
-                                                    <label>Nivel de (PTC):</label>
-                                                    <div className="input-group">                                                        
-                                                        <input
-                                                            readOnly={true}
-                                                            type='text'
-                                                            placeholder='Nivel de PTC del docente...'
-                                                            className=" form-control"
-                                                            value={this.state.ptc}
-                                                            onChange={this.onChangeHorasFrenteGrupoHandler}
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <div className="col">
-                                                    <label>Horas Frente a Grupo:</label>
-                                                    <div className="input-group">                                                        
-                                                        <input
-                                                            type='number'
-                                                            className=" form-control"
-                                                            value={this.state.horas_frente_grupo}
-                                                            onChange={this.onChangeHorasFrenteGrupoHandler}
-                                                            onInput={(e) => {
-                                                                e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                            }}
-                                                            required
-                                                        />
-                                                        <div className="input-group-append">
-                                                            <span className="input-group-text">Hora(s)</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                            
-
-                                    <div className="col">
-                                        <div className="row mb-2 mt-3">
-                                            <label className="h6"><b>Academias</b></label>
-                                        </div>
-                                    </div>                                   
-
-                                    <div className="row mb-4">
-                                        <div className="col">
-                                            <div className="form-group row">
-                                                <div className="col">
-                                                    <input
-                                                        className='mr-2'
-                                                        type="radio"
-                                                        onChange={this.onChangePresidenteDisablerHandler}
-                                                        checked={this.state.disablePresidente}
-                                                        onInput={(e) => {
-                                                            e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                        }}
-                                                        /> Horas Presidente
-                                                </div>
-                                            </div>
-                                            <div className="form-outline">
-                                                <label>Presidente:</label>
-                                                <Select
-                                                    isDisabled= {!this.state.disablePresidente}
-                                                    hideSelectedOptions={!this.state.disablePresidente}
-                                                    rules={{ required: true }}
-                                                    options={this.state.horas_presidente}
-                                                    onChange={(e) => this.onChangePresidenteHandler(e)}
-                                                    value={{ label: this.state.presidente === '' ? "Seleccione hora(s) presidente..." : this.state.presidente }}
-                                                    onInput={(e) => {
-                                                        e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                    }}
-                                                />
-                                            </div>
-                                        </div>
-                                    
-                                        <div className="col">
-                                            <div className="form-group row">
-                                                <div className="col">
-                                                    <input
-                                                        className='mr-2'
-                                                        type="radio"
-                                                        onChange={this.onChangeSecretarioDisablerHandler}
-                                                        checked={this.state.disableSecretario}
-                                                        /> Horas Secretario
-                                                </div>
-                                            </div>
-                                            <div className="form-outline">
-                                                <label className="">Secretario:</label>
-                                                <Select
-                                                    isDisabled={!this.state.disableSecretario}
-                                                    rules={{ required: true }}
-                                                    options={this.state.horas_presidente}
-                                                    onChange={(e) => this.onChangeSecretarioHandler(e)}
-                                                    value={{ label: this.state.secretario === '' ? "Seleccione hora(s) secretario..." : this.state.secretario }}
-                                                    onInput={(e) => {
-                                                        e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                    }}
-                                                />
-                                            </div>
-                                        </div>                        
-                                    </div>
-                                    <div className="col">
-                                        <div className="row mb-2 mt-3">
-                                            <label className="h6"><b>Asesorías</b></label>
-                                        </div>
-                                    </div> 
-                                    <div className="row mb-4">
-                                        <div className="col">
-                                            <div className="form-outline">
-                                                <label>Asesorias Académicas:</label>
-                                                <div className="input-group">
-                                                    <input
-                                                        type='number'
-                                                        className="form-control"
-                                                        value={this.state.asesorias_academica}
-                                                        onChange={this.onChangeAsesoriaAcademicaHandler}
-                                                        onInput={(e) => {
-                                                            e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                        }}
-                                                        required
-                                                    />
-                                                <div className="input-group-append">
-                                                    <span className="input-group-text">Hora(s)</span>
-                                                </div>
-                                            </div>
-                                            </div>
-                                        </div>
-                                    
-                                        <div className="col">
-                                            <div className="form-outline">
-                                                <label className="">Educacion Dual:</label>
-                                                <div className="input-group">
-                                                    <input
-                                                        type='number'
-                                                        className="form-control"
-                                                        value={this.state.educacion_dual}
-                                                        onChange={this.onChangeEducacionDualHandler}
-                                                        onInput={(e) => {
-                                                            e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                        }}
-                                                        required
-                                                    />
-                                                    <div className="input-group-append">
-                                                        <span className="input-group-text">Hora(s)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>                        
-                                    </div>
-
-                                    <div className="row mb-4">
-                                        <div className="col">
-                                            <div className="form-outline">
-                                                <label>Residencias Profesionales:</label>
-                                                <div className="input-group">
-                                                    <input
-                                                        type='number'
-                                                        className="form-control"
-                                                        value={this.state.residencias_profesionales}
-                                                        onChange={this.onChangeResidenciasProfesionalesHandler}
-                                                        onInput={(e) => {
-                                                            e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                        }}
-                                                        required
-                                                    />
-                                                    <div className="input-group-append">
-                                                        <span className="input-group-text">Hora(s)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    
-                                        <div className="col">
-                                            <div className="form-outline">
-                                                <label className="">Titulación:</label>
-                                                <div className="input-group">
-                                                    <input
-                                                        type='number'
-                                                        className="form-control"
-                                                        value={this.state.titulacion}
-                                                        onChange={this.onChangeTitulacionHandler}
-                                                        onInput={(e) => {
-                                                            e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                        }}
-                                                        required
-                                                    />
-                                                <div className="input-group-append">
-                                                        <span className="input-group-text">Hora(s)</span>
-                                                    </div>
-                                                </div>
-                                            </div>                            
-                                        </div>      
-
-                                        <div className="col">
-                                            <div className="form-outline">
-                                                <label className="">Tutorias:</label>
-                                                <div className="input-group">
-                                                    <input
-                                                        type='number'
-                                                        className="form-control"
-                                                        value={this.state.tutorias}
-                                                        onChange={this.onChangeTutoriasHandler}
-                                                        onInput={(e) => {
-                                                            e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                        }}
-                                                        required
-                                                    />
-                                                    <div className="input-group-append">
-                                                        <span className="input-group-text">Hora(s)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="row">
-                                        <div className="col-7">
-                                            <div className="form-group row">
-                                                <label className="col-md-5 col-form-label"><b>Actividades Complementarias:</b> </label>
-                                                <div className="col">
-                                                    <div className="input-group">
-                                                        <input
-                                                            type='number'
-                                                            className=" form-control"
-                                                            value={this.state.actividades_complementarias}
-                                                            onChange={this.onChangeActividadesComplementariasHandler}
-                                                            onInput={(e) => {
-                                                                e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                            }}
-                                                            required
-                                                        />
-                                                        <div className="input-group-append">
-                                                            <span className="input-group-text">Hora(s)</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="row">
-                                        <div className="col-7">
-                                            <div className="form-group row">
-                                                <label className="col-md-5 col-form-label"><b>Subtotal 1:</b> </label>
-                                                <div className="col">
-                                                    <div className="input-group">
-                                                        <input readOnly={true}
-                                                            type='number'
-                                                            // placeholder="Subtotal 1 reactivo"
-                                                            className=" form-control"
-                                                            value={this.state.subtotal_1}
-                                                            // onChange={this.onChangesubtotal1Handler}
-                                                        />
-                                                        <div className="input-group-append">
-                                                            <span className="input-group-text">Hora(s)</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </fieldset>
-                                <hr />
-
-                                <div className="col">
-                                    <div className="row">
-                                        <label className="h5"><b>HORAS NECESIDAD INSTITUCIONAL</b></label>
-                                    </div>
-                                </div>
-
-                                <fieldset className="border border-info p-3">
-                                    <legend className="w-auto text-left h6">Ingrese información de necesidad institucional</legend>
-                                        <div className="row">
-                                            <div className="col-12">
-                                                <div className="form-group row">
-                                                        <label className="col-md-6 col-form-label">Investigacion educativa, desarrrollo tecnológico:</label>
-
-                                                    <div className="col">
-                                                        <div className="input-group">
-                                                            <input
-                                                                type='number'
-                                                                placeholder="Subtotal 1 reactivo"
-                                                                className=" form-control"
-                                                                value={this.state.proyecto_investigacion}
-                                                                onChange={this.onChangeProyecto_InvestigacionHandler}
-                                                                onInput={(e) => {
-                                                                    e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                                }}
-                                                                required
-                                                            />
-                                                            <div className="input-group-append">
-                                                                <span className="input-group-text">Hora(s)</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="row mb-4">
-                                            <div className="col">
-                                                <div className="form-outline">
-                                                    <label className="">Apoyo Operativo:</label>
-                                                    <div className="input-group">
-                                                        <input
-                                                            type='number'
-                                                            className="form-control"
-                                                            value={this.state.apoyo_operativo}
-                                                            onChange={this.onChangeApoyoOperativoHandler}
-                                                            onInput={(e) => {
-                                                                e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo números
-                                                            }}
-                                                            required ={true}
-                                                        />
-                                                        <div className="input-group-append">
-                                                            <span className="input-group-text">Hora(s)</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="col">
-                                                <div className="form-outline">
-                                                    <label className=""><b>Subtotal 2:</b></label>
-                                                        <div className="input-group">
-                                                            <input readOnly={true}
-                                                                type='number'
-                                                                placeholder="Subtotal 2 reactivo"
-                                                                className="form-control"
-                                                                value={this.state.subtotal_2}
-                                                                onChange={this.onChangeSubtotal2Handler}
-                                                            />
-                                                        <div className="input-group-append">
-                                                            <span className="input-group-text">Hora(s)</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                <hr />
-
-                                <div className="row mb-4">
-                                    <div className="col-6">
-                                        <div className="form-outline">
-                                            <label className=""><b>Total:</b></label>
-                                            <div className="input-group">
-                                                <input readOnly={true}
-                                                    type='number'
-                                                    placeholder="Total reactivo"
-                                                     className="form-control"
-                                                    value={this.state.total}
-                                                    onChange={this.onChangeTotalHandler}
-                                                />
-                                                <div className="input-group-append">
-                                                    <span className="input-group-text">Hora(s)</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="row mb-4">
-                                    <div className="col">
-                                        <div className="form-outline">
-                                            <label className=""><b>OBSERVACIONES:</b></label>
-                                            <textarea
-                                                placeholder="Ingrese observaciones de la proyeccion por asignatura..."
-                                                 className="form-control"
-                                                value={this.state.observaciones}
-                                                onChange={this.onChangeObservacionesHandler}
-                                                required
-                                            />
-                                        </div>                            
-                                    </div>
-                                </div>
-
-                             </form>
-                        </div>
-
-                        <br />
-                        <div className="card-footer text-muted mb-3 mt-3">
-                        {this.state.isLoading ? (
-                                // Mostrar el spinner si isLoading es true
-                                <div className="text-center">
-                                    <div className="spinner-border" role="status">
-                                        <span className="sr-only">Loading...</span>
-                                    </div>
-                                </div>
-                            ) : (
-                            <button className="btn btn-primary mt-0" onClick={this.updateProyeccionFulltime} disabled={this.state.disableAgregar}>Agregar</button>
-                            )}
-                            <button className="btn btn-danger mt-0" onClick={this.cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancelar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        this.setState(
+            {
+                presidente: 0,
+                secretario: 0,
+            },
+            this.calcularTotal
         );
     }
+    };
+
+     // Método para calcular el nuevo total
+  calcularTotal = () => {
+    const {
+      horas_frente_grupo,
+      presidente,
+      secretario,
+      asesorias_academica,
+      educacion_dual,
+      residencias_profesionales,
+      titulacion,
+      tutorias,
+      actividades_complementarias,
+      invesigacion_educativa,
+      apoyo_operativo,
+      extensions,
+    } = this.state;
+
+    let sumExtensions = 0;
+    const newExtensions = extensions.map((item) => {
+        const {
+            horas_frente_grupo,
+            presidente,
+            secretario,
+            asesorias_academica,
+            educacion_dual,
+            residencias_profesionales,
+            titulacion,
+            tutorias,
+            actividades_complementarias,
+            invesigacion_educativa,
+            apoyo_operativo} = item.form
+        const nuevo_subtotal_1 =
+            parseInt(horas_frente_grupo || 0) +
+            parseInt(presidente || 0) +
+            parseInt(secretario || 0) +
+            parseInt(asesorias_academica || 0) +
+            parseInt(educacion_dual || 0) +
+            parseInt(residencias_profesionales || 0) +
+            parseInt(titulacion || 0) +
+            parseInt(tutorias || 0) +
+            parseInt(actividades_complementarias || 0);
+        const nuevo_subtotal_2 =
+            parseInt(invesigacion_educativa || 0) + parseInt(apoyo_operativo || 0);
+        sumExtensions += nuevo_subtotal_1 + nuevo_subtotal_2;
+        const newFom = item.form;
+        newFom.subtotal_1 = nuevo_subtotal_1;
+        newFom.subtotal_2 = nuevo_subtotal_2;
+        return {
+            ...item,
+            form: newFom
+        }
+    });
+
+    // Realiza los cálculos necesarios para obtener el nuevo total
+    const nuevoTotal =
+      parseInt(horas_frente_grupo || 0) +
+      parseInt(presidente || 0) +
+      parseInt(secretario || 0) +
+      parseInt(asesorias_academica || 0) +
+      parseInt(educacion_dual || 0) +
+      parseInt(residencias_profesionales || 0) +
+      parseInt(titulacion || 0) +
+      parseInt(tutorias || 0) +
+      parseInt(actividades_complementarias || 0) +
+      parseInt(invesigacion_educativa || 0) +
+      parseInt(apoyo_operativo || 0) +
+      parseInt(sumExtensions || 0);
+
+    const nuevo_subtotal_1 =
+      parseInt(horas_frente_grupo || 0) +
+      parseInt(presidente || 0) +
+      parseInt(secretario || 0) +
+      parseInt(asesorias_academica || 0) +
+      parseInt(educacion_dual || 0) +
+      parseInt(residencias_profesionales || 0) +
+      parseInt(titulacion || 0) +
+      parseInt(tutorias || 0) +
+      parseInt(actividades_complementarias || 0);
+
+    const nuevo_subtotal_2 =
+      parseInt(invesigacion_educativa || 0) + parseInt(apoyo_operativo || 0);
+
+    // Actualiza el estado con el nuevo total y subtotales
+    this.setState(
+      {
+        total: nuevoTotal,
+        subtotal_1: nuevo_subtotal_1,
+        subtotal_2: nuevo_subtotal_2,
+        extensions: newExtensions
+      },
+      this.enableAddButton
+    );
+  };
+
+
+     // Método para manejar el cambio en un campo de entrada
+  handleInputChange = (event) => {
+    const { name, value } = event.target;
+    const { extensions } = this.state;
+    const parentValue = event.target.getAttribute('parent');
+    if(parentValue) {
+        const newExtensions = extensions.map((item) => {
+            if(item.input_name === parentValue) {
+                const newForm = { ...item.form };
+                newForm[name] = parseInt(value) || 0;
+                return {
+                    ...item,
+                    form: newForm,
+                };
+            }
+            return {
+                ...item,
+            };
+        });
+        this.setState(
+            {
+                extensions: newExtensions,
+            },
+            this.calcularTotal
+        );
+    } else {
+        this.setState(
+            {
+                [name]: value,
+            },
+            // Después de actualizar el estado, llama al método para calcular el nuevo total
+            this.calcularTotal
+        );
+    }
+  };
+
+  handleInputValidation = (e) => {
+    e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Permite solo números
+    const { total_hours, total } = this.state;
+    const parentValue = e.target.getAttribute('parent');
+    let value = 0;
+    if(parentValue) {
+        const foundElement = this.state.extensions.find(
+            (item) => item.input_name === parentValue
+        );
+        const fieldName = e.target.name;
+        const newForm = { ...foundElement.form };
+        value = newForm[fieldName];
+    } else {
+        const fieldName = e.target.name;
+        value = this.state[fieldName];
+    }
+    const fieldValue = parseInt(e.target.value) || 0;
+    console.log("Permitido: ", Math.min(fieldValue, total_hours - (total - value)));
+    e.target.value = Math.min(fieldValue, total_hours - (total - value));
+  };
+
+  onChangePresidenteHandler = (event) => {
+    if (
+      parseInt(event.label || 0) <=
+      this.state.total_hours - (this.state.total - this.state.presidente)
+    ) {
+        this.setState({ presidente: event.label }, this.calcularTotal);
+    } else {
+        alert("No es posible elegir una hora mayor al limite disponible");
+    }
+  };
+
+  onExtensiOnChangePresidenteHandler = (parentValue, e) => {
+    const fieldName = 'presidente';
+    const { extensions } = this.state;
+    const foundElement = extensions.find(
+        (item) => item.input_name === parentValue
+    );
+    const newForm = { ...foundElement.form };
+    const value = newForm[fieldName];
+    if (
+      parseInt(e.label || 0) <=
+      this.state.total_hours - (this.state.total - value)
+    ) {
+        const newExtensions = extensions.map((item) => {
+            if(item.input_name === parentValue) {
+                const newForm = { ...item.form };
+                newForm[fieldName] = parseInt(e.label) || 0;
+                return {
+                    ...item,
+                    form: newForm,
+                };
+            }
+            return {
+                ...item,
+            };
+        });
+        this.setState(
+            {
+                extensions: newExtensions,
+            },
+            this.calcularTotal
+        );
+    } else {
+        alert("No es posible elegir una hora mayor al limite disponible");
+    }
+  };
+
+  onChangeSecretarioHandler = (event) => {
+    if (
+      parseInt(event.label || 0) >
+      this.state.total_hours - (this.state.total - this.state.secretario)
+    ) {
+      alert("No es posible elegir una hora mayor al limite disponible");
+    } else {
+      this.setState({ secretario: event.label }, this.calcularTotal);
+    }
+  };
+
+  onExtensiOnSecretarioHandler = (parentValue, e) => {
+    const fieldName = 'secretario';
+    const { extensions } = this.state;
+    const foundElement = extensions.find(
+        (item) => item.input_name === parentValue
+    );
+    const newForm = { ...foundElement.form };
+    const value = newForm[fieldName];
+    if (
+      parseInt(e.label || 0) <=
+      this.state.total_hours - (this.state.total - value)
+    ) {
+        const newExtensions = extensions.map((item) => {
+            if(item.input_name === parentValue) {
+                const newForm = { ...item.form };
+                newForm[fieldName] = parseInt(e.label) || 0;
+                return {
+                    ...item,
+                    form: newForm,
+                };
+            }
+            return {
+                ...item,
+            };
+        });
+        this.setState(
+            {
+                extensions: newExtensions,
+            },
+            this.calcularTotal
+        );
+    } else {
+        alert("No es posible elegir una hora mayor al limite disponible");
+    }
+  }; 
+
+  onChangeObservacionesHandler = (event) => {
+    this.setState({ observaciones: event.target.value });
+  };
+
+  enableAddButton = () => {
+    const {
+      folio,
+      tipo_unidad,
+      clave_programa,
+      nombre_docente,
+      codigo_nomina,
+      grado_academico,
+      total_hours,
+      total,
+    } = this.state;
+    const disableAgregar = !(
+      folio !== "" &&
+      total_hours !== 0 &&
+      total_hours === total
+    );
+    this.setState({ disableAgregar });
+  };
+
+
+  render() {
+    const elementosJSX = this.state.extensions.map((item, index) => {
+      const name = index;
+
+      return (
+        <div key={name}>
+          <fieldset className="border border-info p-3">
+            <legend className="w-auto text-left h6">
+              {item.nombre_completo}
+            </legend>
+            <div className="col">
+              <div className="row">
+                <label className="h5">
+                  <b>HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS</b>
+                </label>
+              </div>
+            </div>
+            <fieldset className="border border-info p-3">
+              <legend className="w-auto text-left h6">
+                Ingrese información de horas sustantivas para atención de
+                alumnos
+              </legend>
+
+              <div className="row">
+                <div className="col">
+                  <div className="form-group row">
+                    <div className="col">
+                      <label>Nivel de (PTC):</label>
+                      <div className="input-group">
+                        <input
+                          readOnly={true}
+                          type="text"
+                          placeholder="Nivel de PTC del docente..."
+                          className=" form-control"
+                          value={this.state.ptc}
+                          onChange={this.onChangeHorasFrenteGrupoHandler}
+                        />
+                      </div>
+                    </div>
+                    <div className="col">
+                          <label>Horas Frente a Grupo:</label>
+                          <div className="input-group">
+                            <input
+                              name="horas_frente_grupo"
+                              type="number"
+                              className=" form-control"
+                              value={this.state.horas_frente_grupo}
+                              onChange={this.handleInputChange}
+                              onInput={this.handleInputValidation}
+                              required
+                            />
+                            <div className="input-group-append">
+                              <span className="input-group-text">Hora(s)</span>
+                            </div>
+                          </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col">
+                <div className="row mb-2 mt-3">
+                  <label className="h6">
+                    <b>Academias</b>
+                  </label>
+                </div>
+              </div>
+
+              <div className="row mb-4">
+                <div className="col">
+                  <div className="form-group row">
+                    <div className="col">
+                      <input
+                        parent={`extension_${index}`}
+                        className="mr-2"
+                        type="radio"
+                        onChange={this.onChangePresidenteDisablerHandler}
+                        checked={item.form.disablePresidente}
+                        onInput={(e) => {
+                          e.target.value = e.target.value.replace(
+                            /[^0-9]/g,
+                            ""
+                          ); // Permite solo números
+                        }}
+                      />{" "}
+                      Horas Presidente
+                    </div>
+                  </div>
+                  <div className="form-outline">
+                    <label>Presidente:</label>
+                    <Select
+                      parent={`extension_${index}`}
+                      name="presidente"
+                      isDisabled={!item.form.disablePresidente}
+                      hideSelectedOptions={!item.form.disablePresidente}
+                      rules={{ required: true }}
+                      options={this.state.horas_presidente}
+                      onChange={(e) => {
+                        this.onExtensiOnChangePresidenteHandler(`extension_${index}`,e);
+                      }}
+                      value={{
+                        label:
+                          item.form.presidente === ""
+                            ? "Seleccione hora(s) presidente..."
+                            : item.form.presidente,
+                      }}
+                      onInput={(e) => {
+                        e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Permite solo números
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="col">
+                  <div className="form-group row">
+                    <div className="col">
+                      <input
+                        parent={`extension_${index}`}
+                        className="mr-2"
+                        type="radio"
+                        onChange={this.onChangeSecretarioDisablerHandler}
+                        checked={item.form.disableSecretario}
+                      />{" "}
+                      Horas Secretario
+                    </div>
+                  </div>
+                  <div className="form-outline">
+                    <label className="">Secretario:</label>
+                    <Select
+                      parent={`extension_${index}`}
+                      isDisabled={!item.form.disableSecretario}
+                      rules={{ required: true }}
+                      options={this.state.horas_presidente}
+                      onChange={(e) => {
+                        this.onExtensiOnSecretarioHandler(`extension_${index}`,e);
+                      }}
+                      value={{
+                        label:
+                          item.form.secretario === ""
+                            ? "Seleccione hora(s) secretario..."
+                            : item.form.secretario,
+                      }}
+                      onInput={(e) => {
+                        e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Permite solo números
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col">
+                <div className="row mb-2 mt-3">
+                  <label className="h6">
+                    <b>Asesorías</b>
+                  </label>
+                </div>
+              </div>
+
+              <div className="row mb-4">
+                <div className="col">
+                  <div className="form-outline">
+                    <label>Asesorias Académicas:</label>
+                    <div className="input-group">
+                      <input
+                        parent={`extension_${index}`}
+                        name="asesorias_academica"
+                        type="number"
+                        className="form-control"
+                        value={item.form.asesorias_academica}
+                        onChange={this.handleInputChange}
+                        onInput={this.handleInputValidation}
+                        required
+                      />
+                      <div className="input-group-append">
+                        <span className="input-group-text">Hora(s)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col">
+                  <div className="form-outline">
+                    <label className="">Educacion Dual:</label>
+                    <div className="input-group">
+                      <input
+                        parent={`extension_${index}`}
+                        name="educacion_dual"
+                        type="number"
+                        className="form-control"
+                        value={item.form.educacion_dual}
+                        onChange={this.handleInputChange}
+                        onInput={this.handleInputValidation}
+                        required
+                      />
+                      <div className="input-group-append">
+                        <span className="input-group-text">Hora(s)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="row mb-4">
+                <div className="col">
+                  <div className="form-outline">
+                    <label>Residencias Profesionales:</label>
+                    <div className="input-group">
+                      <input
+                        parent={`extension_${index}`}
+                        name="residencias_profesionales"
+                        type="number"
+                        className="form-control"
+                        value={item.form.residencias_profesionales}
+                        onChange={this.handleInputChange}
+                        onInput={this.handleInputValidation}
+                        required
+                      />
+                      <div className="input-group-append">
+                        <span className="input-group-text">Hora(s)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col">
+                  <div className="form-outline">
+                    <label className="">Titulación:</label>
+                    <div className="input-group">
+                      <input
+                        parent={`extension_${index}`}
+                        name="titulacion"
+                        type="number"
+                        className="form-control"
+                        value={item.form.titulacion}
+                        onChange={this.handleInputChange}
+                        onInput={this.handleInputValidation}
+                        required
+                      />
+                      <div className="input-group-append">
+                        <span className="input-group-text">Hora(s)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col">
+                  <div className="form-outline">
+                    <label className="">Tutorias:</label>
+                    <div className="input-group">
+                      <input
+                        parent={`extension_${index}`}
+                        name="tutorias"
+                        type="number"
+                        className="form-control"
+                        value={item.form.tutorias}
+                        onChange={this.handleInputChange}
+                        onInput={this.handleInputValidation}
+                        required
+                      />
+                      <div className="input-group-append">
+                        <span className="input-group-text">Hora(s)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-7">
+                  <div className="form-group row">
+                    <label className="col-md-5 col-form-label">
+                      <b>Actividades Complementarias:</b>{" "}
+                    </label>
+                    <div className="col">
+                      <div className="input-group">
+                        <input
+                          parent={`extension_${index}`}
+                          name="actividades_complementarias"
+                          type="number"
+                          className=" form-control"
+                          value={item.form.actividades_complementarias}
+                          onChange={this.handleInputChange}
+                          onInput={this.handleInputValidation}
+                          required
+                        />
+                        <div className="input-group-append">
+                          <span className="input-group-text">Hora(s)</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-7">
+                  <div className="form-group row">
+                    <label className="col-md-5 col-form-label">
+                      <b>Subtotal 1:</b>{" "}
+                    </label>
+                    <div className="col">
+                      <div className="input-group">
+                        <input
+                          readOnly={true}
+                          type="number"
+                          className=" form-control"
+                          value={item.form.subtotal_1}
+                        />
+                        <div className="input-group-append">
+                          <span className="input-group-text">Hora(s)</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <hr />
+            <div className="col">
+            <div className="row">
+              <label className="h5">
+                <b>HORAS NECESIDAD INSTITUCIONAL</b>
+              </label>
+            </div>
+          </div>
+          <fieldset className="border border-info p-3">
+            <legend className="w-auto text-left h6">
+              Ingrese información de necesidad institucional
+            </legend>
+            <div className="row">
+              <div className="col-12">
+                <div className="form-group row">
+                  <label className="col-md-6 col-form-label">
+                    Investigacion educativa, desarrrollo tecnológico:
+                  </label>
+
+                  <div className="col">
+                    <div className="input-group">
+                      <input
+                        parent={`extension_${index}`}
+                        name="invesigacion_educativa"
+                        type="number"
+                        placeholder="Subtotal 1 reactivo"
+                        className=" form-control"
+                        value={item.form.invesigacion_educativa}
+                        onChange={this.handleInputChange}
+                        onInput={this.handleInputValidation}
+                        required
+                      />
+                      <div className="input-group-append">
+                        <span className="input-group-text">Hora(s)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row mb-4">
+              <div className="col">
+                <div className="form-outline">
+                  <label className="">Apoyo Operativo:</label>
+                  <div className="input-group">
+                    <input
+                      parent={`extension_${index}`}
+                      name="apoyo_operativo"
+                      type="number"
+                      className="form-control"
+                      value={item.form.apoyo_operativo}
+                      onChange={this.handleInputChange}
+                      onInput={this.handleInputValidation}
+                      required={true}
+                    />
+                    <div className="input-group-append">
+                      <span className="input-group-text">Hora(s)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col">
+                <div className="form-outline">
+                  <label className="">
+                    <b>Subtotal 2:</b>
+                  </label>
+                  <div className="input-group">
+                    <input
+                      readOnly={true}
+                      type="number"
+                      placeholder="Subtotal 2 reactivo"
+                      className="form-control"
+                      value={item.form.subtotal_2}
+                    />
+                    <div className="input-group-append">
+                      <span className="input-group-text">Hora(s)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <hr />
+          </fieldset>
+          <br />
+        </div>
+      );
+    });
+    return (
+      <div className="container">
+        <div className="row justify-content-center mt-3 mb-3">
+          <div
+            className="card col-10"
+            style={{ boxShadow: "0 2px 8px 1px rgba(64, 60, 67, 0.24)" }}
+          >
+            <div className="card-body">
+              <div
+                className="card-header text-center"
+                style={{ boxShadow: "0 2px 8px 1px rgba(64, 60, 67, 0.24)" }}
+              >
+                <h2 className="h3">
+                  <b>Modificar Proyeccion Profesor Tiempo Completo</b>
+                </h2>
+              </div>
+              <br />
+              <form>
+                <div className="row mb-4 justify-content-center ">
+                  <div className="col-6">
+                    <div className="form-outline">
+                      <label className="">Folio: </label>
+                      <Select
+                      isDisabled={true}
+                        rules={{ required: true }}
+                        options={this.state.folios}
+                        onChange={(e) => this.onChangeFolioHandler(e)}
+                        value={{
+                          label:
+                            this.state.folio === ""
+                              ? "Seleccione folio de proyeccion..."
+                              : this.state.folio,
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-6">
+                    <div className="form-outline">
+                      <label className="">Tipo de UA: </label>
+                      <Select
+                        rules={{ required: true }}
+                        options={this.state.tipos_unidades}
+                        onChange={(e) => this.onChangeTipoUnidadHandler(e)}
+                        value={{
+                          label:
+                            this.state.tipo_unidad === ""
+                              ? "Seleccione unidad academica..."
+                              : this.state.tipo_unidad,
+                        }}
+                      />   {this.state.errorTipoUA && (
+    <p style={{ color: 'red' }}>{this.state.errorTipoUA}</p>
+  )}
+                    </div>
+                  </div>
+                </div>
+                <div className="col">
+                  <div className="row mb-3">
+                    <label className="h5">
+                      <b>PROFESORES DE ASIGNATURA</b>
+                    </label>
+                  </div>
+                </div>
+
+                <fieldset className="border border-info p-3">
+                  <legend className="w-auto text-left h6">
+                    Ingrese información de profesor por asignatura
+                  </legend>
+                  <div className="row mb-4">
+                    <div className="col">
+                      <div className="form-outline">
+                        <label>Unidad Academica</label>
+                        <Select
+                          isDisabled={true}
+                          rules={{ required: true }}
+                          options={this.state.unidades}
+                          onChange={(e) => this.onChangeUnidadHandler(e)}
+                          value={{
+                            label:
+                              this.state.unidad_academica === ""
+                                ? "Seleccione unidad academica..."
+                                : this.state.unidad_academica,
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="col">
+                      <div className="form-outline">
+                        <label className="">Clave de Programa Educativo:</label>
+                        <Select
+                          rules={{ required: true }}
+                          options={this.state.carreras}
+                          onChange={(e) => this.onChangeClaveProgramaHandler(e)}
+                          value={{
+                            label:
+                              this.state.clave_programa === ""
+                                ? "Seleccione clave de programa educativo..."
+                                : this.state.clave_programa,
+                          }}
+                        />
+                        {this.state.errorClavePrograma && (
+                                                        <p style={{ color: 'red' }}>{this.state.errorClavePrograma}</p>
+                                                    )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row mb-4">
+                    <div className="col">
+                      <div className="form-outline">
+                        <label className="">Nombre del Docente: </label>
+                        <Select
+                          // depende que se realize el cambio en unidad academcia para que se pueda habilidar
+                          // y se reseteara si se cambia la unidad academica, al igual se resetea el valor de nivel academico.
+                          // isDisabled={this.state.disableDocente}
+                          isDisabled={true}
+                          rules={{ required: true }}
+                          options={this.state.docentes}
+                          onChange={(e) => this.onChangeNombreDocenteHandler(e)}
+                          value={{
+                            label:
+                              this.state.nombre_docente === ""
+                                ? "Seleccione nombre del docente..."
+                                : this.state.nombre_docente,
+                          }}
+                        />
+                        
+                        {this.state.errorDocente && (
+                                                        <p style={{ color: 'red' }}>{this.state.errorDocente}</p>
+                                                    )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row mb-4">
+                    <div className="col">
+                      <div className="form-outline">
+                        <label>Código de Nómina:</label>
+                        <input
+                        readOnly
+                          placeholder="Ingrese código de nómina..."
+                          className="form-control"
+                          value={this.state.codigo_nomina}
+                          onChange={this.onChangeCodigoNominaHandler}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="col">
+                      {/* <div className="form-outline" style={{display: 'none'}}> */}
+                      <div
+                        className="form-outline"
+                        style={{ display: "block" }}
+                      >
+                        <label>Nivel Academico</label>
+                        <Select
+                          options={this.state.niveles}
+                          onChange={(e) =>
+                            this.onChangeGradoAcademicoaHandler(e)
+                          }
+                          value={{
+                            label:
+                              this.state.grado_academico === ""
+                                ? "Seleccione nivel academico..."
+                                : this.state.grado_academico,
+                          }}
+                        />
+                        {this.state.errorAcademico && (
+                           <p style={{ color: 'red' }}>{this.state.errorAcademico}</p>
+                       )}
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+                <hr />
+                <div className="col">
+                  <div className="row">
+                    <label className="h5">
+                      <b>HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS</b>
+                    </label>
+                  </div>
+                </div>
+
+                <fieldset className="border border-info p-3">
+                  <legend className="w-auto text-left h6">
+                    Ingrese información de horas sustantivas para atención de
+                    alumnos
+                  </legend>
+
+                  <div className="row">
+                    <div className="col">
+                      <div className="form-group row">
+                        <div className="col">
+                          <label>Nivel de (PTC):</label>
+                          <div className="input-group">
+                            <input
+                              readOnly={true}
+                              type="text"
+                              placeholder="Nivel de PTC del docente..."
+                              className=" form-control"
+                              value={this.state.ptc}
+                              onChange={this.onChangeHorasFrenteGrupoHandler}
+                            />
+                          </div>
+                        </div>
+                        <div className="col">
+                          <label>Horas Frente a Grupo:</label>
+                          <div className="input-group">
+                            <input
+                              name="horas_frente_grupo"
+                              type="number"
+                              className=" form-control"
+                              value={this.state.horas_frente_grupo}
+                              onChange={this.handleInputChange}
+                              onInput={this.handleInputValidation}
+                              required
+                            />
+                            <div className="input-group-append">
+                              <span className="input-group-text">Hora(s)</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col">
+                    <div className="row mb-2 mt-3">
+                      <label className="h6">
+                        <b>Academias</b>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="row mb-4">
+                    <div className="col">
+                      <div className="form-group row">
+                        <div className="col">
+                          <input
+                            className="mr-2"
+                            type="radio"
+                            onChange={this.onChangePresidenteDisablerHandler}
+                            checked={this.state.disablePresidente}
+                            onInput={(e) => {
+                              e.target.value = e.target.value.replace(
+                                /[^0-9]/g,
+                                ""
+                              ); // Permite solo números
+                            }}
+                          />{" "}
+                          Horas Presidente
+                        </div>
+                      </div>
+                      <div className="form-outline">
+                        <label>Presidente:</label>
+                        <Select
+                          isDisabled={!this.state.disablePresidente}
+                          hideSelectedOptions={!this.state.disablePresidente}
+                          rules={{ required: true }}
+                          options={this.state.horas_presidente}
+                          onChange={(e) => this.onChangePresidenteHandler(e)}
+                          value={{
+                            label:
+                              this.state.presidente === ""
+                                ? "Seleccione hora(s) presidente..."
+                                : this.state.presidente,
+                          }}
+                          onInput={(e) => {
+                            e.target.value = e.target.value.replace(
+                              /[^0-9]/g,
+                              ""
+                            ); // Permite solo números
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="col">
+                      <div className="form-group row">
+                        <div className="col">
+                          <input
+                            className="mr-2"
+                            type="radio"
+                            onChange={this.onChangeSecretarioDisablerHandler}
+                            checked={this.state.disableSecretario}
+                          />{" "}
+                          Horas Secretario
+                        </div>
+                      </div>
+                      <div className="form-outline">
+                        <label className="">Secretario:</label>
+                        <Select
+                          isDisabled={!this.state.disableSecretario}
+                          rules={{ required: true }}
+                          options={this.state.horas_presidente}
+                          onChange={(e) => this.onChangeSecretarioHandler(e)}
+                          value={{
+                            label:
+                              this.state.secretario === ""
+                                ? "Seleccione hora(s) secretario..."
+                                : this.state.secretario,
+                          }}
+                          onInput={(e) => {
+                            e.target.value = e.target.value.replace(
+                              /[^0-9]/g,
+                              ""
+                            ); // Permite solo números
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className="row mb-2 mt-3">
+                      <label className="h6">
+                        <b>Asesorías</b>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="row mb-4">
+                    <div className="col">
+                      <div className="form-outline">
+                        <label>Asesorias Académicas:</label>
+                        <div className="input-group">
+                          <input
+                            name="asesorias_academica"
+                            type="number"
+                            className="form-control"
+                            value={this.state.asesorias_academica}
+                            onChange={this.handleInputChange}
+                            onInput={this.handleInputValidation}
+                            required
+                          />
+                          <div className="input-group-append">
+                            <span className="input-group-text">Hora(s)</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col">
+                      <div className="form-outline">
+                        <label className="">Educacion Dual:</label>
+                        <div className="input-group">
+                          <input
+                            name="educacion_dual"
+                            type="number"
+                            className="form-control"
+                            value={this.state.educacion_dual}
+                            onChange={this.handleInputChange}
+                            onInput={this.handleInputValidation}
+                            required
+                          />
+                          <div className="input-group-append">
+                            <span className="input-group-text">Hora(s)</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row mb-4">
+                    <div className="col">
+                      <div className="form-outline">
+                        <label>Residencias Profesionales:</label>
+                        <div className="input-group">
+                          <input
+                            name="residencias_profesionales"
+                            type="number"
+                            className="form-control"
+                            value={this.state.residencias_profesionales}
+                            onChange={this.handleInputChange}
+                            onInput={this.handleInputValidation}
+                            required
+                          />
+                          <div className="input-group-append">
+                            <span className="input-group-text">Hora(s)</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col">
+                      <div className="form-outline">
+                        <label className="">Titulación:</label>
+                        <div className="input-group">
+                          <input
+                            name="titulacion"
+                            type="number"
+                            className="form-control"
+                            value={this.state.titulacion}
+                            onChange={this.handleInputChange}
+                            onInput={this.handleInputValidation}
+                            required
+                          />
+                          <div className="input-group-append">
+                            <span className="input-group-text">Hora(s)</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col">
+                      <div className="form-outline">
+                        <label className="">Tutorias:</label>
+                        <div className="input-group">
+                          <input
+                            name="tutorias"
+                            type="number"
+                            className="form-control"
+                            value={this.state.tutorias}
+                            onChange={this.handleInputChange}
+                            onInput={this.handleInputValidation}
+                            required
+                          />
+                          <div className="input-group-append">
+                            <span className="input-group-text">Hora(s)</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-7">
+                      <div className="form-group row">
+                        <label className="col-md-5 col-form-label">
+                          <b>Actividades Complementarias:</b>{" "}
+                        </label>
+                        <div className="col">
+                          <div className="input-group">
+                            <input
+                              name="actividades_complementarias"
+                              type="number"
+                              className=" form-control"
+                              value={this.state.actividades_complementarias}
+                              onChange={this.handleInputChange}
+                              onInput={this.handleInputValidation}
+                              required
+                            />
+                            <div className="input-group-append">
+                              <span className="input-group-text">Hora(s)</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-7">
+                      <div className="form-group row">
+                        <label className="col-md-5 col-form-label">
+                          <b>Subtotal 1:</b>{" "}
+                        </label>
+                        <div className="col">
+                          <div className="input-group">
+                            <input
+                              readOnly={true}
+                              type="number"
+                              className=" form-control"
+                              value={this.state.subtotal_1}
+                            />
+                            <div className="input-group-append">
+                              <span className="input-group-text">Hora(s)</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+                <hr />
+
+                <div className="col">
+                  <div className="row">
+                    <label className="h5">
+                      <b>HORAS NECESIDAD INSTITUCIONAL</b>
+                    </label>
+                  </div>
+                </div>
+
+                <fieldset className="border border-info p-3">
+                  <legend className="w-auto text-left h6">
+                    Ingrese información de necesidad institucional
+                  </legend>
+                  <div className="row">
+                    <div className="col-12">
+                      <div className="form-group row">
+                        <label className="col-md-6 col-form-label">
+                          Investigacion educativa, desarrrollo tecnológico:
+                        </label>
+
+                        <div className="col">
+                          <div className="input-group">
+                            <input
+                              name="invesigacion_educativa"
+                              type="number"
+                              placeholder="Subtotal 1 reactivo"
+                              className=" form-control"
+                              value={this.state.invesigacion_educativa}
+                              onChange={this.handleInputChange}
+                              onInput={this.handleInputValidation}
+                              required
+                            />
+                            <div className="input-group-append">
+                              <span className="input-group-text">Hora(s)</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row mb-4">
+                    <div className="col">
+                      <div className="form-outline">
+                        <label className="">Apoyo Operativo:</label>
+                        <div className="input-group">
+                          <input
+                            name="apoyo_operativo"
+                            type="number"
+                            className="form-control"
+                            value={this.state.apoyo_operativo}
+                            onChange={this.handleInputChange}
+                            onInput={this.handleInputValidation}
+                            required={true}
+                          />
+                          <div className="input-group-append">
+                            <span className="input-group-text">Hora(s)</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col">
+                      <div className="form-outline">
+                        <label className="">
+                          <b>Subtotal 2:</b>
+                        </label>
+                        <div className="input-group">
+                          <input
+                            readOnly={true}
+                            type="number"
+                            placeholder="Subtotal 2 reactivo"
+                            className="form-control"
+                            value={this.state.subtotal_2}
+                          />
+                          <div className="input-group-append">
+                            <span className="input-group-text">Hora(s)</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+                <hr />
+                <div className="col">
+                  <div className="row">
+                    <label className="h5">
+                      <b></b>
+                    </label>
+                  </div>
+                </div>
+
+                {this.state.show_extensions && (
+                  <fieldset className="border border-info p-3">
+                    <legend className="w-auto text-left h6">Extensiones</legend>
+                    {elementosJSX}
+                  </fieldset>
+                )}
+                <div className="row mb-4">
+                  <div className="col-6">
+                    <div className="form-outline">
+                      <label className="">
+                        <b>Total:</b>
+                      </label>
+                      <div className="input-group">
+                        <input
+                          readOnly={true}
+                          type="number"
+                          placeholder="Total reactivo"
+                          className="form-control"
+                          value={this.state.total}
+                        />
+                        <div className="input-group-append">
+                          <span className="input-group-text">Hora(s)</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row mb-4">
+                  <div className="col">
+                    <div className="form-outline">
+                      <label className="">
+                        <b>OBSERVACIONES:</b>
+                      </label>
+                      <textarea
+                        placeholder="Ingrese observaciones de la proyeccion por asignatura..."
+                        className="form-control"
+                        value={this.state.observaciones}
+                        onChange={this.onChangeObservacionesHandler}
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <br />
+            <div className="card-footer text-muted mb-3 mt-3">
+              {this.state.isLoading ? (
+                // Mostrar el spinner si isLoading es true
+                <div className="text-center">
+                  <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  className="btn btn-primary mt-0"
+                  onClick={this.updateProyeccionFulltime}
+                  disabled={this.state.disableAgregar}
+                >
+                  Agregar
+                </button>
+              )}
+              <button
+                className="btn btn-danger mt-0"
+                onClick={this.cancel.bind(this)}
+                style={{ marginLeft: "10px" }}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
 }
 

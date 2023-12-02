@@ -127,7 +127,10 @@ class HeaderComponent extends Component {
                                         <hr />
                                         <a className="dropdown-item" href="/comparacion-fulltime">
                                             Comparar Folios Tiempo Completo
-                                        </a>                   
+                                        </a>        
+                                        <a className="dropdown-item" href="/comparacion-fulltime-docente">
+                                            Comparar Folios Docente Tiempo Completo
+                                        </a>              
                                     </div>
                                 </div>
                             </div>

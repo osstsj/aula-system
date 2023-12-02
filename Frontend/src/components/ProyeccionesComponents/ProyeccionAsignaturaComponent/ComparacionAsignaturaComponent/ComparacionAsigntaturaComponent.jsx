@@ -183,7 +183,7 @@ class ComparacionAsigntaturaComponent extends Component {
             <div className="container">
                 <h2 className="text-center mt-5 mb-3 Title">COMPARACION DE FOLIOS DE PROYECCIONES ACADEMICAS, POR ASIGNATURA DEL TECNOLÓGICO SUPERIOR DE JALISCO</h2>
                 <div className="row justify-content-center mb-4">
-                    <fieldset className="border border-info p-0">
+                    <fieldset className="border border-info p-0 mb-3">
                         {/* <legend className="w-auto text-left h6">Referencia</legend> */}
                         <div className="col" style={{"text-align": "center"}}>
                             <span><small><b>Selección:</b> Folio 1 (Anterior: [ZA - 1 - 2024 A]), Folio 2 (Reciente:[ ZA - 4 - 2024 B ])<br /></small></span>
