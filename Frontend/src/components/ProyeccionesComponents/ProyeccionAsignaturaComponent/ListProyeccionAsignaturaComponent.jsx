@@ -91,11 +91,16 @@ class ListProyeccionAsignaturaComponent extends Component {
 
         // Combina los datos de asignaturas en una sola estructura
         const datosCombinados = asignaturas.map((asignatura) => ({
-            "No.": asignatura.id,
-            "Clave de Programa Educativo": asignatura.profe_asignatura.clave_programa,
-            "Código de Nómina": asignatura.profe_asignatura.codigo_nomina,
+            "No. Folio": asignatura.folio.folio,
+            "Clave de Programa Educativo": asignatura.profe_asignatura.clave_programa.carrera_nombre.clave_programa,
+            "Código de Nómina": asignatura.profe_asignatura.nombre_docente.codigo_nomina,
             "Grado Académico": asignatura.profe_asignatura.grado_academico,
-            "Nombre del Docente":asignatura.profe_asignatura.nombre_docente.nombre_completo,
+            "Nombre del Docente": asignatura.profe_asignatura.nombre_docente.nombre_completo,
+            "No. de Folio": asignatura.folio.folio,
+            "Clave de Programa Educativo": asignatura.profe_asignatura.clave_programa.carrera_nombre.clave_programa,
+            "Código de Nómina": asignatura.profe_asignatura.nombre_docente.codigo_nomina,
+            "Grado Académico": asignatura.profe_asignatura.grado_academico,
+            "Nombre del Docente": asignatura.profe_asignatura.nombre_docente.nombre_completo,
             "Hora de asignatura (A)": asignatura.horas_sustantivas_atencion_alumnos.horas_asignatura.a,
             "Hora de asignatura (B)": asignatura.horas_sustantivas_atencion_alumnos.horas_asignatura.b,
             "Horas frente al grupo": asignatura.horas_sustantivas_atencion_alumnos.horas_frente_grupo,
@@ -113,9 +118,18 @@ class ListProyeccionAsignaturaComponent extends Component {
             "Subtotal 2": asignatura.horas_necesidad_institucional.subtotal_2,
             "Total": asignatura.total,
             "Observaciones": asignatura.observaciones,
+            "Fecha Solicitud de Modificación": asignatura.fecha_actualizacion,
+            "Carga Horaria Anterior": asignatura.carga_horaria_anterior,
+            "Categoría de Horas de Asignatura Anterior": asignatura.categoria_horas_asignatura_anterior,
+            "Carga Horaria Nueva": asignatura.carga_horaria_nueva,
+            "Tipo de Horas de Asignatura Nueva": asignatura.categoria_tipo_horas_asignatura_nueva,
+            "La Modificación Se Aplica A Partir de (Fecha)": asignatura.modifica_aplica_en,
+            "No. Oficio Respuesta": asignatura.oficio_respuesta,
+            "No. de Oficio Academia": asignatura.oficio_academia,
+            "Fecha en que RH Aplica en el Sistema": asignatura.fecha_rh_aplica_sistema,
+            "Observaciones Modificación": asignatura.observaciones_modificacion,
             // Agrega más campos según sea necesario
         }));
-
         // Crea una nueva hoja de Excel
         const ws = XLSX.utils.json_to_sheet(datosCombinados);
 
@@ -143,6 +157,20 @@ class ListProyeccionAsignaturaComponent extends Component {
             { wch: 10 }, // Subtotal 2
             { wch: 10 }, // Total
             { wch: 30 }, // Observaciones
+            { wch: 30 },
+            { wch: 30 },
+            { wch: 30 },
+            { wch: 30 },
+            { wch: 30 },
+            { wch: 30 },
+            { wch: 30 },
+            { wch: 30 },
+            { wch: 30 },
+            { wch: 30 },
+            { wch: 30 },
+            { wch: 30 },
+            { wch: 30 },
+            { wch: 30 },
             // Agrega más anchos de columna según sea necesario
         ];
         ws['!cols'] = colWidths;
@@ -474,143 +502,143 @@ class ListProyeccionAsignaturaComponent extends Component {
                                     </tr>
                                 )
                             }
-                                <tr>
-                                        {/* ---------------------- Totales de proyeccion profesor por asignatura ------------------- */}
-                                        <td className={`text-center table-id${areColumns2Visible || areColumnsVisible ? '' : 'collapse'
-                                            }`}>{}</td>
-                                        <td align="center" className={`text-center table-content${areColumnsVisible ? '' : 'collapse'
-                                            }`}></td>
+                                    <tr>
+                                            {/* ---------------------- Totales de proyeccion profesor por asignatura ------------------- */}
+                                            <td className={`text-center table-id${areColumns2Visible || areColumnsVisible ? '' : 'collapse'
+                                                }`}>{}</td>
+                                            <td align="center" className={`text-center table-content${areColumnsVisible ? '' : 'collapse'
+                                                }`}></td>
 
-                                        {/* PROFESORES DE ASIGNATURA - Clave de Programa Educativo */}
-                                        <td align="center" className={`text-center table-content ${areColumnsVisible ? '' : 'collapse'
-                                            }`}></td>
+                                            {/* PROFESORES DE ASIGNATURA - Clave de Programa Educativo */}
+                                            <td align="center" className={`text-center table-content ${areColumnsVisible ? '' : 'collapse'
+                                                }`}></td>
 
-                                        {/* PROFESORES DE ASIGNATURA - Código de Nómina */}
-                                        <td align="center" className={`text-center table-content  ${areColumnsVisible ? '' : 'collapse'
-                                            }`}></td>
+                                            {/* PROFESORES DE ASIGNATURA - Código de Nómina */}
+                                            <td align="center" className={`text-center table-content  ${areColumnsVisible ? '' : 'collapse'
+                                                }`}></td>
 
-                                        {/* PROFESORES DE ASIGNATURA - Grado Académico */}
-                                        <td align="center" className={`text-center table-content  ${areColumnsVisible ? '' : 'collapse'
-                                            }`}></td>
+                                            {/* PROFESORES DE ASIGNATURA - Grado Académico */}
+                                            <td align="center" className={`text-center table-content  ${areColumnsVisible ? '' : 'collapse'
+                                                }`}></td>
 
-                                        {/* PROFESORES DE ASIGNATURA - Nombre del Docente */}
-                                        <td align="center" className={`text-center table-content table-grey ${areColumnsVisible ? '' : 'collapse'
-                                            }`}><b>TOTALES</b></td>
+                                            {/* PROFESORES DE ASIGNATURA - Nombre del Docente */}
+                                            <td align="center" className={`text-center table-content table-grey ${areColumnsVisible ? '' : 'collapse'
+                                                }`}><b>TOTALES</b></td>
 
-                                        {/*HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Hora de asignatura - A */}
-                                        <td align="center" className={`text-center table-content table-grey ${areColumnsVisible ? '' : 'collapse'
-                                            }`}><b>{A}</b></td>
+                                            {/*HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Hora de asignatura - A */}
+                                            <td align="center" className={`text-center table-content table-grey ${areColumnsVisible ? '' : 'collapse'
+                                                }`}><b>{A}</b></td>
 
-                                        {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - B */}
-                                        <td align="center" className={`text-center table-content table-grey ${areColumnsVisible ? '' : 'collapse'
-                                            }`}><b>{B}</b></td>
+                                            {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - B */}
+                                            <td align="center" className={`text-center table-content table-grey ${areColumnsVisible ? '' : 'collapse'
+                                                }`}><b>{B}</b></td>
 
-                                        {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Horas frente al grupo */}
-                                        <td align="center" className={`text-center table-content  table-grey ${areColumnsVisible ? '' : 'collapse'
-                                            }`}><b>{Horas_frente_al_grupo}</b></td>
+                                            {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Horas frente al grupo */}
+                                            <td align="center" className={`text-center table-content  table-grey ${areColumnsVisible ? '' : 'collapse'
+                                                }`}><b>{Horas_frente_al_grupo}</b></td>
 
 
-                                        {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Academias - Presidente */}
-                                        <td align="center" className={`text-center table-content  table-grey ${areColumnsVisible ? '' : 'collapse'
-                                            }`}><b>{Presidente}</b></td>
+                                            {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Academias - Presidente */}
+                                            <td align="center" className={`text-center table-content  table-grey ${areColumnsVisible ? '' : 'collapse'
+                                                }`}><b>{Presidente}</b></td>
 
-                                        {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Academias -Secretario */}
-                                        <td align="center" className={`text-center table-content  table-grey ${areColumnsVisible ? '' : 'collapse'
-                                            }`}><b>{Secretario}</b></td>
+                                            {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Academias -Secretario */}
+                                            <td align="center" className={`text-center table-content  table-grey ${areColumnsVisible ? '' : 'collapse'
+                                                }`}><b>{Secretario}</b></td>
 
-                                        {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Asesorias - Residencia Profesional */}
-                                        <td align="center" className={`text-center table-content table-grey ${areColumnsVisible ? '' : 'collapse'
-                                            }`}><b>{Residencia_Profesional}</b></td>
+                                            {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Asesorias - Residencia Profesional */}
+                                            <td align="center" className={`text-center table-content table-grey ${areColumnsVisible ? '' : 'collapse'
+                                                }`}><b>{Residencia_Profesional}</b></td>
 
-                                        {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Asesorias - Educación Dual */}
-                                        <td align="center" className={`text-center table-content table-grey  ${areColumnsVisible ? '' : 'collapse'
-                                            }`}><b>{Educacion_Dual}</b></td>
+                                            {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Asesorias - Educación Dual */}
+                                            <td align="center" className={`text-center table-content table-grey  ${areColumnsVisible ? '' : 'collapse'
+                                                }`}><b>{Educacion_Dual}</b></td>
 
-                                        {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Asesorias - Titulación */}
-                                        <td align="center" className={`text-center table-content  table-grey ${areColumnsVisible ? '' : 'collapse'
-                                            }`}><b>{Titulacion}</b></td>
+                                            {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Asesorias - Titulación */}
+                                            <td align="center" className={`text-center table-content  table-grey ${areColumnsVisible ? '' : 'collapse'
+                                                }`}><b>{Titulacion}</b></td>
 
-                                        {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Asesorias - Asesorias Académicas */}
-                                        <td align="center" className={`text-center table-content table-grey ${areColumnsVisible ? '' : 'collapse'
-                                            }`}><b>{Asesorias_Academicas}</b></td>
+                                            {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Asesorias - Asesorias Académicas */}
+                                            <td align="center" className={`text-center table-content table-grey ${areColumnsVisible ? '' : 'collapse'
+                                                }`}><b>{Asesorias_Academicas}</b></td>
 
-                                        {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Asesorias - Tutorias */}
-                                        <td align="center" className={`text-center table-content  table-grey ${areColumnsVisible ? '' : 'collapse'
-                                            }`}><b>{Tutorias}</b></td>
+                                            {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Asesorias - Tutorias */}
+                                            <td align="center" className={`text-center table-content  table-grey ${areColumnsVisible ? '' : 'collapse'
+                                                }`}><b>{Tutorias}</b></td>
 
-                                        {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Actividades Complementarias */}
-                                        <td align="center" className={`text-center table-content  table-grey ${areColumnsVisible ? '' : 'collapse'
-                                            }`}><b>{Actividades_Complementarias}</b></td>
+                                            {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Actividades Complementarias */}
+                                            <td align="center" className={`text-center table-content  table-grey ${areColumnsVisible ? '' : 'collapse'
+                                                }`}><b>{Actividades_Complementarias}</b></td>
 
-                                        {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Subtotal 1 */}
-                                        <td align="center" className={`text-center table-content table-grey ${areColumnsVisible ? '' : 'collapse'
-                                            }`}><b>{Subtotal_1}</b></td>
+                                            {/* HORAS SUSTANTIVAS PARA ATENCIÓN DE ALUMNOS - Subtotal 1 */}
+                                            <td align="center" className={`text-center table-content table-grey ${areColumnsVisible ? '' : 'collapse'
+                                                }`}><b>{Subtotal_1}</b></td>
 
-                                        {/* HORAS NECESIDAD INSTITUCIONAL - Investigacion educativa, desarrrollo tecnológico */}
-                                        <td align="center" className={`text-center table-content table-grey ${areColumnsVisible ? '' : 'collapse'
-                                            }`}><b>{Investigacion}</b></td>
+                                            {/* HORAS NECESIDAD INSTITUCIONAL - Investigacion educativa, desarrrollo tecnológico */}
+                                            <td align="center" className={`text-center table-content table-grey ${areColumnsVisible ? '' : 'collapse'
+                                                }`}><b>{Investigacion}</b></td>
 
-                                        {/* HORAS NECESIDAD INSTITUCIONAL - Apoyo Operativo */}
-                                        <td align="center" className={`text-center table-content table-grey ${areColumnsVisible ? '' : 'collapse'
-                                            }`}><b>{Apoyo_Operativo}</b></td>
+                                            {/* HORAS NECESIDAD INSTITUCIONAL - Apoyo Operativo */}
+                                            <td align="center" className={`text-center table-content table-grey ${areColumnsVisible ? '' : 'collapse'
+                                                }`}><b>{Apoyo_Operativo}</b></td>
 
-                                        {/* HORAS NECESIDAD INSTITUCIONAL - Subtotal 2 */}
-                                        <td align="center" className={`text-center table-content table-grey ${areColumnsVisible ? '' : 'collapse'
-                                            }`}><b>{Subtotal_2}</b></td>
+                                            {/* HORAS NECESIDAD INSTITUCIONAL - Subtotal 2 */}
+                                            <td align="center" className={`text-center table-content table-grey ${areColumnsVisible ? '' : 'collapse'
+                                                }`}><b>{Subtotal_2}</b></td>
 
-                                        {/* TOTAL */}
-                                        <td align="center" className={`text-center table-content table-grey ${areColumnsVisible ? '' : 'collapse'
-                                            }`}><b>{TOTAL}</b></td>
+                                            {/* TOTAL */}
+                                            <td align="center" className={`text-center table-content table-grey ${areColumnsVisible ? '' : 'collapse'
+                                                }`}><b>{TOTAL}</b></td>
 
-                                        {/* OBSERVACIONES */}
-                                        <td colSpan="3" align="center" className={`text-center table-content  ${areColumnsVisible ? '' : 'collapse'
-                                            }`}></td>
+                                            {/* OBSERVACIONES */}
+                                            <td colSpan="3" align="center" className={`text-center table-content  ${areColumnsVisible ? '' : 'collapse'
+                                                }`}></td>
 
-                                        {/* ----------------- Table de cambios ------------------------ */}
-                                        {/* FECHA SOLICITUD DE MODIFICACIÓN */}
-                                        <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`}></td>
+                                            {/* ----------------- Table de cambios ------------------------ */}
+                                            {/* FECHA SOLICITUD DE MODIFICACIÓN */}
+                                            <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
+                                                }`}></td>
 
-                                        {/* CARGAHORARIA  ANTERIOR */}
-                                        <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} ></td>
+                                            {/* CARGAHORARIA  ANTERIOR */}
+                                            <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
+                                                }`} ></td>
 
-                                        {/* CATEGORIA DE HORAS DE ASIGNATRURA ANTERIOR */}
-                                        <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} ></td>
+                                            {/* CATEGORIA DE HORAS DE ASIGNATRURA ANTERIOR */}
+                                            <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
+                                                }`} ></td>
 
-                                        {/* CARGA HORARIA NUEVA */}
-                                        <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} ></td>
+                                            {/* CARGA HORARIA NUEVA */}
+                                            <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
+                                                }`} ></td>
 
-                                        {/* TIPO DE HORAS DE ASIGNATRURA NUEVA */}
-                                        <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} ></td>
+                                            {/* TIPO DE HORAS DE ASIGNATRURA NUEVA */}
+                                            <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
+                                                }`} ></td>
 
-                                        {/* LA MODIFICACIÓN SE APLICA A PARTIR DE (FECHA): */}
-                                        <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} ></td>
+                                            {/* LA MODIFICACIÓN SE APLICA A PARTIR DE (FECHA): */}
+                                            <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
+                                                }`} ></td>
 
-                                        {/* NO. OFICIO RESPUESTA */}
-                                        <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} ></td>
+                                            {/* NO. OFICIO RESPUESTA */}
+                                            <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
+                                                }`} ></td>
 
-                                        {/* NO. DE OFICIO ACADEMIA */}
-                                        <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} ></td>
+                                            {/* NO. DE OFICIO ACADEMIA */}
+                                            <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
+                                                }`} ></td>
 
-                                        {/* FECHA EN QUE RH APLICA EN EL SISTEMA */}
-                                        <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} ></td>
+                                            {/* FECHA EN QUE RH APLICA EN EL SISTEMA */}
+                                            <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
+                                                }`} ></td>
 
-                                        {/* OBSERVACIONES */}
-                                        <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
-                                            }`} ></td>
-                                        <td align="center" className={`text-center table-content ${areColumns2Visible || areColumnsVisible ? '' : 'collapse' }`}>
-                                        
-                                        </td>
+                                            {/* OBSERVACIONES */}
+                                            <td align="center" className={`text-center table-content  ${areColumns2Visible ? '' : 'collapse'
+                                                }`} ></td>
+                                            <td align="center" className={`text-center table-content ${areColumns2Visible || areColumnsVisible ? '' : 'collapse' }`}>
+                                            
+                                            </td>
 
-                                    </tr>
+                                        </tr>
                         </tbody>
                     </table>
                 </div>

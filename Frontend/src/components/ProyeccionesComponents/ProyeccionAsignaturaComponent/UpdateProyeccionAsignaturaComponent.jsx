@@ -54,7 +54,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
 
                 // horas_sustantivas_atencion_alumnos
                     // horas_asignatura: 
-                    total_hours: 0,
+                    total_hours: 40,
                     cumulative_hours: 0,
                     a: 0,
                     b: 0,
@@ -439,6 +439,24 @@ class UpdateProyeccionAsignaturaComponent extends Component {
             a: hour,
             total_hours: hour
         });
+        this.setState({
+    
+            horas_frente_grupo: 0,
+            presidente: 0,
+            secretario: 0,
+            asesorias_academica: 0,
+            educacion_dual: 0,
+            residencias_profesionales: 0,
+            titulacion: 0,
+            tutorias: 0,
+            actividades_complementarias: 0,
+            invesigacion_educativa: 0,
+            apoyo_operativo: 0,
+            subtotal_1:0,
+            subtotal_2:0,
+            total:0,
+          
+          });
     }
     onChangeBHandler = (event) => {
         this.setState({disableAll: false});
@@ -447,7 +465,24 @@ class UpdateProyeccionAsignaturaComponent extends Component {
         this.setState({
             b: hour,
             total_hours: hour
-        });
+        });this.setState({
+    
+            horas_frente_grupo: 0,
+            presidente: 0,
+            secretario: 0,
+            asesorias_academica: 0,
+            educacion_dual: 0,
+            residencias_profesionales: 0,
+            titulacion: 0,
+            tutorias: 0,
+            actividades_complementarias: 0,
+            invesigacion_educativa: 0,
+            apoyo_operativo: 0,
+            subtotal_1:0,
+            subtotal_2:0,
+            total:0,
+          
+          });
     }
 
     cleaningHours = () => {

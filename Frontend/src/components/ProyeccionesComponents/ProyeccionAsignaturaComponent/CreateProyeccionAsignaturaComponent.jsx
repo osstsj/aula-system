@@ -458,14 +458,51 @@ getTipoUnidad() {
     this.setState({
       a: hour,
       total_hours: hour,
+    }); 
+    this.setState({
+    
+      horas_frente_grupo: 0,
+      presidente: 0,
+      secretario: 0,
+      asesorias_academica: 0,
+      educacion_dual: 0,
+      residencias_profesionales: 0,
+      titulacion: 0,
+      tutorias: 0,
+      actividades_complementarias: 0,
+      invesigacion_educativa: 0,
+      apoyo_operativo: 0,
+      subtotal_1:0,
+      subtotal_2:0,
+      total:0,
+    
     });
+    
   };
   onChangeBHandler = (event) => {
     const hour = parseInt(event.target.value);
     this.setState({
       b: hour,
       total_hours: hour,
+    });this.setState({
+    
+      horas_frente_grupo: 0,
+      presidente: 0,
+      secretario: 0,
+      asesorias_academica: 0,
+      educacion_dual: 0,
+      residencias_profesionales: 0,
+      titulacion: 0,
+      tutorias: 0,
+      actividades_complementarias: 0,
+      invesigacion_educativa: 0,
+      apoyo_operativo: 0,
+      subtotal_1:0,
+      subtotal_2:0,
+      total:0,
+    
     });
+    
   };
 
   cleaningHours = () => {

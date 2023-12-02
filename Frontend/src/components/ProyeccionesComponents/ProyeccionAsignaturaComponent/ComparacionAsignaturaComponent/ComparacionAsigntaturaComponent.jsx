@@ -5,7 +5,8 @@ import * as XLSX from 'xlsx';  // Importa la librería XLSX
 import FolioAsignaturaService from '../../../../services/Proyecciones/FolioAsignaturaService';
 import Select from 'react-select'
 import UnidadService from "../../../../services/Control/UnidadService";
-
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 class ComparacionAsigntaturaComponent extends Component {
     constructor(props) {
@@ -172,7 +173,39 @@ class ComparacionAsigntaturaComponent extends Component {
         // Generar el archivo XLSX
         XLSX.writeFile(wb, 'comparaciones.xlsx');
     }
-
+    
+    exportToPDF = () => {
+        const { comparaciones } = this.state;
+    
+        // Modificar la estructura de los datos para incluir la información de la unidad académica
+        const datosParaExportar = comparaciones.map(comparacion => ({
+            'UA': comparacion.nombre_Ua,
+            'Nombre del Docente': comparacion.nombre_Docente,
+            ['COM Subtotal1 Horas de apoyo a la docencia ' + this.state.folio1]: comparacion.subtotal_1_1,
+            ['COM Subtotal1 Horas de apoyo a la docencia ' + this.state.folio2]: comparacion.subtotal_1_2,
+            ['Comparativa Subtotal1 Horas de apoyo a la docencia ' + '(' + this.state.folio2 + ') - (' + this.state.folio1 + ')']: comparacion.com_Subtotal_1,
+            ['COM Subtotal2 Horas Institucional ' + this.state.folio1]: comparacion.subtotal_2_1,
+            ['COM Subtotal2 Horas Institucional ' + this.state.folio2]: comparacion.subtotal_2_2,
+            ['Comparativa Subtotal2 Horas Institucional ' + '(' + this.state.folio2 + ') - (' + this.state.folio1 + ')']: comparacion.com_Subtotal_2,
+            ['COM Total ' + this.state.folio1]: comparacion.total_1,
+            ['COM Total ' + this.state.folio2]: comparacion.total_2,
+            ['Comparativa Total ' + '(' + this.state.folio2 + ') - (' + this.state.folio1 + ')']: comparacion.com_Total,
+        }));
+    
+        // Crear una nueva instancia de jsPDF
+        const pdf = new jsPDF();
+        
+        // Configurar la tabla
+        pdf.autoTable({
+            head: [Object.keys(datosParaExportar[0])],
+            body: datosParaExportar.map(obj => Object.values(obj)),
+            startY: 20,
+        });
+    
+        // Guardar el archivo PDF
+        pdf.save('comparaciones.pdf');
+    }
+    
     render() {
         const boton = {
             marginLeft: '1rem',
@@ -190,14 +223,12 @@ class ComparacionAsigntaturaComponent extends Component {
                             <span><small><b>Cálculo Comparación:</b> [ ZA - 4 - 2024 B ] - [ZA - 1 - 2024 A]</small></span><br />
                             <span><small><b>Bandera:</b> Rojo: comparación menor a 5 | Negro: comparación mayor que 0 y menor que 5 | Verde: comparación mayor que 5</small></span>
                         </div>
-                        <button style={{ width: '15%', marginLeft: '1rem' }} className="btn  btn-outline-success mb-4" onClick={this.exportToExcel}>
-                    Exportar a Excel
-                </button>
+                       
                     </fieldset>
                 </div>
 
                     <div className="row mb-3">
-                        <div className="col-4">
+                        <div className="col-3">
                             <div>
                                 <Select
                                     rules={{ required: true }}
@@ -208,7 +239,7 @@ class ComparacionAsigntaturaComponent extends Component {
                                 />
                             </div>
                         </div>
-                        <div className="col-4">
+                        <div className="col-3">
                             <Select
                                 rules={{ required: true }}
                                 options={this.state.folios}
@@ -218,7 +249,7 @@ class ComparacionAsigntaturaComponent extends Component {
 
                        
                         </div>
-                        <div className="col-4">
+                        <div className="col-3">
                             <div>
                                 <Select
                                     rules={{ required: true }}
@@ -228,6 +259,14 @@ class ComparacionAsigntaturaComponent extends Component {
                                     value={{ label: this.state.folio2 == '' ? "Seleccione Folio 2..." : this.state.folio2 }}
                                 />
                             </div>
+                        </div>
+                        <div className='col-3'>
+                        <button style={{ marginLeft: '1rem',marginTop:'0rem' }} className="btn  btn-outline-success mb-4" onClick={this.exportToExcel}>
+                    Exp a Excel
+                </button>
+                <button style={{ marginLeft: '1rem',marginTop:'0rem' }} className="btn  btn-outline-dark mb-4" onClick={this.exportToPDF}>
+                    Exp a PDF
+                </button>
                         </div>
                     </div>
                 <div className="row" style={{ overflowX: 'auto' }}>

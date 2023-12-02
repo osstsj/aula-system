@@ -3,6 +3,10 @@ import FulltimeProyeccionService from '../../../services/Proyecciones/FulltimePr
 import FolioFulltimeService from '../../../services/Proyecciones/FolioFulltimeService';
 import CarreraPorUnidadService from '../../../services/Control/CarreraPorUnidadService';
 import ExtensionsService from "../../../services/Control/ExtensionsService";
+<<<<<<< Updated upstream
+=======
+import DocenteService from '../../../services/Control/DocenteService';
+>>>>>>> Stashed changes
 import Select from 'react-select'
 import '../../StyleGlobal/Style.css'
 
@@ -284,6 +288,95 @@ class UpdateProyeccionFulltimeComponent extends Component {
 
         this.setUpPoS(); // debido a que this.state, es una funcion asyc, se debe agregar aqui para que realize su tarea...
     }
+    async getAllProyeccionesToFilterDocente(id_folio) {
+        let fulltimeList = [];
+        await FulltimeProyeccionService.getAllProyeccionesFulltimeByFolio(id_folio)
+            .then(
+                res =>
+                    fulltimeList = res.data,
+            ).catch(() => {
+                alert("Error al traer las proyecciones tiempo completo por folio...");
+                this.props.history.push('/');
+        });
+
+        // When you use this.setState inside a loop, it doesn't immediately update the state synchronously. 
+        // The setState function is asynchronous, and if you call it in a loop, it might not behave as expected.
+        // To filter elements based on your condition, it's better to create a new array and then update the state once.
+        
+        let updatedDocentes = this.state.docentes;
+        
+        fulltimeList.map((fulltime) => {
+            updatedDocentes = updatedDocentes.filter(docente =>
+                 docente.id !== fulltime.profesor_fulltime.nombre_docente.id
+              );
+        })
+
+        // Additionally, keep in mind that setState may not immediately reflect the updated state due to
+        //  its asynchronous nature. If you need to perform any actions after the state is updated, you can 
+        //  use the second argument of setState, which is a callback function.
+          this.setState({ docentes: updatedDocentes });
+    }
+
+
+    async getDocenteList(id_unidad) {
+        let options = null;
+        await DocenteService.getAllDocentesByCategoriaPTCFulltime(id_unidad).then(res => {
+            const data = res.data;
+            options = data.map(d => ({
+                "value": d.nombre_completo,
+                "label": d.nombre_completo,
+                "id": d.id,
+                "codigo_nomina": d.codigo_nomina,
+                "ptc":d.categoria,
+            }))
+            this.setState({ docentes: options });
+        }).catch(() => {
+            alert("Error al intentar traer los docentes...");
+            this.props.history.push('/');
+        });
+    }
+
+    async getAllExtensionsByUnidadId() {
+        await ExtensionsService.getAllExtensionsByUnidadId(this.state.id_unidad)
+          .then((res) => {
+            const extensions = res.data.map((item, index) => {
+              return {
+                ...item,
+                index,
+                value: 0,
+                input_name: `extension_${index}`,
+                form: {
+                  disablePresidente: true,
+                  disableSecretario: false,
+                  horas_frente_grupo: 0,
+                  // academias
+                  presidente: 0,
+                  secretario: 0,
+                  // asesorias
+                  asesorias_academica: 0,
+                  educacion_dual: 0,
+                  residencias_profesionales: 0,
+                  titulacion: 0,
+                  tutorias: 0,
+                  actividades_complementarias: 0,
+                  subtotal_1: 0,
+                  invesigacion_educativa: 0,
+                  apoyo_operativo: 0,
+                  subtotal_2: 0,
+                },
+              };
+            });
+            this.setState({
+              extensions,
+              show_extensions: true,
+            });
+          })
+          .catch(() => {
+            alert("Error al intentar traer las extensiones...");
+            this.props.history.push("/");
+          });
+      }
+
 
 
 
