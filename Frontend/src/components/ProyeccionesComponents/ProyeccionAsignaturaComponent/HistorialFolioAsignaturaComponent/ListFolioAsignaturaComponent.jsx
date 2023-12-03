@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import '../../../StyleGlobal/Style.css';
 import FolioAsignaturaService from "../../../../services/Proyecciones/FolioAsignaturaService";
 import UnidadService from "../../../../services/Control/UnidadService";
+import * as XLSX from 'xlsx';
+
+import jsPDF from 'jspdf';
+import 'jspdf-autotable'; // Importa la extensión jspdf-autotable
 import Select from 'react-select'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'; // Importa Reactstrap para el modal
 
@@ -24,6 +28,10 @@ class ListFolioAsignaturaComponent extends Component {
         this.deleteFolioById = this.deleteFolioById.bind(this);
 
         this.onChangeUnidadHandler = this.onChangeUnidadHandler.bind(this);
+        this.exportToPDF = this.exportToPDF.bind(this); // Método para exportar a PDF
+        this.exportToExcel = this.exportToExcel.bind(this);
+
+
     }
 
  
@@ -116,8 +124,64 @@ class ListFolioAsignaturaComponent extends Component {
             folioToDeleteId: null, // Restablece el ID de la colegiatura
         });
     }
+    exportToPDF = () => {
+        const { folios } = this.state;
 
+        // Modificar la estructura de los datos para incluir la información del folio
+        const datosParaExportar = folios.map((folio, index) => ({
+            '#': index + 1,
+            'Folio': folio.folio,
+            'Fecha de Creacion': folio.fecha_creacion,
+            'Estatus': 'Activo',
+        }));
 
+        // Verificar si hay datos para exportar
+        if (datosParaExportar.length === 0) {
+            console.error('No hay datos para exportar a PDF.');
+            return;
+        }
+
+        // Crear una nueva instancia de jsPDF
+        const pdf = new jsPDF();
+
+        // Configurar la tabla
+        pdf.autoTable({
+            head: [Object.keys(datosParaExportar[0])],
+            body: datosParaExportar.map(obj => Object.values(obj)),
+            startY: 20,
+        });
+
+        // Guardar el archivo PDF
+        pdf.save('folios.pdf');
+    }
+    exportToExcel = () => {
+        const { folios } = this.state;
+
+        // Modificar la estructura de los datos para incluir la información del folio
+        const datosParaExportar = folios.map((folio, index) => ({
+            '#': index + 1,
+            'Folio': folio.folio,
+            'Fecha de Creacion': folio.fecha_creacion,
+            'Estatus': 'Activo',
+        }));
+
+        // Verificar si hay datos para exportar
+        if (datosParaExportar.length === 0) {
+            console.error('No hay datos para exportar a Excel.');
+            return;
+        }
+
+        // Crear un nuevo libro de Excel
+        const workbook = XLSX.utils.book_new();
+        const sheetData = datosParaExportar.map(obj => Object.values(obj));
+        const worksheet = XLSX.utils.aoa_to_sheet([Object.keys(datosParaExportar[0]), ...sheetData]);
+
+        // Agregar la hoja de cálculo al libro
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Folios');
+
+        // Guardar el archivo Excel
+        XLSX.writeFile(workbook, 'folios.xlsx');
+    }
     render() {
         const boton = {
             marginLeft: '1rem',
@@ -127,7 +191,7 @@ class ListFolioAsignaturaComponent extends Component {
         return (
             <div className="container">
                 <div className="row">
-                <h2 className="text-center mt-5 mb-5 Title">HISTORIAL DE FOLIOS DE PROYECCIONES ACADEMICAS, POR ASIGNATURA DEL TECNOLÓGICO SUPERIROR DE JALISCO</h2>
+                <h2 className="text-center mt-5 mb-5 Title">HISTORIAL DE FOLIOS DE PROYECCIONES ACADÉMICAS, POR ASIGNATURA DEL TECNOLÓGICO SUPERIOR DE JALISCO</h2>
                     <div className="col-4">
                         <div style={{ marginTop: '5.6%' }}>
                             <Select
@@ -157,7 +221,7 @@ class ListFolioAsignaturaComponent extends Component {
                             <tr>
                                 <th></th>
                                 <th className="table-title">Folio</th>
-                                <th className="table-title">Fecha de Creacion</th>
+                                <th className="table-title">Fecha de Creación</th>
                                 <th className="table-title">Estatus</th>
                                 <th className="table-action">Acciones</th>
                             </tr>
@@ -171,7 +235,7 @@ class ListFolioAsignaturaComponent extends Component {
                                     <td className="table-conten">"Activo"</td>
                                     <td className="table-action">
                                          <button onClick={() => this.viewProyeccion(folio.id)} className="btn btn-info mt-0">
-                                            Ver Proyecion
+                                            Ver Proyecciones
                                         </button>
                                         <button className="btn btn-danger mt-0" style={boton}
                                                 onClick={() => this.toggleModal(folio.id)} // Abre el modal y pasa el ID de la colegiatura

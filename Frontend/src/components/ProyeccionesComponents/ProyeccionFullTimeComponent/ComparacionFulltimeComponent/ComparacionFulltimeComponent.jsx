@@ -205,7 +205,7 @@ class ComparacionFulltimeComponent extends Component {
 
         return (
             <div className="container">
-                <h2 className="text-center mt-5 mb-5 Title">COMPARACION DE FOLIOS DE PROYECCIONES ACADEMICAS, TIEMPO COMPLETO DEL TECNOLÓGICO SUPERIOR DE JALISCO</h2>
+                <h2 className="text-center mt-5 mb-5 Title">COMPARACIÓN DE FOLIOS DE PROYECCIONES ACADÉMICAS, TIEMPO COMPLETO DEL TECNOLÓGICO SUPERIOR DE JALISCO</h2>
                     <div className="row justify-content-center mb-4">
                         <fieldset className="border border-info p-0 mb-3">
                             {/* <legend className="w-auto text-left h6">Referencia</legend> */}
@@ -268,7 +268,7 @@ class ComparacionFulltimeComponent extends Component {
                                 <th className="table-title">Nombre del Docente</th>
                                 <th className="table-title"> COM Horas Frente a Grupo <br /> Horas de apoyo a la docencia <br /> {this.state.folio1}</th>
                                 <th className="table-title"> COM Horas Frente a Grupo <br /> Horas de apoyo a la docencia <br /> {this.state.folio2}</th>
-                                <th className="table-title"> Comparacion Horas Frente a Grupo <br /> Horas de apoyo a la docencia <br /> ({this.state.folio2}) - ({this.state.folio1})</th>
+                                <th className="table-title"> Comparación Horas Frente a Grupo <br /> Horas de apoyo a la docencia <br /> ({this.state.folio2}) - ({this.state.folio1})</th>
                                 <th className="table-title">COM Total <br /> {this.state.folio1}</th>
                                 <th className="table-title">COM Total <br /> {this.state.folio2}</th>
                                 <th className="table-title">Comparativa Total <br /> ({this.state.folio2}) - ({this.state.folio1})</th>

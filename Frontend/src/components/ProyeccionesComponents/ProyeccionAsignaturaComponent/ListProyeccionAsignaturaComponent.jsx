@@ -253,8 +253,8 @@ class ListProyeccionAsignaturaComponent extends Component {
                         <button onClick={this.toggleColumns} style={{ marginRight: '2%' }} className="btn btn-success mb-4" >Comprimir Actual</button>
                         <button onClick={this.toggleColumn2s} style={{ marginRight: '27.8%' }} className="btn btn-primary mb-4" >Comprimir Anterior</button>
                         <button className="btn btn-outline-success mb-4" onClick={this.exportToExcel}>Exportar a Excel</button> {/* Botón de exportar a Excel */}
-                        <button className="btn btn-outline-info mb-4" onClick={{}}>Exportar a PDF</button> {/* Botón de exportar a Excel */}
-                    </div>
+                       {/* <button className="btn btn-outline-info mb-4" onClick={this.exportToPDF}>Exportar a PDF</button> {/* Botón de exportar a Excel */}
+                       </div>
 
                 </div>
                 <div>

@@ -6,7 +6,8 @@ import '../../StyleGlobal/Style.css'
 import FulltimeProyeccionService from '../../../services/Proyecciones/FulltimeProyeccionService';
 import FolioFulltimeService from '../../../services/Proyecciones/FolioFulltimeService';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
+import * as XLSX from 'xlsx';  // Importa la librería XLSX
+import jsPDF from 'jspdf';
 
 class ListProyeccionFullTimeComponent extends Component {
     constructor(props) {
@@ -27,7 +28,9 @@ class ListProyeccionFullTimeComponent extends Component {
         this.viewProyeccionFulltime = this.viewProyeccionFulltime.bind(this);
         this.addFulltime = this.addFulltime.bind(this);
         this.updateProyeccionFulltime = this.updateProyeccionFulltime.bind(this);
-        // this.exportToExcel = this.exportToExcel.bind(this);  // Método para exportar a Excel
+        this.exportToExcel = this.exportToExcel.bind(this);  // Método para exportar a Excel
+        this.exportToPDF = this.exportToPDF.bind(this); // Método para exportar a PDF
+
     }
 
     componentDidMount() {
@@ -97,7 +100,145 @@ class ListProyeccionFullTimeComponent extends Component {
             asignaturaToDeleteId: id_asignatura, // Establece el ID de la colegiatura a eliminar
         });
     }
-
+    exportToExcel() {
+        const { fulltimes } = this.state; // Replace with your actual data
+    
+        const datosCombinados = fulltimes.map((fulltime) => ({
+            "No. Folio": fulltime.folio.folio,
+            "Clave de Programa Educativo": fulltime.profesor_fulltime.clave_programa.carrera_nombre.clave_programa,
+            "Código de Nómina": fulltime.profesor_fulltime.nombre_docente.codigo_nomina,
+            "Grado Académico": fulltime.profesor_fulltime.grado_academico,
+            "Nombre del Docente": fulltime.profesor_fulltime.nombre_docente.nombre_completo,
+            "Hora de asignatura (A)": fulltime.horas_sustantivas_atencion_alumnos_fulltime.ptc,
+            "Hora de asignatura (B)": fulltime.horas_sustantivas_atencion_alumnos_fulltime.horas_frente_grupo,
+            "Horas frente al grupo": fulltime.horas_sustantivas_atencion_alumnos_fulltime.horas_frente_grupo,
+            "Academias - Presidente": fulltime.horas_sustantivas_atencion_alumnos_fulltime.academias.presidente,
+            "Academias - Secretario": fulltime.horas_sustantivas_atencion_alumnos_fulltime.academias.secretario,
+            "Asesorías - Residencia Profesional": fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.residencias_profesionales,
+            "Asesorías - Educación Dual": fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.educacion_dual,
+            "Asesorías - Titulación": fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.titulacion,
+            "Asesorías Académicas": fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.asesorias_academica,
+            "Tutorías": fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.tutorias,
+            "Actividades Complementarias": fulltime.horas_sustantivas_atencion_alumnos_fulltime.actividades_complementarias,
+            "Subtotal 1": fulltime.horas_sustantivas_atencion_alumnos_fulltime.subtotal_1,
+            "Investigación Educativa, Desarrollo Tecnológico": fulltime.horas_necesidad_institucional_fulltime.proyecto_investigacion,
+            "Apoyo Operativo": fulltime.horas_necesidad_institucional_fulltime.apoyo_operativo,
+            "Subtotal 2": fulltime.horas_necesidad_institucional_fulltime.subtotal_2,
+            "Total": fulltime.total,
+            "Observaciones": fulltime.observaciones,
+            "Fecha Solicitud de Modificación": fulltime.fecha_actualizacion,
+            "Carga Horaria Anterior": fulltime.carga_horaria_anterior,
+            "Categoría de Horas de Asignatura Anterior": fulltime.nivel_ptc_anterior,
+            "Carga Horaria Nueva": fulltime.carga_horaria_nueva,
+            "Tipo de Horas de Asignatura Nueva": fulltime.nivel_ptc_nuevo,
+            "La Modificación Se Aplica A Partir de (Fecha)": fulltime.modifica_aplica_en,
+            "No. Oficio Respuesta": fulltime.oficio_respuesta,
+            "No. de Oficio Academia": fulltime.oficio_academia,
+            "Fecha en que RH Aplica en el Sistema": fulltime.fecha_rh_aplica_sistema,
+            "Observaciones Modificación": fulltime.observacion_modificacion,
+            // Add more fields as needed
+        }));
+    
+        const ws = XLSX.utils.json_to_sheet(datosCombinados);
+    
+        const colWidths = [
+            { wch: 5 },  // No.
+            { wch: 30 }, // Clave de Programa Educativo
+            { wch: 20 }, // Código de Nómina
+            { wch: 15 }, // Grado Académico
+            { wch: 20 }, // Nombre del Docente
+            { wch: 10 }, // Hora de asignatura (A)
+            { wch: 10 }, // Hora de asignatura (B)
+            { wch: 10 }, // Horas frente al grupo
+            { wch: 20 }, // Academias - Presidente
+            { wch: 20 }, // Academias - Secretario
+            { wch: 20 }, // Asesorías - Residencia Profesional
+            { wch: 20 }, // Asesorías - Educación Dual
+            { wch: 20 }, // Asesorías - Titulación
+            { wch: 20 }, // Asesorías Académicas
+            { wch: 10 }, // Tutorías
+            { wch: 20 }, // Actividades Complementarias
+            { wch: 10 }, // Subtotal 1
+            { wch: 20 }, // Investigación Educativa, Desarrollo Tecnológico
+            { wch: 20 }, // Apoyo Operativo
+            { wch: 10 }, // Subtotal 2
+            { wch: 10 }, // Total
+            { wch: 30 }, // Observaciones
+            { wch: 30 },
+            { wch: 30 },
+            // Add more column widths as needed
+        ];
+        ws['!cols'] = colWidths;
+    
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Fulltimes'); // Change sheet name if desired
+    
+        XLSX.writeFile(wb, 'fulltimes.xlsx'); // Change output file name if desired
+    }
+    exportToPDF() {
+        const { fulltimes } = this.state; // Replace with your actual data
+    
+        const doc = new jsPDF();
+        doc.text('Lista de fulltimes', 10, 10);
+    
+        const columns = [
+            'No. Folio', 'Clave de Programa Educativo', 'Código de Nómina', 'Grado Académico', 'Nombre del Docente',
+            'Hora de asignatura (A)', 'Hora de asignatura (B)', 'Horas frente al grupo', 'Academias - Presidente',
+            'Academias - Secretario', 'Asesorías - Residencia Profesional', 'Asesorías - Educación Dual',
+            'Asesorías - Titulación', 'Asesorías Académicas', 'Tutorías', 'Actividades Complementarias',
+            'Subtotal 1', 'Investigación Educativa, Desarrollo Tecnológico', 'Apoyo Operativo', 'Subtotal 2',
+            'Total', 'Observaciones', 'Fecha Solicitud de Modificación', 'Carga Horaria Anterior',
+            'Categoría de Horas de Asignatura Anterior', 'Carga Horaria Nueva', 'Tipo de Horas de Asignatura Nueva',
+            'La Modificación Se Aplica A Partir de (Fecha)', 'No. Oficio Respuesta', 'No. de Oficio Academia',
+            'Fecha en que RH Aplica en el Sistema', 'Observaciones Modificación',
+            // Add more fields as needed
+        ];
+    
+        const data = fulltimes.map((fulltime) => [
+            fulltime.folio.folio,
+            fulltime.profesor_fulltime.clave_programa.carrera_nombre.clave_programa,
+            fulltime.profesor_fulltime.nombre_docente.codigo_nomina,
+            fulltime.profesor_fulltime.grado_academico,
+            fulltime.profesor_fulltime.nombre_docente.nombre_completo,
+            fulltime.horas_sustantivas_atencion_alumnos_fulltime.ptc,
+            fulltime.horas_sustantivas_atencion_alumnos_fulltime.horas_frente_grupo,
+            fulltime.horas_sustantivas_atencion_alumnos_fulltime.horas_frente_grupo,
+            fulltime.horas_sustantivas_atencion_alumnos_fulltime.academias.presidente,
+            fulltime.horas_sustantivas_atencion_alumnos_fulltime.academias.secretario,
+            fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.residencias_profesionales,
+            fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.educacion_dual,
+            fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.titulacion,
+            fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.asesorias_academica,
+            fulltime.horas_sustantivas_atencion_alumnos_fulltime.asesorias.tutorias,
+            fulltime.horas_sustantivas_atencion_alumnos_fulltime.actividades_complementarias,
+            fulltime.horas_sustantivas_atencion_alumnos_fulltime.subtotal_1,
+            fulltime.horas_necesidad_institucional_fulltime.proyecto_investigacion,
+            fulltime.horas_necesidad_institucional_fulltime.apoyo_operativo,
+            fulltime.horas_necesidad_institucional_fulltime.subtotal_2,
+            fulltime.total,
+            fulltime.observaciones,
+            fulltime.fecha_actualizacion,
+            fulltime.carga_horaria_anterior,
+            fulltime.nivel_ptc_anterior,
+            fulltime.carga_horaria_nueva,
+            fulltime.nivel_ptc_nuevo,
+            fulltime.modifica_aplica_en,
+            fulltime.oficio_respuesta,
+            fulltime.oficio_academia,
+            fulltime.fecha_rh_aplica_sistema,
+            fulltime.observacion_modificacion,
+            // Add more fields as needed
+        ]);
+    
+        doc.autoTable({
+            startY: 20,
+            head: [columns],
+            body: data,
+        });
+    
+        doc.save('fulltimes.pdf');
+    }
+    
     // Método para cerrar el modal
     closeModal = () => {
         this.setState({
@@ -157,7 +298,7 @@ class ListProyeccionFullTimeComponent extends Component {
                         <button onClick={this.toggleColumns} style={{ marginRight: '2%' }} className="btn btn-success mb-4" >Comprimir Actual</button>
                         <button onClick={this.toggleColumn2s} style={{ marginRight: '27.8%' }} className="btn btn-primary mb-4" >Comprimir Anterior</button>
                         <button className="btn btn-outline-success mb-4" onClick={this.exportToExcel}>Exportar a Excel</button> {/* Botón de exportar a Excel */}
-                        <button className="btn btn-outline-info mb-4" onClick={{}}>Exportar a PDF</button> {/* Botón de exportar a Excel */}
+                       {/* <button className="btn btn-outline-info mb-4" onClick={this.exportToPDF}>Exportar a PDF</button> {/* Botón de exportar a Excel */}
 
                 </div>
                 <div className="row" style={{ overflowX: 'auto',boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)'  }}>

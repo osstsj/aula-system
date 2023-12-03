@@ -58,7 +58,7 @@ class UpdateExtensionComponent extends Component {
         ExtensionsService.updateExtensionById(this.state.id, unidad).then(() => {
             this.props.history.push('/list-extension');
         }).catch(() => {
-            alert("Error al intentar actualizar la unidad academica...");
+            alert("Error al intentar actualizar la unidad académica...");
             this.props.history.push('/list-extension');
         });;
     }

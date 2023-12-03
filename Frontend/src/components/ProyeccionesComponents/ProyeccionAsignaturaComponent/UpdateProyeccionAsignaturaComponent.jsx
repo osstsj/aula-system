@@ -639,7 +639,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                     <div className="card col-10" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                         <div className="card-body">
                             <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                                <h2 className='h3'><b>Modificar Proyeccion por Asignatura</b></h2>
+                                <h2 className='h3'><b>Modificar Proyección  por Asignatura</b></h2>
                             </div>
                             <br />
                             <form>
@@ -679,7 +679,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                                         <div className="row mb-4">
                                             <div className="col">
                                                 <div className="form-outline">
-                                                    <label>Unidad Academica</label>
+                                                    <label>Unidad Académica</label>
                                                     <Select
                                                         isDisabled={true}
                                                         rules={{ required: true }}
@@ -739,7 +739,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                                             <div className="col">
                                             {/* <div className="form-outline" style={{display: 'none'}}> */}
                                                 <div className="form-outline" style={{display: 'block'}}>
-                                                    <label>Nivel Academico</label>
+                                                    <label>Nivel Académico</label>
                                                     <Select
                                                         options={this.state.niveles}
                                                         onChange={(e) => this.onChangeGradoAcademicoaHandler(e)}
@@ -938,7 +938,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                                     <div className="row mb-4">
                                         <div className="col">
                                             <div className="form-outline">
-                                                <label>Asesorias Académicas:</label>
+                                                <label>Asesorías  Académicas:</label>
                                                 <div className="input-group">
                                                     <input
                                                     readOnly={this.state.disableAll}
@@ -959,7 +959,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
 
                                         <div className="col">
                                             <div className="form-outline">
-                                                <label className="">Educacion Dual:</label>
+                                                <label className="">Educación  Dual:</label>
                                                 <div className="input-group">
                                                     <input
                                                     readOnly={this.state.disableAll}
@@ -1103,7 +1103,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                                         <div className="row">
                                             <div className="col-12">
                                                 <div className="form-group row">
-                                                        <label className="col-md-6 col-form-label">Investigacion educativa, desarrrollo tecnológico:</label>
+                                                        <label className="col-md-6 col-form-label">Investigación  educativa, desarrrollo tecnológico:</label>
 
                                                     <div className="col">
                                                         <div className="input-group">
@@ -1193,7 +1193,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                                         <div className="form-outline">
                                             <label className=""><b>OBSERVACIONES:</b></label>
                                             <textarea
-                                                placeholder="Ingrese observaciones de la proyeccion por asignatura..."
+                                                placeholder="Ingrese observaciones de la proyección por asignatura..."
                                                 className="form-control"
                                                 value={this.state.observaciones}
                                                 onChange={this.onChangeObservacionesHandler}

@@ -44,8 +44,8 @@ class ListExtensionComponent extends Component {
                     this.props.history.push('/list-extension');
                 });
             } else {
-                alert("La unidad academica no es posible eliminar porque esta presente en otros modulos. \n" +
-                "por favor verifique: Areas Academicas, Docentes, Carrera Por Unidad, Oferta Academica, Proyecciones Asignatura/Tiempo Completo");
+                alert("La unidad académica no es posible eliminar porque está presente en otros módulos. \n" +
+                "Por favor verifique: Áreas Académicas, Docentes, Carrera Por Unidad, Oferta Académica, Proyecciones Asignatura/Tiempo Completo");
                 this.setState({
                     isModalOpen: false, // Cierra el modal después de eliminar
                     colegiaturaToDeleteId: null}) // Restablece el ID de la colegiatura)
@@ -186,7 +186,7 @@ class ListExtensionComponent extends Component {
                     </div>
                     <div className="col-7">
                     <button style={{ width: '29%' , marginRight: '5rem' }} className="btn btn-primary mb-4" onClick={this.addUnidad}>
-                        Agregar Extension
+                        Agregar extensión
                     </button>
                     <button style={{ width: '25%', marginLeft: '1rem'}} className="btn  btn-outline-success mb-4" onClick={this.exportToExcel}>
                         Exportar a Excel

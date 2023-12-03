@@ -116,7 +116,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                     <div className="card col-9" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>                     
                         <div className="card-body">
                             <div className="card-header" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                                <h3 className="text-center"><b>Folio: {this.state.folio} <br />Proyeccion Por Asignatura #{this.state.id} <br /> Unidad Académica: {this.state.unidad_academica}</b></h3>
+                                <h3 className="text-center"><b>Folio: {this.state.folio} <br />Proyección Por Asignatura #{this.state.id} <br /> Unidad Académica: {this.state.unidad_academica}</b></h3>
                             </div>
                             <br />
                             
@@ -262,7 +262,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                 <div className="row">
                                     <div className="col">
                                         <div className="form-outline">
-                                            <label className="">Asesorias Académicas:</label>
+                                            <label className="">Asesorías Académicas:</label>
                                         </div>
                                     </div>
                                     <div className="col">
@@ -274,7 +274,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                 <div className="row">
                                     <div className="col">
                                         <div className="form-outline">
-                                            <label className="">Educacion Dual:</label>
+                                            <label className="">Educación Dual:</label>
                                         </div>
                                     </div>
                                     <div className="col">
@@ -359,7 +359,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                             <div className="row">
                                 <div className="col">
                                     <div className="form-outline">
-                                        <label className="">Investigacion educativa, desarrrollo tecnológico:</label>
+                                        <label className="">Investigación educativa, desarrrollo tecnológico:</label>
                                     </div>
                                 </div>
                                 <div className="col">
@@ -441,7 +441,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                             <div className="row">
                                 <div className="col-5">
                                     <div className="form-outline">
-                                        <label className="">Fecha y hora de creacion:</label>
+                                        <label className="">Fecha y hora de creación:</label>
                                     </div>
                                 </div>
                                 <div className="col">
@@ -466,7 +466,7 @@ class ViewProyeccionAsignaturaComponent extends Component {
                             <div className="row">
                                 <div className="col-5">
                                     <div className="form-outline">
-                                        <label className="">Fecha y hora de ultima modificaion:</label>
+                                        <label className="">Fecha y hora de ultima modificaión:</label>
                                     </div>
                                 </div>
                                 <div className="col">

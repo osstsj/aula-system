@@ -162,7 +162,7 @@ class CreateFolioAsignaturaComponent extends Component {
                     <div className="card col-11 mt-3" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
                         <div className="card-body">
                             <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                                <h2 className="h3 Title">Agregar Folio - Proyeccion Profesor de Tiempo Completo</h2>
+                                <h2 className="h3 Title">Agregar Folio - Proyección Profesor de Tiempo Completo</h2>
                             </div>
                             <br />
                             <form>
@@ -194,7 +194,7 @@ class CreateFolioAsignaturaComponent extends Component {
 
                                         <div className="col">
                                             <div className="form-outline">
-                                                <label>Numero:</label>
+                                                <label>Número:</label>
                                                 <input
                                                 readOnly
                                                     type="number"

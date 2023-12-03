@@ -1097,7 +1097,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
               <div className="row mb-4">
                 <div className="col">
                   <div className="form-outline">
-                    <label>Asesorias Académicas:</label>
+                    <label>Asesorías Académicas:</label>
                     <div className="input-group">
                       <input
                         parent={`extension_${index}`}
@@ -1118,7 +1118,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
 
                 <div className="col">
                   <div className="form-outline">
-                    <label className="">Educacion Dual:</label>
+                    <label className="">Educación Dual:</label>
                     <div className="input-group">
                       <input
                         parent={`extension_${index}`}
@@ -1269,7 +1269,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
               <div className="col-12">
                 <div className="form-group row">
                   <label className="col-md-6 col-form-label">
-                    Investigacion educativa, desarrrollo tecnológico:
+                    Investigación educativa, desarrrollo tecnológico:
                   </label>
 
                   <div className="col">
@@ -1356,7 +1356,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
                 style={{ boxShadow: "0 2px 8px 1px rgba(64, 60, 67, 0.24)" }}
               >
                 <h2 className="h3">
-                  <b>Modificar Proyeccion Profesor Tiempo Completo</b>
+                  <b>Modificar Proyección Profesor Tiempo Completo</b>
                 </h2>
               </div>
               <br />
@@ -1413,7 +1413,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
                   <div className="row mb-4">
                     <div className="col">
                       <div className="form-outline">
-                        <label>Unidad Academica</label>
+                        <label>Unidad Académica</label>
                         <Select
                           isDisabled={true}
                           rules={{ required: true }}
@@ -1422,7 +1422,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
                           value={{
                             label:
                               this.state.unidad_academica === ""
-                                ? "Seleccione unidad academica..."
+                                ? "Seleccione unidad Académica..."
                                 : this.state.unidad_academica,
                           }}
                         />
@@ -1497,7 +1497,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
                         className="form-outline"
                         style={{ display: "block" }}
                       >
-                        <label>Nivel Academico</label>
+                        <label>Nivel Académico</label>
                         <Select
                           options={this.state.niveles}
                           onChange={(e) =>
@@ -1506,7 +1506,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
                           value={{
                             label:
                               this.state.grado_academico === ""
-                                ? "Seleccione nivel academico..."
+                                ? "Seleccione nivel Académico..."
                                 : this.state.grado_academico,
                           }}
                         />
@@ -1665,7 +1665,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
                   <div className="row mb-4">
                     <div className="col">
                       <div className="form-outline">
-                        <label>Asesorias Académicas:</label>
+                        <label>Asesorías Académicas:</label>
                         <div className="input-group">
                           <input
                             name="asesorias_academica"
@@ -1685,7 +1685,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
 
                     <div className="col">
                       <div className="form-outline">
-                        <label className="">Educacion Dual:</label>
+                        <label className="">Educación Dual:</label>
                         <div className="input-group">
                           <input
                             name="educacion_dual"
@@ -1833,7 +1833,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
                     <div className="col-12">
                       <div className="form-group row">
                         <label className="col-md-6 col-form-label">
-                          Investigacion educativa, desarrrollo tecnológico:
+                          Investigación educativa, desarrrollo tecnológico:
                         </label>
 
                         <div className="col">
@@ -1943,7 +1943,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
                         <b>OBSERVACIONES:</b>
                       </label>
                       <textarea
-                        placeholder="Ingrese observaciones de la proyeccion por asignatura..."
+                        placeholder="Ingrese observaciones de la proyección por asignatura..."
                         className="form-control"
                         value={this.state.observaciones}
                         onChange={this.onChangeObservacionesHandler}

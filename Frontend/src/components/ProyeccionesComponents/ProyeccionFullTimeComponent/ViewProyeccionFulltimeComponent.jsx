@@ -277,7 +277,7 @@ class ViewProyeccionFulltimeComponent extends Component {
                                 <div className="row">
                                     <div className="col">
                                         <div className="form-outline">
-                                            <label className="">Asesorias Académicas:</label>
+                                            <label className="">Asesorías Académicas:</label>
                                         </div>
                                     </div>
                                     <div className="col">
@@ -289,7 +289,7 @@ class ViewProyeccionFulltimeComponent extends Component {
                                 <div className="row">
                                     <div className="col">
                                         <div className="form-outline">
-                                            <label className="">Educacion Dual:</label>
+                                            <label className="">Educación Dual:</label>
                                         </div>
                                     </div>
                                     <div className="col">
@@ -456,7 +456,7 @@ class ViewProyeccionFulltimeComponent extends Component {
                             <div className="row">
                                 <div className="col-5">
                                     <div className="form-outline">
-                                        <label className="">Fecha y hora de creacion:</label>
+                                        <label className="">Fecha y hora de creación:</label>
                                     </div>
                                 </div>
                                 <div className="col">
@@ -481,7 +481,7 @@ class ViewProyeccionFulltimeComponent extends Component {
                             <div className="row">
                                 <div className="col-5">
                                     <div className="form-outline">
-                                        <label className="">Fecha y hora de ultima modificaion:</label>
+                                        <label className="">Fecha y hora de ultima modificación:</label>
                                     </div>
                                 </div>
                                 <div className="col">

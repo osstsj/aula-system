@@ -42,7 +42,7 @@ class ListUnidadComponent extends Component {
                     this.props.history.push('/list-unidad');
                 });
             } else {
-                swal("Oops!", "La carrera por unidad no es posible eliminar porque esta presente en otros modulos.\n" +
+                swal("Oops!", "La carrera por unidad no es posible eliminar porque está  presente en otros módulos.\n" +
                 "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
                 this.setState({
                     isModalOpen: false, // Cierra el modal después de eliminar

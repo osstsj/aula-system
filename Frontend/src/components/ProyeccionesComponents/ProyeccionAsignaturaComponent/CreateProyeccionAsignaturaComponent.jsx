@@ -1061,7 +1061,7 @@ onChangeBDisablerHandler = () => {
               <div className="row mb-4">
                 <div className="col">
                   <div className="form-outline">
-                    <label>Asesorias Académicas:</label>
+                    <label>Asesorías Académicas:</label>
                     <div className="input-group">
                       <input
                         parent={`extension_${index}`}
@@ -1082,7 +1082,7 @@ onChangeBDisablerHandler = () => {
 
                 <div className="col">
                   <div className="form-outline">
-                    <label className="">Educacion Dual:</label>
+                    <label className="">Educación Dual:</label>
                     <div className="input-group">
                       <input
                         parent={`extension_${index}`}
@@ -1233,7 +1233,7 @@ onChangeBDisablerHandler = () => {
               <div className="col-12">
                 <div className="form-group row">
                   <label className="col-md-6 col-form-label">
-                    Investigacion educativa, desarrrollo tecnológico:
+                    Investigación educativa, desarrrollo tecnológico:
                   </label>
 
                   <div className="col">
@@ -1376,7 +1376,7 @@ onChangeBDisablerHandler = () => {
                   <div className="row mb-4">
                     <div className="col">
                       <div className="form-outline">
-                        <label>Unidad Academica</label>
+                        <label>Unidad Académica</label>
                         <Select
                         readOnly
                           isDisabled={true}
@@ -1692,7 +1692,7 @@ onChangeBDisablerHandler = () => {
                   <div className="row mb-4">
                     <div className="col">
                       <div className="form-outline">
-                        <label>Asesorias Académicas:</label>
+                        <label>Asesorías Académicas:</label>
                         <div className="input-group">
                           <input
                             name="asesorias_academica"
@@ -1712,7 +1712,7 @@ onChangeBDisablerHandler = () => {
 
                     <div className="col">
                       <div className="form-outline">
-                        <label className="">Educacion Dual:</label>
+                        <label className="">Educación Dual:</label>
                         <div className="input-group">
                           <input
                             name="educacion_dual"
@@ -1860,7 +1860,7 @@ onChangeBDisablerHandler = () => {
                     <div className="col-12">
                       <div className="form-group row">
                         <label className="col-md-6 col-form-label">
-                          Investigacion educativa, desarrrollo tecnológico:
+                          Investigación educativa, desarrrollo tecnológico:
                         </label>
 
                         <div className="col">
@@ -1969,7 +1969,7 @@ onChangeBDisablerHandler = () => {
                         <b>OBSERVACIONES:</b>
                       </label>
                       <textarea
-                        placeholder="Ingrese observaciones de la proyeccion por asignatura..."
+                        placeholder="Ingrese observaciones de la proyeccin por asignatura..."
                         className="form-control"
                         value={this.state.observaciones}
                         onChange={this.onChangeObservacionesHandler}

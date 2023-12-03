@@ -43,7 +43,7 @@ class ListCarreraPorUnidadComponent extends Component {
                     this.props.history.push('/list-carrera_por_unidad');
                 });
             } else {
-                swal("Oops!", "La carrera por unidad no es posible eliminar porque esta presente en otros modulos.\n" +
+                swal("Oops!", "La carrera por unidad no es posible eliminar porque está  presente en otros módulos.\n" +
                 "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
 
                 this.setState({
@@ -67,7 +67,7 @@ class ListCarreraPorUnidadComponent extends Component {
             if (res.data === false) {
                 this.props.history.push(`update-carrera-por-unidad/${id}`);
             } else {
-                swal("Oops!","La carrera por unidad no es posible editar porque esta presente en otros modulos. \n" +
+                swal("Oops!","La carrera por unidad no es posible editar porque está  presente en otros módulos. \n" +
                 "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
             }
         }).catch(() => {
