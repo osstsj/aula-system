@@ -34,7 +34,7 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
     private final DocenteRepository docenteRepository;
     private final CarreraPorUnidadRepository carreraPorUnidadRepository;
     private final UnidadRepository unidadRepository;
-    private final ExtensionsFormAsignaturaRepository extensionsFormAsignaturaRepository;
+//    private final ExtensionsFormAsignaturaRepository extensionsFormAsignaturaRepository;
 
     private static FolioAsignaturaEntity folioAsignaturaEntity = null; //Singleton Pattern
     private static DocenteEntity docenteEntity = null;
