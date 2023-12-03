@@ -10,9 +10,9 @@ spring:
   application:
     name: backend
   datasource:
-    url: jdbc:postgresql://localhost:5432/aulasystem
+    url: jdbc:postgresql://localhost:5432/aula_system
     username: postgres
-    password:
+    password: aula-system
   jpa:
       hibernate:
          ddl-auto: create-drop
