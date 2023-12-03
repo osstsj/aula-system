@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import FulltimeProyeccionService from '../../../../services/Proyecciones/FulltimeProyeccionService';
+import AsignaturaProyeccionService from '../../../../services/Proyecciones/AsignaturaProyeccionService';
 import '../../../StyleGlobal/Style.css';
-import * as XLSX from 'xlsx';  // Importa la librería XLSX
-import FolioFulltimeService from '../../../../services/Proyecciones/FolioFulltimeService';
+import FolioAsignaturaService from '../../../../services/Proyecciones/FolioAsignaturaService';
 import Select from 'react-select'
 import UnidadService from "../../../../services/Control/UnidadService";
-import DocenteService from '../../../../services/Control/DocenteService';
+import DocenteService from "../../../../services/Control/DocenteService";
 
-
-class ComparacionFulltimeComponent extends Component {
+class ComparacionAsigntaturaDocenteComponent extends Component {
     constructor(props) {
         super(props);
 
@@ -20,10 +18,14 @@ class ComparacionFulltimeComponent extends Component {
 
             folio1: '',
             folio2: '',
+
+            nombre_Ua: null,
+            nombre_Docente: null,
+            com_Subtotal_1: null,
+            com_Subtotal_2: null,
+            com_Total: null,
             unidad: '',
             docente: '',
-
-   
 
             id_folio_1: null,
             id_folio_2: null,
@@ -32,33 +34,30 @@ class ComparacionFulltimeComponent extends Component {
             unidades: [],
             comparaciones:[],
 
-            nombre_Ua: null,
+            bandera: null,
+            com_Subtotal_1: null,
+            com_Subtotal_2: null,
+            com_Total: null,
             nombre_Docente: null,
-            horas_Grupo_1: null,
-            horas_Grupo_2: null,
-            com_Horas_Grupo: null,
+            nombre_Ua: null,
+            subtotal_1_1: null,
+            subtotal_1_2: null,
+            subtotal_2_1: null,
+            subtotal_2_2: null,
             total_1: null,
             total_2: null,
-            com_Total: null,
-            bandera: null,
 
         };
         this.onChangeUnidadHandler = this.onChangeUnidadHandler.bind(this);
 
-    }
 
- 
-    viewProyeccion(id_folio) {
-        this.props.history.push(`/list-proyeccion_asignatura/${id_folio}`);
     }
 
 
     componentDidMount(){
-
         this.getUnidadList();
     }
 
-    
     async getUnidadList() {
         let options = null;
 
@@ -78,7 +77,7 @@ class ComparacionFulltimeComponent extends Component {
 
     async getFolioById(id_unidad) {
         let options = null;
-        await FolioFulltimeService.getAllFoliosByUA(id_unidad).then(res => { 
+        await FolioAsignaturaService.getAllFoliosByUA(id_unidad).then(res => { 
             const data = res.data;
             options = data.map(d => ({
                 "value": d.folio,
@@ -95,21 +94,24 @@ class ComparacionFulltimeComponent extends Component {
     }
 
 
-    async showListComparacionFulltime(id_folio_1, id_folio_2, id_docente) {
+    async showListComparacionAsignatura(id_folio_1, id_folio_2, id_docente) {
         let options = null;
 
-        await FulltimeProyeccionService.showComparativeFulltomeByIdsFoliosAndIdDocente(id_folio_1, id_folio_2, id_docente).then(res => {
+        await AsignaturaProyeccionService.showComparativeAsignaturaByIdsFoliosAndIdDocente(id_folio_1, id_folio_2, id_docente).then(res => {
             options = res.data;
             this.setState({
-                nombre_Ua: options.nombre_Ua,
+                bandera: options.bandera,
+                com_Subtotal_1: options.com_Subtotal_1,
+                com_Subtotal_2: options.com_Subtotal_2,
+                com_Total: options.com_Total,
                 nombre_Docente: options.nombre_Docente,
-                horas_Grupo_1: options.horas_Grupo_1,
-                horas_Grupo_2: options.horas_Grupo_2,
-                com_Horas_Grupo: options.com_Horas_Grupo,
+                nombre_Ua: options.nombre_Ua,
+                subtotal_1_1: options.subtotal_1_1,
+                subtotal_1_2: options.subtotal_1_2,
+                subtotal_2_1: options.subtotal_2_1,
+                subtotal_2_2: options.subtotal_2_2,
                 total_1: options.total_1,
                 total_2: options.total_2,
-                com_Total: options.com_Total,
-                bandera: options.bandera,
             })
         }).catch(() => {
             alert("Error al intentar traer las comparaciones...");
@@ -117,9 +119,10 @@ class ComparacionFulltimeComponent extends Component {
         });
     }
 
+
     async getDocenteList(id_unidad) {
         let options = null;
-        await DocenteService.getAllDocentesByCategoriaPTCFulltime(id_unidad).then(res => {
+        await DocenteService.getAllDocentesByCategoriaPTCAsignatura(id_unidad).then(res => {
             const data = res.data;
             options = data.map(d => ({
                 "value": d.nombre_completo,
@@ -133,14 +136,15 @@ class ComparacionFulltimeComponent extends Component {
         });
     }
 
+
     onChangeFolio1Handler = (event) => {
         this.setState({ folio1: event.label });
         this.setState({ id_folio_1: event.id});
 
-        if ((this.state.id_docente === null) || (this.state.id_folio_2 === null)) {
+        if ((this.state.id_docente === null) || (this.state.id_folio_2 === null))  {
             return;
         } else {
-            this.showListComparacionFulltime(event.id, this.state.id_folio_2, this.state.id_docente );
+            this.showListComparacionAsignatura(event.id, this.state.id_folio_2, this.state.id_docente);
         }
     }
     onChangeFolio2Handler = (event) => {
@@ -150,7 +154,7 @@ class ComparacionFulltimeComponent extends Component {
         if ((this.state.id_docente === null) || (this.state.id_folio_1 === null))  {
             return;
         } else {
-            this.showListComparacionFulltime(this.state.id_folio_1, event.id, this.state.id_docente );
+            this.showListComparacionAsignatura(this.state.id_folio_1, event.id, this.state.id_docente);
         }
     }
 
@@ -159,7 +163,7 @@ class ComparacionFulltimeComponent extends Component {
         this.setState({folio2: ''});
         this.setState({docente: ''});
         this.setState({ unidad: event.label });
-        
+
         this.getFolioById(event.id);
         this.getDocenteList(event.id);
     }
@@ -171,12 +175,11 @@ class ComparacionFulltimeComponent extends Component {
         if ((this.state.id_folio_1 === null) || (this.state.id_folio_2 === null)) {
             return;
         } else {
-            this.showListComparacionFulltime(this.state.id_folio_1, this.state.id_folio_2, event.id );
+            this.showListComparacionAsignatura(this.state.id_folio_1, this.state.id_folio_2, event.id );
         }
     }
 
-
-
+ 
     render() {
         const boton = {
             marginLeft: '1rem',
@@ -185,19 +188,20 @@ class ComparacionFulltimeComponent extends Component {
 
         return (
             <div className="container">
-                <h2 className="text-center mt-5 mb-5 Title">COMPARACION DE FOLIOS DE PROYECCIONES ACADEMICAS, DE DOCENTE DE TIEMPO COMPLETO DEL TECNOLÓGICO SUPERIOR DE JALISCO</h2>
-                    <div className="row justify-content-center mb-4">
-                        <fieldset className="border border-info p-0 mb-3">
-                            {/* <legend className="w-auto text-left h6">Referencia</legend> */}
-                            <div className="col" style={{"text-align": "center"}}>
-                                <span><small><b>Selección:</b> Folio 1 (Anterior: [ZA - 1 - 2024 A]), Folio 2 (Reciente:[ ZA - 4 - 2024 B ])<br /></small></span>
-                                <span><small><b>Cálculo Comparación:</b> [ ZA - 4 - 2024 B ] (Horas Frente a Grupo) - [ZA - 1 - 2024 A] (Horas Frente a Grupo)</small></span><br />
-                                <span><small><b>Bandera:</b> Rojo: comparación menor a 5 | Negro: comparación mayor que o igual 0 y menor que 5 | Verde: comparación mayor que 5</small></span>
-                            </div>
-                        </fieldset>
-                    </div>
-                    <div className="row mb-3">
-                        
+                <h2 className="text-center mt-5 mb-3 Title">COMPARACION DE FOLIOS DE PROYECCIONES ACADEMICAS, DE DOCENTE POR ASIGNATURA DEL TECNOLÓGICO SUPERIOR DE JALISCO</h2>
+                <div className="row justify-content-center mb-4">
+                    <fieldset className="border border-info p-0 mb-3">
+                        {/* <legend className="w-auto text-left h6">Referencia</legend> */}
+                        <div className="col" style={{"text-align": "center"}}>
+                            <span><small><b>Selección:</b> Folio 1 (Anterior: [ZA - 1 - 2024 A]), Folio 2 (Reciente:[ ZA - 4 - 2024 B ])<br /></small></span>
+                            <span><small><b>Cálculo Comparación:</b> [ ZA - 4 - 2024 B ] - [ZA - 1 - 2024 A]</small></span><br />
+                            <span><small><b>Bandera:</b> Rojo: comparación menor a 5 | Negro: comparación mayor que o igual 0 y menor que 5 | Verde: comparación mayor que 5</small></span>
+                        </div>
+                       
+                    </fieldset>
+                </div>
+
+                <div className="row mb-3">                     
                         <div className="col-3">
                             <div>
                                 <Select
@@ -247,23 +251,28 @@ class ComparacionFulltimeComponent extends Component {
                                 <th></th>
                                 <th className="table-title">UA</th>
                                 <th className="table-title">Nombre del Docente</th>
-                                <th className="table-title"> COM Horas Frente a Grupo <br /> Horas de apoyo a la docencia <br /> {this.state.folio1}</th>
-                                <th className="table-title"> COM Horas Frente a Grupo <br /> Horas de apoyo a la docencia <br /> {this.state.folio2}</th>
-                                <th className="table-title"> Comparacion Horas Frente a Grupo <br /> Horas de apoyo a la docencia <br /> ({this.state.folio2}) - ({this.state.folio1})</th>
+                                <th className="table-title">COM Subtotal1 <br /> Horas de apoyo a la docencia <br />{this.state.folio1}</th>
+                                <th className="table-title">COM Subtotal1 <br /> Horas de apoyo a la docencia <br /> {this.state.folio2}</th>
+                                <th className="table-title">Comparativa Subtotal1 <br /> Horas de apoyo a la docencia <br /> ({this.state.folio2}) - ({this.state.folio1})</th>
+                                <th className="table-title">COM Subtotal2 <br /> Horas Institucional <br /> {this.state.folio1}</th>
+                                <th className="table-title">COM Subtotal2 <br /> Horas Institucional <br /> {this.state.folio2}</th>
+                                <th className="table-title">Comparativa Subtotal2 <br /> Horas Institucional <br /> ({this.state.folio2}) - ({this.state.folio1})</th>
                                 <th className="table-title">COM Total <br /> {this.state.folio1}</th>
                                 <th className="table-title">COM Total <br /> {this.state.folio2}</th>
                                 <th className="table-title">Comparativa Total <br /> ({this.state.folio2}) - ({this.state.folio1})</th>
                             </tr>
                         </thead>
                         <tbody>
-            
                                 <tr>
                                     <td></td>
                                     <td className={this.state.bandera === 'ROJO' ? 'table-conten text-danger' : this.state.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{this.state.nombre_Ua}</td>
                                     <td className={this.state.bandera === 'ROJO' ? 'table-conten text-danger' : this.state.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{this.state.nombre_Docente}</td>
-                                    <td className={this.state.bandera === 'ROJO' ? 'table-conten text-danger' : this.state.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{this.state.horas_Grupo_1}</td>
-                                    <td className={this.state.bandera === 'ROJO' ? 'table-conten text-danger' : this.state.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{this.state.horas_Grupo_2}</td>
-                                    <td className={this.state.bandera === 'ROJO' ? 'table-conten text-danger' : this.state.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{this.state.com_Horas_Grupo}</td>
+                                    <td className={this.state.bandera === 'ROJO' ? 'table-conten text-danger' : this.state.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{this.state.subtotal_1_1}</td>
+                                    <td className={this.state.bandera === 'ROJO' ? 'table-conten text-danger' : this.state.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{this.state.subtotal_1_2}</td>
+                                    <td className={this.state.bandera === 'ROJO' ? 'table-conten text-danger' : this.state.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{this.state.com_Subtotal_1}</td>
+                                    <td className={this.state.bandera === 'ROJO' ? 'table-conten text-danger' : this.state.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{this.state.subtotal_2_1}</td>
+                                    <td className={this.state.bandera === 'ROJO' ? 'table-conten text-danger' : this.state.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{this.state.subtotal_2_2}</td>
+                                    <td className={this.state.bandera === 'ROJO' ? 'table-conten text-danger' : this.state.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{this.state.com_Subtotal_2}</td>
                                     <td className={this.state.bandera === 'ROJO' ? 'table-conten text-danger' : this.state.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{this.state.total_1}</td>
                                     <td className={this.state.bandera === 'ROJO' ? 'table-conten text-danger' : this.state.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{this.state.total_2}</td>
                                     <td className={this.state.bandera === 'ROJO' ? 'table-conten text-danger' : this.state.bandera === 'VERDE' ? 'table-conten text-success' : 'table-conten'}>{this.state.com_Total}</td>
@@ -277,4 +286,4 @@ class ComparacionFulltimeComponent extends Component {
 }
 
 
-export default ComparacionFulltimeComponent;
+export default ComparacionAsigntaturaDocenteComponent;

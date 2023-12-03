@@ -6,12 +6,14 @@ import edu.tsj.aula.persistance.models.control.entity.CarreraPorUnidadEntity;
 import edu.tsj.aula.persistance.models.control.entity.DocenteEntity;
 import edu.tsj.aula.persistance.models.control.entity.UnidadEntity;
 import edu.tsj.aula.persistance.models.projections.entity.asignatura.IComparacionAsignaturaDto;
+import edu.tsj.aula.persistance.models.projections.entity.asignatura.extensionform.ExtensionFormAsignaturaEntity;
 import edu.tsj.aula.persistance.models.projections.entity.folio.FolioAsignaturaEntity;
 import edu.tsj.aula.persistance.models.projections.entity.asignatura.AsignaturaEntity;
 import edu.tsj.aula.persistance.repository.control.CarreraPorUnidadRepository;
 import edu.tsj.aula.persistance.repository.control.DocenteRepository;
 import edu.tsj.aula.persistance.repository.control.UnidadRepository;
 import edu.tsj.aula.persistance.repository.projections.AsignaturaRepository;
+import edu.tsj.aula.persistance.repository.projections.ExtensionsFormAsignaturaRepository;
 import edu.tsj.aula.persistance.repository.projections.folio.FolioAsignaturaRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +22,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @AllArgsConstructor
@@ -33,11 +34,13 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
     private final DocenteRepository docenteRepository;
     private final CarreraPorUnidadRepository carreraPorUnidadRepository;
     private final UnidadRepository unidadRepository;
+    private final ExtensionsFormAsignaturaRepository extensionsFormAsignaturaRepository;
 
     private static FolioAsignaturaEntity folioAsignaturaEntity = null; //Singleton Pattern
     private static DocenteEntity docenteEntity = null;
     private static CarreraPorUnidadEntity carreraPorUnidadEntity = null;
     private static UnidadEntity unidadAcademica = null;
+    private static ExtensionFormAsignaturaEntity extensionFormAsignaturaEntity = null;
 
     @Transactional
     @Override
@@ -58,11 +61,16 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
         unidadAcademica = unidadRepository.findById(id_unidad).orElseThrow(
                 ()-> new ResourceNotFoundException((" No se encontro unidad academica... con el id: ".concat(id_unidad.toString())),
                         HttpStatus.NOT_FOUND));
+
+
         try {
             asignaturaRequestDto.setFolio(folioAsignaturaEntity);
             asignaturaRequestDto.setUnidad_academica(unidadAcademica);
             asignaturaRequestDto.getProfe_asignatura().setNombre_docente(docenteEntity);
             asignaturaRequestDto.getProfe_asignatura().setClave_programa(carreraPorUnidadEntity);
+
+//            List<ExtensionFormAsignaturaEntity> extensionFormAsignaturaEntityList = getExtensionFormAsignaturaEntities(asignaturaRequestDto);
+
 
             String tipoAoB = asignaturaRequestDto.getHoras_sustantivas_atencion_alumnos().getHoras_asignatura().getA() == 0 ?
                     "B" : "A";
@@ -95,12 +103,27 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
             docenteEntity.setUltima_horas(total);
             docenteEntity.setFolio_ultimo_registro_y_tipo_folio(folioAsignaturaEntity.getFolio().concat(" - ").concat("Proyección Asignatura"));
 
-            return asignaturaRepository.save(asignaturaRequestDto);
+//            asignaturaRequestDto.setExtensiones(null); // resetea
+            AsignaturaEntity asignaturaEntity = asignaturaRepository.save(asignaturaRequestDto);
+//            extensionFormAsignaturaEntityList.forEach(extensiones -> {
+//                asignaturaEntity.getExtensiones().add(extensiones);
+//            });
+
+            return asignaturaEntity;
+
         } catch (Exception e) {
             log.error("Error al intentar crear la proyeccion asignatura con el DTO: {}", asignaturaRequestDto.toString());
             throw new RuntimeException("Runtime Exception: ".concat(e.getMessage()));
         }
     }
+
+//    private static List<ExtensionFormAsignaturaEntity> getExtensionFormAsignaturaEntities(AsignaturaEntity asignaturaRequestDto) {
+//        List<ExtensionFormAsignaturaEntity> extensionFormAsignaturaEntityList = new ArrayList<>();
+//        if (!asignaturaRequestDto.getExtensiones().isEmpty()) {
+//             extensionFormAsignaturaEntityList = new ArrayList<>(asignaturaRequestDto.getExtensiones());
+//        }
+//        return extensionFormAsignaturaEntityList;
+//    }
 
     @Transactional
     @Override

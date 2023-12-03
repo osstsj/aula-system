@@ -212,7 +212,7 @@ class ComparacionFulltimeComponent extends Component {
                             <div className="col" style={{"text-align": "center"}}>
                                 <span><small><b>Selección:</b> Folio 1 (Anterior: [ZA - 1 - 2024 A]), Folio 2 (Reciente:[ ZA - 4 - 2024 B ])<br /></small></span>
                                 <span><small><b>Cálculo Comparación:</b> [ ZA - 4 - 2024 B ] (Horas Frente a Grupo) - [ZA - 1 - 2024 A] (Horas Frente a Grupo)</small></span><br />
-                                <span><small><b>Bandera:</b> Rojo: comparación menor a 5 | Negro: comparación mayor que 0 y menor que 5 | Verde: comparación mayor que 5</small></span>
+                                <span><small><b>Bandera:</b> Rojo: comparación menor a 5 | Negro: comparación mayor que o igual 0 y menor que 5 | Verde: comparación mayor que 5</small></span>
                             </div>
                            
                         </fieldset>

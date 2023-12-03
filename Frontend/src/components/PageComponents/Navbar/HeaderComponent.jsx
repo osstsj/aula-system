@@ -110,7 +110,10 @@ class HeaderComponent extends Component {
                                         <hr />
                                         <a className="dropdown-item" href="/comparacion-asignatura">
                                             Comparar Folios Asignatura
-                                        </a>                                                                        
+                                        </a>     
+                                        <a className="dropdown-item" href="/comparacion-asignatura-docente">
+                                            Comparar Folios Docente Asignatura
+                                        </a>                                                                     
                                     </div>
                                 </div>
                                 <div className="dropdown-submenu">

@@ -2,6 +2,7 @@ package edu.tsj.aula.persistance.models.projections.entity.asignatura;
 
 import com.fasterxml.jackson.annotation.*;
 import edu.tsj.aula.persistance.models.control.entity.UnidadEntity;
+import edu.tsj.aula.persistance.models.projections.entity.asignatura.extensionform.ExtensionFormAsignaturaEntity;
 import edu.tsj.aula.persistance.models.projections.entity.folio.FolioAsignaturaEntity;
 import edu.tsj.aula.persistance.models.projections.entity.asignatura.profesor.ProfeAsignatura;
 import edu.tsj.aula.persistance.models.projections.entity.asignatura.sustantivas.HorasSustantivasAtencionAlumnosAsignatura;
@@ -18,7 +19,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -74,6 +77,24 @@ public class AsignaturaEntity  implements Serializable {
     @CreationTimestamp
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fecha_creacion;
+
+
+//    @ManyToMany(fetch = FetchType.LAZY,
+//            cascade = {
+//                    CascadeType.PERSIST,
+//                    CascadeType.MERGE
+//            })
+//    @JoinTable(
+//            name = "proyeccion_asignatura_extensiones",
+//            joinColumns ={
+//                    @JoinColumn(name = "id_asignatura")
+//            },
+//            inverseJoinColumns = {
+//                    @JoinColumn(name = "id_extension")
+//            }
+//    )
+//    private List<ExtensionFormAsignaturaEntity> extensiones = new ArrayList<>();
+
 
     // ------- seccion de cambios ------------
 

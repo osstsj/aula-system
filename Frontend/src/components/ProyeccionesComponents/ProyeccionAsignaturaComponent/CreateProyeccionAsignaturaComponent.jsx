@@ -2,8 +2,6 @@ import React, { Component } from "react";
 
 import AsignaturaProyeccionService from '../../../services/Proyecciones/AsignaturaProyeccionService';
 import FolioAsignaturaService from '../../../services/Proyecciones/FolioAsignaturaService';
-import CarreraService from "../../../services/Control/CarreraService";
-import UnidadService from "../../../services/Control/UnidadService";
 
 import Select from "react-select";
 import "../../StyleGlobal/Style.css";
@@ -394,16 +392,17 @@ getTipoUnidad() {
   }
 
   onChangeTipoUnidadHandler = (event) => {
-    if (event.value === 2) {
-      this.getAllExtensionsByUnidadId();
-    } else {
-      this.setState({
-        show_extensions: false,
-      });
-    }
-    this.setState({
-      tipo_unidad: event.label,   seleccionadoTipoUA: true,  errorTipoUA: null,
-    });
+    this.setState({ tipo_unidad: event.label });
+    // if (event.value === 2) {
+    //   this.getAllExtensionsByUnidadId();
+    // } else {
+    //   this.setState({
+    //     show_extensions: false,
+    //   });
+    // }
+    // this.setState({
+    //   tipo_unidad: event.label,   seleccionadoTipoUA: true,  errorTipoUA: null,
+    // });
   };
 
   onChangeFolioHandler = (event) => {

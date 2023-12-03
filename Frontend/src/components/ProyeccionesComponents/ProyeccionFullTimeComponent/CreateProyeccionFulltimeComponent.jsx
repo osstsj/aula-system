@@ -335,6 +335,8 @@ class CreateProyeccionFulltimeComponent extends Component {
         ];
     
         this.setState({ tipos_unidades: tiposlList });
+
+        console.log(JSON.stringify(this.state.extensions));
     }
 
     getNivel() {
@@ -369,16 +371,17 @@ class CreateProyeccionFulltimeComponent extends Component {
     }
 
     onChangeTipoUnidadHandler = (event) => {
-        if (event.value === 2) {
-            this.getAllExtensionsByUnidadId();
-            } else {
-            this.setState({
-                show_extensions: false,
-            });
-        }
-        this.setState({
-        tipo_unidad: event.label,   seleccionadoTipoUA: true,  errorTipoUA: null,
-        });
+      this.setState({ tipo_unidad: event.label });
+        // if (event.value === 2) {
+        //     this.getAllExtensionsByUnidadId();
+        //     } else {
+        //     this.setState({
+        //         show_extensions: false,
+        //     });
+        // }
+        // this.setState({
+        // tipo_unidad: event.label,   seleccionadoTipoUA: true,  errorTipoUA: null,
+        // });
     };
 
     onChangeFolioHandler = (event) => {

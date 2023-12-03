@@ -55,6 +55,7 @@ import ViewProyeccionFulltimeComponent from './components/ProyeccionesComponents
 import UpdateProyeccionFulltimeComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/UpdateProyeccionFulltimeComponent';
 
 import ComparacionAsigntaturaComponent from './components/ProyeccionesComponents/ProyeccionAsignaturaComponent/ComparacionAsignaturaComponent/ComparacionAsigntaturaComponent';
+import ComparacionAsigntaturaDocenteComponent from './components/ProyeccionesComponents/ProyeccionAsignaturaComponent/ComparacionAsignaturaComponent/ComparacionAsigntaturaDocenteComponent';
 import ComparacionFulltimeComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/ComparacionFulltimeComponent/ComparacionFulltimeComponent'
 import ComparacionFulltimeDocenteComponent from './components/ProyeccionesComponents/ProyeccionFullTimeComponent/ComparacionFulltimeComponent/ComparacionFulltimeDocenteComponent'
 
@@ -145,6 +146,7 @@ function App() {
 
                           {/* ------------- Comparacions--------- */}
                           <Route path = "/comparacion-asignatura" component={ComparacionAsigntaturaComponent}></Route>
+                          <Route path = "/comparacion-asignatura-docente" component={ComparacionAsigntaturaDocenteComponent}></Route>
                           <Route path = "/comparacion-fulltime" component={ComparacionFulltimeComponent}></Route>
                           <Route path = "/comparacion-fulltime-docente" component={ComparacionFulltimeDocenteComponent}></Route>
 
