@@ -94,12 +94,12 @@ class CreateProyeccionAsignaturaComponent extends Component {
   createProyeccionAsignatura = (e) => {
     const codigoNomina = e.target.value;
 
-    if (!this.state.seleccionadoTipoUA) {
-        this.setState({
-          errorTipoUA: 'Por favor, seleccione una opción del tipo de UA.',
-        });
-        return;
-      }
+    // if (!this.state.seleccionadoTipoUA) {
+    //     this.setState({
+    //       errorTipoUA: 'Por favor, seleccione una opción del tipo de UA.',
+    //     });
+    //     return;
+    //   }
     
       // Verificar si no se ha seleccionado una opción en la "Clave de Programa Educativo"
       if (!this.state.seleccionadoClavePrograma) {

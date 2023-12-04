@@ -37,12 +37,12 @@ class ListUnidadComponent extends Component {
                         colegiaturaToDeleteId: null, // Restablece el ID de la colegiatura
                     });
                 }).catch(() => {
-                    swal("Oops!","Error al intentar eliminar la carrera por unidad...\n" +
+                    swal("Oops!","Error al intentar eliminar la unidad...\n" +
                     "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
                     this.props.history.push('/list-unidad');
                 });
             } else {
-                swal("Oops!", "La carrera por unidad no es posible eliminar porque está  presente en otros módulos.\n" +
+                swal("Oops!", "La unidad no es posible eliminar porque está  presente en otros módulos.\n" +
                 "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
                 this.setState({
                     isModalOpen: false, // Cierra el modal después de eliminar
@@ -71,7 +71,7 @@ class ListUnidadComponent extends Component {
         UnidadService.getAllUnidades().then((res) => {
             this.setState({unidades: res.data});
         }).catch(() => {
-            swal("Oops!","Error al intentar traer las carreras por unidad...", "error");
+            swal("Oops!","Error al intentar traer la unidad...", "error");
              this.props.history.push('/list-unidad');
         });
     }

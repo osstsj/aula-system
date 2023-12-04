@@ -38,12 +38,12 @@ class ListCarreraComponent extends Component {
                         unidadeToDeleteId: null, // Restablece el ID de la colegiatura
                     });
                 }).catch(() => {
-                    swal("Oops!","Error al intentar eliminar la carrera por unidad...\n" +
+                    swal("Oops!","Error al intentar eliminar la carrera...\n" +
                     "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
                     this.props.history.push('/list-carrera');
                 });
             } else {
-                swal("Oops!", "La carrera por unidad no es posible eliminar porque está  presente en otros módulos.\n" +
+                swal("Oops!", "La carrera no es posible eliminar porque está  presente en otros módulos.\n" +
                 "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
 
                 this.setState({
@@ -53,7 +53,7 @@ class ListCarreraComponent extends Component {
                     this.props.history.push('/list-carrera');
                 }
         }).catch(() => {
-            alert("Error al intentar eliminar la carrera por unidad...");
+            alert("Error al intentar eliminar la carrera...");
             this.props.history.push('/list-carrera');
         });
     }
