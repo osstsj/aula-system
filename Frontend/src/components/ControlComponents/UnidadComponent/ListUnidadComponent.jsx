@@ -38,12 +38,12 @@ class ListUnidadComponent extends Component {
                     });
                 }).catch(() => {
                     swal("Oops!","Error al intentar eliminar la unidad...\n" +
-                    "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
+                    "Por favor verifique: Proyecciones Asignatura ó Tiempo Completo.", "error");
                     this.props.history.push('/list-unidad');
                 });
             } else {
                 swal("Oops!", "La unidad no es posible eliminar porque está  presente en otros módulos.\n" +
-                "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
+                "Por favor verifique: Proyecciones Asignatura ó Tiempo Completo.", "error");
                 this.setState({
                     isModalOpen: false, // Cierra el modal después de eliminar
                     colegiaturaToDeleteId: null}) // Restablece el ID de la colegiatura)
@@ -51,7 +51,7 @@ class ListUnidadComponent extends Component {
                 this.props.history.push('/list-unidad');
             }
         }).catch(() => {
-            alert("Error al intentar eliminar la unida academica...");
+            alert("Error al intentar eliminar la unidad academica...");
             this.props.history.push('/list-unidad');
         });            
     }

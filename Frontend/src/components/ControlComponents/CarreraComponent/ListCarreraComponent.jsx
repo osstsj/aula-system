@@ -39,12 +39,12 @@ class ListCarreraComponent extends Component {
                     });
                 }).catch(() => {
                     swal("Oops!","Error al intentar eliminar la carrera...\n" +
-                    "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
+                    "Por favor verifique: Proyecciones Asignatura ó Tiempo Completo.", "error");
                     this.props.history.push('/list-carrera');
                 });
             } else {
                 swal("Oops!", "La carrera no es posible eliminar porque está  presente en otros módulos.\n" +
-                "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
+                "Por favor verifique: Proyecciones Asignatura ó Tiempo Completo.", "error");
 
                 this.setState({
                     isModalOpen: false, // Cierra el modal después de eliminar
@@ -71,7 +71,7 @@ class ListCarreraComponent extends Component {
         CarreraService.getAllCarreras().then((res) => {
             this.setState({ carreras: res.data });
         }).catch(() => {
-            swal("Oops!","Error al intentar traer las carreras por unidad...", "error");
+            swal("Oops!","Error al intentar traer las carreras...", "error");
             this.props.history.push('/list-carrera');
         });
     }

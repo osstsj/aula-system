@@ -199,6 +199,8 @@ class UpdateProyeccionFulltimeComponent extends Component {
                 id_docente: fulltime.profesor_fulltime.nombre_docente.id,
                 id_carrera: fulltime.profesor_fulltime.clave_programa.id,
                 id_folio: fulltime.folio.id,
+
+                disableAll: true
                 
         })
 
@@ -207,24 +209,31 @@ class UpdateProyeccionFulltimeComponent extends Component {
         this.getHorasAcademias_secretario();
         this.getFolioList();
         this.getCarreraList();
+        this.setUpPoS();
         this.getTipoUnidad();
     }).catch(() => {
       alert("Error al intentar traer la proyeccion tiempo completo");
       this.props.history.push('/');
-  })
+    })
         
         
     }
 
 
     setUpPoS() {
+      if (this.state.disableAll === true) {
+          this.setState({disablePresidente: false}); // radiobutton
+          this.setState({disableSecretario: false});
+      } else {
         if (this.state.presidente !== 0) { 
-            this.setState({disablePresidente: true}); // radiobutton
-            this.setState({disableSecretario: false});
+          this.setState({disablePresidente: true}); // radiobutton
+          this.setState({disableSecretario: false});
         } else {
             this.setState({disableSecretario: true});
             this.setState({disablePresidente: false});
         }
+      }
+        
     }
 
     async getCarreraList() {
@@ -288,7 +297,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
         // tiempo (async), y se tiene que delegar a otra funcion para que siga la ejecucion en secuncia...
         // y se optenga el valor el en prop de categoria.
 
-        this.setUpPoS(); // debido a que this.state, es una funcion asyc, se debe agregar aqui para que realize su tarea...
+        // this.setUpPoS(); // debido a que this.state, es una funcion asyc, se debe agregar aqui para que realize su tarea...
     }
     async getAllProyeccionesToFilterDocente(id_folio) {
         let fulltimeList = [];
@@ -318,8 +327,6 @@ class UpdateProyeccionFulltimeComponent extends Component {
         //  use the second argument of setState, which is a callback function.
           this.setState({ docentes: updatedDocentes });
     }
-
-
     async getDocenteList(id_unidad) {
         let options = null;
         await DocenteService.getAllDocentesByCategoriaPTCFulltime(id_unidad).then(res => {
@@ -378,10 +385,6 @@ class UpdateProyeccionFulltimeComponent extends Component {
             this.props.history.push("/");
           });
       }
-
-
-
-
     async getAllExtensionsByUnidadId() {
         await ExtensionsService.getAllExtensionsByUnidadId(this.state.id_unidad)
           .then((res) => {
@@ -571,7 +574,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
         }
     });
     this.setState({
-        total_hours: 0,
+        // total_hours: 0,
         cumulative_hours: 0,
         horas_frente_grupo: 0,
         presidente: 0,
@@ -770,6 +773,18 @@ class UpdateProyeccionFulltimeComponent extends Component {
 
      // Método para manejar el cambio en un campo de entrada
   handleInputChange = (event) => {
+    if (this.state.disableAll === true) {
+      if (this.state.presidente !== 0) { 
+        this.setState({disablePresidente: true}); // radiobutton
+        this.setState({disableSecretario: false});
+      } else {
+        this.setState({disableSecretario: true});
+        this.setState({disablePresidente: false});
+      }
+      this.cleaningHours();
+      this.setState({disableAll: false}); 
+    }
+
     const { name, value } = event.target;
     const { extensions } = this.state;
     const parentValue = event.target.getAttribute('parent');
@@ -826,6 +841,11 @@ class UpdateProyeccionFulltimeComponent extends Component {
   };
 
   onChangePresidenteHandler = (event) => {
+    if(this.state.disableAll === true) {
+      this.cleaningHours();
+      this.setState({disableAll : false});
+    }
+
     if (
       parseInt(event.label || 0) <=
       this.state.total_hours - (this.state.total - this.state.presidente)
@@ -873,6 +893,11 @@ class UpdateProyeccionFulltimeComponent extends Component {
   };
 
   onChangeSecretarioHandler = (event) => {
+    if(this.state.disableAll === true) {
+      this.cleaningHours();
+      this.setState({disableAll : false});
+    }
+
     if (
       parseInt(event.label || 0) >
       this.state.total_hours - (this.state.total - this.state.secretario)
@@ -1673,6 +1698,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
                         <label>Asesorías Académicas:</label>
                         <div className="input-group">
                           <input
+                          readOnly={this.state.disableAll}
                             name="asesorias_academica"
                             type="number"
                             className="form-control"
@@ -1693,6 +1719,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
                         <label className="">Educación Dual:</label>
                         <div className="input-group">
                           <input
+                          readOnly={this.state.disableAll}
                             name="educacion_dual"
                             type="number"
                             className="form-control"
@@ -1715,6 +1742,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
                         <label>Residencias Profesionales:</label>
                         <div className="input-group">
                           <input
+                          readOnly={this.state.disableAll}
                             name="residencias_profesionales"
                             type="number"
                             className="form-control"
@@ -1735,6 +1763,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
                         <label className="">Titulación:</label>
                         <div className="input-group">
                           <input
+                          readOnly={this.state.disableAll}
                             name="titulacion"
                             type="number"
                             className="form-control"
@@ -1755,6 +1784,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
                         <label className="">Tutorias:</label>
                         <div className="input-group">
                           <input
+                          readOnly={this.state.disableAll}
                             name="tutorias"
                             type="number"
                             className="form-control"
@@ -1780,6 +1810,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
                         <div className="col">
                           <div className="input-group">
                             <input
+                            readOnly={this.state.disableAll}
                               name="actividades_complementarias"
                               type="number"
                               className=" form-control"
@@ -1844,6 +1875,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
                         <div className="col">
                           <div className="input-group">
                             <input
+                            readOnly={this.state.disableAll}
                               name="invesigacion_educativa"
                               type="number"
                               placeholder="Subtotal 1 reactivo"
@@ -1868,6 +1900,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
                         <label className="">Apoyo Operativo:</label>
                         <div className="input-group">
                           <input
+                          readOnly={this.state.disableAll}
                             name="apoyo_operativo"
                             type="number"
                             className="form-control"

@@ -65,6 +65,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
 
                     // academias
                     presidente: 0,
+                    auxPresidente: 0,
                     secretario: 0,
 
                     // asesorias
@@ -278,13 +279,19 @@ class UpdateProyeccionAsignaturaComponent extends Component {
     }
 
     setUpPoS() {
-        if (this.state.presidente !== 0) { 
-            this.setState({disablePresidente: true}); // radiobutton
+        if (this.state.disableAll === true) {
+            this.setState({disablePresidente: false}); // radiobutton
             this.setState({disableSecretario: false});
-        } else {
-            this.setState({disableSecretario: true});
-            this.setState({disablePresidente: false});
+        }  else {
+            if (this.state.auxPresidente !== 0) { 
+                this.setState({disablePresidente: true}); // radiobutton
+                this.setState({disableSecretario: false});
+            } else {
+                this.setState({disableSecretario: true});
+                this.setState({disablePresidente: false});
+            }
         }
+       
     }
 
     async getDocenteList(id_unidad) {
@@ -433,6 +440,14 @@ class UpdateProyeccionAsignaturaComponent extends Component {
 
     onChangeAHandler = (event) => {
         this.setState({disableAll: false});
+        if (this.state.presidente !== 0) { 
+            this.setState({disablePresidente: true}); // radiobutton
+            this.setState({disableSecretario: false});
+        } else {
+            this.setState({disableSecretario: true});
+            this.setState({disablePresidente: false});
+        }
+        
 
         this.cleaningHours();
         const hour = parseInt(event.target.value);
@@ -461,6 +476,15 @@ class UpdateProyeccionAsignaturaComponent extends Component {
     }
     onChangeBHandler = (event) => {
         this.setState({disableAll: false});
+        if (this.state.presidente !== 0) { 
+            this.setState({disablePresidente: true}); // radiobutton
+            this.setState({disableSecretario: false});
+        } else {
+            this.setState({disableSecretario: true});
+            this.setState({disablePresidente: false});
+        }
+    
+
         this.cleaningHours();
         const hour = parseInt(event.target.value);
         this.setState({
@@ -517,6 +541,10 @@ class UpdateProyeccionAsignaturaComponent extends Component {
         this.cleaningHours();
     }
     onChangePresidenteDisablerHandler = () => {
+        if(this.state.disableAll === true) {
+            this.cleaningHours();
+        }
+
         this.setState(() => ({
             disablePresidente: true,
             disableSecretario: false,
@@ -527,6 +555,10 @@ class UpdateProyeccionAsignaturaComponent extends Component {
         },this.calcularTotal);
     }
     onChangeSecretarioDisablerHandler = () => {
+        if(this.state.disableAll === true) {
+            this.cleaningHours();
+        }
+
         this.setState(() => ({
             disableSecretario: true,
             disablePresidente: false,

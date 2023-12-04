@@ -38,12 +38,12 @@ class ListDocenteComponent extends Component {
                     })
                 }).catch(() => {
                     swal("Oops!","Error al intentar eliminar el docente...\n" +
-                    "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
+                    "Por favor verifique: Proyecciones Asignatura ó Tiempo Completo.", "error");
                     this.props.history.push('/list-docente');
                 });
             } else {
                 swal("Oops!", "el docente no es posible eliminar porque está  presente en otros módulos.\n" +
-                "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
+                "Por favor verifique: Proyecciones Asignatura ó Tiempo Completo.", "error");
 
                 this.setState({
                     isModalOpen: false, // Cierra el modal después de eliminar

@@ -39,12 +39,12 @@ class ListCarreraPorUnidadComponent extends Component {
                     });
                 }).catch(() => {
                     swal("Oops!","Error al intentar eliminar la carrera por unidad...\n" +
-                    "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
+                    "Por favor verifique: Proyecciones Asignatura ó Tiempo Completo", "error");
                     this.props.history.push('/list-carrera_por_unidad');
                 });
             } else {
                 swal("Oops!", "La carrera por unidad no es posible eliminar porque está  presente en otros módulos.\n" +
-                "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
+                "Por favor verifique: Proyecciones Asignatura ó Tiempo Completo.", "error");
 
                 this.setState({
                     isModalOpen: false, // Cierra el modal después de eliminar
@@ -68,7 +68,7 @@ class ListCarreraPorUnidadComponent extends Component {
                 this.props.history.push(`update-carrera-por-unidad/${id}`);
             } else {
                 swal("Oops!","La carrera por unidad no es posible editar porque está  presente en otros módulos. \n" +
-                "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
+                "Por favor verifique: Proyecciones Asignatura ó Tiempo Completo.", "error");
             }
         }).catch(() => {
             alert("Error al intentar eliminar la carrera por unidad...");
