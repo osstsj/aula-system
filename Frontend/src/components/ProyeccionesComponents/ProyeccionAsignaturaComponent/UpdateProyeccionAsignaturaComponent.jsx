@@ -146,21 +146,21 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                 disableAll: true
             });
 
+            this.getUnidadList();
+            this.getNivel();
+            this.getHorasAcademias_presidente();
+            this.getHorasAcademias_secretario();
+            this.getCarreraList();
+            this.getFolioList();
+            this.getTipoUnidad();
+            this.setUpAoB();
+            this.setUpPoS();
+
         })
         .catch(() => {
             alert("Error al intentar traer la proyeccion por asignatura");
             this.props.history.push('/');
         })
-
-        this.getUnidadList();
-        this.getNivel();
-        this.getHorasAcademias_presidente();
-        this.getHorasAcademias_secretario();
-        this.getCarreraList();
-        this.getFolioList();
-        this.getTipoUnidad();
-        this.setUpAoB();
-        this.setUpPoS();
     }
 
     updateProyeccionAsignatura = (e) => {

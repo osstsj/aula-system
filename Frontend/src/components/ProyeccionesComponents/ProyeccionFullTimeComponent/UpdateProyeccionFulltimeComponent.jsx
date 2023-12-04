@@ -201,14 +201,18 @@ class UpdateProyeccionFulltimeComponent extends Component {
                 id_folio: fulltime.folio.id,
                 
         })
-    })
-        
+
         this.getNivel();
         this.getHorasAcademias_presidente();
         this.getHorasAcademias_secretario();
         this.getFolioList();
         this.getCarreraList();
         this.getTipoUnidad();
+    }).catch(() => {
+      alert("Error al intentar traer la proyeccion tiempo completo");
+      this.props.history.push('/');
+  })
+        
         
     }
 
