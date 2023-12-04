@@ -207,6 +207,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
         this.getHorasAcademias_presidente();
         this.getHorasAcademias_secretario();
         this.getFolioList();
+        this.getCarreraList();
         this.getTipoUnidad();
         
     }
@@ -222,9 +223,9 @@ class UpdateProyeccionFulltimeComponent extends Component {
         }
     }
 
-    async getCarreraList(id_unidad) {
+    async getCarreraList() {
         let options = null;
-        await CarreraPorUnidadService.getCarreraPorUnidadEntitiesByUnidad_academicaId(id_unidad).then((res) => {
+        await CarreraPorUnidadService.getCarreraPorUnidadEntitiesByUnidad_academicaId(this.state.id_unidad).then((res) => {
             const data = res.data;
             options = data.map(d => ({
                 "value": d.carrera_nombre.clave_programa,
@@ -277,7 +278,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
             this.props.history.push(`/list-proyeccion_fulltime/${this.state.id_folio}`);
         })
 
-        this.getCarreraList(this.state.id_unidad);
+        
         // se puso aqui ya que no se puede consultar el valor de categoria en el metodo compountDidMount
         // porque una vez que se realize el setState con getById... no se puede consultar el valor al mismo
         // tiempo (async), y se tiene que delegar a otra funcion para que siga la ejecucion en secuncia...

@@ -3,6 +3,7 @@ import AsignaturaProyeccionService from '../../../services/Proyecciones/Asignatu
 import FolioAsignaturaService from '../../../services/Proyecciones/FolioAsignaturaService';
 import CarreraService from '../../../services/Control/CarreraService';
 import UnidadService from '../../../services/Control/UnidadService';
+import CarreraPorUnidadService from '../../../services/Control/CarreraPorUnidadService';
 
 import Select from 'react-select'
 import '../../StyleGlobal/Style.css'
@@ -145,21 +146,21 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                 disableAll: true
             });
 
-            this.getUnidadList();
-            this.getNivel();
-            this.getHorasAcademias_presidente();
-            this.getHorasAcademias_secretario();
-            this.getCarreraList();
-            this.getFolioList();
-            this.getTipoUnidad();
-            this.setUpAoB();
-            this.setUpPoS();
-
         })
         .catch(() => {
             alert("Error al intentar traer la proyeccion por asignatura");
             this.props.history.push('/');
         })
+
+        this.getUnidadList();
+        this.getNivel();
+        this.getHorasAcademias_presidente();
+        this.getHorasAcademias_secretario();
+        this.getCarreraList();
+        this.getFolioList();
+        this.getTipoUnidad();
+        this.setUpAoB();
+        this.setUpPoS();
     }
 
     updateProyeccionAsignatura = (e) => {
@@ -301,11 +302,11 @@ class UpdateProyeccionAsignaturaComponent extends Component {
 
     async getCarreraList() {
         let options = null;
-        await CarreraService.getAllCarrerasByEstatus().then(res => {
+        await CarreraPorUnidadService.getCarreraPorUnidadEntitiesByUnidad_academicaId(this.state.id_unidad).then((res) => {
             const data = res.data;
             options = data.map(d => ({
-                "value": d.clave_programa,
-                "label": d.clave_programa,
+                "value": d.carrera_nombre.clave_programa,
+                "label": d.carrera_nombre.clave_programa,
                 "id": d.id,
             }))
         }).catch(() => {
