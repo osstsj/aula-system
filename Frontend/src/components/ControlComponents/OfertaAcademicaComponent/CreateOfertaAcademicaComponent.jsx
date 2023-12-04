@@ -113,7 +113,8 @@ class CreateOfertaAcademicaComponent extends Component {
     getModalidad() {
         const modalidadList = [
             { value: 'ESCOLARIZADA', label: 'ESCOLARIZADA' },
-            { value: 'MIXTA', label: 'MIXTA' }
+            { value: 'MIXTA', label: 'MIXTA' },
+            { value: 'A DISTANCIA', label: 'A DISTANCIA' }
         ]
         this.setState({ modalidades: modalidadList })
     }
