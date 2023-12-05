@@ -92,6 +92,12 @@ class ViewProyeccionFulltimeComponent extends Component {
                     proyecto_investigacion: fulltime.horas_necesidad_institucional_fulltime.proyecto_investigacion,
                     apoyo_operativo: fulltime.horas_necesidad_institucional_fulltime.apoyo_operativo,
                     subtotal_2: fulltime.horas_necesidad_institucional_fulltime.subtotal_2,
+                    //carga nueva 
+                    carga_horaria_nueva:fulltime.carga_horaria_nueva,
+                    nivel_ptc_nuevo:fulltime.nivel_ptc_nuevo,
+                    //carga anterior
+                    carga_horaria_anterior:fulltime.carga_horaria_anterior,
+                    nivel_ptc_anterior:fulltime.nivel_ptc_anterior,
 
                 total: fulltime.total,
                 unidad_academica: fulltime.unidad_academica.nombre_completo,
@@ -113,6 +119,9 @@ class ViewProyeccionFulltimeComponent extends Component {
 
     render() {
         
+        const handleImprimir = () => {
+            window.print();
+          };
         return (
             <div className="mt-4 container" >
                 <div className="row justify-content-center">
@@ -490,11 +499,62 @@ class ViewProyeccionFulltimeComponent extends Component {
                                     </div>
                                 </div>
                             </div>                            
-                            
+                            <div className="row">
+                                <div className="col-5">
+                                    <div className="form-outline">
+                                        <label className="">Carga horarias nueva:</label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.carga_horaria_nueva}</div>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div className="row">
+                                <div className="col-5">
+                                    <div className="form-outline">
+                                        <label className="">Nivel de PTC Nuevo:</label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.nivel_ptc_nuevo}</div>
+                                    </div>
+                                </div>
+                            </div> 
+                                
+                            <div className="row">
+                                <div className="col-5">
+                                    <div className="form-outline">
+                                        <label className="">fulltime.carga_horaria_anterior:</label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.carga_horaria_anterior}</div>
+                                    </div>
+                                </div>
+                            </div>     
+                            <div className="row">
+                                <div className="col-5">
+                                    <div className="form-outline">
+                                        <label className="">Nivel de PTC anterior:</label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.nivel_ptc_anterior}</div>
+                                    </div>
+                                </div>
+                            </div>     
+
 
                             <br />
                             <div className="card-footer text-muted">
                                 <button className = "btn btn-secondary mt-0" onClick={this.back.bind(this)} style= {{marginLeft: "10px"}}>Regresar</button>
+                                <button className="btn btn-secondary mt-0" onClick={handleImprimir} style={{ marginLeft: "10px", backgroundColor: "rgb(0, 128, 0)" }}>Imprimir</button>
+
                             </div>
                         </div>
                     </div>

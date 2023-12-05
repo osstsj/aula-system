@@ -250,7 +250,7 @@ class ListFolioAsignaturaComponent extends Component {
                 <Modal isOpen={this.state.isModalOpen} toggle={this.closeModal}>
                     <ModalHeader>Confirmar Eliminación</ModalHeader>
                     <ModalBody>
-                        ¿Estás seguro de que deseas eliminar este docente?
+                        ¿Estás seguro de que deseas eliminar este Folio?
                     </ModalBody>
                     <ModalFooter>
                         <Button color="danger" onClick={() => this.deleteFolioById(this.state.folioToDeleteId)}>Eliminar Folio</Button>

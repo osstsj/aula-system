@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AsignaturaProyeccionService from '../../../services/Proyecciones/AsignaturaProyeccionService';
+import '../../StyleGlobal/Style.css'
 
 class ViewProyeccionAsignaturaComponent extends Component {
     constructor(props) {
@@ -90,6 +91,12 @@ class ViewProyeccionAsignaturaComponent extends Component {
                     invesigacion_educativa: asignatura.horas_necesidad_institucional.invesigacion_educativa,
                     apoyo_operativo: asignatura.horas_necesidad_institucional.apoyo_operativo,
                     subtotal_2: asignatura.horas_necesidad_institucional.subtotal_2,
+                    //carga nuevas 
+                    carga_horaria_nueva:asignatura.carga_horaria_nueva,
+                    categoria_tipo_horas_asignatura_nueva:asignatura.categoria_tipo_horas_asignatura_nueva,
+                    //carga anterior 
+                    carga_horaria_anterior:asignatura.carga_horaria_anterior,
+                    categoria_horas_asignatura_anterior:asignatura.categoria_horas_asignatura_anterior,
 
                 total: asignatura.total,
                 unidad_academica: asignatura.unidad_academica.nombre_completo,
@@ -109,7 +116,9 @@ class ViewProyeccionAsignaturaComponent extends Component {
     }
 
     render() {
-        
+        const handleImprimir = () => {
+            window.print();
+          };
         return (
             <div className="mt-4 container" >
                 <div className="row justify-content-center">
@@ -475,11 +484,60 @@ class ViewProyeccionAsignaturaComponent extends Component {
                                     </div>
                                 </div>
                             </div>                            
-                            
+                            <div className="row">
+                                <div className="col-5">
+                                    <div className="form-outline">
+                                        <label className="">Carga horaria nueva :</label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.carga_horaria_nueva}</div>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div className="row">
+                                <div className="col-5">
+                                    <div className="form-outline">
+                                        <label className="">Asignatura Nueva:</label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.categoria_tipo_horas_asignatura_nueva}</div>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div className="row">
+                                <div className="col-5">
+                                    <div className="form-outline">
+                                        <label className="">Carga horaria anterior:</label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.carga_horaria_anterior}</div>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div className="row">
+                                <div className="col-5">
+                                    <div className="form-outline">
+                                        <label className="">Asignatura anterior:</label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className="">{this.state.categoria_horas_asignatura_anterior}</div>
+                                    </div>
+                                </div>
+                            </div> 
 
                             <br />
                             <div className="card-footer text-muted">
                                 <button className = "btn btn-secondary mt-0" onClick={() => this.back(this.state.id)} style= {{marginLeft: "10px"}}>Regresar</button>
+                                <button className="btn btn-secondary mt-0" onClick={handleImprimir} style={{ marginLeft: "10px", backgroundColor: "rgb(0, 128, 0)" }}>Imprimir</button>
+
                             </div>
                         </div>
                     </div>
