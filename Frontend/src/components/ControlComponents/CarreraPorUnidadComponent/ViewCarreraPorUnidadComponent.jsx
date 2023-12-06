@@ -22,7 +22,8 @@ class ViewCarreraPorUnidadComponent extends Component {
             CarreraPorUnidadService.getCarreraPorUnidadById(this.state.id).then((res) => {
                 let carrera = res.data;
                 this.setState({
-                    carrera_nombre: carrera.carrera_nombre.nombre_completo, 
+                    
+                    carrera_nombre: carrera.carrera_nombre.nombre, 
                     unidad_academica: carrera.unidad_academica.nombre_completo, 
                     modalidad: carrera.modalidad,
                     nivel: carrera.nivel,

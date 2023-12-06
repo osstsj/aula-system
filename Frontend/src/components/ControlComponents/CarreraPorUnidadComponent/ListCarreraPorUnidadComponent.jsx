@@ -96,7 +96,7 @@ class ListCarreraPorUnidadComponent extends Component {
         // Modificar la estructura de los datos para incluir la información de la unidad académica
         const datosParaExportar = unidades.map(unidad => ({
             id: unidad.id,
-            carrera_nombre: unidad.carrera_nombre,
+            carrera_nombre: unidad.carrera_nombre.nombre, // Corrected line
             nivel: unidad.nivel,
             unidad_academica: unidad.unidad_academica.nombre_completo,
             modalidad: unidad.modalidad,
@@ -148,12 +148,15 @@ class ListCarreraPorUnidadComponent extends Component {
         const doc = new jsPDF();
         doc.text('Lista de unidades', 10, 10);
 
-        const columns = [' Carrera', ' Nivel', ' Unidad', 'Modalidad'];
+        const columns = [' Carrera', ' Nivel', ' Unidad', 'Modalidad','fecha de creacion', 'fecha de actaulizacion'];
         const data = unidades.map((unidad) => [
-            unidad.carrera_nombre,
+            unidad.carrera_nombre.nombre,
             unidad.nivel,
             unidad.unidad_academica.nombre_completo,
             unidad.modalidad,
+            
+            unidad.fecha_creacion,
+            unidad.fecha_actualizacion
         ]);
 
         doc.autoTable({

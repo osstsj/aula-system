@@ -1300,7 +1300,7 @@ class CreateProyeccionFulltimeComponent extends Component {
                         value={{
                           label:
                             this.state.tipo_unidad === ""
-                              ? "Seleccione unidad academica..."
+                              ? "Seleccione unidad Académica..."
                               : this.state.tipo_unidad,
                         }}
                       />   {this.state.errorTipoUA && (
@@ -1324,7 +1324,7 @@ class CreateProyeccionFulltimeComponent extends Component {
                   <div className="row mb-4">
                     <div className="col">
                       <div className="form-outline">
-                        <label>Unidad Academica</label>
+                        <label>Unidad Académica</label>
                         <Select
                           isDisabled={true}
                           rules={{ required: true }}
@@ -1333,7 +1333,7 @@ class CreateProyeccionFulltimeComponent extends Component {
                           value={{
                             label:
                               this.state.unidad_academica === ""
-                                ? "Seleccione unidad academica..."
+                                ? "Seleccione unidad Académica..."
                                 : this.state.unidad_academica,
                           }}
                         />
@@ -1416,7 +1416,7 @@ class CreateProyeccionFulltimeComponent extends Component {
                           value={{
                             label:
                               this.state.grado_academico === ""
-                                ? "Seleccione nivel academico..."
+                                ? "Seleccione nivel académico..."
                                 : this.state.grado_academico,
                           }}
                         />

@@ -1352,7 +1352,7 @@ onChangeBDisablerHandler = () => {
                         value={{
                           label:
                             this.state.tipo_unidad === ""
-                              ? "Seleccione unidad academica..."
+                              ? "Seleccione unidad Académica..."
                               : this.state.tipo_unidad,
                         }}
                       />   {this.state.errorTipoUA && (
@@ -1460,7 +1460,7 @@ onChangeBDisablerHandler = () => {
                         className="form-outline"
                         style={{ display: "block" }}
                       >
-                        <label>Nivel Academico</label>
+                        <label>Nivel Académico</label>
                         <Select
                           options={this.state.niveles}
                           onChange={(e) =>
@@ -1469,7 +1469,7 @@ onChangeBDisablerHandler = () => {
                           value={{
                             label:
                               this.state.grado_academico === ""
-                                ? "Seleccione nivel academico..."
+                                ? "Seleccione nivel académico..."
                                 : this.state.grado_academico,
                           }}
                         />
@@ -1969,7 +1969,7 @@ onChangeBDisablerHandler = () => {
                         <b>OBSERVACIONES:</b>
                       </label>
                       <textarea
-                        placeholder="Ingrese observaciones de la proyeccin por asignatura..."
+                        placeholder="Ingrese observaciones de la proyección por asignatura..."
                         className="form-control"
                         value={this.state.observaciones}
                         onChange={this.onChangeObservacionesHandler}

@@ -122,31 +122,26 @@ class ListExtensionComponent extends Component {
     }
 
     exportToPDF() {
-        const { unidades } = this.state;
+        const { extensiones, unidad_academica } = this.state;
 
-        const doc = new jsPDF();
-        doc.text('Lista de Unidades', 10, 10);
+        // Crear una nueva instancia de jsPDF
+        const pdfDoc = new jsPDF();
 
-        const columns = ['Clave DGP', 'Abreviatura', 'Nombre Completo', 'Tipo Unidad', 'Nombre Corto', 'Dirección Completa','Fecha de creacion','Fecha de actualizacion'];
-        const data = unidades.map((unidad) => [
-            unidad.clave_dgp,
-            unidad.abreviatura,
-            unidad.nombre_completo,
-            unidad.tipo_unidad,
-            unidad.nombre_corto,
-            unidad.direccion_completa,
-            unidad.fecha_creacion,
-            unidad.fecha_actualizacion,
+        // Título del PDF
+        pdfDoc.text(`Lista de Extensiones Académicas - ${unidad_academica}`, 14, 10);
 
-        ]);
-
-        doc.autoTable({
-            startY: 20,
-            head: [columns],
-            body: data,
+        // Contenido de la tabla utilizando jspdf-autotable
+        pdfDoc.autoTable({
+            head: [['Clave DGP', 'Abreviatura', 'Nombre Completo','fecha de  creacion','fecha de actualizacion']],
+            body: extensiones.map(unidad => [unidad.clave_dgp,
+                unidad.abreviatura,
+                unidad.nombre_completo,
+                unidad.fecha_creacion,
+                unidad.fecha_actualizacion,]),
         });
 
-        doc.save('unidades.pdf');
+        // Guardar el PDF con un nombre específico
+        pdfDoc.save('extensiones_academicas.pdf');
     }
   // Método para abrir el modal
     toggleModal = (colegiaturaId) => {
