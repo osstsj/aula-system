@@ -100,7 +100,7 @@ class ListAreaEscolarComponent extends Component {
         const doc = new jsPDF();
         doc.text('Lista de areas', 10, 10);
 
-        const columns = ['area', ' responsable', 'unidad_academica', 'fecha de creacion', 'fecha de actualizacion'];
+        const columns = ['área', ' responsable', 'unidad_académica', 'fecha de creación', 'fecha de actualización'];
         const data = areas.map((area) => [
             area.area,
             area.responsable,

@@ -102,7 +102,7 @@ class UpdateAreaEscolarComponent extends Component {
                                     <div className="form-outline">
                                         <label>Área</label>
                                         <input type="text" 
-                                            placeholder="Ingrese nombre del area..." 
+                                            placeholder="Ingrese nombre del área..." 
                                             className="form-control"  name="area"
                                             value={this.state.area}
                                             onChange={this.onChangeAreasHandler}
@@ -117,7 +117,7 @@ class UpdateAreaEscolarComponent extends Component {
                                     <div className="form-outline">
                                     <label>Responsable</label>
                                         <input type="text" className="form-control" 
-                                            placeholder='Ingrese nombre del Responsable...'
+                                            placeholder='Ingrese nombre del responsable...'
                                             value={this.state.responsable}
                                             onChange={this.onChangeResponsableHandler}
                                             required

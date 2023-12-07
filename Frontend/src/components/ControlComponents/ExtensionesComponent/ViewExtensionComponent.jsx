@@ -37,7 +37,7 @@ class ViewExtensionComponent extends Component {
                 fecha_actualizacion: unidad.fecha_actualizacion
             });
         }).catch(() => {
-            alert("Error al intentar traer la unidad academica...");
+            alert("Error al intentar traer la unidad académica...");
             this.props.history.push('/list-unidad');
         });
 

@@ -112,9 +112,9 @@ class UpdateUnidadComponent extends Component {
                                                     onChange={this.changeTipoUnidadHandler} 
                                                     required
                                                 >
-                                                    <option value=""  disabled>Seleccione una opcion...</option>
+                                                    <option value=""  disabled>Seleccione una opción...</option>
                                                     <option value="Unidad">Unidad</option>
-                                                    <option value="Extension">Extension</option>
+                                                    <option value="Extension">Extensión</option>
                                                 </select>
                                             </div>
                                         </div>

@@ -104,12 +104,12 @@ class CreateUnidadComponent extends Component {
                 ExtensionService.createExtensionByUnidadId(this.state.id, unidadExtensiones).then(res => {
                     this.props.history.push('/list-unidad');
                 }).catch(() => {
-                    alert("Error al intentar crear la extension academica...");
+                    alert("Error al intentar crear la extension académica...");
                     this.props.history.push('/list-unidad');
                 });
             })
             .catch(() => {
-                alert("Error al intentar traer la unidad para crear extension...");
+                alert("Error al intentar traer la unidad para crear extensión...");
                 this.props.history.push('/list-unidad');
             });           
         }   
@@ -216,7 +216,7 @@ class CreateUnidadComponent extends Component {
                                                 >
                                                     <option value=""  disabled>Seleccione un tipo de UA...</option>
                                                     <option value="Unidad">Unidad académicas</option>
-                                                    <option value="Extension">Unidad académica con extension</option>
+                                                    <option value="Extension">Unidad académica con extensión</option>
                                                 </select>
                                             </div>
                                         </div>

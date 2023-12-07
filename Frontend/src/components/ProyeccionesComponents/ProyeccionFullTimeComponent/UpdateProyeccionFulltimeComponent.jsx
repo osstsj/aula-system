@@ -429,8 +429,8 @@ class UpdateProyeccionFulltimeComponent extends Component {
 
     getTipoUnidad() {
         const tiposlList = [
-          { value: 1, label: "Unidad Academica" },
-          { value: 2, label: "Unidad Academica + Extension" },
+          { value: 1, label: "Unidad Académica" },
+          { value: 2, label: "Unidad Académica + Extension" },
         ];
     
         this.setState({ tipos_unidades: tiposlList });
@@ -1213,7 +1213,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
 
                 <div className="col">
                   <div className="form-outline">
-                    <label className="">Tutorias:</label>
+                    <label className="">Tutorías:</label>
                     <div className="input-group">
                       <input
                         parent={`extension_${index}`}
@@ -1528,21 +1528,18 @@ class UpdateProyeccionFulltimeComponent extends Component {
                         style={{ display: "block" }}
                       >
                         <label>Nivel Académico</label>
-                        <Select
-                          options={this.state.niveles}
-                          onChange={(e) =>
-                            this.onChangeGradoAcademicoaHandler(e)
-                          }
-                          value={{
-                            label:
-                              this.state.grado_academico === ""
-                                ? "Seleccione nivel Académico..."
-                                : this.state.grado_academico,
-                          }}
-                        />
-                        {this.state.errorAcademico && (
-                           <p style={{ color: 'red' }}>{this.state.errorAcademico}</p>
-                       )}
+                        <input
+                          readOnly
+                            placeholder="Ingrese código de nómina..."
+                            className="form-control"
+                            value={this.state.grado_academico === ""
+                            ? "Seleccione nivel académico..."
+                            : this.state.grado_academico}
+                            onChange={(e) =>
+                              this.onChangeGradoAcademicoaHandler(e)
+                            }
+                            required
+                          />
                       </div>
                     </div>
                   </div>

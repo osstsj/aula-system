@@ -134,7 +134,7 @@ class ViewCarreraComponent extends Component {
                             <div className="row mb-3">
                                 <div className="col-4">
                                     <div className="form-outline">
-                                        <label className="">Fecha de creacion:</label>
+                                        <label className="">Fecha de creaciónn:</label>
                                     </div>
                                 </div>
                                 <div className="col">

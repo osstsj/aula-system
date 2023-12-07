@@ -37,7 +37,7 @@ class UpdateExtensionComponent extends Component {
                 direccion_completa: unidad.direccion_completa
             });
         }).catch(() => {
-            alert("Error al intentar trear la unidad academica...");
+            alert("Error al intentar trear la unidad académica...");
             this.props.history.push('/list-extension');
         });
     }
@@ -115,7 +115,7 @@ class UpdateExtensionComponent extends Component {
                                                 >
                                                     <option value=""  disabled>Seleccione una opcion...</option>
                                                     {/* <option value="Unidad">Unidad</option> */}
-                                                    <option value="Extension" selected>Extension</option>
+                                                    <option value="Extension" selected>Extensión</option>
                                                 </select>
                                             </div>
                                         </div>

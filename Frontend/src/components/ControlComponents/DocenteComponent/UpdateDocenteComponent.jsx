@@ -18,6 +18,7 @@ class UpdateDocenteComponent extends Component {
             actividad: '',
             estatus: '',
             codigo_nomina: '',
+            grado_academico: '',
 
             unidades: [],
             categorias: [],
@@ -35,7 +36,8 @@ class UpdateDocenteComponent extends Component {
             this.state.unidad_academica.trim() === '' || 
             this.state.categoria.trim() === '' || 
             this.state.actividad.trim() === '' || 
-            this.state.codigo_nomina.trim() === '') {
+            this.state.codigo_nomina.trim() === '' || 
+            this.state.grado_academico === '') {
                 alert('Por favor complete todos los campos requeridos.');
                 return;
             }
@@ -48,6 +50,7 @@ class UpdateDocenteComponent extends Component {
                 actividad: this.state.actividad.trim(),
                 codigo_nomina: this.state.codigo_nomina.trim(),
                 estatus: this.state.estatus,
+                grado_academico: this.state.grado_academico,
             };
             // Mostrar el spinner al iniciar la acción
             this.setState({ isLoading: true });
@@ -75,6 +78,7 @@ class UpdateDocenteComponent extends Component {
                 actividad: docente.actividad,
                 estatus: docente.estatus,
                 codigo_nomina: docente.codigo_nomina,
+                grado_academico: docente.grado_academico,
             })
         })
         
@@ -82,6 +86,7 @@ class UpdateDocenteComponent extends Component {
         this.getActividad();
         this.getCategoria();
         this.getEstatus();
+        this.getNivel();
     }
 
    
@@ -112,6 +117,16 @@ class UpdateDocenteComponent extends Component {
         this.setState({ estatusList: estatusList })
     }
 
+    getNivel() {
+        const nivelList = [
+          { value: "LICENCIATURA", label: "LICENCIATURA" },
+          { value: "INGENIERIA", label: "INGENIERIA" },
+          { value: "MAESTRIA", label: "MAESTRIA" },
+          { value: "DOCTORADO", label: "DOCTORADO" },
+        ];
+    
+        this.setState({ niveles: nivelList });
+    }
 
     getCategoria() {
         const categoriaList = [
@@ -159,6 +174,11 @@ class UpdateDocenteComponent extends Component {
     onChangeCodigoNominaHandler = (event) => {
         this.setState({ codigo_nomina: event.target.value });
     }
+
+    onChangeGradoAcademicoaHandler = (event) => {
+        this.setState({ grado_academico: event.label});
+      };
+
 
    
     cancel(){
@@ -254,9 +274,9 @@ class UpdateDocenteComponent extends Component {
                                             </div>
                                             <div className="col-2">
                                                 <div className="form-outline">
-                                                    <label className="">Codigo de nomina: </label>
+                                                    <label className="">Código de nómina: </label>
                                                     <input
-                                                        placeholder="No de nomina..."
+                                                        placeholder="No de nómina..."
                                                         className="form-control"
                                                         value={this.state.codigo_nomina}
                                                         onChange={this.onChangeCodigoNominaHandler}
@@ -265,21 +285,35 @@ class UpdateDocenteComponent extends Component {
                                                 </div>
                                             </div>
                                     </div>
+                                    <div className="row mb-3 mt-4">                                   
+                                        <div className="col-4">
+                                            <div
+                                                className="form-outline">
+                                                <label>Nivel Académico</label>
+                                                <Select
+                                                options={this.state.niveles}
+                                                onChange={(e) =>
+                                                    this.onChangeGradoAcademicoaHandler(e)
+                                                }
+                                                value={{
+                                                    label:
+                                                    this.state.grado_academico === ""
+                                                        ? "Seleccione nivel académico..."
+                                                        : this.state.grado_academico,
+                                                }}
+                                                />
+                                            </div>
+                                        </div>
 
-                                    <hr />
-                                        <div className="row justify-content-end">
-                                        <div className="col-2">
-                                            <div className="row">
+                                        <div className="col-4">
                                                 <label className='mr-2'>Estatus:</label>
                                                     <Select
-                                                    // isDisabled={true}
                                                         onChange={(e) => this.onChangeEstatusHandler(e)}
                                                         options={this.state.estatusList}
                                                         value={{label: this.state.estatus}}
-                                                    />                                    
-                                            </div>
+                                                    /> 
                                         </div>
-                                    </div>                                   
+                                    </div>                                  
 
                                         <br />
                                             <div className="card-footer text-muted">

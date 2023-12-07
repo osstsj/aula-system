@@ -69,7 +69,7 @@ class UpdateCarreraPorUnidadComponent extends Component {
                     this.props.history.push('/list-carrera_por_unidad');
                 });
             } else {
-                swal("Oops!", "La carrera por unidad no es posible eliminar porque esta presente en otros modulos.\n" +
+                swal("Oops!", "La carrera por unidad no es posible eliminar porque esta presente en otros módulos.\n" +
                 "por favor verifique: Proyecciones Asignatura/Tiempo Completo", "error");
 
                 this.props.history.push('/list-carrera_por_unidad');
@@ -187,7 +187,7 @@ class UpdateCarreraPorUnidadComponent extends Component {
                                         <div className="form-outline">
                                             <label>Niveles Académico</label>
                                             <Select
-                                             placeholder="Seleccione una nivel Academico..."
+                                             placeholder="Seleccione una nivel académico..."
                                              options={this.state.niveles} 
                                             onChange={this.changeNivelHandler}
                                              value={{ label: this.state.nivel }}

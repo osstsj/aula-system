@@ -68,6 +68,7 @@ public class FulltimeServiceImpl implements IFulltimeService {
             fullTimeDto.setUnidad_academica(unidadAcademica);
             fullTimeDto.getProfesor_fulltime().setNombre_docente(docenteEntity);
             fullTimeDto.getProfesor_fulltime().setClave_programa(carreraPorUnidadEntity);
+            fullTimeDto.getProfesor_fulltime().setGrado_academico(docenteEntity.getGrado_academico());
 
             Integer subtotal_1 =
                     fullTimeDto.getHoras_sustantivas_atencion_alumnos_fulltime().getHoras_frente_grupo() +

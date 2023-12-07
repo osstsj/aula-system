@@ -188,7 +188,7 @@ class ComparacionAsigntaturaDocenteComponent extends Component {
 
         return (
             <div className="container">
-                <h2 className="text-center mt-5 mb-3 Title">COMPARACION DE FOLIOS DE PROYECCIONES ACADEMICAS, DE DOCENTE POR ASIGNATURA DEL TECNOLÓGICO SUPERIOR DE JALISCO</h2>
+                <h2 className="text-center mt-5 mb-3 Title">COMPARACIÓN DE FOLIOS DE PROYECCIONES ACADÉMICAS, DE DOCENTE POR ASIGNATURA DEL TECNOLÓGICO SUPERIOR DE JALISCO</h2>
                 <div className="row justify-content-center mb-4">
                     <fieldset className="border border-info p-0 mb-3">
                         {/* <legend className="w-auto text-left h6">Referencia</legend> */}

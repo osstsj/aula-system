@@ -142,7 +142,7 @@ class CreateAreaEscolarComponent extends Component {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                placeholder='Ingrese nombre del Responsable...'
+                                                placeholder='Ingrese nombre del responsable...'
                                                 value={this.state.responsable}
                                                 onChange={this.onChangeResponsableHandler}
                                                 required

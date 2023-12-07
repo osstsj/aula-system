@@ -50,7 +50,7 @@ class ViewCarreraPorUnidadComponent extends Component {
                 <div className="card col-9 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>                    
                     <div className="card-body">
                         <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                            <h3 className="h3 Title"> Carrera por Unidade Académica  a Detalle</h3>
+                            <h3 className="h3 Title"> Carrera por Unidade Académica a Detalle</h3>
                         </div>
                         <br />
                         <div className="row">

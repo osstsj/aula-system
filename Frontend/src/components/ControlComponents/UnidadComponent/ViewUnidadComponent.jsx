@@ -62,7 +62,7 @@ class ViewUnidadComponent extends Component {
                     <div className="card col-9 mt-4" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>                        
                         <div className="card-body">
                             <div className="card-header text-center" style={{ boxShadow: '0 2px 8px 1px rgba(64, 60, 67, 0.24)' }}>
-                                <h2 className="h3 Title">Unidad Académica  a Detalle</h2>
+                                <h2 className="h3 Title">Unidad Académica a Detalle</h2>
                             </div>
                                 <br />
                             <div className="row">
@@ -203,7 +203,7 @@ class ViewUnidadComponent extends Component {
                                     <div className="row">
                                         <div className="col-4">
                                             <div className="form-outline">
-                                                <label className="">Extension: </label>
+                                                <label className="">Extensión: </label>
                                             </div>
                                         </div>
                                         <div className="col">
@@ -306,7 +306,7 @@ class ViewUnidadComponent extends Component {
                                     <div className="row mb-3">
                                         <div className="col-4">
                                             <div className="form-outline">
-                                                <label className="">Fecha de creacion:</label>
+                                                <label className="">Fecha de creación:</label>
                                             </div>
                                         </div>
                                         <div className="col">
@@ -319,7 +319,7 @@ class ViewUnidadComponent extends Component {
                                     <div className="row">
                                         <div className="col-4">
                                             <div className="form-outline">
-                                                <label className="">Fecha de actualizacion:</label>
+                                                <label className="">Fecha de actualización:</label>
                                             </div>
                                         </div>
                                         <div className="col">

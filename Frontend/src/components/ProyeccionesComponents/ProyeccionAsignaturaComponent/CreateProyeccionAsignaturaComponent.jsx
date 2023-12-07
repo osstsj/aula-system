@@ -263,6 +263,7 @@ async getDocenteList(id_unidad, id_folio) {
             "id": d.id,
             "codigo_nomina": d.codigo_nomina,
             "categoria":d.categoria,
+            "grado_academico": d.grado_academico,
         }))
         this.setState({ docentes: options });
     }).catch(() => {
@@ -275,8 +276,8 @@ async getDocenteList(id_unidad, id_folio) {
 
 getTipoUnidad() {
     const tiposlList = [
-        { value: 'Unidad Academica', label: 'Unidad Academica' },
-        { value: 'Unidad Academica + Extension', label:'Unidad Academica + Extension'},
+        { value: 'Unidad Académica', label: 'Unidad Académica' },
+        { value: 'Unidad Académica + Extensión', label:'Unidad Académica + Extensión'},
     ]
 
     this.setState({ tipos_unidades: tiposlList });
@@ -355,7 +356,7 @@ getTipoUnidad() {
   getTipoUnidad() {
     const tiposlList = [
       { value: 1, label: "Unidad Academica" },
-      { value: 2, label: "Unidad Academica + Extension" },
+      { value: 2, label: "Unidad Academica + Extensión" },
     ];
 
     this.setState({ tipos_unidades: tiposlList });
@@ -429,12 +430,14 @@ getTipoUnidad() {
     this.setState({ codigo_nomina: event.target.value }, this.enableAddButton);
   };
   onChangeGradoAcademicoaHandler = (event) => {
-    this.setState({ grado_academico: event.label,seleccionadoAcademico:true,errorAcademico:null  }, this.enableAddButton);
+    // this.setState({ grado_academico: event.label,seleccionadoAcademico:true,errorAcademico:null  }, this.enableAddButton);
   };
 
   onChangeNombreDocenteHandler = (event) => {
     this.setState({ codigo_nomina: event.codigo_nomina });
     this.setState({ nombre_docente: event.label, seleccionadoDocente:true,errorDocente:null  });
+    this.setState({ grado_academico: event.grado_academico,seleccionadoAcademico:true,errorAcademico:null  } , this.enableAddButton);
+
     this.setState({ id_docente: event.id }, this.enableAddButton);
 
     if(event.categoria === "PROFESOR ASIGNATURA - A") {
@@ -1147,7 +1150,7 @@ onChangeBDisablerHandler = () => {
 
                 <div className="col">
                   <div className="form-outline">
-                    <label className="">Tutorias:</label>
+                    <label className="">Tutorías:</label>
                     <div className="input-group">
                       <input
                         parent={`extension_${index}`}
@@ -1461,18 +1464,18 @@ onChangeBDisablerHandler = () => {
                         style={{ display: "block" }}
                       >
                         <label>Nivel Académico</label>
-                        <Select
-                          options={this.state.niveles}
-                          onChange={(e) =>
-                            this.onChangeGradoAcademicoaHandler(e)
-                          }
-                          value={{
-                            label:
-                              this.state.grado_academico === ""
-                                ? "Seleccione nivel académico..."
-                                : this.state.grado_academico,
-                          }}
-                        />
+                          <input
+                          readOnly
+                            placeholder="Ingrese código de nómina..."
+                            className="form-control"
+                            value={this.state.grado_academico === ""
+                            ? "Seleccione nivel académico..."
+                            : this.state.grado_academico}
+                            onChange={(e) =>
+                              this.onChangeGradoAcademicoaHandler(e)
+                            }
+                            required
+                          />
                         {this.state.errorAcademico && (
                            <p style={{ color: 'red' }}>{this.state.errorAcademico}</p>
                        )}

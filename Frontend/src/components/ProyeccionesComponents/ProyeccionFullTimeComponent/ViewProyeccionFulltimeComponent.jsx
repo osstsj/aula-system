@@ -334,7 +334,7 @@ class ViewProyeccionFulltimeComponent extends Component {
                                 <div className="row">
                                     <div className="col">
                                         <div className="form-outline">
-                                            <label className="">Tutorias:</label>
+                                            <label className="">Tutorías:</label>
                                         </div>
                                     </div>
                                     <div className="col">

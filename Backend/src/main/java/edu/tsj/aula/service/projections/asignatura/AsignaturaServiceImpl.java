@@ -68,6 +68,7 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
             asignaturaRequestDto.setUnidad_academica(unidadAcademica);
             asignaturaRequestDto.getProfe_asignatura().setNombre_docente(docenteEntity);
             asignaturaRequestDto.getProfe_asignatura().setClave_programa(carreraPorUnidadEntity);
+            asignaturaRequestDto.getProfe_asignatura().setGrado_academico(docenteEntity.getGrado_academico());
 
 //            List<ExtensionFormAsignaturaEntity> extensionFormAsignaturaEntityList = getExtensionFormAsignaturaEntities(asignaturaRequestDto);
 

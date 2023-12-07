@@ -184,7 +184,6 @@ class UpdateOfertaAcademicaComponent extends Component {
                                         <div className="form-outline">
                                         <label>Lista de Carrera</label>
                                             <Select 
-                                            placeholder="Seleccione una lista de planteles..."
                                             options={this.state.carreras} 
                                             onChange={this.changeCarreraHandler}
                                             value={{ label: this.state.carrera }} />
@@ -208,7 +207,7 @@ class UpdateOfertaAcademicaComponent extends Component {
                                         <div className="form-outline">
                                             <label>Turno</label>
                                             <Select
-                                             placeholder="Seleccione una nivel Academico..."
+                                             placeholder="Seleccione una nivel Académico..."
                                              options={this.state.turnos} 
                                             onChange={this.changeTurnoHandler}
                                              value={{ label: this.state.turno }}

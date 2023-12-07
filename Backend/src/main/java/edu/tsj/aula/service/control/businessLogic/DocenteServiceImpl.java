@@ -160,6 +160,7 @@ public class DocenteServiceImpl implements IDocenteService {
             existingDocente.get().setEstatus(docenteRequestDto.getEstatus());
             existingDocente.get().setCodigo_nomina(docenteRequestDto.getCodigo_nomina());
             existingDocente.get().setUnidad_academica(unidadEntity);
+            existingDocente.get().setGrado_academico(docenteRequestDto.getGrado_academico());
             existingDocente.get().setFecha_actualizacion(LocalDateTime.now());
 
 

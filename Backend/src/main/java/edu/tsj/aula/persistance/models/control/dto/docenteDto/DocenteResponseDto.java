@@ -39,6 +39,8 @@ public class DocenteResponseDto {
 
     private String codigo_nomina;
 
+    private String grado_academico;
+
     private Integer ultima_horas;
     private String folio_ultimo_registro_y_tipo_folio;
     private String realizado_por;

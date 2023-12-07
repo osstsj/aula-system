@@ -17,6 +17,7 @@ class CreateDocenteComponent extends Component {
             categoria: '',
             actividad: '',
             codigo_nomina: '',
+            grado_academico: '',
             estatus: 'Activo',
             
             isLoading: false, // Nuevo estado para controlar la visibilidad del spinner
@@ -35,6 +36,7 @@ class CreateDocenteComponent extends Component {
         this.onChangeActividadHandler = this.onChangeActividadHandler.bind(this);
         this.onChangeEstatusHandler = this.onChangeEstatusHandler.bind(this);
         this.onChangeCodigoNominaHandler = this.onChangeCodigoNominaHandler.bind(this);
+        this.onChangeGradoAcademicoaHandler = this.onChangeGradoAcademicoaHandler.bind(this);
         this.createDocente = this.createDocente.bind(this);
     }
 
@@ -48,7 +50,8 @@ class CreateDocenteComponent extends Component {
         this.state.categoria.trim() === '' || 
         this.state.actividad.trim() === '' ||
         this.state.estatus === '' || 
-        this.state.codigo_nomina.trim() === '') {
+        this.state.codigo_nomina.trim() === '' ||
+        this.state.grado_academico === '') {
             this.setState({
                 alert: (
                     <div className="alert alert-dismissible alert-danger">
@@ -67,6 +70,7 @@ class CreateDocenteComponent extends Component {
             actividad: this.state.actividad.trim(),
             estatus: this.state.estatus,
             codigo_nomina: this.state.codigo_nomina.trim(),
+            grado_academico: this.state.grado_academico,
         };
         // Mostrar el spinner al iniciar la acción
         this.setState({ isLoading: true });
@@ -85,6 +89,7 @@ class CreateDocenteComponent extends Component {
         this.getActividad();
         this.getCategoria();
         this.getEstatus();
+        this.getNivel();
     }
 
     async getUnidadList() {
@@ -113,6 +118,18 @@ class CreateDocenteComponent extends Component {
         ]
         this.setState({ estatusList: estatusList })
     }
+
+    getNivel() {
+        const nivelList = [
+          { value: "LICENCIATURA", label: "LICENCIATURA" },
+          { value: "INGENIERIA", label: "INGENIERIA" },
+          { value: "MAESTRIA", label: "MAESTRIA" },
+          { value: "DOCTORADO", label: "DOCTORADO" },
+        ];
+    
+        this.setState({ niveles: nivelList });
+    }
+
 
     getCategoria() {
         const categoriaList = [
@@ -159,7 +176,9 @@ class CreateDocenteComponent extends Component {
     onChangeCodigoNominaHandler = (event) => {
         this.setState({ codigo_nomina: event.target.value, alert:null });
     }
-
+    onChangeGradoAcademicoaHandler = (event) => {
+        this.setState({ grado_academico: event.label});
+      };
 
     cancel() {
         this.props.history.push('/list-docente');
@@ -237,7 +256,7 @@ class CreateDocenteComponent extends Component {
                                                     rules={{ required: true }}
                                                         options={this.state.categorias}
                                                         onChange={(e) => this.onChangeCategoriaHandler(e)}
-                                                        value={{ label: this.state.categoria === "" ? "Seleccione una categoria..." : this.state.categoria }}
+                                                        value={{ label: this.state.categoria === "" ? "Seleccione una categoría..." : this.state.categoria }}
                                                     />
                                                 </div>
                                             </div>
@@ -254,9 +273,9 @@ class CreateDocenteComponent extends Component {
                                             </div>
                                             <div className="col-2">
                                                 <div className="form-outline">
-                                                    <label className="">Codigo de nomina: </label>
+                                                    <label className="">Código de nómina: </label>
                                                     <input
-                                                        placeholder="No de nomina..."
+                                                        placeholder="No de nómina..."
                                                         className="form-control"
                                                         value={this.state.codigo_nomina}
                                                         onChange={this.onChangeCodigoNominaHandler}
@@ -265,19 +284,34 @@ class CreateDocenteComponent extends Component {
                                                 </div>
                                             </div>
                                     </div>
+                                    <div className="row mb-3 mt-4">                                   
+                                        <div className="col-4">
+                                            <div
+                                                className="form-outline">
+                                                <label>Nivel Académico</label>
+                                                <Select
+                                                options={this.state.niveles}
+                                                onChange={(e) =>
+                                                    this.onChangeGradoAcademicoaHandler(e)
+                                                }
+                                                value={{
+                                                    label:
+                                                    this.state.grado_academico === ""
+                                                        ? "Seleccione nivel académico..."
+                                                        : this.state.grado_academico,
+                                                }}
+                                                />
+                                            </div>
+                                        </div>
 
-                                    <hr />
-                                        <div className="row justify-content-end">
-                                        <div className="col-2">
-                                            <div className="row">
+                                        <div className="col-4">
                                                 <label className='mr-2'>Estatus:</label>
                                                     <Select
                                                     isDisabled={true}
                                                         onChange={(e) => this.onChangeEstatusHandler(e)}
                                                         options={this.state.estatusList}
                                                         value={{label: this.state.estatus}}
-                                                    />                                    
-                                            </div>
+                                                    /> 
                                         </div>
                                     </div>
                                     <br />

@@ -122,7 +122,7 @@ class ListOfertaAcademicaComponent extends Component {
         const doc = new jsPDF();
         doc.text('Lista de ofertas', 10, 10);
 
-        const columns = [' unidad', ' carrera', ' modalidad', 'turno', 'periodo', 'fecha de creacion', 'fecha de actualizacion'];
+        const columns = [' unidad', ' carrera', ' modalidad', 'turno', 'periodo', 'fecha de creación', 'fecha de actualización'];
         const data = ofertas.map((oferta) => [
             oferta.unidad_academica.nombre_completo,
             oferta.carrera.nombre,

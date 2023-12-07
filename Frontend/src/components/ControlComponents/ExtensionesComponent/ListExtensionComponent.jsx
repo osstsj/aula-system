@@ -107,7 +107,7 @@ class ListExtensionComponent extends Component {
         await ExtensionService.getAllExtensionsByUnidadId(id_unidad).then(res => {
             this.setState({ extensiones: res.data });
             }).catch(() => {
-                alert("Error al intentar traer todas la extensiones academicas...");
+                alert("Error al intentar traer todas la extensiones académicas...");
                 this.props.history.push('/list-extension');
             });
     }
@@ -132,7 +132,7 @@ class ListExtensionComponent extends Component {
 
         // Contenido de la tabla utilizando jspdf-autotable
         pdfDoc.autoTable({
-            head: [['Clave DGP', 'Abreviatura', 'Nombre Completo','fecha de  creacion','fecha de actualizacion']],
+            head: [['Clave DGP', 'Abreviatura', 'Nombre Completo','fecha de  creacion','fecha de actualización']],
             body: extensiones.map(unidad => [unidad.clave_dgp,
                 unidad.abreviatura,
                 unidad.nombre_completo,

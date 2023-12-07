@@ -15,6 +15,7 @@ class ViewPlantelComponent extends Component {
                 categoria: '',
                 actividad: '',
                 estatus: '',
+                grado_academico: '',
                 fecha_creacion: '',
                 fecha_actualizacion: '',
                 ultima_horas: null,
@@ -35,6 +36,7 @@ class ViewPlantelComponent extends Component {
                 actividad: docente.actividad,
                 estatus: docente.estatus,
                 codigo_nomina: docente.codigo_nomina,
+                grado_academico: docente.grado_academico,
                 fecha_creacion: docente.fecha_creacion,
                 fecha_actualizacion: docente.fecha_actualizacion,
                 ultima_horas: docente.ultima_horas,
@@ -101,6 +103,19 @@ class ViewPlantelComponent extends Component {
                                     </div>
                                 </div>
                             </div>
+
+                            <div className="row mb-3">
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <label className=""><b>Nivel Académico:</b></label>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="form-outline">
+                                        <div className=""><i>{this.state.grado_academico}</i></div>
+                                    </div>
+                                </div>
+                            </div>
                             
                             <div className="row mb-3">
                                 <div className="col">
@@ -143,7 +158,7 @@ class ViewPlantelComponent extends Component {
                             <div className="row mb-3">
                                 <div className="col">
                                     <div className="form-outline">
-                                        <label className=""><b>Codigo Nomina:</b> </label>
+                                        <label className=""><b>Código Nómina:</b> </label>
                                     </div>
                                 </div>
                                 <div className="col">
@@ -170,7 +185,7 @@ class ViewPlantelComponent extends Component {
                             <div className="row mt-2">
                                     <div className="col-4">
                                         <div className="form-outline">
-                                            <label className=""><b>Horas en proyeccion:</b></label>
+                                            <label className=""><b>Horas en proyección:</b></label>
                                         </div>
                                     </div>
                                     <div className="col">

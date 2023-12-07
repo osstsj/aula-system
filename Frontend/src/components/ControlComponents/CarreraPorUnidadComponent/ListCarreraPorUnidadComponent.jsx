@@ -148,7 +148,7 @@ class ListCarreraPorUnidadComponent extends Component {
         const doc = new jsPDF();
         doc.text('Lista de unidades', 10, 10);
 
-        const columns = [' Carrera', ' Nivel', ' Unidad', 'Modalidad','fecha de creacion', 'fecha de actaulizacion'];
+        const columns = [' Carrera', ' Nivel', ' Unidad', 'Modalidad','fecha de creación', 'fecha de actaulización'];
         const data = unidades.map((unidad) => [
             unidad.carrera_nombre.nombre,
             unidad.nivel,

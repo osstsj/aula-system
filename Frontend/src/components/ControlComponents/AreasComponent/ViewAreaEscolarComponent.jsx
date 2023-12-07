@@ -104,7 +104,7 @@ class ViewAreaEscolarComponent extends Component {
                             <div className="row mb-3">
                                 <div className="col-4">
                                     <div className="form-outline">
-                                        <label className="">Fecha de creacion:</label>
+                                        <label className="">Fecha de creación:</label>
                                     </div>
                                 </div>
                                 <div className="col">
@@ -129,7 +129,7 @@ class ViewAreaEscolarComponent extends Component {
                             <div className="row">
                                 <div className="col-4">
                                     <div className="form-outline">
-                                        <label className="">Fecha de actualizacion:</label>
+                                        <label className="">Fecha de actualización:</label>
                                     </div>
                                 </div>
                                 <div className="col">

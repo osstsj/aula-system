@@ -183,7 +183,7 @@ class CreateProyeccionFulltimeComponent extends Component {
             }
         ).catch(error => {
             console.log("Error en crear proyeccion por tiempo completo: " + error);
-            alert('Error en crear proyeccion por tiempo completo...');
+            alert('Error en crear proyección por tiempo completo...');
             this.props.history.push('/');
         });
 
@@ -276,6 +276,7 @@ class CreateProyeccionFulltimeComponent extends Component {
                 "id": d.id,
                 "codigo_nomina": d.codigo_nomina,
                 "ptc":d.categoria,
+                "grado_academico": d.grado_academico,
             }))
             this.setState({ docentes: options });
         }).catch(() => {
@@ -331,7 +332,7 @@ class CreateProyeccionFulltimeComponent extends Component {
     getTipoUnidad() {
         const tiposlList = [
           { value: 1, label: "Unidad Academica" },
-          { value: 2, label: "Unidad Academica + Extension" },
+          { value: 2, label: "Unidad Academica + Extensión" },
         ];
     
         this.setState({ tipos_unidades: tiposlList });
@@ -421,6 +422,7 @@ class CreateProyeccionFulltimeComponent extends Component {
         this.setState({ ptc: ''});
         this.setState({ ptc: event.ptc });
         this.setState({ codigo_nomina: event.codigo_nomina });
+        this.setState({ grado_academico: event.grado_academico,seleccionadoAcademico:true,errorAcademico:null  } , this.enableAddButton);
     }
 
 
@@ -912,7 +914,7 @@ class CreateProyeccionFulltimeComponent extends Component {
               <div className="col">
                 <div className="row mb-2 mt-3">
                   <label className="h6">
-                    <b>Academias</b>
+                    <b>Académias</b>
                   </label>
                 </div>
               </div>
@@ -1333,7 +1335,7 @@ class CreateProyeccionFulltimeComponent extends Component {
                           value={{
                             label:
                               this.state.unidad_academica === ""
-                                ? "Seleccione unidad Académica..."
+                                ? "Seleccione unidad académica..."
                                 : this.state.unidad_academica,
                           }}
                         />
@@ -1408,18 +1410,18 @@ class CreateProyeccionFulltimeComponent extends Component {
                         style={{ display: "block" }}
                       >
                         <label>Nivel Académico</label>
-                        <Select
-                          options={this.state.niveles}
-                          onChange={(e) =>
-                            this.onChangeGradoAcademicoaHandler(e)
-                          }
-                          value={{
-                            label:
-                              this.state.grado_academico === ""
-                                ? "Seleccione nivel académico..."
-                                : this.state.grado_academico,
-                          }}
-                        />
+                          <input
+                          readOnly
+                            placeholder="Ingrese código de nómina..."
+                            className="form-control"
+                            value={this.state.grado_academico === ""
+                            ? "Seleccione nivel académico..."
+                            : this.state.grado_academico}
+                            onChange={(e) =>
+                              this.onChangeGradoAcademicoaHandler(e)
+                            }
+                            required
+                          />
                         {this.state.errorAcademico && (
                            <p style={{ color: 'red' }}>{this.state.errorAcademico}</p>
                        )}
@@ -1657,7 +1659,7 @@ class CreateProyeccionFulltimeComponent extends Component {
 
                     <div className="col">
                       <div className="form-outline">
-                        <label className="">Tutorias:</label>
+                        <label className="">Tutorías:</label>
                         <div className="input-group">
                           <input
                             name="tutorias"

@@ -122,7 +122,7 @@ class ListCarreraComponent extends Component {
         const doc = new jsPDF();
         doc.text('Lista de carreras', 10, 10);
 
-        const columns = [' abreviatura', ' nombre', 'dgp', ' plan_estudio', 'estatus', 'fecha de creacion', ' fecha de actualizacion'];
+        const columns = [' abreviatura', ' nombre', 'dgp', ' plan_estudio', 'estatus', 'fecha de creación', ' fecha de actualización'];
         const data = carreras.map((carrera) => [
             carrera.abreviatura,
             carrera.nombre,

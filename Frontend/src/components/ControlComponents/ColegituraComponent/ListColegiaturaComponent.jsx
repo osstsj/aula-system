@@ -101,7 +101,7 @@ class ListColegiaturaComponent extends Component {
         const doc = new jsPDF();
         doc.text('Lista de colegiaturas', 10, 10);
 
-        const columns = [' clave',' descripcion',' monto', 'estatus','comentarios','fecha de creacion','fecha de actualiacion'];
+        const columns = [' clave',' descripción',' monto', 'estatus','comentarios','fecha de creación','fecha de actualiación'];
         const data = colegiaturas.map((colegiatura) => [
             colegiatura.clave,
             colegiatura.descripcion,

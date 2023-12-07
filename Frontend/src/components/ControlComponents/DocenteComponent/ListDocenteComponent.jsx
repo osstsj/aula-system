@@ -42,7 +42,7 @@ class ListDocenteComponent extends Component {
                     this.props.history.push('/list-docente');
                 });
             } else {
-                swal("Oops!", "el docente no es posible eliminar porque está  presente en otros módulos.\n" +
+                swal("Oops!", "El docente no es posible eliminar porque está  presente en otros módulos.\n" +
                 "Por favor verifique: Proyecciones Asignatura ó Tiempo Completo.", "error");
 
                 this.setState({
@@ -88,7 +88,9 @@ class ListDocenteComponent extends Component {
             apellido_materno: docente.apellido_materno,
             unidad_academica: docente.unidad_academica.nombre_completo,
             categoria: docente.categoria,
+            grado_academico: docente.grado_academico,
             actividad: docente.actividad,
+            estatus: docente.estatus,
             fecha_creacion: docente.fecha_creacion,
             fecha_actualizacion: docente.fecha_actualizacion
         }));
@@ -121,15 +123,17 @@ class ListDocenteComponent extends Component {
         const doc = new jsPDF();
         doc.text('Lista de docentes', 10, 10);
 
-        const columns = ['Nombre', 'Apellido Paternno', 'Apellido Materno', 'Unidad Academica', 'Categoria', 'Actividad', 'Fecha Creacion', 'Fecha de Actualizacion'];
+        const columns = ['Nombre', 'Apellido Paterno', 'Apellido Materno', 'Unidad Académica', 'Categoría','Nivel Académico', 'Actividad', 'estatus', 'Fecha Creación', 'Fecha de Actualización'];
         
         const data = docentes.map((docente) => [
             docente.nombre,
              docente.apellido_paterno,
              docente.apellido_materno,
-              docente.unidad_academica.nombre_completo,
+            docente.unidad_academica.nombre_completo,
              docente.categoria,
+             docente.grado_academico,
              docente.actividad,
+             docente.estatus,
              docente.fecha_creacion,
              docente.fecha_actualizacion
          ]);
@@ -184,6 +188,7 @@ class ListDocenteComponent extends Component {
                                 <th className='table-title'>Unidad Académica</th>
                                 <th className='table-title'>Categoría</th>
                                 <th className='table-title'>Actividad</th>
+                                <th className='table-title'>Nivel Académico</th>
                                 <th className='table-title'>Estatus</th>
                                 <th className='table-action'>Acciones</th>
                             </tr>
@@ -205,6 +210,9 @@ class ListDocenteComponent extends Component {
                                         </td>
                                         <td className={docente.estatus === 'Activo' ? 'table-conten':'table-conten text-secondary'}>
                                             {docente.actividad}
+                                        </td>
+                                        <td className={docente.estatus === 'Activo' ? 'table-conten':'table-conten text-secondary'}>
+                                            {docente.grado_academico}
                                         </td>
                                         <td className={docente.estatus === 'Activo' ? 'table-conten':'table-conten text-secondary'}>
                                             {docente.estatus}

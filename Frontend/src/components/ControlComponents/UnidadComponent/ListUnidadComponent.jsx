@@ -95,7 +95,7 @@ class ListUnidadComponent extends Component {
         const doc = new jsPDF();
         doc.text('Lista de Unidades', 10, 10);
 
-        const columns = ['Clave DGP', 'Abreviatura', 'Nombre Completo', 'Tipo Unidad', 'Nombre Corto', 'Dirección Completa','Fecha de creacion','Fecha de actualizacion'];
+        const columns = ['Clave DGP', 'Abreviatura', 'Nombre Completo', 'Tipo Unidad', 'Nombre Corto', 'Dirección Completa','Fecha de creación','Fecha de actualización'];
         const data = unidades.map((unidad) => [
             unidad.clave_dgp,
             unidad.abreviatura,

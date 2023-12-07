@@ -98,7 +98,7 @@ class CreateCarreraComponent extends Component {
                                             <div className="form-outline">
                                                 <label className="">Abreviatura: </label>
                                                 <input 
-                                                    placeholder="Ingrese Abreviatura..." 
+                                                    placeholder="Ingrese abreviatura..." 
                                                     name="abreviatura" className="form-control" 
                                                     value={this.state.abreviatura} 
                                                     onChange={this.changeAbreviaturataHandler} 

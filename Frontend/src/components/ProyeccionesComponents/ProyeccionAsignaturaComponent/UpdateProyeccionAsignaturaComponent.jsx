@@ -362,10 +362,10 @@ class UpdateProyeccionAsignaturaComponent extends Component {
 
     getTipoUnidad() {
         const tiposlList = [
-            { value: 'Unidad Academica', label: 'Unidad Academica' },
-            { value: 'Unidad Academica + Extension', label:'Unidad Academica + Extension'},
-        ]
-
+          { value: 1, label: "Unidad Académica" },
+          { value: 2, label: "Unidad Académica + Extension" },
+        ];
+    
         this.setState({ tipos_unidades: tiposlList });
     }
 
@@ -773,11 +773,15 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                                             {/* <div className="form-outline" style={{display: 'none'}}> */}
                                                 <div className="form-outline" style={{display: 'block'}}>
                                                     <label>Nivel Académico</label>
-                                                    <Select
-                                                        options={this.state.niveles}
-                                                        onChange={(e) => this.onChangeGradoAcademicoaHandler(e)}
-                                                        value={{ label: this.state.grado_academico  === '' ? "Seleccione nivel academico..." : this.state.grado_academico}}
-                                                    />
+                                                    <input
+                                                        readOnly
+                                                            placeholder="Ingrese código de nómina..."
+                                                            className="form-control"
+                                                            value={this.state.grado_academico === ""
+                                                            ? "Seleccione nivel académico..."
+                                                            : this.state.grado_academico}
+                                                            required
+                                                        />
                                                 </div>
                                             </div>
                                         </div>
@@ -903,7 +907,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
 
                                     <div className="col">
                                         <div className="row mb-2 mt-3">
-                                            <label className="h6"><b>Academias</b></label>
+                                            <label className="h6"><b>Académias</b></label>
                                         </div>
                                     </div>
 
@@ -1057,7 +1061,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
 
                                         <div className="col">
                                             <div className="form-outline">
-                                                <label className="">Tutorias:</label>
+                                                <label className="">Tutorías:</label>
                                                 <div className="input-group">
                                                     <input
                                                     readOnly={this.state.disableAll}

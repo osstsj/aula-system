@@ -93,16 +93,16 @@ class CreateExtensionComponent extends Component {
                 }
                
 
-                console.log('Unidad Academica + Extension => ' + JSON.stringify(unidadExtensiones));
+                console.log('Unidad Académica + Extensión => ' + JSON.stringify(unidadExtensiones));
                 ExtensionService.createExtensionByUnidadId(this.state.id, unidadExtensiones).then(res => {
                     this.props.history.push('/list-extension');
                 }).catch(() => {
-                    alert("Error al intentar crear la extension academica...");
+                    alert("Error al intentar crear la extensión académica...");
                     this.props.history.push('/list-extension');
                 });
             })
             .catch(() => {
-                alert("Error al intentar traer la unidad para crear extension...");
+                alert("Error al intentar traer la unidad para crear extensión...");
                 this.props.history.push('/list-extension');
             });           
         }   
@@ -207,7 +207,7 @@ class CreateExtensionComponent extends Component {
                                                     required
                                                     disabled
                                                 >
-                                                    <option value="Extension">Unidad académica con extension</option>
+                                                    <option value="Extension">Unidad académica con extensión</option>
                                                 </select>
                                             </div>
                                         </div>
