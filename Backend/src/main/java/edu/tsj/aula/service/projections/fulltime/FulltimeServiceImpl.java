@@ -1,7 +1,6 @@
 package edu.tsj.aula.service.projections.fulltime;
 
 import edu.tsj.aula.configuration.exception.ResourceNotFoundException;
-import edu.tsj.aula.persistance.models.control.entity.CarreraEntity;
 import edu.tsj.aula.persistance.models.control.entity.CarreraPorUnidadEntity;
 import edu.tsj.aula.persistance.models.control.entity.DocenteEntity;
 import edu.tsj.aula.persistance.models.control.entity.UnidadEntity;
@@ -9,7 +8,6 @@ import edu.tsj.aula.persistance.models.projections.entity.completo.FullTimeEntit
 import edu.tsj.aula.persistance.models.projections.entity.completo.IComparacionFulltimeDto;
 import edu.tsj.aula.persistance.models.projections.entity.folio.FolioFulltimeEntity;
 import edu.tsj.aula.persistance.repository.control.CarreraPorUnidadRepository;
-import edu.tsj.aula.persistance.repository.control.CarreraRepository;
 import edu.tsj.aula.persistance.repository.control.DocenteRepository;
 import edu.tsj.aula.persistance.repository.control.UnidadRepository;
 import edu.tsj.aula.persistance.repository.projections.FulltimeRepository;
@@ -60,12 +58,8 @@ public class FulltimeServiceImpl implements IFulltimeService {
             carreraPorUnidadEntity = carreraPorUnidadRepository.findById(id_carrera_por_unidad).orElseThrow(
                     ()-> new ResourceNotFoundException((" No se encontro carrera... con el id: ".concat(id_carrera_por_unidad.toString())),
                             HttpStatus.NOT_FOUND));
-            unidadAcademica = unidadRepository.findById(id_unidad).orElseThrow(
-                    ()-> new ResourceNotFoundException((" No se encontro unidad academica... con el id: ".concat(id_unidad.toString())),
-                            HttpStatus.NOT_FOUND));
 
             fullTimeDto.setFolio(folioFulltimeEntity);
-            fullTimeDto.setUnidad_academica(unidadAcademica);
             fullTimeDto.getProfesor_fulltime().setNombre_docente(docenteEntity);
             fullTimeDto.getProfesor_fulltime().setClave_programa(carreraPorUnidadEntity);
             fullTimeDto.getProfesor_fulltime().setGrado_academico(docenteEntity.getGrado_academico());

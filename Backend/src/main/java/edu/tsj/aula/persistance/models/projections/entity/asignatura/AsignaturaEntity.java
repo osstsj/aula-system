@@ -48,11 +48,6 @@ public class AsignaturaEntity  implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_unidad", nullable = false)
-    private UnidadEntity unidad_academica;
-
     @JoinColumn(name = "id_profe")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private ProfeAsignatura profe_asignatura;

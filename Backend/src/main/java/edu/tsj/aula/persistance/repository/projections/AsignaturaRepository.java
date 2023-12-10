@@ -15,7 +15,7 @@ public interface AsignaturaRepository  extends JpaRepository<AsignaturaEntity, L
     @Query("SELECT AE FROM AsignaturaEntity as AE WHERE AE.folio= :id_folio")
     List<AsignaturaEntity> findAllByFolio(FolioAsignaturaEntity id_folio);
 
-    @Query(value = "SELECT PA.unidad_academica.nombre_completo AS nombre_Ua,  " +
+    @Query(value = "SELECT PA.folio.unidad_academica.nombre_completo AS nombre_Ua,  " +
             "PAP.nombre_docente.nombre_completo as nombre_Docente,\n" +
             "PAHSAA.subtotal_1 AS subtotal_1_1,\n" +
             "PAHSAA2.subtotal_1 AS subtotal_1_2,\n" +
@@ -66,7 +66,7 @@ public interface AsignaturaRepository  extends JpaRepository<AsignaturaEntity, L
             "WHERE PA.folio.id =:id_folio_1 AND PA2.folio.id =:id_folio_2 AND  PAP.nombre_docente.id = PAP2.nombre_docente.id")
     List<IComparacionAsignaturaDto> showComparativeAsignaturaByIdsFolios(Long id_folio_1, Long id_folio_2);
 
-    @Query(value = "SELECT PA.unidad_academica.nombre_completo AS nombre_Ua,  " +
+    @Query(value = "SELECT PA.folio.unidad_academica.nombre_completo AS nombre_Ua,  " +
             "PAP.nombre_docente.nombre_completo as nombre_Docente,\n" +
             "PAHSAA.subtotal_1 AS subtotal_1_1,\n" +
             "PAHSAA2.subtotal_1 AS subtotal_1_2,\n" +

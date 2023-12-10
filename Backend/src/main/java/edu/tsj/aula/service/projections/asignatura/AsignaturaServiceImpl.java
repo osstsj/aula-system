@@ -58,14 +58,10 @@ public class AsignaturaServiceImpl implements IAsignaturaService {
                 ()-> new ResourceNotFoundException((" No se encontro carrera... con el id: ".concat(id_carrera_por_unidad.toString())),
                         HttpStatus.NOT_FOUND));
 
-        unidadAcademica = unidadRepository.findById(id_unidad).orElseThrow(
-                ()-> new ResourceNotFoundException((" No se encontro unidad academica... con el id: ".concat(id_unidad.toString())),
-                        HttpStatus.NOT_FOUND));
 
 
         try {
             asignaturaRequestDto.setFolio(folioAsignaturaEntity);
-            asignaturaRequestDto.setUnidad_academica(unidadAcademica);
             asignaturaRequestDto.getProfe_asignatura().setNombre_docente(docenteEntity);
             asignaturaRequestDto.getProfe_asignatura().setClave_programa(carreraPorUnidadEntity);
             asignaturaRequestDto.getProfe_asignatura().setGrado_academico(docenteEntity.getGrado_academico());

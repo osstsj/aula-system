@@ -15,7 +15,7 @@ spring:
 # #    P R O D U C T I O N
 #    url: jdbc:postgresql://localhost:5432/aula_system
 #    username: postgres
-#    password: aula-system
+#    password: aula_system
 #  jpa:
 #      hibernate:
 #         ddl-auto: create-drop

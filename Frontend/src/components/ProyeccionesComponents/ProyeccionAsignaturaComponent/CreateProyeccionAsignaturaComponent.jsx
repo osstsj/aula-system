@@ -93,7 +93,7 @@ class CreateProyeccionAsignaturaComponent extends Component {
 
   createProyeccionAsignatura = (e) => {
     const codigoNomina = e.target.value;
-
+// Descomentar cuando se vaya a agregar extensiones en las unidades académicas.
     // if (!this.state.seleccionadoTipoUA) {
     //     this.setState({
     //       errorTipoUA: 'Por favor, seleccione una opción del tipo de UA.',

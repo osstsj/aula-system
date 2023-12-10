@@ -15,7 +15,7 @@ public interface FulltimeRepository extends JpaRepository<FullTimeEntity, Long> 
     @Query("SELECT FT FROM FullTimeEntity AS FT WHERE FT.folio= :id_folio")
     List<FullTimeEntity> findAllByFolio(FolioFulltimeEntity id_folio);
 
-    @Query(value = "SELECT PF.unidad_academica.nombre_completo AS nombre_Ua,"+
+    @Query(value = "SELECT PF.folio.unidad_academica.nombre_completo AS nombre_Ua,"+
             "PFP.nombre_docente.nombre_completo AS nombre_Docente,\n" +
             "PFHSAA.horas_frente_grupo AS horas_Grupo_1,\n" +
             "PFHSAA2.horas_frente_grupo AS horas_Grupo_2,\n" +
@@ -54,7 +54,7 @@ public interface FulltimeRepository extends JpaRepository<FullTimeEntity, Long> 
             "WHERE PF.folio.id =:id_folio_1 AND PF2.folio.id =:id_folio_2  AND PFP.nombre_docente.id = PFP2.nombre_docente.id")
     List<IComparacionFulltimeDto> showComparativeAsignaturaByIdsFolios(Long id_folio_1, Long id_folio_2);
 
-    @Query(value = "SELECT PF.unidad_academica.nombre_completo AS nombre_Ua,"+
+    @Query(value = "SELECT PF.folio.unidad_academica.nombre_completo AS nombre_Ua,"+
             "PFP.nombre_docente.nombre_completo AS nombre_Docente,\n" +
             "PFHSAA.horas_frente_grupo AS horas_Grupo_1,\n" +
             "PFHSAA2.horas_frente_grupo AS horas_Grupo_2,\n" +

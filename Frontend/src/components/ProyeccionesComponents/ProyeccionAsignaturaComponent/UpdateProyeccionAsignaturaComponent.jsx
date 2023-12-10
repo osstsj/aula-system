@@ -132,7 +132,7 @@ class UpdateProyeccionAsignaturaComponent extends Component {
                     subtotal_2: asignatura.horas_necesidad_institucional.subtotal_2,
 
                 total: asignatura.total,
-                unidad_academica: asignatura.unidad_academica.nombre_completo,
+                unidad_academica: asignatura.folio.unidad_academica.nombre_completo,
 
                 id_unidad: asignatura.unidad_academica.id,
                 id_docente: asignatura.profe_asignatura.nombre_docente.id,

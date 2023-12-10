@@ -4,8 +4,6 @@ package edu.tsj.aula.persistance.models.projections.entity.completo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import edu.tsj.aula.persistance.models.control.entity.CarreraEntity;
-import edu.tsj.aula.persistance.models.control.entity.UnidadEntity;
 import edu.tsj.aula.persistance.models.projections.entity.completo.necesidad.HorasNecesidadInstitucionalFulltime;
 import edu.tsj.aula.persistance.models.projections.entity.completo.profesor.ProfesorFulltimeEntity;
 import edu.tsj.aula.persistance.models.projections.entity.completo.sustantivas.HorasSustantivasAtencionAlumnosFulltime;
@@ -15,8 +13,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -46,11 +42,6 @@ public class FullTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_unidad", nullable = false)
-    private UnidadEntity unidad_academica;
 
     @JoinColumn(name = "id_profesor")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

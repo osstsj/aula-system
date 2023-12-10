@@ -11,27 +11,6 @@ services:
       - 5432:5432
     networks:
       - netms1
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
-    container_name: db-sqlserver-cart
-    environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=1a.2b.3c.
-    ports:
-      - 1433:1433
-    networks:
-      - netms1
-  mysql:
-    image: mysql:8
-    container_name: db-mysql-security
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=123456
-      - MYSQL_DATABASE=db_segurity
-    ports:
-      - 3306:3306
-    networks:
-      - netms1
 networks:
   netms1:
     name: net-ms1

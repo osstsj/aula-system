@@ -88,6 +88,7 @@ class CreateProyeccionFulltimeComponent extends Component {
     }
 
     createProyeccionFulltime= (e) => {
+      // Descomentar cuando se vaya a agregar extensiones en las unidades académicas.
         // if (!this.state.seleccionadoTipoUA) {
         //     this.setState({
         //       errorTipoUA: 'Por favor, seleccione una opción del tipo de UA.',
@@ -331,8 +332,8 @@ class CreateProyeccionFulltimeComponent extends Component {
 
     getTipoUnidad() {
         const tiposlList = [
-          { value: 1, label: "Unidad Academica" },
-          { value: 2, label: "Unidad Academica + Extensión" },
+          { value: 1, label: "Unidad Académica" },
+          { value: 2, label: "Unidad Académica + Extensión" },
         ];
     
         this.setState({ tipos_unidades: tiposlList });
@@ -373,6 +374,7 @@ class CreateProyeccionFulltimeComponent extends Component {
 
     onChangeTipoUnidadHandler = (event) => {
       this.setState({ tipo_unidad: event.label });
+      // Descomentar cuando se vaya a agregar extensiones en las unidades académicas.
         // if (event.value === 2) {
         //     this.getAllExtensionsByUnidadId();
         //     } else {

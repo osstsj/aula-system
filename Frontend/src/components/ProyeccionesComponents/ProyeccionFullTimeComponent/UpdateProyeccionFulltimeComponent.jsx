@@ -193,7 +193,7 @@ class UpdateProyeccionFulltimeComponent extends Component {
                     subtotal_2: fulltime.horas_necesidad_institucional_fulltime.subtotal_2,
 
                 total: fulltime.total,
-                unidad_academica: fulltime.unidad_academica.nombre_completo,
+                unidad_academica: fulltime.folio.unidad_academica.nombre_completo,
 
                 id_unidad: fulltime.unidad_academica.id,
                 id_docente: fulltime.profesor_fulltime.nombre_docente.id,
