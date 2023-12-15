@@ -25,13 +25,45 @@ curl -O  https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh
 ./install.sh
 nvm install 16.20.0
 
-npm install
-npm start
+
+npm install (instala dependencias)
+npm start (despliega en modo desarrollo)
+
+npm run build -> crea artefacto de produccion
+serve -s build (ejecutar artefacto de producción)
 
 Ctrl+b d   detach
 
+
+/----------------
+Cambiar en el archivo application.yml de Backend:
+
+#------ Desarrollo
+jpa:
+  hibernate:
+    ddl-auto: create-drop // en desarrollo H2 database
+
+#------ Produccion
+1. Crea los esquemas en la base de datos de postgreSQL.
+jpa:
+   hibernate:
+     ddl-auto: create
+
+2. Una vez creado los esquemas, se ejecuta Ctrl + c para parar la aplicacion del Backend
+   y cambiar en el archivo application.yml a none, para que no se realicen cambios y se vuelva a crear los esquemas de la base datos, 
+   por lo tanto la aplicacion estara en modo 'Produccion'.
+
+jpa:
+   hibernate:
+      ddl-auto: none
+
+3. En caso de que no se haya creado la base de datos por alguna excepcion, intentar entrar a la consola PSQL, 
+sudo -u postgres psql
+CREATE DATABASE aula_system;
  
- 
+Y volver a seguir los dos primeros pasos.
+
+//------------------------------- 
 services:
   db:
     container_name: postgres
